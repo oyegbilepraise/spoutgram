@@ -12,7 +12,7 @@
 }
 ._xparnts_y {
   width: 450px;
-}
+} 
 ._0004_logo_svg {
   width: 130px;
   margin: auto;
@@ -479,9 +479,56 @@ input[type="text"].data_content_pass:focus::placeholder, input[type="password"].
 .svg__showpaswd {
   width: 15px; height: 15px;
 }
-
-
-
+.popup__upldmodal {
+  position: fixed;
+  width: 100vw; height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  top: 0px;
+  z-index: 100;
+  left: 0px;
+  overflow-y: auto;
+  /* padding-top: 10px; padding-bottom: 10px; */
+}
+.title_mdlupld {
+  font-family: var(--global-medium);
+  font-size: 17px;
+  display: block;
+  text-align: center;
+  width: max-content;
+  margin: auto;
+}
+.closepicupld {
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.10);
+  stroke: rgb(92, 92, 92);
+  width: 18px; height: 18px; padding: 6px;
+  border-radius: 50%;
+  box-sizing: content-box;
+  margin-top: 0px; margin-left: 16px;
+  position: absolute;
+  top: 13px;
+}
+.avatar_y {
+  border: 1px solid red;
+}
+.tytyty {
+  border-bottom: 1px solid rgb(235, 235, 235);
+  display: flex;
+  position: relative;
+  padding-top: 15px; padding-bottom: 15px;
+  margin-bottom: 15px;
+}
+.photobaby {
+  position: absolute;
+  fill: gray;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  top: 70px;
+}
+.xyyxyy {
+  /* border: 1px solid black; */
+  position: relative;
+}
 
 /* responsiveness */
 @media screen and (max-width: 520px) {

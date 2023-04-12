@@ -5,7 +5,7 @@ import {
 } from "@/redux/slices/userDetailSlice";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
+ 
 const StepOne = () => {
   // toggles
   const [status, setStatus] = useState(false);

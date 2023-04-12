@@ -4,7 +4,7 @@ import {
   nextComponent,
 } from "@/redux/slices/userDetailSlice";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux"; 
 
 const StepTwo = () => {
   // storing the current data into state before sending to create profile

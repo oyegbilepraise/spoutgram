@@ -1,31 +1,24 @@
-// Nextjs
 import Link from "next/link"
 import { useRouter } from "next/router"
 
-// Formik
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 
-// Redux.
 import { useDispatch } from 'react-redux'
 import { registerUserAction } from '@/redux/slices/authSlice/authSlice'
 import { useSelector } from 'react-redux'
 
-// Components.
 import { AuthLayout } from '@/layout'
 
-// styles
 import styles from '@/layout/AuthLayout/AuthLayout.module.css'
 
-// Signup Formik Schema.
-const signupValidationSchema = Yup.object().shape({
+const signupValidationSchema = Yup.object().shape({ 
   email: Yup.string()
     .email('Please enter a valid email address')
     .required('Please enter your email address.'),
   password: Yup.string()
     .required('Please enter your password')
     .matches(
-      // eslint-disable-next-line
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
       "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character"
     ),
@@ -35,12 +28,10 @@ const signupValidationSchema = Yup.object().shape({
 })
 
 const SignUpScreen = () => {
-  // navigate to a different page using nextjs useRouter
   const router = useRouter()
   const dispatch = useDispatch()
   const storeData = useSelector(store => store?.auth)
 
-  // Formik.
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -57,6 +48,7 @@ const SignUpScreen = () => {
     // dispatch(generateEmailVerificationAction())
     router.push('/verify')
   }
+  
   return (
     <AuthLayout>
 

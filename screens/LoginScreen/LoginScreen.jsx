@@ -1,25 +1,17 @@
-import './loginScreen.module.css'
-
-//Next
 import { useRouter } from 'next/router'
 
-// Redux
 import { useDispatch } from 'react-redux'
 import { useSelector } from 'react-redux'
 import { loginUserAction } from '@/redux/slices/authSlice/authSlice'
 
-// Formik & Yup.
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 
-// Components.
 import { AuthLayout } from '@/layout'
 import Link from 'next/link'
 
-// styles
 import styles from '@/layout/AuthLayout/AuthLayout.module.css'
 
-// Formik Validation Schema.
 const loginFormSchema = Yup.object().shape({
   email: Yup.string()
     .email('Enter a valid email')
@@ -36,7 +28,7 @@ const LoginScreen = () => {
   const formik = useFormik({
     initialValues: {
       email: '',
-      password: '',
+      password: '', 
     },
     onSubmit: (values) => {
       dispatch(loginUserAction(values))
