@@ -17,7 +17,12 @@ import { AuthLayout } from '@/layout'
 import Link from 'next/link'
 
 const verifyEmailSchema = Yup.object().shape({
-  token: Yup.string().required('Please enter a valid token sent to your mail.')
+  token: Yup.string()
+    .required('Please enter the valid token sent to your mail.')
+    .matches(
+      /^\d{6}$/,
+      "Invalid code format"
+    )
 })
 
 const VerifyAccountScreen = () => {
@@ -63,7 +68,7 @@ const VerifyAccountScreen = () => {
               </span>
 
               <div className={styles.xpnd_inpts} style={{ paddingTop: "14px" }}>
-                <div>
+                <div style={{ position: "relative" }}>
                   <input
                     type="text"
                     value={formik.values.token}
@@ -74,24 +79,15 @@ const VerifyAccountScreen = () => {
 
                     {/* this is where I stopd */}
 
-                  <span className={styles._0013_span}>
-
                     {/* error message */}
                     {formik.touched.token && formik.errors.token ? (
-                      <svg className={styles.invalid_svg}
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24" height="24"
-                        viewBox="0 0 24 24" fill="none"
-                        stroke="#01A8EA" strokeWidth="2"
-                        strokeLinecap="round" strokeLinejoin="round">
-                        <circle cx="12" cy="12" r="10"></circle>
-                        <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line>
-                      </svg>
+                      <span className={styles.__spanerror}>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#d90000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+                    </span>
                     ) : null}
                     {formik.touched.token && formik.errors.token}
                     {/* error message */}
                     {/* error message */}
-                  </span>
 
                 </div>
               </div>

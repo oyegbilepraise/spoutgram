@@ -4,7 +4,7 @@ import { default as NextImage } from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addDetailsToUserProfile,
-  nextComponent,
+  nextComponent, 
 } from "@/redux/slices/userDetailSlice";
 import { useEffect, useState } from "react";
 import Avatar from "react-avatar-edit";
@@ -90,35 +90,84 @@ const StepThree = () => {
       >
         {/* pop up to add a profile picture and please modify the class for better UI  */}
         {showPopup && (
-          <div
+          <div className={styles.popup__upldmodal}>
+            <div
             style={{
               position: "absolute",
               width: "500px",
-              borderRadius: "12px",
+              height: "600px",
+              borderRadius: "20px",
               background: "#fff",
               boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",
               zIndex: 20,
               top: "50%",
-              transform: "translateY(-50%)",
-              padding: "10px",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              padding: "0px",
             }}
           >
-            <div
-              style={{
-                marginBottom: "10px",
-                cursor: "pointer",
-              }}
-              onClick={closeModal}
-            >
-              Close Icon
+            <div className={styles.tytyty}>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width={19}
+                height={19}
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#d0d0d0"
+                strokeWidth={2}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className={styles.closepicupld}
+                onClick={closeModal}
+              >
+                <line x1={18} y1={6} x2={6} y2={18} />
+                <line x1={6} y1={6} x2={18} y2={18} />
+              </svg>
+              <span className={styles.title_mdlupld}>
+                Profile Photo
+              </span>
             </div>
+
+            <div className={styles.xyyxyy}>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                width={65}
+                height={65}
+                className={styles.photobaby}
+              >
+                <path
+                  d="M21 15V18H24V20H21V23H19V20H16V18H19V15H21ZM21.0082 3C21.556 3 22 3.44495 22 3.9934L22.0007 13.3417C21.3749 13.1204 20.7015 13 20 13V5H4L4.001 19L13.2929 9.70715C13.6528 9.34604 14.22 9.31823 14.6123 9.62322L14.7065 9.70772L18.2521 13.2586C15.791 14.0069 14 16.2943 14 19C14 19.7015 14.1204 20.3749 14.3417 21.0007L2.9918 21C2.44405 21 2 20.5551 2 20.0066V3.9934C2 3.44476 2.45531 3 2.9918 3H21.0082ZM8 7C9.10457 7 10 7.89543 10 9C10 10.1046 9.10457 11 8 11C6.89543 11 6 10.1046 6 9C6 7.89543 6.89543 7 8 7Z"
+                  fill="rgb(200, 200, 200)"
+                />
+              </svg>
+            </div>
+
             <Avatar
-              width={400}
+              width={500}
               height={300}
               onCrop={onCrop}
               onClose={onClose}
               onBeforeFileLoad={onBeforeFileLoad}
               src={src}
+              id="pic-avatar"
+              borderStyle={{
+                border: "1px solid transparent",
+                borderRadius: "20px",
+                margin: "auto",
+                textAlign: "center"
+              }}
+              label="Choose a Photo"
+              labelStyle={{
+                fontSize: "15px",
+                fontFamily: "Roboto-Regular",
+                background: "#01A8EA",
+                color: "white",
+                paddingTop: "8px", paddingBottom: "8px",
+                paddingLeft: "30px", paddingRight: "30px",
+                borderRadius: "5px"
+              }}
+              imageWidth={200}
             />
             {/* upload image  */}
             <div
@@ -128,6 +177,7 @@ const StepThree = () => {
                 cursor: "pointer",
                 padding: "10px",
                 marginTop: "10px",
+                display: "none"
               }}
               onClick={uploadImage}
             >
@@ -137,6 +187,7 @@ const StepThree = () => {
             {error && (
               <p style={{ color: "red", marginTop: "10px" }}>{error}</p>
             )}
+            </div>
           </div>
         )}
 
