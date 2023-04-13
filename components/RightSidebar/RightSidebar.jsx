@@ -5,6 +5,31 @@ import styles from "@/layout/HomeLayout/HomeLayout.module.css";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 
+// read documentation to style and also inspect element. https://www.npmjs.com/package/react-multi-carousel
+
+// custom arrows. add arrows in place of the buttons
+const ButtonGroup = ({ next, previous, goToSlide, ...rest }) => {
+  const {
+    carouselState: { currentSlide },
+  } = rest;
+  return (
+    <div className="carousel-button-group">
+      {" "}
+      <button
+        className={currentSlide === 0 ? "disable" : ""}
+        onClick={() => previous()}
+      >
+        prev
+      </button>
+      <button onClick={() => next()}>next</button>
+      <button onClick={() => goToSlide(currentSlide + 1)}>
+        {" "}
+        Go to any slide{" "}
+      </button>
+    </div>
+  );
+};
+
 const RightSidebar = () => {
   const responsive = {
     desktop: {
@@ -141,6 +166,64 @@ const RightSidebar = () => {
         },
       ],
     },
+    {
+      id: 5,
+      items: [
+        {
+          id: 1,
+          name: "Ara",
+          username: "@sar",
+          btn: "Follow",
+        },
+        {
+          id: 2,
+          name: "Simsi",
+          username: "@kunle",
+          btn: "Follow",
+        },
+        {
+          id: 3,
+          name: "killer",
+          username: "@yub",
+          btn: "Follow",
+        },
+        {
+          id: 4,
+          name: "Dami",
+          username: "@blesgs",
+          btn: "Follow",
+        },
+      ],
+    },
+    {
+      id: 6,
+      items: [
+        {
+          id: 1,
+          name: "Ada",
+          username: "@gold",
+          btn: "Follow",
+        },
+        {
+          id: 2,
+          name: "Sdimi",
+          username: "@adedddkunle",
+          btn: "Follow",
+        },
+        {
+          id: 3,
+          name: "Vibe_kildddler",
+          username: "@yawaHub",
+          btn: "Follow",
+        },
+        {
+          id: 4,
+          name: "Killer",
+          username: "@blessddings",
+          btn: "Follow",
+        },
+      ],
+    },
   ];
   return (
     <div className={`${styles.rightbar} ${styles._000rightbar}`}>
@@ -184,8 +267,9 @@ const RightSidebar = () => {
             keyBoardControl={true}
             customTransition="all .5"
             transitionDuration={500}
+            customButtonGroup={<ButtonGroup />}
             containerClass="carousel-container"
-            removeArrowOnDeviceType={["tablet", "mobile"]}
+            renderButtonGroupOutside={true}
             dotListClass="custom-dot-list-style"
             itemClass="carousel-item-padding-40-px"
           >
