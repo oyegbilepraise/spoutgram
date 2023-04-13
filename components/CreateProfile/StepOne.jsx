@@ -5,10 +5,11 @@ import {
 } from "@/redux/slices/userDetailSlice";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
- 
+
 const StepOne = () => {
   // toggles
   const [status, setStatus] = useState(false);
+  const [organStatus, setOrganStatus] = useState(false);
 
   //   values
   const [statusValue, setStatusValue] = useState("");
@@ -44,11 +45,17 @@ const StepOne = () => {
   //   updating status value
   const handleStatus = (statusValue) => {
     setStatusValue(statusValue);
+    setStatus((prev) => !prev);
+    setOrganStatus(true);
+    if (statusValue !== "creator") {
+      setAdult(false);
+    }
   };
 
   //   updating organization value
   const handleOrganization = (organValue) => {
     setOrganizationValue(organValue);
+    setOrganStatus(false);
   };
 
   // sending the data to redux
@@ -158,7 +165,7 @@ const StepOne = () => {
             <div className={styles.dropdown_option}>
               {/* selected status */}
               <span onClick={() => setStatus((prev) => !prev)}>
-                Select status
+                {statusValue === "" ? "Select status" : statusValue}
               </span>
               {/* error message */}
               <span>
@@ -224,8 +231,8 @@ const StepOne = () => {
           </div>
 
           {/* if user picks Creator as an option, show this */}
-          {statusValue === "creator" && (
-            <div>
+          <div>
+            {statusValue === "creator" && (
               <span className={styles.span_checkb_data}>
                 <input
                   type="checkbox"
@@ -240,8 +247,10 @@ const StepOne = () => {
                   Are your contents suitable for audience 18 and above?
                 </span>
               </span>
+            )}
 
-              {/* if you ticks the checkbox, show this */}
+            {/* if you ticks the checkbox, show this */}
+            {adult && (
               <span className={styles.alert_user_choice}>
                 <svg
                   className={styles.invalid_svg_2}
@@ -261,8 +270,8 @@ const StepOne = () => {
                 Audience below 18 would not be allowed to see, or subscribe to
                 your contents.
               </span>
-            </div>
-          )}
+            )}
+          </div>
 
           {/* if user picks Organization, show this */}
           {statusValue === "organization" && (
@@ -272,8 +281,10 @@ const StepOne = () => {
             >
               <div className={styles.dropdown_option}>
                 {/* selected status */}
-                <span onClick={() => setOrganization((prev) => !prev)}>
-                  Organization category
+                <span onClick={() => setOrganStatus((prev) => !prev)}>
+                  {organizationValue === ""
+                    ? "Organization category"
+                    : organizationValue}
                 </span>
                 {/* error message */}
                 <span>
@@ -296,97 +307,102 @@ const StepOne = () => {
                 </span>
                 {/* error message */}
               </div>
-              <div className={styles.dropdown}>
-                {/* options */}
-                <div onClick={() => handleOrganization("non-profit")}>
-                  <span
-                    className={styles.select__data}
-                    style={{
-                      color: organizationValue === "non-profit" && "#01A8EA",
-                      // you can change the color here or in css
-                    }}
-                  >
-                    Non-Profit
-                  </span>
+              {organStatus && (
+                <div className={styles.dropdown}>
+                  {/* options */}
+                  <div onClick={() => handleOrganization("non-profit")}>
+                    <span
+                      className={styles.select__data}
+                      style={{
+                        color: organizationValue === "non-profit" && "#01A8EA",
+                        // you can change the color here or in css
+                      }}
+                    >
+                      Non-Profit
+                    </span>
+                  </div>
+                  <div onClick={() => handleOrganization("technology")}>
+                    <span
+                      className={styles.select__data}
+                      style={{
+                        color: organizationValue === "technology" && "#01A8EA",
+                      }}
+                    >
+                      Technology
+                    </span>
+                  </div>
+                  <div onClick={() => handleOrganization("pharmaceuticals")}>
+                    <span
+                      className={styles.select__data}
+                      style={{
+                        color:
+                          organizationValue === "pharmaceuticals" && "#01A8EA",
+                      }}
+                    >
+                      Pharmaceuticals
+                    </span>
+                  </div>
+                  <div onClick={() => handleOrganization("religious")}>
+                    <span
+                      className={styles.select__data}
+                      style={{
+                        color: organizationValue === "religious" && "#01A8EA",
+                      }}
+                    >
+                      Religious
+                    </span>
+                  </div>
+                  <div onClick={() => handleOrganization("other")}>
+                    <span
+                      className={styles.select__data}
+                      style={{
+                        color: organizationValue === "other" && "#01A8EA",
+                      }}
+                    >
+                      Other
+                    </span>
+                  </div>
+                  {/* options */}
                 </div>
-                <div onClick={() => handleOrganization("technology")}>
-                  <span
-                    className={styles.select__data}
-                    style={{
-                      color: organizationValue === "technology" && "#01A8EA",
-                    }}
-                  >
-                    Technology
-                  </span>
-                </div>
-                <div onClick={() => handleOrganization("pharmaceuticals")}>
-                  <span
-                    className={styles.select__data}
-                    style={{
-                      color:
-                        organizationValue === "pharmaceuticals" && "#01A8EA",
-                    }}
-                  >
-                    Pharmaceuticals
-                  </span>
-                </div>
-                <div onClick={() => handleOrganization("religious")}>
-                  <span
-                    className={styles.select__data}
-                    style={{
-                      color: organizationValue === "religious" && "#01A8EA",
-                    }}
-                  >
-                    Religious
-                  </span>
-                </div>
-                <div onClick={() => handleOrganization("other")}>
-                  <span
-                    className={styles.select__data}
-                    style={{
-                      color: organizationValue === "other" && "#01A8EA",
-                    }}
-                  >
-                    Other
-                  </span>
-                </div>
-                {/* options */}
-              </div>
+              )}
+
               {/* dropdown */}
             </div>
           )}
 
           {/* if user enters other ---- show this */}
-          {organizationValue === "other" && (
-            <div style={{ paddingTop: "7px" }}>
-              <input
-                type="text"
-                placeholder="Other"
-                className={styles.data_content_pass}
-              />
+          {organizationValue === "other" &&
+            statusValue ===
+              "organization" && (
+                <div style={{ paddingTop: "7px" }}>
+                  <input
+                    type="text"
+                    placeholder="Other"
+                    className={styles.data_content_pass}
+                  />
 
-              <span className={styles._0013_span}>
-                {/* error message */}
-                <svg
-                  className={styles.invalid_svg}
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="#01A8EA"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <circle cx="12" cy="12" r="10"></circle>
-                  <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line>
-                </svg>
-                This field is required!
-                {/* error message */}
-              </span>
-            </div>
-          )}
+                  <span className={styles._0013_span}>
+                    {/* error message */}
+                    <svg
+                      className={styles.invalid_svg}
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="#01A8EA"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <circle cx="12" cy="12" r="10"></circle>
+                      <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line>
+                    </svg>
+                    This field is required!
+                    {/* error message */}
+                  </span>
+                </div>
+              )}
         </div>
       </div>
 
