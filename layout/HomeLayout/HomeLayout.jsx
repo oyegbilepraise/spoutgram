@@ -11,10 +11,10 @@ const HomeLayout = (props) => {
           {props.children}
           <RightSidebar />
         </div>
-      
+       
       </div>
     </main>
   )
 }
 
-export default HomeLayout
+export default HomeLayout 

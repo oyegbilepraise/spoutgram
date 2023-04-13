@@ -14,7 +14,7 @@ import Select from "react-select";
 import styles from "@/layout/AuthLayout/AuthLayout.module.css";
 
 // Components
-import { BasicProfileInfo, MoreProfileInfo, ProfileInfo } from "@/components";
+// import { BasicProfileInfo, MoreProfileInfo, ProfileInfo } from "@/components";
 import { AuthLayout } from "@/layout";
 import StepOne from "@/components/CreateProfile/StepOne";
 import { useState } from "react";
