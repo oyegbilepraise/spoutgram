@@ -77,6 +77,18 @@ const RightSidebar = () => {
           username: "@dipox",
           btn: "Follow",
         },
+        {
+          id: 5,
+          name: "Dipo",
+          username: "@dipox",
+          btn: "Follow",
+        },
+        {
+          id: 6,
+          name: "Dipo",
+          username: "@dipox",
+          btn: "Follow",
+        },
       ],
     },
     {
@@ -102,6 +114,18 @@ const RightSidebar = () => {
         },
         {
           id: 4,
+          name: "Yemi",
+          username: "@dipox",
+          btn: "Follow",
+        },
+        {
+          id: 5,
+          name: "Yemi",
+          username: "@dipox",
+          btn: "Follow",
+        },
+        {
+          id: 6,
           name: "Yemi",
           username: "@dipox",
           btn: "Follow",
@@ -135,6 +159,18 @@ const RightSidebar = () => {
           username: "@brown",
           btn: "Follow",
         },
+        {
+          id: 5,
+          name: "James",
+          username: "@brown",
+          btn: "Follow",
+        },
+        {
+          id: 6,
+          name: "James",
+          username: "@brown",
+          btn: "Follow",
+        },
       ],
     },
     {
@@ -160,6 +196,18 @@ const RightSidebar = () => {
         },
         {
           id: 4,
+          name: "Killer",
+          username: "@blessings",
+          btn: "Follow",
+        },
+        {
+          id: 5,
+          name: "Killer",
+          username: "@blessings",
+          btn: "Follow",
+        },
+        {
+          id: 6,
           name: "Killer",
           username: "@blessings",
           btn: "Follow",
@@ -193,6 +241,18 @@ const RightSidebar = () => {
           username: "@blesgs",
           btn: "Follow",
         },
+        {
+          id: 5,
+          name: "Dami",
+          username: "@blesgs",
+          btn: "Follow",
+        },
+        {
+          id: 6,
+          name: "Dami",
+          username: "@blesgs",
+          btn: "Follow",
+        },
       ],
     },
     {
@@ -218,6 +278,18 @@ const RightSidebar = () => {
         },
         {
           id: 4,
+          name: "Killer",
+          username: "@blessddings",
+          btn: "Follow",
+        },
+        {
+          id: 5,
+          name: "Killer",
+          username: "@blessddings",
+          btn: "Follow",
+        },
+        {
+          id: 6,
           name: "Killer",
           username: "@blessddings",
           btn: "Follow",
