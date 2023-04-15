@@ -551,6 +551,7 @@ input[type="text"].data_content_pass:focus::placeholder, input[type="password"].
   position: fixed;
   top: 0; left: 0;
   z-index: 100;
+  background-color: white;
 }
 .error__firstdiv, .div_babyy_xy {
   max-width: 850px;
@@ -559,6 +560,10 @@ input[type="text"].data_content_pass:focus::placeholder, input[type="password"].
 }
 .div_babyy_xy {
   margin-top: 200px;
+}
+.curved404 {
+  width: 290px; height: 290px;
+  border-radius: 50%;
 }
 .cftpg {
   display: block;
@@ -585,11 +590,35 @@ input[type="text"].data_content_pass:focus::placeholder, input[type="password"].
   background-color: var(--brand-color);
   font-family: var(--global-medium);
   font-size: 15px;
-  width: 150px;
-  padding-top: 7px; padding-bottom: 7px;
+  width: 250px;
+  padding-top: 11px; padding-bottom: 11px;
   cursor: pointer;
   color: white;
   border-radius: 5px;
+}
+.error__msg__xyx {
+  border: 1px solid black;
+  display: block;
+  padding-top: 10px; padding-bottom: 10px;
+  border-radius: 5px;
+  border: 1px solid var(--brand-color);
+  background-color: #01a8ea33;
+  text-align: center;
+  position: relative;
+}
+.error__inval {
+  width: 21px; height: 21px;
+  fill: var(--brand-color);
+  position: absolute;
+  left: 10px;
+}
+.error__txt__xyx {
+  /* display: block; */
+  /* border: 1px solid black; */
+  width: max-content;
+  margin: auto;
+  font-family: var(--global-regular);
+  font-size: 15px;
 }
 @media screen and (max-width: 920px) {
   .cftpg {

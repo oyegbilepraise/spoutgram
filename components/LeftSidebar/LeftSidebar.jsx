@@ -2,6 +2,7 @@
 import img from '../../images/default-photo.svg'
 import Image from 'next/image'
 import styles from '@/layout/HomeLayout/HomeLayout.module.css'
+import { MoreSidebar } from '@/components'
 
 const LeftSidebar = () => {
   return  (
@@ -9,7 +10,7 @@ const LeftSidebar = () => {
     <div className={styles.__logo}>
       {/* spoutgram__svg */}
       <svg
-        className={styles._0004_logo_svg}
+        className={styles._0004_logo_svg} 
         width={282}
         height={49}
         viewBox="0 0 282 49"
@@ -281,8 +282,9 @@ const LeftSidebar = () => {
       </span>
       <span className={styles.span_data_sidebar}>@username</span>
     </div>
-  </div>
-  
+
+    <MoreSidebar/> 
+    </div>
   )
 }
 

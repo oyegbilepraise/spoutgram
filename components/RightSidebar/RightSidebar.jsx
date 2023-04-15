@@ -13,19 +13,42 @@ const ButtonGroup = ({ next, previous, goToSlide, ...rest }) => {
     carouselState: { currentSlide },
   } = rest;
   return (
-    <div className="carousel-button-group">
+    <div className={`${styles.carousel_button_group} ${styles.carousel__btn__div}`}>
       {" "}
       <button
         className={currentSlide === 0 ? "disable" : ""}
-        onClick={() => previous()}
+        onClick={() => previous()} style={{cursor: "pointer"}}
       >
-        prev
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width={21}
+          height={21}
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="var(--brand-color)"
+          strokeWidth={2}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path d="M15 18l-6-6 6-6" />
+        </svg>
       </button>
-      <button onClick={() => next()}>next</button>
-      <button onClick={() => goToSlide(currentSlide + 1)}>
-        {" "}
-        Go to any slide{" "}
+      <button onClick={() => next()} style={{marginLeft: "5px", cursor: "pointer"}}>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width={21}
+        height={21}
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="var(--brand-color)"
+        strokeWidth={2}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="M9 18l6-6-6-6" />
+      </svg>
       </button>
+      
     </div>
   );
 };

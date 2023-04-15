@@ -1,6 +1,8 @@
 import Link from "next/link";
 import Head from 'next/head'
 import styles from '@/layout/AuthLayout/AuthLayout.module.css'
+import img from '../images/404_y.gif'
+import Image from "next/image";
 
 function Custom404() {
   return (
@@ -36,15 +38,18 @@ function Custom404() {
 
       <div className={styles.div_babyy_xy}>
         <span className={styles.cftpg}>
-          Page not found
+          4-Oh-4
         </span>
+        <div style={{textAlign: "center"}}>
+          {/* <Image className={styles.curved404} src={img} /> */}
+        </div>
         <span className={styles.error_stry}>
           Oops! It seems you've stumbled upon a lost post or a broken link. This page seems to have gone on a digital adventure, lost in the vastness of the internet. In the meantime, why not head back home and check out our amazing content? Who knows, you might just find something even better!
         </span>
         <span style={{display: "block", paddingTop: "40px", textAlign: "center"}}>
           <Link href="/">
             <button className={styles.gbh_btn}>
-              Go to Home
+              Take me to see those contents!!
             </button>
           </Link>
         </span>

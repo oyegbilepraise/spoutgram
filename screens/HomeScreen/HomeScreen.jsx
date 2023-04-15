@@ -1,10 +1,14 @@
 import { HomeLayout } from "@/layout";
 import Image from "next/image";
+import img from '../../images/default-photo.svg'
 
 // import './HomeScreen.module.css'
 import styles from "@/layout/HomeLayout/HomeLayout.module.css";
 import Post from "@/components/Home/Post";
-import { useState } from "react";
+import { useState } from "react"; 
+
+
+import Link from 'next/link'
 
 const HomeScreen = () => {
   const [showPostSettings, setShowPostSettings] = useState(false);
@@ -16,7 +20,7 @@ const HomeScreen = () => {
           <span>Home</span>
         </nav>
         {/* compose post */}
-        <div className={styles.post__compose__container}>
+        <div className={styles.post__compose__container} style={{display: "none"}}>
           <div className={styles.pcc__child}>
             <div style={{ display: "none" }}>
               <textarea
@@ -259,11 +263,213 @@ const HomeScreen = () => {
             </div>
           </div>
         </div>
+
+        <div className={styles.whats_yyy}>
+          <div className={styles.parnt__cnt_wyyyt}>
+            <div className={styles.inipic_xyz}>
+              <Image className={styles.img__winipc} src={img} />
+            </div>
+            <div className={styles.ini__inp}>
+              <Link href="/createpost"><input type="text" className={styles.disbld__inp__post} placeholder="What's in the Spotlight?" disabled/></Link>
+              <Link href="/createpost">
+                <button className={styles.inp__create__btn}>
+                  Create
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width={17}
+                    height={17}
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="#fff" 
+                    strokeWidth={3}
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    style={{
+                      position: "absolute",
+                      right: "10px", top: "9px"
+                    }}
+                  >
+                    <line x1={12} y1={5} x2={12} y2={19} />
+                    <line x1={5} y1={12} x2={19} y2={12} />
+                  </svg>
+                </button>
+              </Link>
+            </div>
+          </div>
+        </div>
         {/* compose post */}
         {/* post */}
         <Post />
+        <Post />
+        <Post />
         {/* post */}
       </div>
+
+
+      {/* this is the search modal */}
+      <>
+        {/* search modal */}
+        <div className={styles.search__modal_container} style={{ display: "none" }}>
+          <div className={styles.search__modal}>
+            <div>
+              <input
+                type="search"
+                placeholder="Search Spoutgram"
+                className={styles.main__search__input}
+              />
+            </div>
+            <div className={styles.search__recommendation_div}>
+              <div className={styles.recommendation}>
+                <div>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className={styles.search__icon}
+                    width={24}
+                    height={24}
+                    viewBox="0 0 24 24" 
+                    fill="none"
+                    stroke="rgb(172, 172, 172)"
+                    strokeWidth={2}
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <circle cx={11} cy={11} r={8} />
+                    <line x1={21} y1={21} x2="16.65" y2="16.65" />
+                  </svg>
+                </div>
+                <div>
+                  <img
+                    src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OHx8cG9ydHJhaXR8ZW58MHx8MHx8&w=1000&q=80"
+                    alt="profile-image"
+                    className={styles.profile__s_img}
+                  />
+                </div>
+                <div>
+                  <h6 className={styles.search__text}>Penuel John</h6>
+                  <h6 className={styles.search__text_uname}>@penueljohn</h6>
+                </div>
+              </div>
+              <div className={styles.recommendation}>
+                <div>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className={styles.search__icon}
+                    width={24}
+                    height={24}
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="rgb(172, 172, 172)"
+                    strokeWidth={2}
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <circle cx={11} cy={11} r={8} />
+                    <line x1={21} y1={21} x2="16.65" y2="16.65" />
+                  </svg>
+                </div>
+                <div>
+                  <h6 className={`${styles.search__text} ${styles.st_two}`}>Search recommendation</h6>
+                </div>
+              </div>
+              <div className={styles.recommendation}>
+                <div>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className={styles.search__icon}
+                    width={24}
+                    height={24}
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="rgb(172, 172, 172)"
+                    strokeWidth={2}
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <circle cx={11} cy={11} r={8} />
+                    <line x1={21} y1={21} x2="16.65" y2="16.65" />
+                  </svg>
+                </div>
+                <div>
+                  <h6 className={`${styles.search__text} ${styles.st_two}`}>United States</h6>
+                </div>
+              </div>
+              <div className={styles.recommendation}>
+                <div>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className={styles.search__icon}
+                    width={24}
+                    height={24}
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="rgb(172, 172, 172)"
+                    strokeWidth={2}
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <circle cx={11} cy={11} r={8} />
+                    <line x1={21} y1={21} x2="16.65" y2="16.65" />
+                  </svg>
+                </div>
+                <div>
+                  <h6 className={`${styles.search__text} ${styles.st_two}`}>What is in the spotlight?</h6>
+                </div>
+              </div>
+              <div className={styles.recommendation}>
+                <div>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className={styles.search__icon}
+                    width={24}
+                    height={24}
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="rgb(172, 172, 172)"
+                    strokeWidth={2}
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <circle cx={11} cy={11} r={8} />
+                    <line x1={21} y1={21} x2="16.65" y2="16.65" />
+                  </svg>
+                </div>
+                <div>
+                  <h6 className={`${styles.search__text} ${styles.st_two}`}>Function recall</h6>
+                </div>
+              </div>
+              <div className={styles.recommendation}>
+                <div>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className={styles.search__icon}
+                    width={24}
+                    height={24}
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="rgb(172, 172, 172)"
+                    strokeWidth={2}
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <circle cx={11} cy={11} r={8} />
+                    <line x1={21} y1={21} x2="16.65" y2="16.65" />
+                  </svg>
+                </div>
+                <div>
+                  <h6 className={`${styles.search__text} ${styles.st_two}`}>Spoutgram</h6>
+                </div>
+              </div>
+            </div>
+            <div className={styles.flex__sm}>
+              <div>
+                <span className={`${styles.close__search__h6} ${styles.sm__close}`}>CLOSE</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        {/* search modal */}
+      </>
+
     </HomeLayout>
   );
 };

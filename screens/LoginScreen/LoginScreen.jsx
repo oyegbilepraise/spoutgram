@@ -84,6 +84,26 @@ const LoginScreen = () => {
                 <span className={styles.or}>OR</span>
               </div>
 
+
+              {storeData?.appError && storeData?.appError ? (
+              <span className={styles.error__msg__xyx}>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  width={24}
+                  height={24}
+                  className={styles.error__inval}
+                >
+                  <path
+                    d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM11 15V17H13V15H11ZM11 7V13H13V7H11Z"
+                    fill="var(--brand-color)"
+                  />
+                </svg>
+                <span className={styles.error__txt__xyx}>
+                {storeData?.appError && storeData?.appError}
+                </span>
+              </span> ) : null}
+
               <div className={styles.xpnd_inpts} style={{ paddingTop: "14px" }}>
                 <div style={{ position: "relative" }}>
                   <input type="text" value={formik.values.email} onChange={formik.handleChange('email')} onBlur={formik.handleBlur} name='email' placeholder="Email" className={styles.data_content_pass} />
@@ -123,10 +143,6 @@ const LoginScreen = () => {
                 </div>
 
               </div>
-
-              <span className={styles.ouplskk}>
-                {storeData?.appError && storeData?.appError}
-              </span>
 
               <div>
 
