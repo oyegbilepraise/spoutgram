@@ -1,4 +1,5 @@
 // import './RightSidebar.module.css'
+import React from "react";
 import img from "../../images/default-photo.svg";
 import Image from "next/image";
 import styles from "@/layout/HomeLayout/HomeLayout.module.css";
@@ -29,6 +30,62 @@ const ButtonGroup = ({ next, previous, goToSlide, ...rest }) => {
     </div>
   );
 };
+
+// custom dots
+
+const carouselItems = [
+  {
+    id: 1,
+    image: "md"
+  },
+  {
+    id: 2,
+    image: "m3d"
+  },
+  {
+    id: 3,
+    image: "ed"
+  },
+  {
+    id: 4,
+    image: "5d"
+  },
+  {
+    id: 5,
+    image: "ed"
+  },
+  {
+    id: 6,
+    image: "ed"
+  },
+]
+
+const images = carouselItems.map(({id, image}) => {
+  return (
+    <div id={id}>
+      <p>{image}</p>
+    </div>
+  );
+})
+const CustomDot = ({ onClick, ...rest }) => {
+  const {
+    onMove,
+    index,
+    active,
+    carouselState: { currentSlide, deviceType }
+  } = rest;
+  // onMove means if dragging or swiping in progress.
+  // active is provided by this lib for checking if the item is active or not.
+  return (
+    <button
+      className={active ? "active" : "inactive"}
+      onClick={() => onClick()}
+    >
+      {React.Children.toArray(images)[index]}
+    </button>
+  );
+};
+
 
 const RightSidebar = () => {
   const responsive = {
@@ -340,6 +397,7 @@ const RightSidebar = () => {
             customTransition="all .5"
             transitionDuration={500}
             customButtonGroup={<ButtonGroup />}
+            customDot={<CustomDot />}
             containerClass="carousel-container"
             renderButtonGroupOutside={true}
             dotListClass="custom-dot-list-style"
