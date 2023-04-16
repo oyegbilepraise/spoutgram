@@ -1,14 +1,12 @@
 import Link from "next/link";
 import Head from 'next/head'
 import styles from '@/layout/AuthLayout/AuthLayout.module.css'
-import img from '../images/404_y.gif'
-import Image from "next/image";
 
 function Custom404() {
   return (
     <>
       <Head>
-        <title>Error / 404</title>
+        <title>Page not found / 404</title>
         <>
           <meta charSet="UTF-8" />
           <meta httpEquiv="X-UA-Compatible" content="IE=edge" />

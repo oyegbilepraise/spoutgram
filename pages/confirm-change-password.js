@@ -6,32 +6,19 @@ const ConfirmChangePassword = () => {
   return (
     <>
      <Head>
-        <title>Spoutgram: Confirm Account</title>
+        <title>Spoutgram / Confirm Account</title>
         <>
           <meta charSet="UTF-8" />
           <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
           <meta name="locale" content="en_US" />
           <meta name="theme-color" content="#ffffff" />
-          <meta
-            name="viewport"
-            content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0,viewport-fit=cover"
-          />
-          <meta name="description" content="Confirm your account." />
-          <link rel="stylesheet" href="../app__assets/style__theme_amo/normalize.css" />
-          <link
-            rel="stylesheet"
-            href="../app__assets/style__theme_amo/amo_style_theme.css"
-          />
-          <link
-            rel="preload"
-            href="../app__assets/style__theme_amo/amo_style_theme.css"
-            as="style"
-          />
-          <link
-            rel="icon"
-            href="../app__assets/images/favicon/apple-touch-icon.png"
-            type="image/png"
-          />
+          <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0,viewport-fit=cover" />
+          <meta name="description" content="Confirm Account." />
+          <meta property="og:site_name" content="Spoutgram" />
+          <meta property="og:title" content="Spoutgram / Confirm Account." />
+          <meta property="og:description" content="Confirm Account." />
+          <meta property="og:type" content="webapp" />
+          <meta property="og:url" content="https://spoutgram.com/confirm-change-password" />
         </>
         <link rel="icon" href="/apple-touch-icon.png" type="image/png" />
       </Head>
