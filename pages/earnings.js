@@ -1,12 +1,12 @@
 import React from 'react'
-import { BookmarkScreen } from '@/screens'
+import { EarningsScreen } from '@/screens'
 import Head from 'next/head'
 
-const Bookmark = () => {
+const Earnings = () => {
   return (
     <>
-      <Head>
-        <title>Spoutgram / Bookmarks</title>
+     <Head>
+        <title>Spoutgram / Earnings</title>
         <>
           <meta charSet="UTF-8" />
           <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
@@ -14,19 +14,19 @@ const Bookmark = () => {
           <meta name="theme-color" content="#ffffff" />
           <meta name="robots" content="noindex" />
           <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0,viewport-fit=cover" />
-          <meta name="description" content="Bookmarks Page." />
+          <meta name="description" content="Earnings Page." />
           <meta property="og:site_name" content="Spoutgram" />
-          <meta property="og:title" content="Spoutgram / Bookmarks." />
-          <meta property="og:description" content="Bookmarks Page." />
+          <meta property="og:title" content="Spoutgram / Earnings." />
+          <meta property="og:description" content="Earnings Page." />
           <meta property="og:type" content="webapp" />
-          <meta property="og:url" content="https://spoutgram.com/bookmarks" />
+          <meta property="og:url" content="https://spoutgram.com/earnings" />
         </>
         <link rel="icon" href="/apple-touch-icon.png" type="image/png" />
       </Head>
-      <BookmarkScreen/>
+      <EarningsScreen/>
     </>
     
   )
 }
 
-export default Bookmark
+export default Earnings
