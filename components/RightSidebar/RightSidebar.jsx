@@ -59,37 +59,47 @@ const ButtonGroup = ({ next, previous, goToSlide, ...rest }) => {
 const carouselItems = [
   {
     id: 1,
-    image: "md"
+    image: "https://res.cloudinary.com/dpokiomqq/image/upload/v1681646889/dot_oydtsm-removebg-preview_kpnufv.png"
   },
   {
     id: 2,
-    image: "m3d"
+    image: "https://res.cloudinary.com/dpokiomqq/image/upload/v1681646889/dot_oydtsm-removebg-preview_kpnufv.png"
   },
   {
     id: 3,
-    image: "ed"
+    image: "https://res.cloudinary.com/dpokiomqq/image/upload/v1681646889/dot_oydtsm-removebg-preview_kpnufv.png"
   },
   {
     id: 4,
-    image: "5d"
+    image: "https://res.cloudinary.com/dpokiomqq/image/upload/v1681646889/dot_oydtsm-removebg-preview_kpnufv.png"
   },
   {
     id: 5,
-    image: "ed"
+    image: "https://res.cloudinary.com/dpokiomqq/image/upload/v1681646889/dot_oydtsm-removebg-preview_kpnufv.png"
   },
   {
     id: 6,
-    image: "ed"
+    image: "https://res.cloudinary.com/dpokiomqq/image/upload/v1681646889/dot_oydtsm-removebg-preview_kpnufv.png"
   },
 ]
 
 const images = carouselItems.map(({id, image}) => {
   return (
-    <div id={id}>
-      <p>{image}</p>
+    <div key={id}>
+    <figure className="h-auto w-auto">
+      <Image
+        src={image}
+        alt="dotss"
+        width={30}
+        height={30}
+        priority
+        className=""
+      />
+    </figure>
     </div>
   );
 })
+
 const CustomDot = ({ onClick, ...rest }) => {
   const {
     onMove,
@@ -99,6 +109,7 @@ const CustomDot = ({ onClick, ...rest }) => {
   } = rest;
   // onMove means if dragging or swiping in progress.
   // active is provided by this lib for checking if the item is active or not.
+  // style the active className for active state
   return (
     <button
       className={active ? "active" : "inactive"}
