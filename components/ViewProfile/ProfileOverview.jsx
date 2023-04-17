@@ -1,6 +1,6 @@
 import styles from "@/layout/HomeLayout/HomeLayout.module.css";
 import Image from "next/image";
-import img from "../../images/default-photo.svg";
+import img from "../../images/default-photo.svg"; 
 
 const ProfileOverview = () => {
   return (
@@ -237,6 +237,45 @@ const ProfileOverview = () => {
               <span className={styles.pfl__data}>Joined January 2004</span>
             </span>
           </span>
+        </div>
+      </div>
+
+      {/* more__button */}
+      <div className={styles.span__xyz}>
+        <div className="xyx__more__Profile" style={{position: "relative", height: "32px", width: "32px"}}>
+          <svg
+            width={15}
+            height={4}
+            viewBox="0 0 18 4"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            style={{position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)"}}
+          >
+            <circle
+              cx={2}
+              cy={2}
+              r="1.2"
+              fill="#8e8e8e"
+              stroke="#8e8e8e"
+              strokeWidth="1.6"
+            />
+            <circle
+              cx={9}
+              cy={2}
+              r="1.2"
+              fill="#8e8e8e"
+              stroke="#8e8e8e"
+              strokeWidth="1.6"
+            />
+            <circle
+              cx={16}
+              cy={2}
+              r="1.2"
+              fill="#8e8e8e"
+              stroke="#8e8e8e"
+              strokeWidth="1.6"
+            />
+          </svg>
         </div>
       </div>
     </div>

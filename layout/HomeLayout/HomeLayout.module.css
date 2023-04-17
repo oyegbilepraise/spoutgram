@@ -1357,6 +1357,8 @@
     margin: auto;
     top: 0px;
     margin-top: 0px;
+    /* border: 1px solid black; */
+    position: relative;
 }
 .the__starting__point > div:nth-child(1) {
     /* border: 1px solid black; */
@@ -1386,6 +1388,19 @@
 }
 .dxcWAsd {
     padding-left: 25px;
+}
+.span__xyz {
+    /* border: 1px solid black; */
+    position: absolute;
+    top: 42px;
+    right: 15px;
+    /* padding: 5px; */
+    /* background-color: rgb(0, 0, 0, 0.02); */
+    display: block;
+    height: 32px; width: 32px;
+    border-radius: 50%;
+    background-color: rgba(163, 163, 163, 0.22);
+    cursor: pointer;
 }
 .yuv_usr {
     font-family: var(--global-medium);
@@ -1558,7 +1573,7 @@ input[type="text"].disbld__inp__post {
     position: absolute;
     right: 0;
 }
-.close_more_sideb {
+.close_more_sideb { 
     fill: #494949;
     width: 20px; height: 20px;
     padding: 5px;
