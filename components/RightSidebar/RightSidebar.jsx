@@ -1,4 +1,4 @@
-// import './RightSidebar.module.css'
+import './RightSidebar.module.css'
 import React, { useState } from "react";
 import img from "../../images/default-photo.svg";
 import Image from "next/image";
@@ -65,47 +65,34 @@ const ButtonGroup = ({ next, previous, goToSlide, ...rest }) => {
 const carouselItems = [
   {
     id: 1,
-    image:
-      "https://res.cloudinary.com/dpokiomqq/image/upload/v1681646889/dot_oydtsm-removebg-preview_kpnufv.png",
   },
   {
-    id: 2,
-    image:
-      "https://res.cloudinary.com/dpokiomqq/image/upload/v1681646889/dot_oydtsm-removebg-preview_kpnufv.png",
+    id: 2,  
   },
   {
-    id: 3,
-    image:
-      "https://res.cloudinary.com/dpokiomqq/image/upload/v1681646889/dot_oydtsm-removebg-preview_kpnufv.png",
+    id: 3,  
   },
   {
-    id: 4,
-    image:
-      "https://res.cloudinary.com/dpokiomqq/image/upload/v1681646889/dot_oydtsm-removebg-preview_kpnufv.png",
+    id: 4,  
   },
   {
-    id: 5,
-    image:
-      "https://res.cloudinary.com/dpokiomqq/image/upload/v1681646889/dot_oydtsm-removebg-preview_kpnufv.png",
+    id: 5,  
   },
   {
-    id: 6,
-    image:
-      "https://res.cloudinary.com/dpokiomqq/image/upload/v1681646889/dot_oydtsm-removebg-preview_kpnufv.png",
+    id: 6,  
   },
+
 ];
 
-const images = carouselItems.map(({ id, image }) => {
+const images = carouselItems.map(({ id }) => {
   return (
     <div key={id}>
       <figure className="h-auto w-auto">
-        <Image
-          src={image}
+        <img
+          src={`data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' class='styles._0xschsvg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='rgb(172, 172, 172)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><circle cx='11' cy='11' r='8' /><line x1='21' y1='21' x2='16.65' y2='16.65' /></svg>`}
           alt="dotss"
           width={30}
           height={30}
-          priority
-          className=""
         />
       </figure>
     </div>
