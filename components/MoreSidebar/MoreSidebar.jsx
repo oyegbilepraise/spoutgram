@@ -199,7 +199,7 @@ const MoreSidebar = () => {
                         </svg>
                     </div>
                     <div>
-                    <h6 className={styles.sidebar__menu_h6}>Payment</h6>
+                    <h6 className={styles.sidebar__menu_h6}>Payments</h6>
                     </div>
                 </div>
                 </a>

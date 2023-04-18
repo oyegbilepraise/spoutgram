@@ -1,4 +1,4 @@
-// import './RightSidebar.module.css'
+import './RightSidebar.module.css'
 import React from "react";
 import img from "../../images/default-photo.svg";
 import Image from "next/image";
