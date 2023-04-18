@@ -17,7 +17,7 @@ import styles from "@/layout/AuthLayout/AuthLayout.module.css";
 // import { BasicProfileInfo, MoreProfileInfo, ProfileInfo } from "@/components";
 import { AuthLayout } from "@/layout";
 import StepOne from "@/components/CreateProfile/StepOne";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import StepTwo from "@/components/CreateProfile/StepTwo";
 import dynamic from "next/dynamic";
 
@@ -100,6 +100,19 @@ const CreateProfileScreen = () => {
       label: org.label,
     };
   });
+
+  // prompting user they are about to reload or leave the page
+  useEffect(() => {
+    const handleBeforeUnload = (event) => {
+      event.preventDefault();
+      event.returnValue = "";
+      return "Are you sure you want to refresh the page? All form input will be lost.";
+    };
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, []);
 
   // current component
   const current = useSelector((state) => state.userDetails.currentComponent);

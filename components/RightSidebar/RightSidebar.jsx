@@ -1,10 +1,11 @@
 import './RightSidebar.module.css'
-import React from "react";
+import React, { useState } from "react";
 import img from "../../images/default-photo.svg";
 import Image from "next/image";
 import styles from "@/layout/HomeLayout/HomeLayout.module.css";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
+import Search from "../SearchComp/Search";
 
 // read documentation to style and also inspect element. https://www.npmjs.com/package/react-multi-carousel
 
@@ -14,11 +15,14 @@ const ButtonGroup = ({ next, previous, goToSlide, ...rest }) => {
     carouselState: { currentSlide },
   } = rest;
   return (
-    <div className={`${styles.carousel_button_group} ${styles.carousel__btn__div}`}>
+    <div
+      className={`${styles.carousel_button_group} ${styles.carousel__btn__div}`}
+    >
       {" "}
       <button
         className={currentSlide === 0 ? "disable" : ""}
-        onClick={() => previous()} style={{cursor: "pointer"}}
+        onClick={() => previous()}
+        style={{ cursor: "pointer" }}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -34,22 +38,24 @@ const ButtonGroup = ({ next, previous, goToSlide, ...rest }) => {
           <path d="M15 18l-6-6 6-6" />
         </svg>
       </button>
-      <button onClick={() => next()} style={{marginLeft: "5px", cursor: "pointer"}}>
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width={21}
-        height={21}
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="var(--brand-color)"
-        strokeWidth={2}
-        strokeLinecap="round"
-        strokeLinejoin="round"
+      <button
+        onClick={() => next()}
+        style={{ marginLeft: "5px", cursor: "pointer" }}
       >
-        <path d="M9 18l6-6-6-6" />
-      </svg>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width={21}
+          height={21}
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="var(--brand-color)"
+          strokeWidth={2}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path d="M9 18l6-6-6-6" />
+        </svg>
       </button>
-      
     </div>
   );
 };
@@ -59,53 +65,46 @@ const ButtonGroup = ({ next, previous, goToSlide, ...rest }) => {
 const carouselItems = [
   {
     id: 1,
-    image: "https://res.cloudinary.com/dpokiomqq/image/upload/v1681646889/dot_oydtsm-removebg-preview_kpnufv.png"
   },
   {
-    id: 2,
-    image: "https://res.cloudinary.com/dpokiomqq/image/upload/v1681646889/dot_oydtsm-removebg-preview_kpnufv.png"
+    id: 2,  
   },
   {
-    id: 3,
-    image: "https://res.cloudinary.com/dpokiomqq/image/upload/v1681646889/dot_oydtsm-removebg-preview_kpnufv.png"
+    id: 3,  
   },
   {
-    id: 4,
-    image: "https://res.cloudinary.com/dpokiomqq/image/upload/v1681646889/dot_oydtsm-removebg-preview_kpnufv.png"
+    id: 4,  
   },
   {
-    id: 5,
-    image: "https://res.cloudinary.com/dpokiomqq/image/upload/v1681646889/dot_oydtsm-removebg-preview_kpnufv.png"
+    id: 5,  
   },
   {
-    id: 6,
-    image: "https://res.cloudinary.com/dpokiomqq/image/upload/v1681646889/dot_oydtsm-removebg-preview_kpnufv.png"
+    id: 6,  
   },
-]
 
-const images = carouselItems.map(({id, image}) => {
+];
+
+const images = carouselItems.map(({ id }) => {
   return (
     <div key={id}>
-    <figure className="h-auto w-auto">
-      <Image
-        src={image}
-        alt="dotss"
-        width={30}
-        height={30}
-        priority
-        className=""
-      />
-    </figure>
+      <figure className="h-auto w-auto">
+        <img
+          src={`data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' class='styles._0xschsvg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='rgb(172, 172, 172)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><circle cx='11' cy='11' r='8' /><line x1='21' y1='21' x2='16.65' y2='16.65' /></svg>`}
+          alt="dotss"
+          width={30}
+          height={30}
+        />
+      </figure>
     </div>
   );
-})
+});
 
 const CustomDot = ({ onClick, ...rest }) => {
   const {
     onMove,
     index,
     active,
-    carouselState: { currentSlide, deviceType }
+    carouselState: { currentSlide, deviceType },
   } = rest;
   // onMove means if dragging or swiping in progress.
   // active is provided by this lib for checking if the item is active or not.
@@ -119,7 +118,6 @@ const CustomDot = ({ onClick, ...rest }) => {
     </button>
   );
 };
-
 
 const RightSidebar = () => {
   const responsive = {
@@ -388,11 +386,19 @@ const RightSidebar = () => {
       ],
     },
   ];
+
+  // show search modal toggle
+  const [showSearch, setShowSearch] = useState(false);
+  const handleSearch = () => {
+    setShowSearch((prev) => !prev);
+  };
+
   return (
     <div className={`${styles.rightbar} ${styles._000rightbar}`}>
       <div className={styles.__parent_00_q}>
+        {/* Search input  */}
         <div className={styles.nonlist}>
-          <div style={{ position: "relative" }}>
+          <div style={{ position: "relative" }} onClick={handleSearch}>
             <input
               type="search"
               placeholder="Search Spoutgram"
@@ -416,6 +422,10 @@ const RightSidebar = () => {
             </svg>
           </div>
         </div>
+        {/* search modal */}
+        {showSearch && <Search handleSearch={handleSearch} />}
+        {/* search modal */}
+
         {/* suggestions */}
         <div className={styles.sgstn}>
           <span>Suggested Follows</span>

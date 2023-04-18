@@ -1646,6 +1646,13 @@ input[type="text"].disbld__inp__post {
     transform: translate(-50%, -50%);
     letter-spacing: 0.9px;
 }
+
 .active {
-    color: green;
+  fill: blue;
+  background:red;
+  border: 1px solid pink;
+}
+
+.inactive {
+  fill: gray;
 }

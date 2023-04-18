@@ -1,5 +1,7 @@
 .active {
-    color: green;
-    fill: green;
-    stroke: green;
+  fill: blue;
+}
+
+.inactive {
+  fill: gray;
 }
