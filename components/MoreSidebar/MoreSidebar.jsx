@@ -1,6 +1,7 @@
 import img from "../../images/default-photo.svg";
 import Image from "next/image";
 import styles from "@/layout/HomeLayout/HomeLayout.module.css";
+import Link from "next/link";
 
 const MoreSidebar = ({ handleShowMore }) => {
   return (
@@ -53,7 +54,7 @@ const MoreSidebar = ({ handleShowMore }) => {
               </div>
             </div>
           </div>
-          <a href="/bookmarks">
+          <Link href="/bookmarks">
             <div className={styles.sidebar__menu}>
               <div>
                 <svg
@@ -75,8 +76,8 @@ const MoreSidebar = ({ handleShowMore }) => {
                 <h6 className={styles.sidebar__menu_h6}>Bookmarks</h6>
               </div>
             </div>
-          </a>
-          <a href="/subscriptions">
+          </Link>
+          <Link href="/subscriptions">
             <div className={styles.sidebar__menu}>
               <div>
                 <svg
@@ -109,8 +110,8 @@ const MoreSidebar = ({ handleShowMore }) => {
                 <h6 className={styles.sidebar__menu_h6}>Subscriptions</h6>
               </div>
             </div>
-          </a>
-          <a href="/settings">
+          </Link>
+          <Link href="/settings">
             <div className={styles.sidebar__menu}>
               <div>
                 <svg
@@ -177,8 +178,8 @@ const MoreSidebar = ({ handleShowMore }) => {
                 <h6 className={styles.sidebar__menu_h6}>Settings</h6>
               </div>
             </div>
-          </a>
-          <a href="/setup/banking">
+          </Link>
+          <Link href="/setup/banking">
             <div className={styles.sidebar__menu}>
               <div>
                 <svg
@@ -205,8 +206,8 @@ const MoreSidebar = ({ handleShowMore }) => {
                 <h6 className={styles.sidebar__menu_h6}>Payment</h6>
               </div>
             </div>
-          </a>
-          <a href="/setup/paywall">
+          </Link>
+          <Link href="/setup/paywall">
             <div className={styles.sidebar__menu}>
               <div>
                 <svg
@@ -259,8 +260,8 @@ const MoreSidebar = ({ handleShowMore }) => {
                 <h6 className={styles.sidebar__menu_h6}>Setups</h6>
               </div>
             </div>
-          </a>
-          <a href="/earnings">
+          </Link>
+          <Link href="/earnings">
             <div className={styles.sidebar__menu}>
               <div>
                 <svg
@@ -315,8 +316,8 @@ const MoreSidebar = ({ handleShowMore }) => {
                 <h6 className={styles.sidebar__menu_h6}>Earnings</h6>
               </div>
             </div>
-          </a>
-          <a href="/earnings">
+          </Link>
+          <Link href="/earnings">
             <div className={styles.sidebar__menu}>
               <div>
                 <svg
@@ -374,7 +375,7 @@ const MoreSidebar = ({ handleShowMore }) => {
                 <h6 className={styles.sidebar__menu_h6}>Banking</h6>
               </div>
             </div>
-          </a>
+          </Link>
         </div>
       </div>
     </>
