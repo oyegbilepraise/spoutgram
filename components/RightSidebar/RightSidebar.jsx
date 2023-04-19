@@ -84,11 +84,12 @@ const carouselItems = [
 
 ];
 
+// use next image component 
 const images = carouselItems.map(({ id }) => {
   return (
     <div key={id}>
       <figure className="h-auto w-auto">
-        <img
+        <Image
           src={`data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' className='s_0xschsvg' width='4' height='4' viewBox='0 0 4 4' fill='none' stroke='red' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><circle cx='11' cy='11' r='8' /><line x1='21' y1='21' x2='16.65' y2='16.65' /></svg>`}
           alt="dotss"
           width={30}
