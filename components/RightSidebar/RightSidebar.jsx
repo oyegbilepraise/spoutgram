@@ -89,7 +89,7 @@ const images = carouselItems.map(({ id }) => {
     <div key={id}>
       <figure className="h-auto w-auto">
         <img
-          src={`data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' class='styles._0xschsvg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='rgb(172, 172, 172)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><circle cx='11' cy='11' r='8' /><line x1='21' y1='21' x2='16.65' y2='16.65' /></svg>`}
+          src={`data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' className='s_0xschsvg' width='4' height='4' viewBox='0 0 4 4' fill='none' stroke='red' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><circle cx='11' cy='11' r='8' /><line x1='21' y1='21' x2='16.65' y2='16.65' /></svg>`}
           alt="dotss"
           width={30}
           height={30}
@@ -110,12 +110,14 @@ const CustomDot = ({ onClick, ...rest }) => {
   // active is provided by this lib for checking if the item is active or not.
   // style the active className for active state
   return (
-    <button
-      className={active ? "active" : "inactive"}
-      onClick={() => onClick()}
-    >
-      {React.Children.toArray(images)[index]}
-    </button>
+    <div className={styles.btn__holder__carsl}>
+      <button
+        className={`${active ? styles.active : styles.inactive} ${styles.carouselbtn}`}
+        onClick={() => onClick()}
+      >
+        {React.Children.toArray(images)[index]}
+      </button>
+    </div>
   );
 };
 

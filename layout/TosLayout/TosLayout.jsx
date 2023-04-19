@@ -8,5 +8,5 @@ const TosLayout = ({ children  }) => {
     </>
   )
 } 
-
+ 
 export default TosLayout;

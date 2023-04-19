@@ -7,7 +7,7 @@ const Tos = () => {
       <>
        <Head>
           <title>Spoutgram / Terms of Service</title>
-          <>
+          <> 
             <meta charSet="UTF-8" />
             <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
             <meta name="locale" content="en_US" />

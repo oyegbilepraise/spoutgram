@@ -1,7 +1,10 @@
 .active {
-  fill: blue;
+  background-color: blue;
 }
 
 .inactive {
-  fill: gray;
+  background-color: gray;
+}
+.s_0xschsvg {
+  stroke: green;
 }
