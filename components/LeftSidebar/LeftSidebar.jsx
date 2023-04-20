@@ -3,9 +3,19 @@ import Link from 'next/link'
 import { BookmarkSvg, CreateSvg, MessageSvg, MoreSidebar, MoreSvg, NotificationSvg, PodcastSvg, SubscriptionSvg } from "@/components";
 import { useState } from "react";
 import { SpoutgramSvg, HomeSvg } from '../../components';
+import { useRouter } from "next/router";
 
 const LeftSidebar = () => {
   const [showMore, setShowMore] = useState(false);
+
+  const router = useRouter();
+  // Define a function to determine if a link is active
+  const isActive = (pathname) => {
+    return router.pathname === pathname
+      ? styles.activeState
+      : styles.inactiveState;
+  };
+
 
   // show more toggle function
   const handleShowMore = () => {
@@ -13,7 +23,9 @@ const LeftSidebar = () => {
   };
 
   return (
-    <div className={`${styles.sidebar} ${styles.onebar} ${styles.no_bar} ${styles._000leftbar}`} >
+    <div
+      className={`${styles.sidebar} ${styles.onebar} ${styles.no_bar} ${styles._000leftbar}`}
+    >
       <div className={styles.__logo}>
         {/* spoutgram__svg */}
         <Link href="/">
@@ -24,7 +36,7 @@ const LeftSidebar = () => {
 
       {/* Home */}
       <Link href="/" className={styles.Link}>
-        <div>
+        <div className={isActive("/")}>
           <HomeSvg />
           <span className={styles.span_data_sidebar}>Home</span>
         </div>
@@ -33,7 +45,7 @@ const LeftSidebar = () => {
 
       {/* Podcasts */}
       <Link href="/podcasts" className={styles.Link}>
-        <div>
+        <div className={isActive("/podcasts")}>
           <PodcastSvg />
           <span className={styles.span_data_sidebar}>Podcasts</span>
         </div>
@@ -42,7 +54,7 @@ const LeftSidebar = () => {
 
       {/* Notifications */}
       <Link href="/notifications" className={styles.Link}>
-        <div>
+        <div className={isActive("/notifications")}>
           <NotificationSvg />
           <span className={styles.span_data_sidebar}>Notifications</span>
         </div>
@@ -51,7 +63,7 @@ const LeftSidebar = () => {
 
       {/* Bookmarks */}
       <Link href="/bookmarks" className={styles.Link}>
-        <div>
+        <div className={isActive("/bookmarks")}>
           <BookmarkSvg />
           <span className={styles.span_data_sidebar}>Bookmarks</span>
         </div>
@@ -60,7 +72,7 @@ const LeftSidebar = () => {
 
       {/* Subscriptions */}
       <Link href="/subscriptions" className={styles.Link}>
-        <div>
+        <div className={isActive("/subscriptions")}>
           <SubscriptionSvg />
           <span className={styles.span_data_sidebar}>Subscriptions</span>
         </div>
@@ -69,7 +81,7 @@ const LeftSidebar = () => {
 
       {/* Messages */}
       <Link href="/messages" className={styles.Link}>
-        <div>
+        <div className={isActive("/messages")}>
           <MessageSvg />
           <span className={styles.span_data_sidebar}>Messages</span>
         </div>
@@ -78,7 +90,7 @@ const LeftSidebar = () => {
 
       {/* More */}
       <div onClick={handleShowMore}>
-       <MoreSvg />
+        <MoreSvg />
         <span className={styles.span_data_sidebar}>More</span>
       </div>
       {/* More */}
@@ -93,34 +105,29 @@ const LeftSidebar = () => {
       {/* Create */}
 
       {/* Profile */}
-        <div className={styles.profile__fxd}>
-
-          <div className={styles.more_explained}>
-            <Link href="/edit">
-              <span className={styles.xmmx___stan}>Edit your profile</span>
-            </Link>
-            <span className={styles.xmmx___stan}>Logout of this account</span>
-          </div>
-
-          <span>
-            <Link  href="/profile">
-              <div className={styles.__user__data__hold}>
-                <span className={styles.user__initial}>
-                  AV
-                </span>
-              </div>
-            </Link>
-          </span>
-          <span className={`${styles.span_data_sidebar} ${styles.norms__ava}`}>
-            Avary
-            <span className={styles.normass__zz}>@avary</span>
-          </span>
+      <div className={styles.profile__fxd}>
+        <div className={styles.more_explained}>
+          <Link href="/edit">
+            <span className={styles.xmmx___stan}>Edit your profile</span>
+          </Link>
+          <span className={styles.xmmx___stan}>Logout of this account</span>
         </div>
+
+        <span>
+          <Link href="/profile">
+            <div className={styles.__user__data__hold}>
+              <span className={styles.user__initial}>AV</span>
+            </div>
+          </Link>
+        </span>
+        <span className={`${styles.span_data_sidebar} ${styles.norms__ava}`}>
+          Avary
+          <span className={styles.normass__zz}>@avary</span>
+        </span>
+      </div>
       {/* Profile */}
 
-
       {showMore && <MoreSidebar handleShowMore={handleShowMore} />}
-
     </div>
   );
 };
