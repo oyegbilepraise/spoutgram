@@ -1,7 +1,6 @@
 name: Spoutgram dev deployment
 
 on:
- 
   push:
     branches: [dev]
 
