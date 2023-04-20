@@ -1,15 +1,13 @@
-import Link from "next/link"
 import { useRouter } from "next/router"
-
 import { useFormik } from 'formik'
-import * as Yup from 'yup'
-
 import { useDispatch } from 'react-redux'
 import { registerUserAction } from '@/redux/slices/authSlice/authSlice' //this registerUserAction should be replaced with the appropriate redux user action
 import { useSelector } from 'react-redux'
-
 import { AuthLayout } from '@/layout'
-
+import {useState} from 'react'
+import { HideSvg, ShowSvg, GoogleSvg, TwitterSvg, AppleSvg, CautionSvg, ErrorSvg, BtnloadSvg } from '../../components';
+import * as Yup from 'yup'
+import Link from "next/link"
 import styles from '@/layout/AuthLayout/AuthLayout.module.css'
 
 const changeValidationSchema = Yup.object().shape({ 
@@ -46,6 +44,11 @@ const ChangePasswordScreen = () => {
     router.push('/login')
   }
 
+  const [password, setPassword] = useState("");
+
+  const [visible, setVisible] = useState(false);
+  const [visibleOne, setVisibleOne] = useState(false);
+
   return (
    <AuthLayout>
     <main className={styles.__main} role="main"> 
@@ -63,27 +66,11 @@ const ChangePasswordScreen = () => {
               </span>
               <div className={styles.xpnd_inpts} style={{ paddingTop: "14px" }}>
                 <div style={{ position: "relative" }}>
-                  <input type="password" value={formik.values.password} onChange={formik.handleChange('password')} onBlur={formik.handleBlur} name='password' placeholder="Password" className={`${styles.data_content_pass} ${styles._00x00_pwd}`} />
+                  <input type={visible ? "text" : "password"} value={formik.values.password} onChange={formik.handleChange('password')} onBlur={formik.handleBlur} name='password' placeholder="Password" className={`${styles.data_content_pass} ${styles._00x00_pwd}`} />
                   <span className={styles.absolute__span}>
-                    <>
-                      <svg
-                        width="24px"
-                        height="24px"
-                        viewBox="0 0 24 24"
-                        version="1.1"
-                        className={styles.svg__showpaswd}
-                        xmlns="http://www.w3.org/2000/svg"
-                        xmlnsXlink="http://www.w3.org/1999/xlink"
-                      >
-                        <g stroke="none" strokeWidth={2} fill="gray" fillRule="evenodd">
-                          <g fill="gray" fillRule="nonzero">
-                            <path
-                              d="M12,9.0046246 C14.209139,9.0046246 16,10.7954856 16,13.0046246 C16,15.2137636 14.209139,17.0046246 12,17.0046246 C9.790861,17.0046246 8,15.2137636 8,13.0046246 C8,10.7954856 9.790861,9.0046246 12,9.0046246 Z M12,10.5046246 C10.6192881,10.5046246 9.5,11.6239127 9.5,13.0046246 C9.5,14.3853365 10.6192881,15.5046246 12,15.5046246 C13.3807119,15.5046246 14.5,14.3853365 14.5,13.0046246 C14.5,11.6239127 13.3807119,10.5046246 12,10.5046246 Z M12,5.5 C16.613512,5.5 20.5960869,8.65000641 21.7011157,13.0643865 C21.8017,13.4662019 21.557504,13.8734775 21.1556885,13.9740618 C20.7538731,14.0746462 20.3465976,13.8304502 20.2460132,13.4286347 C19.3071259,9.67795854 15.9213644,7 12,7 C8.07693257,7 4.69009765,9.68026417 3.75285786,13.4331499 C3.65249525,13.8350208 3.24535455,14.0794416 2.84348365,13.979079 C2.44161275,13.8787164 2.19719198,13.4715757 2.29755459,13.0697048 C3.4006459,8.65271806 7.38448293,5.5 12,5.5 Z"
-                            />
-                          </g>
-                        </g>
-                      </svg>
-                    </>
+                    <span onClick={ () => setVisible(!visible)}>
+                      {visible ? <HideSvg /> : <ShowSvg />}
+                    </ span>
                     
                     {/* error svg  */}
                     {formik.touched.password && formik.errors.password ? (
@@ -92,41 +79,23 @@ const ChangePasswordScreen = () => {
                     </span> ) : null}
                     {/* error svg  */}
 
-                    {/* {formik.touched.password && formik.errors.password} */}
                   </span>
                 </div>
                 <div style={{ position: "relative" }}>
-                  <input type="password" value={formik.values.confirmPassword} onChange={formik.handleChange('confirmPassword')} onBlur={formik.handleBlur} name='confirmPassword' placeholder="Confirm Password" className={`${styles.data_content_pass} ${styles._00x00_pwd}`} />
+                  <input type={visibleOne ? "text" : "password"} value={formik.values.confirmPassword} onChange={formik.handleChange('confirmPassword')} onBlur={formik.handleBlur} name='confirmPassword' placeholder="Confirm Password" className={`${styles.data_content_pass} ${styles._00x00_pwd}`} />
 
                   <span className={styles.absolute__span}>
-                    <>
-                      <svg
-                        width="24px"
-                        height="24px"
-                        viewBox="0 0 24 24"
-                        version="1.1"
-                        className={styles.svg__showpaswd}
-                        xmlns="http://www.w3.org/2000/svg"
-                        xmlnsXlink="http://www.w3.org/1999/xlink"
-                      >
-                        <g stroke="none" strokeWidth={2} fill="gray" fillRule="evenodd">
-                          <g fill="gray" fillRule="nonzero">
-                            <path
-                              d="M12,9.0046246 C14.209139,9.0046246 16,10.7954856 16,13.0046246 C16,15.2137636 14.209139,17.0046246 12,17.0046246 C9.790861,17.0046246 8,15.2137636 8,13.0046246 C8,10.7954856 9.790861,9.0046246 12,9.0046246 Z M12,10.5046246 C10.6192881,10.5046246 9.5,11.6239127 9.5,13.0046246 C9.5,14.3853365 10.6192881,15.5046246 12,15.5046246 C13.3807119,15.5046246 14.5,14.3853365 14.5,13.0046246 C14.5,11.6239127 13.3807119,10.5046246 12,10.5046246 Z M12,5.5 C16.613512,5.5 20.5960869,8.65000641 21.7011157,13.0643865 C21.8017,13.4662019 21.557504,13.8734775 21.1556885,13.9740618 C20.7538731,14.0746462 20.3465976,13.8304502 20.2460132,13.4286347 C19.3071259,9.67795854 15.9213644,7 12,7 C8.07693257,7 4.69009765,9.68026417 3.75285786,13.4331499 C3.65249525,13.8350208 3.24535455,14.0794416 2.84348365,13.979079 C2.44161275,13.8787164 2.19719198,13.4715757 2.29755459,13.0697048 C3.4006459,8.65271806 7.38448293,5.5 12,5.5 Z"
-                            />
-                          </g>
-                        </g>
-                      </svg>
-                    </>
+                    <span onClick={ () => setVisibleOne(!visibleOne)}>
+                      {visibleOne ? <HideSvg /> : <ShowSvg />}
+                    </ span>
 
                     {/* error svg  */}
                     {formik.touched.confirmPassword && formik.errors.confirmPassword ? (
                     <span className={`${styles.__spanerror} ${styles.passwrd__error}`}>
                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#d90000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
                     </span> ) : null}
-
-                    {/* {formik.touched.confirmPassword && formik.errors.confirmPassword} */}
                     {/* error svg  */}
+
                   </span>
                 </div>
 
