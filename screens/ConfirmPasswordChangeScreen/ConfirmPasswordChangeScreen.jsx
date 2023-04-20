@@ -1,16 +1,13 @@
-import Link from "next/link"
 import { useRouter } from "next/router"
-
 import { useFormik } from 'formik'
-import * as Yup from 'yup'
-
 import { useDispatch } from 'react-redux'
 import { registerUserAction } from '@/redux/slices/authSlice/authSlice' //this registerUserAction should be replaced with the appropriate redux user action
 import { useSelector } from 'react-redux'
-
-import styles from '@/layout/AuthLayout/AuthLayout.module.css'
-
 import { AuthLayout } from '@/layout'
+import { EnvelopeSvg, ErrorSvg, ResendLdSvg } from '../../components';
+import Link from "next/link"
+import styles from '@/layout/AuthLayout/AuthLayout.module.css'
+import * as Yup from 'yup'
 
 const confirmValidationSchema = Yup.object().shape({ 
   code: Yup.string()
@@ -67,10 +64,8 @@ const ConfirmPasswordChangeScreen = () => {
                   {/* error svg */}
                   {formik.touched.code && formik.errors.code ? (
                     <span className={styles.__spanerror}>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#d90000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+                    <ErrorSvg />
                   </span> ) : null}
-
-                  {/* {formik.touched.email && formik.errors.email} */}
                   {/* error svg  */}
 
                 </div>
