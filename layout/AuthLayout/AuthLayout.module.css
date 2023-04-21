@@ -530,18 +530,6 @@ input[type="text"].data_content_pass:focus::placeholder, input[type="password"].
   position: relative;
 }
 
-/* responsiveness */
-@media screen and (max-width: 520px) {
-  ._xparnts {
-      width: 100vw;
-      /* border: 1px solid black; */
-      -webkit-font-smoothing: antialiased;
-      text-rendering: optimizelegibility;
-      box-sizing: border-box;
-      padding-right: 28px; padding-left: 28px;
-  }
-}
-
 
 /* error 404 styles */
 .error__nav {
@@ -644,3 +632,200 @@ input[type="text"].data_content_pass:focus::placeholder, input[type="password"].
   }
 }
 /* error 404 styles */
+
+/* responsiveness */
+@media screen and (max-width: 520px) {
+  ._xparnts {
+    width: 100vw; 
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizelegibility;
+    box-sizing: border-box;
+    padding-right: 39px; padding-left: 39px;
+  }
+  .vdf_data, .span_dta_vn {
+    font-family: var(--global-bold);
+    font-weight: 500;
+    font-size: 18px;
+    margin-top: 32px; margin-bottom: 22px;
+    color: rgb(80, 80, 80);
+    letter-spacing: 0.2px;
+  }
+  .oauths_ {
+    width: 100%;
+    padding-top: 18px; padding-bottom: 18px;
+    border-radius: var(--rounded-radius);
+    margin-bottom: 4px;
+    font-family: var(--global-regular);
+    font-weight: 500;
+    padding-left: 22px;
+    font-size: 13px;
+    background-color: rgb(248, 248, 248);
+    letter-spacing: 0.2px;
+    color: rgb(110, 110, 110);
+    border: none;
+  }
+  ._0016_auth_svg {
+    width: 16px; height: 16px;
+    position: absolute;
+    left: 19px;
+    transition: 0.5s all;
+    top: 17px;
+  }
+  ._oxr {
+    padding-top: 17px; padding-bottom: 11px;
+    position: relative;
+  }
+  ._oxr > div {
+    height: 1px;
+    background-color: rgba(225, 225, 225, 0);
+  }
+  .or {
+    position: absolute;
+    font-family: var(--global-bold);
+    padding: 4px;
+    background-color: white;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 12px;
+    font-weight: 600;
+    color: rgb(80, 80, 80);
+  }
+  input[type="text"].data_content_pass, input[type="password"].data_content_pass {
+    height: 45px;
+    width: 100%;
+    border-radius: 4px;
+    padding-left: 15px;
+    font-family: var(--global-regular);
+    font-size: 13px;
+    background-color: rgb(248, 248, 248);
+    outline: none;
+    border: 1px solid rgba(228, 228, 228, 0.264);
+    border: none;
+    caret-color: var(--brand-color);
+  }
+  .xpnd_inpts > div {
+    height: 49px;
+  }
+  .svg__showpaswd {
+    width: 13px; height: 13px;
+  }
+  .absolute__span {
+    position: absolute;
+    width: max-content;
+    right: 10px; top: 13px;
+  }
+  .error______svg {
+    height: 12px; height: 12px;
+  }
+  .pass_data_bd {
+    width: 100%;
+    background-color: var(--brand-color);
+    font-family: var(--global-medium);
+    color: white;
+    display: block;
+    margin-top: 33px;
+    padding-top: 15px; padding-bottom: 15px;
+    border-radius: var(--rounded-radius);
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: 0.2px;
+  }
+  .__spanerror {
+    position: absolute;
+    top: 13px;
+    right: 10px;
+  }
+  .passwrd__error {
+    position: relative;
+    right: 0px;
+    top: 0px;
+    padding-left: 8px;
+  }
+  ._0013_span, .xkktndckl, ._000xsry, ._00sxtry {
+    text-align: left;
+    display: block;
+    font-family: var(--global-regular);
+    font-size: 11px;
+    padding-top: 3px;
+    color: #01A8EA;
+    cursor: pointer;
+    letter-spacing: 0.2px;
+  }
+  .ouplskk {
+    font-family: var(--global-medium);
+    display: block;
+    text-align: center;
+    margin-top: 15px;
+    font-size: 13px;
+    color: var(--brand-color);
+    letter-spacing: 0.2px;
+    font-weight: 500;
+  }
+  .xkktndckl {
+    color: gray;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: center;
+    font-size: 10px;
+  }
+  .xyyx___loader__btn {
+    width: 28px; height: 28px;
+  }
+  .error__txt__xyx {
+    font-size: 13px;
+  }
+  .error__inval {
+    width: 18px; height: 18px;
+    top: 13px;
+  }
+  .error__msg__xyx {
+    margin-top: 8px;
+  }
+  .data_pwd_lock {
+    border: 1px solid rgb(117, 117, 117);
+    display: block;
+    width: 50px;
+    height: 50px;
+    margin: auto;
+    border-radius: 50%;
+    position: relative;
+    margin-bottom: -10px;
+    margin-top: 16px;
+  }
+  .data_pwd_lock > svg {
+    height: 25px; width: 25px;
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  ._000xsry {
+    color: gray;
+    text-align: center;
+    font-size: 12px;
+    margin: auto;
+    margin-bottom: 8px;
+    margin-top: -10px;
+    line-height: 22px;
+    width: 90%;
+  }
+  .new__change__btn {
+    margin-top: 16px;
+  }
+  .data_pwd_lock > .email_svg {
+    height: 24px; width: 24px;
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .sracde {
+    font-family: var(--global-regular);
+    font-size: 13px;
+    font-weight: 500;
+    display: block;
+    width: 100%;
+    text-align: center;
+    margin-top: 16px;
+    color: gray;
+  }
+}

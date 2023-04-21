@@ -76,6 +76,38 @@ const Post = ({ count }) => {
               </Carousel>
             )}
           </div>
+
+
+          <div className={styles.div__for__vid}>
+            {/* PreshPie, this is the video */}
+            <video src="/podcast__tester.mp4" className={styles.vide0__baby}></video>
+
+            {/* playbtn */}
+            <svg
+              className={styles.play__btn__post}
+              width="800px"
+              height="800px"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <g strokeWidth={0} />
+              <g
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+              <g>
+                <path
+                  d="M16.1378 10.5689L9.60498 7.30252C8.40816 6.70411 7 7.5744 7 8.91249V15.0876C7 16.4257 8.40816 17.2959 9.60498 16.6975L16.1378 13.4311C17.3171 12.8415 17.3171 11.1586 16.1378 10.5689Z"
+                  fill="#01a8ea97"
+                />
+              </g>
+            </svg>
+            {/* playbtn */}
+
+          </div>
+
+
         </div>
         <div className={styles._00ftr_pst}>
           <span className={styles._00mn_span}>
