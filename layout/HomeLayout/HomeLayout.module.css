@@ -1757,3 +1757,17 @@ input[type="text"].disbld__inp__post {
     color: #00ACEE;
     transition: 0.6s all;
 }
+.div__for__vid {
+    width: 100%;
+    position: relative;
+    min-height: 520px;
+    border-radius: 10px;
+    margin-bottom: 4px;
+    background-color: black;
+  }
+  .vide0__baby {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    /* max-height: 520px; */
+  }

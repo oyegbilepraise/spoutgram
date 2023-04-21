@@ -1,8 +1,9 @@
 import React from 'react';
+import styles from '@/layout/AuthLayout/AuthLayout.module.css'
 
 const ErrorSvg = () => {
     return (
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#d90000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <svg className={styles.error______svg} xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#d90000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="12" cy="12" r="10">
             </circle>
             <line x1="15" y1="9" x2="9" y2="15">

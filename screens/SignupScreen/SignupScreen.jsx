@@ -150,7 +150,7 @@ const SignUpScreen = () => {
 
                   </span>
 
-                </div>
+                </div> 
                 <div style={{ position: "relative" }}>
                   <input type={visibleOne ? "text" : "password"} value={formik.values.confirmPassword} onChange={formik.handleChange('confirmPassword')} onBlur={formik.handleBlur} name='confirmPassword' placeholder="Confirm Password" className={`${styles.data_content_pass} ${styles._00x00_pwd}`} />
 

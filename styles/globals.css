@@ -79,3 +79,13 @@ button:disabled:hover,
 button[disabled]:hover {
   box-shadow: none;
 }
+input,
+textarea,
+button,
+select,
+a,
+div {
+    -webkit-tap-highlight-color: transparent;
+    appearance: none;
+    -webkit-appearance: none;
+}

@@ -76,6 +76,14 @@ const Post = ({ count }) => {
               </Carousel>
             )}
           </div>
+
+
+          <div className={styles.div__for__vid}>
+            {/* PreshPie, this is the video */}
+            <video src="/podcast__tester.mp4" className={styles.vide0__baby}></video>
+          </div>
+
+
         </div>
         <div className={styles._00ftr_pst}>
           <span className={styles._00mn_span}>

@@ -97,7 +97,7 @@ const LoginScreen = () => {
 
               <div className={styles.xpnd_inpts} style={{ paddingTop: "14px" }}>
                 <div style={{ position: "relative" }}>
-                  <input type="text" value={formik.values.email} onChange={formik.handleChange('email')} onBlur={formik.handleBlur} name='email' placeholder="Email" className={styles.data_content_pass} />
+                  <input type="text" value={formik.values.email} onChange={formik.handleChange('email')} onBlur={formik.handleBlur} autoCorrect='false' name='email' placeholder="Email" className={styles.data_content_pass} />
 
                   {/* error svg */}
                   {formik.touched.email && formik.errors.email ? (
@@ -109,7 +109,7 @@ const LoginScreen = () => {
                 </div>
 
                 <div style={{ position: "relative" }}>
-                  <input type={visible ? "text" : "password"} value={formik.values.password} onChange={formik.handleChange('password')} onBlur={formik.handleBlur} placeholder="Password" name='password' className={`${styles.data_content_pass} ${styles._00x00_pwd}`} />
+                  <input type={visible ? "text" : "password"} value={formik.values.password} onChange={formik.handleChange('password')} onBlur={formik.handleBlur} autoCorrect='false' placeholder="Password" name='password' className={`${styles.data_content_pass} ${styles._00x00_pwd}`} />
                   
                   <span className={styles.absolute__span}>
                     < span onClick={ () => setVisible(!visible)}>

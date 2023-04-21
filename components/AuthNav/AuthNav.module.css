@@ -12,3 +12,14 @@
     width: 130px;
     margin: auto;
   }
+
+  @media screen and (max-width: 520px) {
+    ._0004_logo_svg {
+      width: 115px;
+    }
+    .authnav {
+      width: 87%;
+      padding-top: 12px;
+      padding-bottom: 20px;
+    }
+  }
