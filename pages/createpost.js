@@ -6,7 +6,7 @@ const CreatePost = () => {
   return (
     <>
      <Head>
-        <title>poutgram / Create Post</title>
+        <title>Spoutgram / Create Post</title>
           <>
             <meta charSet="UTF-8" />
             <meta httpEquiv="X-UA-Compatible" content="IE=edge" />

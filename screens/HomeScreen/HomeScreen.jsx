@@ -19,10 +19,7 @@ const HomeScreen = () => {
           <span>Home</span>
         </nav>
         {/* compose post */}
-        <div
-          className={styles.post__compose__container}
-          style={{ display: "none" }}
-        >
+        <div className={styles.post__compose__container} style={{ display: "none" }} >
           <div className={styles.pcc__child}>
             <div style={{ display: "none" }}>
               <textarea

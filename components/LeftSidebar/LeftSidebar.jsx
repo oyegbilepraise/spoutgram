@@ -14,7 +14,7 @@ const LeftSidebar = () => {
     return router.pathname === pathname
       ? styles.activeState
       : styles.inactiveState;
-  };
+  }; 
 
 
   // show more toggle function
@@ -97,7 +97,7 @@ const LeftSidebar = () => {
 
       {/* Create */}
       <Link href="/createpost" className={styles.Link}>
-        <div>
+        <div className={isActive("/createpost")}>
           <CreateSvg />
           <span className={styles.span_data_sidebar}>Create</span>
         </div>
@@ -124,6 +124,23 @@ const LeftSidebar = () => {
           Avary
           <span className={styles.normass__zz}>@avary</span>
         </span>
+
+        <svg
+          className={styles.options___prfl__dxdy}
+          title="More account options"
+          xmlns="http://www.w3.org/2000/svg"
+          width={19}
+          height={19}
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="#000"
+          strokeWidth={2}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path d="M6 9l6 6 6-6" />
+        </svg>
+
       </div>
       {/* Profile */}
 
