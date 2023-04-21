@@ -30,6 +30,15 @@
     cursor: pointer;
     border-radius: 1000px;
 }
+/* active and inactive state */
+ .activeState{
+        background:red;
+  }
+
+ .inactiveState{
+        background: pink;
+  }
+
 ._000leftbar > .__logo:hover {
     background-color: var(--transparent);
 }
