@@ -1,29 +1,135 @@
-import { HomeLayout } from '@/layout'
-import Image from 'next/image'
+import { HomeLayout } from "@/layout";
+import React, { useState, useRef } from "react";
+import Image from "next/image";
 // import img from '../../images/default-photo.svg'
-import styles from '@/layout/HomeLayout/HomeLayout.module.css'
+import styles from "@/layout/HomeLayout/HomeLayout.module.css";
+import "./CreatePostScreen.module.css";
 import people2 from "../../images/people-2.jpeg";
-import { useState } from "react";
 
 const CreatePostScreen = () => {
-
   const [showPostSettings, setShowPostSettings] = useState(false);
 
+  // ----- image uploader starts here -----
+  const [images, setImages] = useState([]);
+  const fileInputRef = useRef();
+
+  const handleFileInputChange = (event) => {
+    const newImages = [];
+    const files = event.target.files;
+
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+
+      if (file.type.startsWith("image/")) {
+        if (images.length >= 4) {
+          alert("You can only upload up to 4 images.");
+          return;
+        }
+
+        newImages.push(file);
+      }
+    }
+
+    setImages([...images, ...newImages]);
+  };
+
+  const handleButtonClick = () => {
+    fileInputRef.current.click();
+  };
+
+  // --------- video uploader stops here --------
+
+  // custom button states
+  const [playing, setPlaying] = useState(false);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
+  const [volume, setVolume] = useState(1);
+  const [muted, setMuted] = useState(false);
+  const [playbackRate, setPlaybackRate] = useState(1);
+  const videoRef = useRef();
+  const progressBarRef = useRef();
+  const volumeBarRef = useRef();
+
+  // ------ custom video starts here ------
+  const togglePlay = () => {
+    setPlaying(!playing);
+    if (playing) {
+      videoRef.current.pause();
+    } else {
+      videoRef.current.play();
+    }
+  };
+
+  const handleTimeUpdate = () => {
+    setCurrentTime(videoRef.current.currentTime);
+    progressBarRef.current.value = videoRef.current.currentTime;
+  };
+
+  const handleLoadedMetadata = () => {
+    setDuration(videoRef.current.duration);
+    progressBarRef.current.max = videoRef.current.duration;
+  };
+
+  const handleProgressChange = () => {
+    videoRef.current.currentTime = progressBarRef.current.value;
+  };
+
+  const handleVolumeChange = () => {
+    const newVolume = volumeBarRef.current.value;
+    videoRef.current.volume = newVolume;
+    setVolume(newVolume);
+    setMuted(false);
+  };
+
+  const toggleMute = () => {
+    const newMuted = !muted;
+    videoRef.current.volume = newMuted ? 0 : volume;
+    setMuted(newMuted);
+  };
+
+  const formatTime = (time) => {
+    const minutes = Math.floor(time / 60);
+    const seconds = Math.floor(time % 60);
+    return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+  };
+
+  const handlePlaybackRateChange = (rate) => {
+    setPlaybackRate(rate);
+    videoRef.current.playbackRate = rate;
+  };
+
+  // --------- custom video stops here --------
 
   return (
-    <HomeLayout> 
+    <HomeLayout>
       {/* div.timeline -> middle */}
       <div class={`${styles.timeline} ${styles._000middlebar}`}>
-            <nav className={styles.___main_nav}>
-                <div>
-                    <span class={styles.icon_back}>
-                        <svg class={styles._00_history__back} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgb(90, 90, 90)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H6M12 5l-7 7 7 7"/></svg>
-                    </span>
-                    <span class={styles.not_home_nav_text}>Create Post</span>
-                </div>
-            </nav>
+        <nav className={styles.___main_nav}>
+          <div>
+            <span class={styles.icon_back}>
+              <svg
+                class={styles._00_history__back}
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="rgb(90, 90, 90)"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M19 12H6M12 5l-7 7 7 7" />
+              </svg>
+            </span>
+            <span class={styles.not_home_nav_text}>Create Post</span>
+          </div>
+        </nav>
 
-            <div className={styles.post__compose__container} style={{ display: "" }} >
+        <div
+          className={styles.post__compose__container}
+          style={{ display: "" }}
+        >
           <div className={styles.pcc__child}>
             <div style={{ display: "" }}>
               <textarea
@@ -42,32 +148,105 @@ const CreatePostScreen = () => {
           </div>
           {/* image/video */}
           <div className={styles.media__preview} style={{ display: "" }}>
-
             {/* this is image parent container */}
             <div style={{ display: "flex" }}>
-              <div className={styles.img___hol}>
-                <Image src={people2} className={styles.img__media__preview} />
-              </div>
-              <div className={styles.img___hol}>
-                <Image src={people2} className={styles.img__media__preview} />
-              </div>
-              <div className={styles.img___hol}>
-                <Image src={people2} className={styles.img__media__preview} />
-              </div>
-              <div className={styles.img___hol}>
-                <Image src={people2} className={styles.img__media__preview} />
-              </div>
+              {images.map((image, index) => (
+                <div key={index} className={styles.img___hol}>
+                  {/* To use the image component, add width and height to the image. use css */}
+                  <img
+                    src={URL.createObjectURL(image)}
+                    alt="girl"
+                    className={styles.img__media__preview}
+                  />
+                </div>
+              ))}
             </div>
 
             {/* this is video parent container */}
             <div className={styles.vid___hol}>
-              <video src="/vid.mp4" className={styles.vid__media__preview} controls />
-            </div>
+              <div>
+                <video
+                  src="/vid.mp4"
+                  ref={videoRef}
+                  onTimeUpdate={handleTimeUpdate}
+                  onLoadedMetadata={handleLoadedMetadata}
+                  muted={muted}
+                  className={styles.vid__media__preview}
+                />
+                <div>
+                  <button onClick={togglePlay}>
+                    {playing ? (
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                        width="24px"
+                        height="24px"
+                      >
+                        <path d="M8 5v14l11-7z" />
+                      </svg>
+                    ) : (
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                        width="24px"
+                        height="24px"
+                      >
+                        <path d="M8 5v14l11-7z" fill="none" />
+                        <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
+                      </svg>
+                    )}
+                  </button>
+                  <button onClick={toggleMute}>
+                    {muted ? <p>muted</p> : <p>unmute</p>}
+                  </button>
+                  <div>
+                    <span>
+                      {formatTime(currentTime)} / {formatTime(duration)}
+                    </span>
+                    <input
+                      type="range"
+                      ref={progressBarRef}
+                      onChange={handleProgressChange}
+                    />
+                  </div>
+                  <div>
+                    <span>Volume:</span>
+                    <input
+                      type="range"
+                      min="0"
+                      max="1"
+                      step="0.1"
+                      value={volume}
+                      ref={volumeBarRef}
+                      onChange={handleVolumeChange}
+                    />
+                  </div>
 
+                  <div>
+                    <span>Speed:</span>
+                    <button onClick={() => handlePlaybackRateChange(0.5)}>
+                      0.5x
+                    </button>
+                    <button onClick={() => handlePlaybackRateChange(1)}>
+                      1x
+                    </button>
+                    <button onClick={() => handlePlaybackRateChange(1.5)}>
+                      1.5x
+                    </button>
+                    <button onClick={() => handlePlaybackRateChange(2)}>
+                      2x
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
+
           {/* image/video */}
           <div className={`${styles.img} ${styles.vid} ${styles.__09xfgc}`}>
-            <div className={styles._sxvg_div}>
+            <div className={styles._sxvg_div} onClick={handleButtonClick}>
               <svg
                 className={styles.post_icon_data}
                 width={18}
@@ -104,6 +283,15 @@ const CreatePostScreen = () => {
               </svg>
               <h6 className={styles.tooltip}>Image</h6>
             </div>
+            <input
+              type="file"
+              accept="image/*"
+              multiple
+              ref={fileInputRef}
+              style={{ display: "none" }}
+              onChange={handleFileInputChange}
+            />
+
             <div className={styles._sxvg_div}>
               <svg
                 className={styles.post_icon_data}
@@ -286,10 +474,10 @@ const CreatePostScreen = () => {
             </div>
           </div>
         </div>
-       </div>
+      </div>
       {/* div.timeline -> middle */}
     </HomeLayout>
-  )
-}
+  );
+};
 
-export default CreatePostScreen
+export default CreatePostScreen;
