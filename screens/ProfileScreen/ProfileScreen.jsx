@@ -10,7 +10,7 @@ import Link from "next/link";
 import ProfileOverview from "@/components/ViewProfile/ProfileOverview";
 
 const ProfileScreen = () => {
-  const router = useRouter();
+  const router = useRouter(); 
   const [currentTab, setCurrentTab] = useState("/");
   const { userId } = router.query;
 

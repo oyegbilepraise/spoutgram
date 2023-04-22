@@ -305,6 +305,7 @@ const HomeScreen = () => {
           </div>
         </div>
         {/* compose post */}
+        
         {/* post */}
         <Post count={1} />
         <Post count={3} />

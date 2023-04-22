@@ -29,9 +29,7 @@ const Post = ({ count }) => {
       <ProfileImage />
 
       {/* Post Body  */}
-      <div
-        className={`${styles.data_content_all} ${styles._00dca} ${styles.data_no_content}`}
-      >
+      <div className={`${styles.data_content_all} ${styles._00dca} ${styles.data_no_content}`} >
         <div>
           <span className={styles._ttl_top}>My take on this SVB Debacle.</span>
         </div>
