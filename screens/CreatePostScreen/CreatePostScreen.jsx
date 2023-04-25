@@ -5,6 +5,7 @@ import Image from "next/image";
 import styles from "@/layout/HomeLayout/HomeLayout.module.css";
 import "./CreatePostScreen.module.css";
 import people2 from "../../images/people-2.jpeg";
+import VideoUploader from "@/components/VideoUpload/video";
 
 const CreatePostScreen = () => {
   const [showPostSettings, setShowPostSettings] = useState(false);
@@ -25,7 +26,6 @@ const CreatePostScreen = () => {
           alert("You can only upload up to 4 images.");
           return;
         }
-
         newImages.push(file);
       }
     }
@@ -37,68 +37,30 @@ const CreatePostScreen = () => {
     fileInputRef.current.click();
   };
 
-  // --------- video uploader stops here --------
+  // ----- video uploader starts here -----
+  const [video, setVideo] = useState(null);
+  const VideoInputRef = useRef();
 
-  // custom button states
-  const [playing, setPlaying] = useState(false);
-  const [currentTime, setCurrentTime] = useState(0);
-  const [duration, setDuration] = useState(0);
-  const [volume, setVolume] = useState(1);
-  const [muted, setMuted] = useState(false);
-  const [playbackRate, setPlaybackRate] = useState(1);
-  const videoRef = useRef();
-  const progressBarRef = useRef();
-  const volumeBarRef = useRef();
+  const handleVideoChange = (event) => {
+    const selectedFiles = event.target.files;
 
-  // ------ custom video starts here ------
-  const togglePlay = () => {
-    setPlaying(!playing);
-    if (playing) {
-      videoRef.current.pause();
+    if (selectedFiles.length > 1) {
+      console.log("Please select only one video file.");
+      return;
+    }
+
+    const selectedFile = selectedFiles[0];
+
+    if (selectedFile.type.startsWith("video/")) {
+      setVideo(selectedFile);
     } else {
-      videoRef.current.play();
+      console.log("Please select a video file.");
     }
   };
 
-  const handleTimeUpdate = () => {
-    setCurrentTime(videoRef.current.currentTime);
-    progressBarRef.current.value = videoRef.current.currentTime;
+  const handleVideoClick = () => {
+    VideoInputRef.current.click();
   };
-
-  const handleLoadedMetadata = () => {
-    setDuration(videoRef.current.duration);
-    progressBarRef.current.max = videoRef.current.duration;
-  };
-
-  const handleProgressChange = () => {
-    videoRef.current.currentTime = progressBarRef.current.value;
-  };
-
-  const handleVolumeChange = () => {
-    const newVolume = volumeBarRef.current.value;
-    videoRef.current.volume = newVolume;
-    setVolume(newVolume);
-    setMuted(false);
-  };
-
-  const toggleMute = () => {
-    const newMuted = !muted;
-    videoRef.current.volume = newMuted ? 0 : volume;
-    setMuted(newMuted);
-  };
-
-  const formatTime = (time) => {
-    const minutes = Math.floor(time / 60);
-    const seconds = Math.floor(time % 60);
-    return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
-  };
-
-  const handlePlaybackRateChange = (rate) => {
-    setPlaybackRate(rate);
-    videoRef.current.playbackRate = rate;
-  };
-
-  // --------- custom video stops here --------
 
   return (
     <HomeLayout>
@@ -163,84 +125,8 @@ const CreatePostScreen = () => {
             </div>
 
             {/* this is video parent container */}
-            <div className={styles.vid___hol}>
-              <div>
-                <video
-                  src="/vid.mp4"
-                  ref={videoRef}
-                  onTimeUpdate={handleTimeUpdate}
-                  onLoadedMetadata={handleLoadedMetadata}
-                  muted={muted}
-                  className={styles.vid__media__preview}
-                />
-                <div>
-                  <button onClick={togglePlay}>
-                    {playing ? (
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        fill="currentColor"
-                        width="24px"
-                        height="24px"
-                      >
-                        <path d="M8 5v14l11-7z" />
-                      </svg>
-                    ) : (
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        fill="currentColor"
-                        width="24px"
-                        height="24px"
-                      >
-                        <path d="M8 5v14l11-7z" fill="none" />
-                        <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
-                      </svg>
-                    )}
-                  </button>
-                  <button onClick={toggleMute}>
-                    {muted ? <p>muted</p> : <p>unmute</p>}
-                  </button>
-                  <div>
-                    <span>
-                      {formatTime(currentTime)} / {formatTime(duration)}
-                    </span>
-                    <input
-                      type="range"
-                      ref={progressBarRef}
-                      onChange={handleProgressChange}
-                    />
-                  </div>
-                  <div>
-                    <span>Volume:</span>
-                    <input
-                      type="range"
-                      min="0"
-                      max="1"
-                      step="0.1"
-                      value={volume}
-                      ref={volumeBarRef}
-                      onChange={handleVolumeChange}
-                    />
-                  </div>
-
-                  <div>
-                    <span>Speed:</span>
-                    <button onClick={() => handlePlaybackRateChange(0.5)}>
-                      0.5x
-                    </button>
-                    <button onClick={() => handlePlaybackRateChange(1)}>
-                      1x
-                    </button>
-                    <button onClick={() => handlePlaybackRateChange(1.5)}>
-                      1.5x
-                    </button>
-                    <button onClick={() => handlePlaybackRateChange(2)}>
-                      2x
-                    </button>
-                  </div>
-                </div>
-              </div>
+            <div>
+              <VideoUploader video={video} />
             </div>
           </div>
 
@@ -292,7 +178,8 @@ const CreatePostScreen = () => {
               onChange={handleFileInputChange}
             />
 
-            <div className={styles._sxvg_div}>
+            {/* video uploader */}
+            <div className={styles._sxvg_div} onClick={handleVideoClick}>
               <svg
                 className={styles.post_icon_data}
                 width={18}
@@ -318,6 +205,14 @@ const CreatePostScreen = () => {
               </svg>
               <h6 className={styles.tooltip}>Video</h6>
             </div>
+            <input
+              type="file"
+              accept="video/*"
+              ref={VideoInputRef}
+              style={{ display: "none" }}
+              onChange={handleVideoChange}
+            />
+
             <div className={styles._sxvg_div} style={{ width: "min-content" }}>
               <div style={{ position: "relative", width: "min-content" }}>
                 <svg
