@@ -6,7 +6,7 @@ const Signup = () => {
   return (
     <>
       <Head>
-        <title>Spoutgram: See what's in the spotlight / Signup</title>
+        <title>Spoutgram: Creator's hub of the internet / Signup</title>
         <>
           <meta charset="UTF-8"></meta>
           <meta httpEquiv="X-UA-Compatible" content="IE=edge" />

@@ -82,11 +82,11 @@
 }
 .ibistro__xyz > div:nth-child(1) {
   width: 50%;
-  padding-right: 5px;
+  /* padding-right: 5px; */
 }
 .ibistro__xyz > div:nth-child(2) {
   width: 50%;
-  padding-left: 5px;
+  /* padding-left: 5px; */
 }
 input[type="text"].data_content_pass, input[type="password"].data_content_pass {
   height: 52px;
@@ -158,9 +158,11 @@ input[type="text"].data_content_pass:focus::placeholder, input[type="password"].
   background-size: cover;
 }
 .xkktndckl {
-  color: gray;
+  color: rgb(176, 176, 176);
   padding-top: 10px;
   text-align: center;
+  margin-top: 10px;
+  font-size: 11px;
 }
 .data_pwd_lock {
   border: 1px solid rgb(117, 117, 117);
@@ -236,13 +238,17 @@ input[type="text"].data_content_pass:focus::placeholder, input[type="password"].
 }
 .dropdown_option {
   border: 1px solid black;
-  background-color: rgb(240, 240, 240);
+  /* background-color: rgb(240, 240, 240); */
   outline: none;
-  border: 1px solid rgba(238, 238, 238, 0.264);
-  height: 46px;
+  /* border: 1px solid rgba(238, 238, 238, 0.264); */
+  /* height: 46px; */
   border-radius: 4px;
   padding-left: 15px;
   cursor: pointer;
+  border: 1px solid rgba(228, 228, 228, 0.264);
+  /* font-size: 14.5px; */
+  height: 52px;
+  background-color: rgb(248, 248, 248);
 }
 .select__all__component {
   position: relative;
@@ -309,7 +315,12 @@ input[type="text"].data_content_pass:focus::placeholder, input[type="password"].
   font-family: var(--global-medium);
   display: block;
   margin-top: 25px;
-  color: var(--grey);
+  color: var(--brand-color);
+  background-color: var(--transparent-brand-color);
+  width: max-content;
+  padding-right: 9px; padding-left: 9px;
+  padding-top: 5px; padding-bottom: 5px;
+  border-radius: 1000px;
 }
 .xs_cnt {
   margin-right: 5px;
@@ -339,17 +350,21 @@ input[type="text"].data_content_pass:focus::placeholder, input[type="password"].
 }
 .user_bio_data {
   font-family: var(--global-regular);
-  font-size: 16px;
+  font-size: 15px;
   padding-left: 15px;
   padding-top: 10px; padding-bottom: 10px;
   resize: none;
-  background-color: rgb(240, 240, 240);
+  background-color: rgb(248, 248, 248);
   width: 100%;
   outline: none;
   height: 100px;
   border-radius: 4px;
   display: block;
   caret-color: var(--brand-color);
+  border: 1px solid rgba(228, 228, 228, 0.264);
+}
+.user_bio_data::placeholder {
+  color: rgb(160, 160, 160);
 }
 .user_bio_data:focus {
   border: 1px solid #01a8ea7a;
@@ -363,15 +378,27 @@ input[type="text"].data_content_pass:focus::placeholder, input[type="password"].
 }
 .count_bio_words {
   width: max-content;
-  padding-right: 10px; padding-left: 10px;
+  /* padding-right: 10px; padding-left: 10px; */
   position: absolute;
-  right: 12px;
-  bottom: 12px;
-  border-radius: var(--rounded-radius);
-  background-color: rgba(0, 0, 0, 0.202);
+  right: 13px;
+  top: 6px;
+  /* border-radius: var(--rounded-radius); */
+  /* background-color: rgba(0, 0, 0, 0.202); */
   color: white;
   font-family: var(--global-medium);
   font-size: 13px;
+  /* padding: 4px; */
+  width: 27px; height: 27px;
+  border-radius: 50%;
+  text-align: center;
+  display: block;
+}
+.cbw_num{
+  font-size: 13.5px;
+  margin-top: 5px;
+  display: block;
+  letter-spacing: 0.1px;
+  color: var(--brand-color);
 }
 .top__wrapper {
   width: max-content;
@@ -379,18 +406,24 @@ input[type="text"].data_content_pass:focus::placeholder, input[type="password"].
   margin: auto;
   position: relative;
 }
-.image__wrapper__ {
-  width: 130px;
-  height: 130px;
-  background-color: rgb(235, 235, 235);
+.image__wrapper__, .image__wrapper__xx {
+  width: 160px;
+  height: 160px;
+  background-color: rgb(245, 245, 245);
   margin: auto;
   border-radius: 50%;
   position: relative;
   padding: 5px;
+  margin-top: 50px;
+}
+.image__wrapper__xx {
+  border: 2px solid rgb(235, 235, 235);
+  background-color: white;
+  border-style: dashed;
 }
 .x_xjhhl_img {
-  width: 93%;
-  height: 93%;
+  width: 94%;
+  height: 94%;
   position: absolute;
   top: 50%; left: 50%;
   transform: translate(-50%, -50%);
@@ -524,6 +557,7 @@ input[type="text"].data_content_pass:focus::placeholder, input[type="password"].
   left: 50%;
   transform: translate(-50%, -50%);
   top: 70px;
+  width: 55px; height: 55px;
 }
 .xyyxyy {
   /* border: 1px solid black; */
@@ -608,6 +642,16 @@ input[type="text"].data_content_pass:focus::placeholder, input[type="password"].
   font-family: var(--global-regular);
   font-size: 15px;
 }
+.yxyx__spn__upld {
+  display: block;
+  font-family: var(--global-medium); 
+  color: var(--brand-color);
+  font-size: 15px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  cursor: pointer;
+  letter-spacing: 0.2px;
+}
 @media screen and (max-width: 920px) {
   .cftpg {
     font-size: 25px;
@@ -633,9 +677,56 @@ input[type="text"].data_content_pass:focus::placeholder, input[type="password"].
 }
 /* error 404 styles */
 
+.svg__signup__ll {
+  fill: rgb(170, 170, 170); width: 16px; height: 16px;
+}
+.xxdffghy__09l {
+  display: flex; margin-top: 0px;
+}
+.xxdffghy__09l > div {
+  width: 50%;
+}
+.xxdffghy__09l > div:nth-child(1) {
+  padding-right: 30px;
+}
+.xxdffghy__09l > div:nth-child(2) {
+  padding-left: 30px;
+}
+.xyxy__svg__subck {
+  width: 27px;
+  height: 27px;
+  fill: var(--brand-color);
+  position: absolute;
+  left: 17px;
+  top: 12.8px;
+}
+.react__wrapper__component_pp {
+  border: 1px solid rgb(230, 230, 230); 
+  height: 350px; 
+  border-radius: 10px; position: relative;
+}
+.xyxy__svgg__upld {
+  width: 35px; 
+  height:35px; 
+  fill: rgb(220, 220, 220);
+}
+.popup__upldmodal__child {
+  position: absolute;
+  width: 500px;
+  height: 600px;
+  border-radius: 20px;
+  background: #fff;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  z-index: 20;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 0px;
+}
+
 /* responsiveness */
 @media screen and (max-width: 520px) {
-  ._xparnts {
+  ._xparnts, ._xparnts_y {
     width: 100vw; 
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizelegibility;
@@ -703,7 +794,7 @@ input[type="text"].data_content_pass:focus::placeholder, input[type="password"].
     border: none;
     caret-color: var(--brand-color);
   }
-  .xpnd_inpts > div {
+  .xpnd_inpts > div, .ibistro__xyz__one > div {
     height: 49px;
   }
   .svg__showpaswd {
@@ -716,6 +807,10 @@ input[type="text"].data_content_pass:focus::placeholder, input[type="password"].
   }
   .error______svg {
     height: 12px; height: 12px;
+  }
+  .error______svg__chev {
+    width: 17px; height: 17px;
+    margin-top: 0px;
   }
   .pass_data_bd {
     width: 100%;
@@ -763,11 +858,11 @@ input[type="text"].data_content_pass:focus::placeholder, input[type="password"].
     font-weight: 500;
   }
   .xkktndckl {
-    color: gray;
+    color: rgb(176, 176, 176);
     padding-top: 10px;
     padding-bottom: 10px;
     text-align: center;
-    font-size: 10px;
+    font-size: 9px;
   }
   .xyyx___loader__btn {
     width: 28px; height: 28px;
@@ -802,11 +897,11 @@ input[type="text"].data_content_pass:focus::placeholder, input[type="password"].
   ._000xsry {
     color: gray;
     text-align: center;
-    font-size: 12px;
+    font-size: 13px;
     margin: auto;
     margin-bottom: 8px;
-    margin-top: -10px;
-    line-height: 22px;
+    margin-top: -18px;
+    line-height: 20px;
     width: 90%;
   }
   .new__change__btn {
@@ -827,5 +922,116 @@ input[type="text"].data_content_pass:focus::placeholder, input[type="password"].
     text-align: center;
     margin-top: 16px;
     color: gray;
+  }
+  .xsteps_count {
+    font-family: var(--global-medium);
+    font-weight: 600;
+    font-size: 13px;
+    display: block;
+    margin-top: 25px;
+    padding-top: 3px; padding-bottom: 3px;
+    color: var(--brand-color);
+  }
+  .svg__signup__ll {
+    /* fill: red; */
+    fill: rgb(170, 170, 170);
+    width: 14px; height: 14px;
+  }
+  .count_bio_words {
+    right: 10px;
+    top: 5px;
+  }
+  .cbw_num{
+    font-size: 11.5px;
+    font-weight: 600;
+  }
+  .user_bio_data {
+    font-size: 13px;
+  }
+  .xxdffghy__09l > div:nth-child(1) {
+    padding-right: 17px;
+  }
+  .xxdffghy__09l > div:nth-child(2) {
+    padding-left: 17px;
+  }
+  .xyxy__svg__subck {
+    width: 22px;
+    height: 22px;
+    fill: var(--brand-color);
+    position: absolute;
+    left: 10px;
+    top: 12.5px;
+  }
+  .react__wrapper__component_pp {
+    border: 1px solid rgb(230, 230, 230); 
+    height: 270px; 
+    border-radius: 10px; position: relative;
+  }
+  .image__wrapper__, .image__wrapper__xx {
+    width: 140px;
+    height: 140px;
+    background-color: rgb(245, 245, 245);
+    margin-top: 30px;
+  }
+  .image__wrapper__xx {
+    border: 2px solid rgb(235, 235, 235);
+    background-color: white;
+    border-style: dashed;
+  }
+  .xyxy__svgg__upld {
+    width: 25px; 
+    height:25px; 
+    fill: rgb(220, 220, 220);
+  }
+  .yxyx__spn__upld {
+    font-family: var(--global-medium);
+    font-weight: 600;
+    font-size: 13px;
+    padding-top: 8px;
+  }
+  ._00sxtry {
+    text-align: center;
+    margin-top: -15px;
+    color: rgb(183, 183, 183);
+  }
+  .closepicupld {
+    width: 15px; height: 15px;  margin-left: 19px;
+    top: 15px;
+  }
+  .title_mdlupld {
+    font-family: var(--global-medium);
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+    color: rgb(33, 33, 33);
+  }
+  .photobaby {
+    width: 45px; height: 45px;
+  }
+}
+
+
+@media screen and (max-width: 670px) {
+  .popup__upldmodal {
+    position: fixed;
+    width: 100%; height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    top: 0px;
+    z-index: 100;
+    left: 0px;
+    box-sizing: border-box;
+  }
+  .popup__upldmodal__child {
+    position: absolute;
+    width: 100%;
+    height: 88%;
+    top: none;
+    left: 50%;
+    transform: translate(-50%, -20%);
+    margin-bottom: 0px;
+    bottom: 0%;
+    padding: 0px;
+    border-bottom-right-radius:0px; border-bottom-left-radius: 0px;
+    box-sizing: border-box;
   }
 }

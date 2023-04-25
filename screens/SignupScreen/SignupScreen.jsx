@@ -187,7 +187,7 @@ const SignUpScreen = () => {
               </div>
 
               <span className={styles.xkktndckl}>
-                By signing up you agree to our <a href="/terms-of-service" target="_blank" style={{ color: "#01A8EA" }}>Terms of Use</a> & <a href="/cookie-policy" style={{ color: "#01A8EA" }}>Cookie Policy</a>.
+                By signing up you agree to our <a href="/terms-of-service" target="_blank" style={{ color: "#54cfff" }}>Terms of Use</a> & <a href="/cookie-policy" style={{ color: "#54cfff" }}>Cookie Policy</a>.
               </span>
               <span className={styles.ouplskk}><Link href="/login">Sign in to Spoutgram</Link></span>
 

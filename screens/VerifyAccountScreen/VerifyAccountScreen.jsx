@@ -4,18 +4,18 @@ import { useDispatch } from 'react-redux'
 import { useSelector } from 'react-redux'
 import { verifyEmailAction, generateEmailVerificationAction } from '@/redux/slices/authSlice/authSlice'
 import { AuthLayout } from '@/layout' 
-import { EnvelopeSvg, ErrorSvg, ResendLdSvg } from '../../components';
+import { EnvelopeSvg, ErrorSvg, ResendLdSvg, CautionSvg } from '../../components';
 import Link from 'next/link'
 import * as Yup from 'yup'
 import styles from '@/layout/AuthLayout/AuthLayout.module.css'
 
 const verifyEmailSchema = Yup.object().shape({
-  token: Yup.string()
-    .required('Please enter the valid token sent to your mail.')
-    .matches(
-      /^\d{6}$/,
-      "Invalid code format"
-    )
+  code: Yup.string()
+  .required('Code is required')
+  .matches(
+    /^\d{6}$/,
+    "Invalid code format"
+  )
 })
 
 const VerifyAccountScreen = () => {
@@ -53,29 +53,43 @@ const VerifyAccountScreen = () => {
               <span className={styles.vdf_data}>Verify your account</span>
 
               <span className={styles._000xsry}>
-                Check your email, a verification code was sent.
+                Enter the code sent to your email. If you can't find the email, check your spam.
               </span>
+
+              <div style={{paddingTop: "5px"}}>
+                <span className={styles.error__msg__xyx}>
+                <svg className={styles.error__inval} width={17} height={17} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM11.0026 16L18.0737 8.92893L16.6595 7.51472L11.0026 13.1716L8.17421 10.3431L6.75999 11.7574L11.0026 16Z"></path></svg>
+                  <span className={styles.error__txt__xyx}>
+                  Verification email resent!
+                  </span>
+                </span> 
+              </div>
+
+              <div style={{paddingTop: "5px"}}>
+                <span className={styles.error__msg__xyx}>
+                <CautionSvg />
+                  <span className={styles.error__txt__xyx}>
+                  Invalid code!
+                  </span>
+                </span> 
+              </div>
 
               <div className={styles.xpnd_inpts} style={{ paddingTop: "14px" }}>
                 <div style={{ position: "relative" }}>
-                  <input type="text" value={formik.values.token} onChange={formik.handleChange('token')} onBlur={formik.handleBlur} placeholder="Code" className={styles.data_content_pass} />
+                  <input type="text" alue={formik.values.code} onChange={formik.handleChange('code')} onBlur={formik.handleBlur} name='code' autoComplete="off" placeholder="Code" className={styles.data_content_pass} />
 
-                    {/* this is where I stopd */}
-
-                    {/* error message */}
-                    {formik.touched.token && formik.errors.token ? (
+                    {/* error svg */}
+                    {formik.touched.code && formik.errors.code ? (
                       <span className={styles.__spanerror}>
                       <ErrorSvg />
-                    </span>
-                    ) : null}
-                    {formik.touched.token && formik.errors.token}
-                    {/* error message */}
+                    </span> ) : null}
+                    {/* error svg  */}
 
                 </div>
               </div>
 
               <div>
-                <button className={styles.pass_data_bd}  type='submit'>Verify</button>
+                <button className={`${styles.pass_data_bd} ${styles.new__change__btn}`}   type='submit'>Verify</button>
               </div>
               <div>
                 <span class={styles.sracde}>Didn't recieve any code? <span className={styles.sapn__rsbd} onClick={handleResendCode}>Resend code.</span></span>
@@ -86,7 +100,7 @@ const VerifyAccountScreen = () => {
               <div>
 
                 {/* verification code resent */}
-                {storeData?.loading && (<span className={`${styles.sending_code} ${styles._00rsnd}`}>
+                {/* {storeData?.loading && (<span className={`${styles.sending_code} ${styles._00rsnd}`}>
                   <>
                     <ResendLdSvg />
                   </>
@@ -110,9 +124,7 @@ const VerifyAccountScreen = () => {
                       <polyline points="20 6 9 17 4 12"></polyline>
                     </svg>
                   </span>
-                )}
-
-                {/* verification code resent */}
+                )} */}
 
               </div>
               <span className={`${styles.ouplskk} ${styles.topme__}`}><Link href="/signup">Back to Sign up</Link></span>

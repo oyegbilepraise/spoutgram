@@ -54,11 +54,20 @@ const ConfirmPasswordChangeScreen = () => {
               <span className={styles.vdf_data}>Confirm it's you</span>
 
               <span className={styles._000xsry}>
-                Enter code sent to your email to confirm.
+                Check your email for a confirmation link to reset your password. If you can't find the email, check your spam.
               </span>
 
+              <div style={{paddingTop: "5px"}}>
+                <span className={styles.error__msg__xyx}>
+                <svg className={styles.error__inval} width={17} height={17} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM11.0026 16L18.0737 8.92893L16.6595 7.51472L11.0026 13.1716L8.17421 10.3431L6.75999 11.7574L11.0026 16Z"></path></svg>
+                  <span className={styles.error__txt__xyx}>
+                  Confirmation email resent!
+                  </span>
+                </span> 
+              </div>
+
               <div className={styles.xpnd_inpts} style={{ paddingTop: "14px" }}>
-                <div style={{ position: "relative" }}>
+                <div style={{ position: "relative", display:"none" }}>
                   <input type="text" value={formik.values.code} onChange={formik.handleChange('code')} onBlur={formik.handleBlur} name='code' autoComplete="off" placeholder="Code" className={styles.data_content_pass} />
 
                   {/* error svg */}
@@ -76,7 +85,7 @@ const ConfirmPasswordChangeScreen = () => {
               {storeData?.loading ? (
                   <button 
                   className={`${styles.pass_data_bd} ${styles.new__change__btn}`}
-                  type='submit' style={{ position: "relative" }} disabled>
+                  type='submit' style={{ position: "relative", display:"none" }} disabled>
                     <>
                     <BtnloadSvg />
                     </>
@@ -85,18 +94,19 @@ const ConfirmPasswordChangeScreen = () => {
 
                 ) : (
                   <button 
+                  style={{ position: "relative", display:"none" }}
                   className={`${styles.pass_data_bd} ${styles.new__change__btn}`} 
                   type='submit'>Confirm</button>
                 )}
                 
               </div>
-              <div>
-                <span class={styles.sracde}>Didn't recieve any code? <span className={styles.sapn__rsbd}>Resend code.</span></span>
+              <div style={{marginTop: "30px"}}>
+                <span class={styles.sracde}>Didn't recieve any email? <span className={styles.sapn__rsbd}>Resend email.</span></span>
               </div>
               <div>
 
                 {/* verification code resent */}
-                <span className={styles._00rsnd}>
+                <span className={styles._00rsnd} style={{display: "none"}}>
                   Code resent
                   <svg className={styles.yxxz} xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                     fill="none" stroke="#01A8EA" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

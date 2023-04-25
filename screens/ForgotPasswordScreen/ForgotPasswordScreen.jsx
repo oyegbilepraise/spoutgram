@@ -54,8 +54,19 @@ const ForgotPasswordScreen = () => {
               <span className={styles.vdf_data}>Forgot Password?</span> 
 
               <span className={styles._000xsry}>
-                Enter the email address you signed up with. You will recieve a confirmation code.
+                Enter the email connected to your account. We will send an email with a link to reset your password.
               </span>
+
+              <div style={{paddingTop: "5px"}}>
+                <span className={styles.error__msg__xyx}>
+                  < CautionSvg />
+                 <span className={styles.error__txt__xyx}>
+                  Email not registered!
+                  </span>
+                </span> 
+              </div>
+
+
               <div className={styles.xpnd_inpts} style={{ paddingTop: "14px" }}>
                 <div style={{ position: "relative" }}>
                   <input type="text" value={formik.values.email} onChange={formik.handleChange('email')} onBlur={formik.handleBlur} name='email' placeholder="Email" className={styles.data_content_pass} />

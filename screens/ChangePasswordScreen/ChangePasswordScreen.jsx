@@ -62,8 +62,19 @@ const ChangePasswordScreen = () => {
               <span className={styles.vdf_data}>Reset Password</span>
 
               <span className={styles._000xsry}>
-                You will be redirected to sign in, after the reset is successful.
+                Enter password, and confirm it.
               </span>
+
+              <div style={{paddingTop: "5px"}}>
+                <span className={styles.error__msg__xyx}>
+                  <svg className={styles.error__inval} width={17} height={17} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM11.0026 16L18.0737 8.92893L16.6595 7.51472L11.0026 13.1716L8.17421 10.3431L6.75999 11.7574L11.0026 16Z"></path></svg>
+                  <span className={styles.error__txt__xyx}>
+                    Reset successful!
+                  </span>
+                </span> 
+              </div>
+
+
               <div className={styles.xpnd_inpts} style={{ paddingTop: "14px" }}>
                 <div style={{ position: "relative" }}>
                   <input type={visible ? "text" : "password"} value={formik.values.password} onChange={formik.handleChange('password')} onBlur={formik.handleBlur} name='password' placeholder="Password" className={`${styles.data_content_pass} ${styles._00x00_pwd}`} />
