@@ -152,7 +152,7 @@ const ProfileOverview = () => {
         </div>
 
         {/*  */}
-        <span style={{display : "block", marginTop: "10px"}}>
+        <span style={{display : "none", marginTop: "10px"}}>
           <span className={styles.span__pv__p}><span className={styles.span__pv}>12K</span> Post</span>
           <span className={styles.span__pv__p}><span className={styles.span__pv}>1.0K</span> Post views</span>
         </span>
