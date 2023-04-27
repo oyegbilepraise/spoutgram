@@ -1,60 +1,61 @@
-import axios from 'axios';
-
-import { baseUrl } from './baseUrl';
+import axios from "axios";
 
 export const API = axios.create({
-  baseURL: baseUrl,
+  baseURL: process.env.NEXT_PUBLIC_SPOUTGRAM_API_URL,
   timeout: 10000,
   headers: {
-    'Content-Type': 'application/json'
-  }
-})
+    "Content-Type": "application/json",
+  },
+});
 
 export const getRequest = async ({ url, token, params }) => {
   const requestResponse = await API({
     headers: { Authorization: `Bearer ${token}` },
-    method: 'GET',
+    method: "GET",
     url,
-    params
-  })
-  return requestResponse
-}
+    params,
+  });
+  return requestResponse;
+};
 
+// POST REQUEST
 export const postRequest = async ({ url, token, data, formData, params }) => {
   const requestResponse = await API({
-    headers: { Authorization: `Bearer ${token}` },
-    'Content-Type': formData ? 'multipart/form-data' : 'application/json',
-    method: 'POST',
+    headers: {
+      Authorization: "Bearer " + token,
+      "Content-Type": "application/json",
+    },
+    method: "POST",
     url,
     params,
     data,
-    formData
-  })
-  return requestResponse
-}
+    formData,
+  });
+  return requestResponse;
+};
 
 export const patchRequest = async ({ url, token, params, formData, data }) => {
   const requestResponse = await API({
     headers: { Authorization: `Bearer ${token}` },
-    'Content-Type': formData ? 'multipart/form-data' : 'application/json',
-    method: 'PATCH',
+    "Content-Type": formData ? "multipart/form-data" : "application/json",
+    method: "PATCH",
     url,
     params,
     data,
-    formData
-  })
-  return requestResponse
-}
+    formData,
+  });
+  return requestResponse;
+};
 
 export const deleteRequest = async ({ url, token, data, params }) => {
   const requestResponse = await API({
     headers: { Authorization: `Bearer ${token}` },
-    method: 'DELETE',
+    method: "DELETE",
     url,
     data,
     token,
-    params
-  })
+    params,
+  });
 
-  return requestResponse
-}
+  return requestResponse;
+};
