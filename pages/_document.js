@@ -7,7 +7,7 @@ export default function Document() {
       <script async src="https://www.googletagmanager.com/gtag/js?id=G-P58EPQ4N9R" />
       <script src="/ga.js" />
       </Head>
-      <body>
+      <body className="appBody__main">
         <Main />
         <NextScript />
       </body>

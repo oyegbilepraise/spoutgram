@@ -82,11 +82,9 @@
 }
 .ibistro__xyz > div:nth-child(1) {
   width: 50%;
-  /* padding-right: 5px; */
 }
 .ibistro__xyz > div:nth-child(2) {
   width: 50%;
-  /* padding-left: 5px; */
 }
 input[type="text"].data_content_pass, input[type="password"].data_content_pass {
   height: 52px;
@@ -238,15 +236,11 @@ input[type="text"].data_content_pass:focus::placeholder, input[type="password"].
 }
 .dropdown_option {
   border: 1px solid black;
-  /* background-color: rgb(240, 240, 240); */
   outline: none;
-  /* border: 1px solid rgba(238, 238, 238, 0.264); */
-  /* height: 46px; */
   border-radius: 4px;
   padding-left: 15px;
   cursor: pointer;
   border: 1px solid rgba(228, 228, 228, 0.264);
-  /* font-size: 14.5px; */
   height: 52px;
   background-color: rgb(248, 248, 248);
 }
@@ -378,16 +372,12 @@ input[type="text"].data_content_pass:focus::placeholder, input[type="password"].
 }
 .count_bio_words {
   width: max-content;
-  /* padding-right: 10px; padding-left: 10px; */
   position: absolute;
   right: 13px;
   top: 6px;
-  /* border-radius: var(--rounded-radius); */
-  /* background-color: rgba(0, 0, 0, 0.202); */
   color: white;
   font-family: var(--global-medium);
   font-size: 13px;
-  /* padding: 4px; */
   width: 27px; height: 27px;
   border-radius: 50%;
   text-align: center;
@@ -487,11 +477,13 @@ input[type="text"].data_content_pass:focus::placeholder, input[type="password"].
   z-index: 100;
 }
 ._loader_img {
+  width: 180px;
+}
+.react__loader__child__div {
   position: absolute;
-  top: 50%;
+  top: 48%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 180px;
 }
 .__spanerror {
   position: absolute;
@@ -520,7 +512,6 @@ input[type="text"].data_content_pass:focus::placeholder, input[type="password"].
   z-index: 100;
   left: 0px;
   overflow-y: auto;
-  /* padding-top: 10px; padding-bottom: 10px; */
 }
 .title_mdlupld {
   font-family: var(--global-medium);
@@ -560,7 +551,6 @@ input[type="text"].data_content_pass:focus::placeholder, input[type="password"].
   width: 55px; height: 55px;
 }
 .xyyxyy {
-  /* border: 1px solid black; */
   position: relative;
 }
 
@@ -635,8 +625,6 @@ input[type="text"].data_content_pass:focus::placeholder, input[type="password"].
   left: 10px;
 }
 .error__txt__xyx {
-  /* display: block; */
-  /* border: 1px solid black; */
   width: max-content;
   margin: auto;
   font-family: var(--global-regular);
@@ -661,9 +649,7 @@ input[type="text"].data_content_pass:focus::placeholder, input[type="password"].
     margin: auto;
   }
   .error__firstdiv, .div_babyy_xy {
-    /* max-width: 850px; */
     width: 90%;
-    /* margin: auto; */
   }
   ._0004_err_svg {
     width: 120px;
@@ -933,7 +919,6 @@ input[type="text"].data_content_pass:focus::placeholder, input[type="password"].
     color: var(--brand-color);
   }
   .svg__signup__ll {
-    /* fill: red; */
     fill: rgb(170, 170, 170);
     width: 14px; height: 14px;
   }
@@ -1008,8 +993,13 @@ input[type="text"].data_content_pass:focus::placeholder, input[type="password"].
   .photobaby {
     width: 45px; height: 45px;
   }
+  ._loader_img {
+    width: 135px;
+  }
+  .react__loader__child__div {
+    top: 45%;
+  }
 }
-
 
 @media screen and (max-width: 670px) {
   .popup__upldmodal {
@@ -1034,4 +1024,29 @@ input[type="text"].data_content_pass:focus::placeholder, input[type="password"].
     border-bottom-right-radius:0px; border-bottom-left-radius: 0px;
     box-sizing: border-box;
   }
+}
+
+/* this is the loader styles */
+/* .fadeOut {
+  overflow-y: hidden;
+  transform: 0.5s ease-in;
+} */
+
+.fadeOut {
+  animation-name: fadeOut;
+  animation-duration: 0.3s;
+  animation-timing-function: ease-out;
+  animation-fill-mode: forwards;
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+.no_scroll {
+  overflow: hidden;
 }
