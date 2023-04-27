@@ -5,6 +5,7 @@ import styles from '@/layout/AuthLayout/AuthLayout.module.css';
 const Preloader = () => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  let timerId;
 
   useEffect(() => {
     const handleStart = (url) => {
@@ -35,14 +36,17 @@ const Preloader = () => {
       const preloader = document.querySelector(`.${styles.loader__}`);
       const appbody = document.querySelector('.appBody__main');
 
-      console.log(appbody);
       if (preloader) {
-        preloader.classList.add(styles.fadeOut);
         appbody.classList.add(styles.no_scroll);
-        setTimeout(() => {
-          preloader.remove();
-          appbody.classList.remove(styles.no_scroll);
-        }, 6000);
+        if (timerId) clearTimeout(timerId);
+        timerId = setTimeout(() => {
+          preloader.classList.add(styles.fadeOut);
+          setTimeout(() => {
+            preloader.remove();
+            appbody.classList.remove(styles.no_scroll);
+          }, 1000);
+        }, 5000);
+        preloader.classList.remove(styles.fadeOut);
       }
     }
   }, [loading]);

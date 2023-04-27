@@ -1027,9 +1027,25 @@ input[type="text"].data_content_pass:focus::placeholder, input[type="password"].
 }
 
 /* this is the loader styles */
-.fadeOut {
+/* .fadeOut {
   overflow-y: hidden;
   transform: 0.5s ease-in;
+} */
+
+.fadeOut {
+  animation-name: fadeOut;
+  animation-duration: 0.3s;
+  animation-timing-function: ease-out;
+  animation-fill-mode: forwards;
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
 }
 .no_scroll {
   overflow: hidden;

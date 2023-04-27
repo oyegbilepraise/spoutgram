@@ -192,19 +192,9 @@ const ProfileOverview = () => {
         </div>
 
         {/*  */}
-<<<<<<< HEAD
         <span style={{display : "none", marginTop: "10px"}}>
           <span className={styles.span__pv__p}><span className={styles.span__pv}>12K</span> Post</span>
           <span className={styles.span__pv__p}><span className={styles.span__pv}>1.0K</span> Post views</span>
-=======
-        <span style={{ display: "block", marginTop: "10px" }}>
-          <span className={styles.span__pv__p}>
-            <span className={styles.span__pv}>12K</span> Post
-          </span>
-          <span className={styles.span__pv__p}>
-            <span className={styles.span__pv}>1.0K</span> Post views
-          </span>
->>>>>>> d1e0395b68bd80ff0b22395af010542f1207acb4
         </span>
         {/*  */}
       </div>
