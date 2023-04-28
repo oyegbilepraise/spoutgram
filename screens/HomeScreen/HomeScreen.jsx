@@ -19,7 +19,10 @@ const HomeScreen = () => {
           <span>Home</span>
         </nav>
         {/* compose post */}
-        <div className={styles.post__compose__container} style={{ display: "none" }} >
+        <div
+          className={styles.post__compose__container}
+          style={{ display: "none" }}
+        >
           <div className={styles.pcc__child}>
             <div style={{ display: "none" }}>
               <textarea
@@ -305,10 +308,8 @@ const HomeScreen = () => {
           </div>
         </div>
         {/* compose post */}
-        
+
         {/* post */}
-        <Post count={1} />
-        <Post count={3} />
         <Post count={3} />
         {/* post */}
       </div>
