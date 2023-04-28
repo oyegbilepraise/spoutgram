@@ -5,7 +5,7 @@ import Image from "next/image";
 import styles from "@/layout/HomeLayout/HomeLayout.module.css";
 import "./CreatePostScreen.module.css";
 import people2 from "../../images/people-2.jpeg";
-import VideoUploader from "@/components/VideoUpload/video";
+import VideoUploader from "@/components/VideoUpload/VideoUploader";
 
 const CreatePostScreen = () => {
   const [showPostSettings, setShowPostSettings] = useState(false);
