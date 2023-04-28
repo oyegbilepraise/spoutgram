@@ -1,14 +1,13 @@
-import { AuthNav } from '../../components';
-import './AuthLayout.module.css';
+import { AuthNav } from "../../components";
+import "./AuthLayout.module.css";
 
-
-const AuthLayout = ({ children  }) => {
+const AuthLayout = ({ children }) => {
   return (
     <>
-      <AuthNav/>
+      <AuthNav />
       {children}
     </>
-  )
-} 
+  );
+};
 
 export default AuthLayout;

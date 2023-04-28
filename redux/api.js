@@ -34,6 +34,7 @@ export const postRequest = async ({ url, token, data, formData, params }) => {
   return requestResponse;
 };
 
+//patch
 export const patchRequest = async ({ url, token, params, formData, data }) => {
   const requestResponse = await API({
     headers: { Authorization: `Bearer ${token}` },
@@ -57,5 +58,20 @@ export const deleteRequest = async ({ url, token, data, params }) => {
     params,
   });
 
+  return requestResponse;
+};
+
+//put request
+export const putRequest = async ({ url, token, data, formData, params }) => {
+  const requestResponse = await API({
+    headers: {
+      "Content-Type": "application/json",
+    },
+    method: "PUT",
+    url,
+    params,
+    data,
+    formData,
+  });
   return requestResponse;
 };

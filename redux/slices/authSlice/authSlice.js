@@ -1,14 +1,18 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { postRequest } from "../../api";
+import { postRequest, putRequest } from "../../api";
 import { URL } from "../../urls";
 import Cookies from "js-cookie";
+import { baseUrl } from "@/redux/baseUrl";
 
 // Register a user
 export const registerUserAction = createAsyncThunk(
   "auth/register",
   async (payload, { rejectWithValue }) => {
     try {
-      const res = await postRequest({ url: URL.register, data: payload });
+      const res = await postRequest({
+        url: `${baseUrl}${URL.register}`,
+        data: payload,
+      });
       Cookies.set("token", res.data.token);
       Cookies.set("verifyEmail", res.data.success);
       return res.data;
@@ -25,7 +29,7 @@ export const generateEmailVerificationAction = createAsyncThunk(
     const token = Cookies.get("token");
     try {
       const res = await postRequest({
-        url: `${URL.generateEmailOTP}`,
+        url: `${baseUrl}${URL.generateEmailOTP}`,
         token: token,
       });
       return res.data;
@@ -40,17 +44,14 @@ export const verifyEmailAction = createAsyncThunk(
   "auth/verify-email",
   async (payload, { rejectWithValue }) => {
     const token = Cookies.get("token");
-    console.log(payload);
     try {
       const res = await postRequest({
-        url: `${URL.verifyEmail}`,
+        url: `${baseUrl}${URL.verifyEmail}`,
         data: payload,
         token: token,
       });
-      console.log(res.data);
       return res.data;
     } catch (err) {
-      console.log(err);
       return rejectWithValue(err?.response?.data?.message);
     }
   }
@@ -62,12 +63,45 @@ export const loginUserAction = createAsyncThunk(
   async (payload, { rejectWithValue }) => {
     try {
       const res = await postRequest({
-        url: `${URL.login}`,
+        url: `${baseUrl}${URL.login}`,
         data: payload,
       });
+
       Cookies.set("token", res.data.token);
       Cookies.set("isLoggedIn", res.data.success);
       Cookies.set("email", res.data.email);
+      return res.data;
+    } catch (err) {
+      return rejectWithValue(err?.response?.data?.message);
+    }
+  }
+);
+
+//forgot password
+export const forgotPasswordAction = createAsyncThunk(
+  "auth/generate-forgotpassword-token",
+  async (payload, { rejectWithValue }) => {
+    try {
+      const res = await postRequest({
+        url: `${baseUrl}${URL.forgotPassword}`,
+        data: payload,
+      });
+      return res.data;
+    } catch (err) {
+      return rejectWithValue(err?.response?.data?.message);
+    }
+  }
+);
+
+//Change Password
+export const changePasswordAction = createAsyncThunk(
+  "/auth/reset-password",
+  async (payload, { rejectWithValue }) => {
+    try {
+      const res = await putRequest({
+        url: `${baseUrl}${URL.changePassword}`,
+        data: payload,
+      });
       return res.data;
     } catch (err) {
       return rejectWithValue(err?.response?.data?.message);
@@ -106,6 +140,18 @@ const authSlice = createSlice({
       loading: false,
       appError: null,
       user: {},
+    },
+    forgotPassword: {
+      loading: false,
+      apiError: null,
+      isEmailAvailable: false,
+      message: {},
+    },
+    changePassword: {
+      loading: false,
+      apiError: null,
+      isConfirmed: false,
+      message: {},
     },
   },
   reducers: {},
@@ -165,6 +211,35 @@ const authSlice = createSlice({
     builder.addCase(loginUserAction.rejected, (state, action) => {
       state.loginUser.loading = false;
       state.loginUser.appError = action?.payload;
+    });
+
+    //Forgot Password
+    builder.addCase(forgotPasswordAction.pending, (state) => {
+      state.forgotPassword.loading = true;
+    });
+    builder.addCase(forgotPasswordAction.fulfilled, (state, action) => {
+      state.forgotPassword.loading = false;
+      state.forgotPassword.isEmailAvailable = true;
+      state.forgotPassword.message = action?.payload;
+    });
+    builder.addCase(forgotPasswordAction.rejected, (state, action) => {
+      state.forgotPassword.loading = false;
+      state.forgotPassword.apiError = action?.payload;
+    });
+
+    //Change Password
+    builder.addCase(changePasswordAction.pending, (state) => {
+      state.changePassword.loading = true;
+    });
+    builder.addCase(changePasswordAction.fulfilled, (state, action) => {
+      state.changePassword.loading = false;
+      state.changePassword.isConfirmed = true;
+      state.changePassword.message = action?.payload;
+    });
+
+    builder.addCase(changePasswordAction.rejected, (state, action) => {
+      state.changePassword.loading = false;
+      state.changePassword.apiError = action?.payload;
     });
   },
 });

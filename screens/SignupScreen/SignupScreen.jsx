@@ -1,7 +1,10 @@
 import { useRouter } from "next/router";
 import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
-import { generateEmailVerificationAction, registerUserAction } from "@/redux/slices/authSlice/authSlice";
+import {
+  generateEmailVerificationAction,
+  registerUserAction,
+} from "@/redux/slices/authSlice/authSlice";
 import { AuthLayout } from "@/layout";
 import { useState } from "react";
 import {
@@ -29,9 +32,9 @@ const signupValidationSchema = Yup.object().shape({
       "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character"
     ),
   confirmPassword: Yup.string()
-    .required('Please confirm your password')
-    .oneOf([Yup.ref('password')], 'Password does not match') 
-})
+    .required("Please confirm your password")
+    .oneOf([Yup.ref("password")], "Password does not match"),
+});
 
 const SignUpScreen = () => {
   const router = useRouter();
@@ -63,7 +66,6 @@ const SignUpScreen = () => {
 
   return (
     <AuthLayout>
-
       <main className={styles.__main} role="main">
         <form onSubmit={formik.handleSubmit}>
           <div className={styles._xparnts}>
