@@ -1,7 +1,6 @@
 import { HomeLayout } from "@/layout";
 import Image from "next/image";
 import img from "../../images/default-photo.svg";
-
 // import './HomeScreen.module.css'
 import styles from "@/layout/HomeLayout/HomeLayout.module.css";
 import Post from "@/components/Home/Post";

@@ -18,7 +18,6 @@ import { useEffect, useState } from "react";
 import * as Yup from "yup";
 import Link from "next/link";
 import styles from "@/layout/AuthLayout/AuthLayout.module.css";
-import Cookies from "js-cookie";
 
 const loginFormSchema = Yup.object().shape({
   email: Yup.string()
@@ -45,21 +44,6 @@ const LoginScreen = () => {
     },
     validationSchema: loginFormSchema,
   });
-
-  // set if user is online
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  useEffect(() => {
-    const loginStatus = Cookies.get("isLoggedIn");
-    if (loginStatus) {
-      setIsLoggedIn(loginStatus);
-    }
-    if (isLoggedIn && user.hasProfile) {
-      router.push("/");
-    }
-    if (isLoggedIn && user.hasProfile === false) {
-      router.push("/create-profile");
-    }
-  }, [isLoggedIn, user.hasProfile]);
 
   const [visible, setVisible] = useState(false);
 
@@ -101,7 +85,6 @@ const LoginScreen = () => {
                 <span className={styles.or}>OR</span>
               </div>
 
-              {/* this is the error msg from the API : Invalid credentials, try again. */}
               {appError && (
                 <span className={styles.error__msg__xyx}>
                   <CautionSvg />

@@ -26,14 +26,16 @@ export const createProfileAction = createAsyncThunk(
 const userDetailSlice = createSlice({
   name: "userDetails",
   initialState: {
-    userProfile: {
-      name: "",
-      username: "",
-      dob: "",
-      location: "",
-      website: "",
-      bio: "",
-    },
+    userProfile: Cookies.get("user-profile")
+      ? Cookies.get("user-profile")
+      : {
+          name: "",
+          username: "",
+          dob: "",
+          location: "",
+          website: "",
+          bio: "",
+        },
     currentComponent: 1,
     profileCreation: {
       loading: false,

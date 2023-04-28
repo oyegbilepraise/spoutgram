@@ -30,6 +30,9 @@ import StepOne from "@/components/CreateProfile/StepOne";
 import { useEffect } from "react";
 import StepTwo from "@/components/CreateProfile/StepTwo";
 import dynamic from "next/dynamic";
+import Cookies from "js-cookie";
+import { useRouter } from "next/router";
+import { useState } from "react";
 
 // Yup ValidationSchema.
 // const createProfileValidationSchema = Yup.object().shape({
@@ -46,8 +49,9 @@ const StepThree = dynamic(
 
 const CreateProfileScreen = () => {
   const dispatch = useDispatch();
+  const router = useRouter();
   // const storeData = useSelector((store) => store?.auth);
-
+  const { user } = useSelector((state) => state?.auth?.loginUser);
   const formik = useFormik({
     onSubmit: (values) => {
       console.log(values);
@@ -154,14 +158,14 @@ const CreateProfileScreen = () => {
             >
               {/* Start Profile Component */}
               {/* <form> */}
-                {/* first component */}
-                {current === 1 && <StepOne />}
+              {/* first component */}
+              {current === 1 && <StepOne />}
 
-                {/* second component */}
-                {current === 2 && <StepTwo />}
+              {/* second component */}
+              {current === 2 && <StepTwo />}
 
-                {/* third component */}
-                {current === 3 && <StepThree />}
+              {/* third component */}
+              {current === 3 && <StepThree />}
               {/* </form> */}
               {/* End User Profile Component */}
             </div>
