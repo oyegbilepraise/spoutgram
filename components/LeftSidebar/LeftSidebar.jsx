@@ -1,12 +1,22 @@
 import styles from "@/layout/HomeLayout/HomeLayout.module.css";
-import Link from 'next/link'
-import { BookmarkSvg, CreateSvg, MessageSvg, MoreSidebar, MoreSvg, NotificationSvg, PodcastSvg, SubscriptionSvg } from "@/components";
+import Link from "next/link";
+import {
+  BookmarkSvg,
+  CreateSvg,
+  MessageSvg,
+  MoreSidebar,
+  MoreSvg,
+  NotificationSvg,
+  PodcastSvg,
+  SubscriptionSvg,
+} from "@/components";
 import { useState } from "react";
-import { SpoutgramSvg, HomeSvg } from '../../components';
+import { SpoutgramSvg, HomeSvg } from "../../components";
 import { useRouter } from "next/router";
 
 const LeftSidebar = () => {
   const [showMore, setShowMore] = useState(false);
+  const [showLogout, setShowLogout] = useState(false);
 
   const router = useRouter();
   // Define a function to determine if a link is active
@@ -14,8 +24,7 @@ const LeftSidebar = () => {
     return router.pathname === pathname
       ? styles.activeState
       : styles.inactiveState;
-  }; 
-
+  };
 
   // show more toggle function
   const handleShowMore = () => {
@@ -106,12 +115,14 @@ const LeftSidebar = () => {
 
       {/* Profile */}
       <div className={styles.profile__fxd}>
-        <div className={styles.more_explained}>
-          <Link href="/edit">
-            <span className={styles.xmmx___stan}>Edit your profile</span>
-          </Link>
-          <span className={styles.xmmx___stan}>Logout of this account</span>
-        </div>
+        {showLogout && (
+          <div className={styles.more_explained}>
+            <Link href="/edit">
+              <span className={styles.xmmx___stan}>Edit your profile</span>
+            </Link>
+            <span className={styles.xmmx___stan}>Logout of this account</span>
+          </div>
+        )}
 
         <span>
           <Link href="/profile">
@@ -137,10 +148,13 @@ const LeftSidebar = () => {
           strokeWidth={2}
           strokeLinecap="round"
           strokeLinejoin="round"
+          onClick={() => setShowLogout((prev) => !prev)}
+          style={{
+            rotate: showLogout ? "180deg" : "",
+          }}
         >
           <path d="M6 9l6 6 6-6" />
         </svg>
-
       </div>
       {/* Profile */}
 

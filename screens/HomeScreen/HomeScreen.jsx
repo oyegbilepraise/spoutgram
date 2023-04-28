@@ -1,7 +1,6 @@
 import { HomeLayout } from "@/layout";
 import Image from "next/image";
 import img from "../../images/default-photo.svg";
-
 // import './HomeScreen.module.css'
 import styles from "@/layout/HomeLayout/HomeLayout.module.css";
 import Post from "@/components/Home/Post";
@@ -19,7 +18,10 @@ const HomeScreen = () => {
           <span>Home</span>
         </nav>
         {/* compose post */}
-        <div className={styles.post__compose__container} style={{ display: "none" }} >
+        <div
+          className={styles.post__compose__container}
+          style={{ display: "none" }}
+        >
           <div className={styles.pcc__child}>
             <div style={{ display: "none" }}>
               <textarea
@@ -305,6 +307,7 @@ const HomeScreen = () => {
           </div>
         </div>
         {/* compose post */}
+
         {/* post */}
         <Post count={1} />
         <Post count={3} />
