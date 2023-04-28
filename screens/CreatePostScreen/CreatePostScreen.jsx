@@ -1,10 +1,8 @@
 import { HomeLayout } from "@/layout";
 import React, { useState, useRef } from "react";
-import Image from "next/image";
-// import img from '../../images/default-photo.svg'
 import styles from "@/layout/HomeLayout/HomeLayout.module.css";
 import "./CreatePostScreen.module.css";
-import people2 from "../../images/people-2.jpeg";
+import ImagePost from "./imagePost";
 import VideoUploader from "@/components/VideoUpload/VideoUploader";
 
 const CreatePostScreen = () => {
@@ -39,23 +37,18 @@ const CreatePostScreen = () => {
 
   // ----- video uploader starts here -----
   const [video, setVideo] = useState(null);
+  console.log(video);
   const VideoInputRef = useRef();
 
   const handleVideoChange = (event) => {
     const selectedFiles = event.target.files;
 
     if (selectedFiles.length > 1) {
-      console.log("Please select only one video file.");
+      alert("Please select only one video file.");
       return;
     }
-
     const selectedFile = selectedFiles[0];
-
-    if (selectedFile.type.startsWith("video/")) {
-      setVideo(selectedFile);
-    } else {
-      console.log("Please select a video file.");
-    }
+      setVideo(selectedFile);  
   };
 
   const handleVideoClick = () => {
@@ -108,26 +101,13 @@ const CreatePostScreen = () => {
               />
             </div>
           </div>
+
           {/* image/video */}
           <div className={styles.media__preview} style={{ display: "" }}>
-            {/* this is image parent container */}
-            <div style={{ display: "flex" }}>
-              {images.map((image, index) => (
-                <div key={index} className={styles.img___hol}>
-                  {/* To use the image component, add width and height to the image. use css */}
-                  <img
-                    src={URL.createObjectURL(image)}
-                    alt="girl"
-                    className={styles.img__media__preview}
-                  />
-                </div>
-              ))}
-            </div>
-
-            {/* this is video parent container */}
-            <div>
-              <VideoUploader video={video} />
-            </div>
+            {/*image parent container */}
+            <ImagePost images={images} />
+            {/*video parent container */}
+            <VideoUploader video={video} />
           </div>
 
           {/* image/video */}
@@ -171,7 +151,7 @@ const CreatePostScreen = () => {
             </div>
             <input
               type="file"
-              accept="image/*"
+              accept=".jpg"
               multiple
               ref={fileInputRef}
               style={{ display: "none" }}
@@ -207,7 +187,7 @@ const CreatePostScreen = () => {
             </div>
             <input
               type="file"
-              accept="video/*"
+              accept=".mp4"
               ref={VideoInputRef}
               style={{ display: "none" }}
               onChange={handleVideoChange}

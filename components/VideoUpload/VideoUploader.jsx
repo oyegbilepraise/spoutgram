@@ -70,8 +70,6 @@ const VideoUploader = ({ video }) => {
 
   return (
     <div>
-      {/* // className={styles.vid__media__preview} */}
-
       <video
         ref={videoRef}
         onTimeUpdate={handleTimeUpdate}

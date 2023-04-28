@@ -4,6 +4,7 @@ import styles from "@/layout/HomeLayout/HomeLayout.module.css";
 function HomeVideo() {
   //  custom button states
   const [playing, setPlaying] = useState(false);
+  const [buttonVisible, setButtonVisible] = useState(true);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [volume, setVolume] = useState(1);
@@ -18,8 +19,10 @@ function HomeVideo() {
     setPlaying(!playing);
     if (playing) {
       videoRef.current.pause();
+      setButtonVisible(true);
     } else {
       videoRef.current.play();
+      setButtonVisible(false);
     }
   };
 
@@ -64,22 +67,26 @@ function HomeVideo() {
   // --------- custom video stops here --------
   return (
     <div>
-        <div>
-         <video
-        src="/podcast__tester.mp4"
-        ref={videoRef}
-        onTimeUpdate={handleTimeUpdate}
-        onLoadedMetadata={handleLoadedMetadata}
-        muted={muted}
-        className={styles.vide0__baby} 
-        // you will have to change the styling {styles.vide0__baby} for others to work. 
-        // currently, it's only play button that is working.
-        //  check it out and come up with something. Sorry
-      />    
-        </div>
-     
       <div>
-        <button onClick={togglePlay}>
+        <video
+          src="/podcast__tester.mp4"
+          ref={videoRef}
+          onTimeUpdate={handleTimeUpdate}
+          onLoadedMetadata={handleLoadedMetadata}
+          muted={muted}
+          onClick={togglePlay}
+          className={styles.vide0__baby}
+          // you will have to change the styling {styles.vide0__baby} for others to work.
+          // currently, it's only play button that is working.
+          //  check it out and come up with something. Sorry
+        />
+      </div>
+
+      <div>
+        <button
+          style={{ display: buttonVisible ? "block" : "none" }}
+          onClick={togglePlay}
+        >
           {playing ? (
             <svg
               className={styles.play__btn__post}
