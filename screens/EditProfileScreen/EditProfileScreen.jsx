@@ -15,6 +15,7 @@ const EditProfileScreen = () => {
                 <svg class={styles._00_history__back} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgb(90, 90, 90)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H6M12 5l-7 7 7 7"/></svg>
               </span>
               <span class={styles.not_home_nav_text}>Edit Profile</span>
+              <button type="submit" className={styles.save__edit__btn}>Save</button>
             </div>
           </nav>
 
@@ -30,7 +31,7 @@ const EditProfileScreen = () => {
 
               <div>
                 <div>
-                  <input className={styles.data_content_pass} type="text" placeholder="Name" value={"Avary"} />
+                  <input className={styles.data_content_pass} type="text" placeholder="Name" value={'Avary'} />
                 </div>
                 <div>
                   <input className={styles.data_content_pass} type="text" placeholder="Username" value={"@avary"} />
@@ -41,10 +42,10 @@ const EditProfileScreen = () => {
 
             <div className={styles.edit__pc__block}>
               <div>
-                <textarea name="" id="" cols="30" rows="10"></textarea>
+                <textarea name="" id="" className={styles.data_content_pass_bio} placeholder="Bio"></textarea>
               </div>
               <div>
-                <input type="text" placeholder="Location" value={"Miami, USA"} />
+                <input className={styles.data_content_pass} type="text" placeholder="Location" value={"Miami, USA"} />
               </div>
               <div>
                 <select name="" id="">
@@ -52,7 +53,7 @@ const EditProfileScreen = () => {
                 </select>
               </div>
               <div>
-                <input type="text" placeholder="Bio Link" value={"https://yourlinks/avary"} />
+                <input className={styles.data_content_pass} type="text" placeholder="Bio Link" value={"https://yourlinks/avary"} />
               </div>
             </div>
 
