@@ -26,4 +26,4 @@ jobs:
             git pull origin dev
             yarn install
             yarn build
-            pm2 restart 2
+            pm2 restart dev-frontend
