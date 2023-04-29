@@ -1,7 +1,7 @@
 import React from "react";
 import { SignupScreen } from "@/screens";
 import Head from "next/head";
-import ProtectedSignUp from "@/components/ProtectedRoutes/ProtectedSignUp";
+import UnauthenticatedRoute from "@/components/ProtectedRoutes/UnauthenticatedRoute";
 
 const Signup = () => {
   return (
@@ -56,4 +56,4 @@ const Signup = () => {
   );
 };
 
-export default ProtectedSignUp(Signup);
+export default UnauthenticatedRoute(Signup);

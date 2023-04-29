@@ -44,6 +44,13 @@ const LoginScreen = () => {
     },
     validationSchema: loginFormSchema,
   });
+  if (user.token && user.accountVerified === false) {
+    router.push("/verify");
+  } else if (user.token && user.hasProfile === false) {
+    router.push("/create-profile");
+  } else if (user.token && user.accountVerified && user.hasProfile) {
+    router.push("/");
+  }
 
   const [visible, setVisible] = useState(false);
 
@@ -144,7 +151,7 @@ const LoginScreen = () => {
 
                   <span className={styles._0013_span}>
                     <span style={{ float: "right" }}>
-                      <a href="/forgot-password">Forgot Password?</a>
+                      <Link href="/forgot-password">Forgot Password?</Link>
                     </span>
                   </span>
                 </div>
