@@ -36,11 +36,11 @@ const ProtectedRoute = (WrappedComponent) => {
       }
 
       // If user is verified and has no profile, go to create profile page
-      if (user && !user.profile) {
+      if (user && !user.profile && router.pathname !== Routes.CREATE_PROFILE) {
         router.push(Routes.CREATE_PROFILE);
         return;
       }
-    }, []);
+    }, [apiError, dispatch, isAuthenticated, router, user]);
 
     // Render error message or wrapped component
     return error ? <p>{error}</p> : <WrappedComponent {...props} />;
