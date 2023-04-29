@@ -9,7 +9,9 @@ import { HideSvg, ShowSvg, GoogleSvg, TwitterSvg, AppleSvg, CautionSvg, ErrorSvg
 import * as Yup from 'yup'
 import Link from "next/link"
 import styles from '@/layout/AuthLayout/AuthLayout.module.css'
+import axios from "axios"
 
+//const [user, setUser ] = useState(null)
 const signupValidationSchema = Yup.object().shape({ 
   email: Yup.string()
     .email('Please enter a valid email address')
@@ -25,11 +27,24 @@ const signupValidationSchema = Yup.object().shape({
     .oneOf([Yup.ref('password')], 'Password does not match')
 })
 
+
 const SignUpScreen = () => {
   const router = useRouter()
   const dispatch = useDispatch()
   const storeData = useSelector(store => store?.auth)
 
+
+  const handleGoogleLogin = async ()=>{
+  try {
+    //const { data } = await axios.get("http://localhost:5050/api/v1/auth/google");
+    window.open(
+      `${process.env.API_LINK}/api/v1/auth/google/callback`,
+      "_self"
+    )
+  } catch (error) {
+    console.log(error);
+  }
+}
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -81,7 +96,7 @@ const SignUpScreen = () => {
 
                 <div>
                   {/* continue with google */}
-                  <button className={`${styles.oauths_} ${styles.ggl_oauth}`}>
+                  <button className={`${styles.oauths_} ${styles.ggl_oauth}`} onClick={handleGoogleLogin}>
                     <GoogleSvg />
                     Continue with Google
                   </button>

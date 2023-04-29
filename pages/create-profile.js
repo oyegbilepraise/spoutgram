@@ -1,8 +1,34 @@
-import React from 'react'
-import { CreateProfileScreen} from '@/screens'
+import React, {useState, useEffect} from 'react'
+import { CreateProfileScreen } from '@/screens'
 import Head from 'next/head'
+import axios from 'axios'
 
 const CreateProfile = () => {
+  const [user, setUser] = useState(null)
+
+  useEffect(() => {
+    const getUser = async () => {
+      try {
+        const url = `${process.env.API_LINK}/api/v1/auth/welcome`
+        const { data } = await axios.get(url, { withCredentials: true })
+        console.log(data)
+        localStorage.setItem("authToken", data.user.token)
+        if (data.hasProfile === false) {
+          console.log(data, 'hiii')
+          //routes to create-profile
+        } else {
+          console.log(data, 'hello')
+          //routes to home
+        }
+        setUser(data.user._json)
+      } catch (e) {
+        console.log(e)
+      }
+    }
+
+    getUser()
+  }, [])
+
   return (
     <>
      <Head>
@@ -24,7 +50,6 @@ const CreateProfile = () => {
       </Head>
       <CreateProfileScreen/>
     </>
-    
   )
 }
 
