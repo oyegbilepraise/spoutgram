@@ -18,6 +18,7 @@ import { useEffect, useState } from "react";
 import * as Yup from "yup";
 import Link from "next/link";
 import styles from "@/layout/AuthLayout/AuthLayout.module.css";
+import Routes from "@/utils/routes";
 
 const loginFormSchema = Yup.object().shape({
   email: Yup.string()
@@ -45,11 +46,11 @@ const LoginScreen = () => {
     validationSchema: loginFormSchema,
   });
   if (user.token && user.accountVerified === false) {
-    router.push("/verify");
+    router.push(Routes.VERIFY);
   } else if (user.token && user.hasProfile === false) {
-    router.push("/create-profile");
+    router.push(Routes.CREATE_PROFILE);
   } else if (user.token && user.accountVerified && user.hasProfile) {
-    router.push("/");
+    router.push(Routes.HOME);
   }
 
   const [visible, setVisible] = useState(false);
