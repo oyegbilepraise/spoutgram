@@ -10,7 +10,7 @@ import Link from "next/link";
 import ProfileOverview from "@/components/ViewProfile/ProfileOverview";
 
 const ProfileScreen = () => {
-  const router = useRouter();
+  const router = useRouter(); 
   const [currentTab, setCurrentTab] = useState("/");
   const { userId } = router.query;
 
@@ -41,7 +41,7 @@ const ProfileScreen = () => {
               }`}
               id="textOne"
             >
-              <Link href={`/${userId}`}>Post</Link>
+              <Link href={`/${userId}`}>POST</Link>
             </h6>
           </div>
           <div className={styles.p_n_m_c_div} id="menuTwo">
@@ -51,7 +51,7 @@ const ProfileScreen = () => {
               }`}
               id="textTwo"
             >
-              <Link href={`/${userId}?tab=gallery`}>Gallery</Link>
+              <Link href={`/${userId}?tab=gallery`}>GALLERY</Link>
             </h6>
           </div>
           <div className={styles.p_n_m_c_div} id="menuThree">
@@ -61,7 +61,7 @@ const ProfileScreen = () => {
               }`}
               id="textThree"
             >
-              <Link href={`/${userId}?tab=podcast`}>Podcast</Link>
+              <Link href={`/${userId}?tab=podcast`}>PODCAST</Link>
             </h6>
           </div>
           <div className={styles.p_n_m_c_div} id="menuFourth">
@@ -71,7 +71,7 @@ const ProfileScreen = () => {
               }`}
               id="textFour"
             >
-              <Link href={`/${userId}?tab=paid`}>Paid (567)</Link>
+              <Link href={`/${userId}?tab=paid`}>MEMBERSHIPS (567.6k)</Link>
             </h6>
           </div>
         </div>

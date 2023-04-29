@@ -39,6 +39,12 @@ html {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizelegibility;
 }
+
+/* hide scrollbar  */
+.no-scroll {
+  overflow: hidden;
+}
+
 input, button, img, svg, select, textarea {
   -webkit-touch-callout: none; 
   -webkit-user-select: none;

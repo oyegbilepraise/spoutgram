@@ -1,20 +1,46 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { postRequest } from "../api";
+import { URL } from "../urls";
+import Cookies from "js-cookie";
+import { baseUrl } from "../baseUrl";
+
+// Create user profile
+export const createProfileAction = createAsyncThunk(
+  "/users/create-profile",
+  async (payload, { rejectWithValue }) => {
+    const token = Cookies.get("token");
+    try {
+      const res = await postRequest({
+        url: `${baseUrl}${URL.createProfile}`,
+        data: payload,
+        token,
+      });
+      console.log(res.data);
+      return res.data;
+    } catch (err) {
+      console.log(err);
+      return rejectWithValue(err?.response?.data?.data);
+    }
+  }
+);
 
 const userDetailSlice = createSlice({
   name: "userDetails",
   initialState: {
     userProfile: {
-      adult: false,
       name: "",
-      organization: "",
-      status: "",
       username: "",
       dob: "",
       location: "",
-      link: "",
+      website: "",
       bio: "",
     },
     currentComponent: 1,
+    profileCreation: {
+      loading: false,
+      appError: null,
+      profile: {},
+    },
   },
   reducers: {
     addDetailsToUserProfile: (state, action) => {
@@ -23,6 +49,22 @@ const userDetailSlice = createSlice({
     nextComponent: (state, action) => {
       state.currentComponent = action.payload;
     },
+  },
+  extraReducers: (builder) => {
+    // create profile.
+    builder.addCase(createProfileAction.pending, (state) => {
+      state.profileCreation.loading = true;
+      state.profileCreation.profile = {};
+      state.profileCreation.appError = null;
+    });
+    builder.addCase(createProfileAction.fulfilled, (state, action) => {
+      state.profileCreation.loading = false;
+      state.profileCreation.profile = action?.payload;
+    });
+    builder.addCase(createProfileAction.rejected, (state, action) => {
+      state.profileCreation.loading = false;
+      state.profileCreation.appError = action?.payload;
+    });
   },
 });
 

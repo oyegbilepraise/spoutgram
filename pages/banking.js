@@ -1,6 +1,7 @@
 import React from "react";
 import { BankingScreen } from "@/screens";
 import Head from "next/head";
+import ProtectedRoute from "@/components/ProtectedRoutes/ProtectedRoute";
 
 const Banking = () => {
   return (
@@ -31,4 +32,4 @@ const Banking = () => {
   );
 };
 
-export default Banking;
+export default ProtectedRoute(Banking);

@@ -1,29 +1,90 @@
-import { HomeLayout } from '@/layout'
-import Image from 'next/image'
-// import img from '../../images/default-photo.svg'
-import styles from '@/layout/HomeLayout/HomeLayout.module.css'
-import people2 from "../../images/people-2.jpeg";
-import { useState } from "react";
+import { HomeLayout } from "@/layout";
+import React, { useState, useRef } from "react";
+import styles from "@/layout/HomeLayout/HomeLayout.module.css";
+import "./CreatePostScreen.module.css";
+import VideoUploader from "@/components/VideoUpload/VideoUploader";
+import ImagePost from "./ImagePost";
 
 const CreatePostScreen = () => {
-
   const [showPostSettings, setShowPostSettings] = useState(false);
 
+  // ----- image uploader starts here -----
+  const [images, setImages] = useState([]);
+  const fileInputRef = useRef();
+
+  const handleFileInputChange = (event) => {
+    const newImages = [];
+    const files = event.target.files;
+
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+
+      if (file.type.startsWith("image/")) {
+        if (images.length >= 4) {
+          alert("You can only upload up to 4 images.");
+          return;
+        }
+        newImages.push(file);
+      }
+    }
+
+    setImages([...images, ...newImages]);
+  };
+
+  const handleButtonClick = () => {
+    fileInputRef.current.click();
+  };
+
+  // ----- video uploader starts here -----
+  const [video, setVideo] = useState(null);
+  console.log(video);
+  const VideoInputRef = useRef();
+
+  const handleVideoChange = (event) => {
+    const selectedFiles = event.target.files;
+
+    if (selectedFiles.length > 1) {
+      alert("Please select only one video file.");
+      return;
+    }
+    const selectedFile = selectedFiles[0];
+      setVideo(selectedFile);  
+  };
+
+  const handleVideoClick = () => {
+    VideoInputRef.current.click();
+  };
 
   return (
-    <HomeLayout> 
+    <HomeLayout>
       {/* div.timeline -> middle */}
       <div class={`${styles.timeline} ${styles._000middlebar}`}>
-            <nav className={styles.___main_nav}>
-                <div>
-                    <span class={styles.icon_back}>
-                        <svg class={styles._00_history__back} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgb(90, 90, 90)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H6M12 5l-7 7 7 7"/></svg>
-                    </span>
-                    <span class={styles.not_home_nav_text}>Create Post</span>
-                </div>
-            </nav>
+        <nav className={styles.___main_nav}>
+          <div>
+            <span class={styles.icon_back}>
+              <svg
+                class={styles._00_history__back}
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="rgb(90, 90, 90)"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M19 12H6M12 5l-7 7 7 7" />
+              </svg>
+            </span>
+            <span class={styles.not_home_nav_text}>Create Post</span>
+          </div>
+        </nav>
 
-            <div className={styles.post__compose__container} style={{ display: "" }} >
+        <div
+          className={styles.post__compose__container}
+          style={{ display: "" }}
+        >
           <div className={styles.pcc__child}>
             <div style={{ display: "" }}>
               <textarea
@@ -40,34 +101,18 @@ const CreatePostScreen = () => {
               />
             </div>
           </div>
+
           {/* image/video */}
           <div className={styles.media__preview} style={{ display: "" }}>
-
-            {/* this is image parent container */}
-            <div style={{ display: "flex" }}>
-              <div className={styles.img___hol}>
-                <Image src={people2} className={styles.img__media__preview} />
-              </div>
-              <div className={styles.img___hol}>
-                <Image src={people2} className={styles.img__media__preview} />
-              </div>
-              <div className={styles.img___hol}>
-                <Image src={people2} className={styles.img__media__preview} />
-              </div>
-              <div className={styles.img___hol}>
-                <Image src={people2} className={styles.img__media__preview} />
-              </div>
-            </div>
-
-            {/* this is video parent container */}
-            <div className={styles.vid___hol}>
-              <video src="/vid.mp4" className={styles.vid__media__preview} controls />
-            </div>
-
+            {/*image parent container */}
+            <ImagePost images={images} />
+            {/*video parent container */}
+            <VideoUploader video={video} />
           </div>
+
           {/* image/video */}
           <div className={`${styles.img} ${styles.vid} ${styles.__09xfgc}`}>
-            <div className={styles._sxvg_div}>
+            <div className={styles._sxvg_div} onClick={handleButtonClick}>
               <svg
                 className={styles.post_icon_data}
                 width={18}
@@ -104,7 +149,17 @@ const CreatePostScreen = () => {
               </svg>
               <h6 className={styles.tooltip}>Image</h6>
             </div>
-            <div className={styles._sxvg_div}>
+            <input
+              type="file"
+              accept=".jpg"
+              multiple
+              ref={fileInputRef}
+              style={{ display: "none" }}
+              onChange={handleFileInputChange}
+            />
+
+            {/* video uploader */}
+            <div className={styles._sxvg_div} onClick={handleVideoClick}>
               <svg
                 className={styles.post_icon_data}
                 width={18}
@@ -130,6 +185,14 @@ const CreatePostScreen = () => {
               </svg>
               <h6 className={styles.tooltip}>Video</h6>
             </div>
+            <input
+              type="file"
+              accept=".mp4"
+              ref={VideoInputRef}
+              style={{ display: "none" }}
+              onChange={handleVideoChange}
+            />
+
             <div className={styles._sxvg_div} style={{ width: "min-content" }}>
               <div style={{ position: "relative", width: "min-content" }}>
                 <svg
@@ -286,10 +349,10 @@ const CreatePostScreen = () => {
             </div>
           </div>
         </div>
-       </div>
+      </div>
       {/* div.timeline -> middle */}
     </HomeLayout>
-  )
-}
+  );
+};
 
-export default CreatePostScreen
+export default CreatePostScreen;

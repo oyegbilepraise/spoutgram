@@ -1,0 +1,20 @@
+.video-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: black;
+  padding: 10px;
+  color: white;
+}
+
+.video-controls button {
+  background-color: transparent;
+  border: none;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.video-controls button:hover {
+  text-decoration: underline;
+}

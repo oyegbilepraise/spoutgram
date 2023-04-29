@@ -4,10 +4,10 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head>
-      <script async src="https://www.googletagmanager.com/gtag/js?id=G-P58EPQ4N9R" />
-      <script src="/ga.js" />
+      <script  src="https://www.googletagmanager.com/gtag/js?id=G-P58EPQ4N9R" defer ></script>
+      <script src="/ga.js" defer ></script>
       </Head>
-      <body>
+      <body className="appBody__main">
         <Main />
         <NextScript />
       </body>

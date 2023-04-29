@@ -155,6 +155,7 @@ const ProfileImage = () => {
         </div>
         {/* hovercard */}
       </div>
+     
       <div>
         <div>
           <span className={styles._0022_nm_usr}>
@@ -166,6 +167,7 @@ const ProfileImage = () => {
           <span className={styles._000_dt_data}>17h</span>
         </div>
       </div>
+     
       <div style={{ position: "absolute", right: 0, top: "-3px" }}>
         <svg
           width={15}
