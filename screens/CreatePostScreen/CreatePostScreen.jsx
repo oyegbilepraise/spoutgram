@@ -2,8 +2,8 @@ import { HomeLayout } from "@/layout";
 import React, { useState, useRef } from "react";
 import styles from "@/layout/HomeLayout/HomeLayout.module.css";
 import "./CreatePostScreen.module.css";
-import ImagePost from "./imagePost";
 import VideoUploader from "@/components/VideoUpload/VideoUploader";
+import ImagePost from "./ImagePost";
 
 const CreatePostScreen = () => {
   const [showPostSettings, setShowPostSettings] = useState(false);
