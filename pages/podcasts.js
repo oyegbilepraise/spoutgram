@@ -1,7 +1,6 @@
 import React from "react";
 import { PodcastScreen } from "@/screens";
 import Head from "next/head";
-import ProtectedRoute from "@/components/ProtectedRoutes/ProtectedRoute";
 
 const Podcast = () => {
   return (
@@ -31,4 +30,4 @@ const Podcast = () => {
   );
 };
 
-export default ProtectedRoute(Podcast);
+export default Podcast;

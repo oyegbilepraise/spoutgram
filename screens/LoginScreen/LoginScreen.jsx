@@ -44,13 +44,29 @@ const LoginScreen = () => {
     },
     validationSchema: loginFormSchema,
   });
-  if (user.token && user.accountVerified === false) {
-    router.push(Routes.VERIFY);
-  } else if (user.token && user.hasProfile === false) {
-    router.push(Routes.CREATE_PROFILE);
-  } else if (user.token && user.accountVerified && user.hasProfile) {
-    router.push(Routes.HOME);
-  }
+  useEffect(() => {
+    if (user.token) {
+      if (
+        user.isAccountVerified === false &&
+        router.pathname !== Routes.VERIFY
+      ) {
+        router.push(Routes.VERIFY);
+        console.log("push to verify from login");
+        return;
+      } else if (
+        user.profile === false &&
+        router.pathname !== Routes.CREATE_PROFILE
+      ) {
+        console.log("push to profile from login");
+        router.push(Routes.CREATE_PROFILE);
+        return;
+      } else {
+        router.push(Routes.HOME);
+        console.log("push to home from login");
+        return;
+      }
+    }
+  }, [user.isAccountVerified, user.profile, user.token]);
 
   const [visible, setVisible] = useState(false);
 

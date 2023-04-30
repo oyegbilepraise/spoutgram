@@ -1,7 +1,6 @@
 import React from "react";
 import { SetupScreen } from "@/screens";
 import Head from "next/head";
-import ProtectedRoute from "@/components/ProtectedRoutes/ProtectedRoute";
 
 const Setup = () => {
   return (
@@ -32,4 +31,4 @@ const Setup = () => {
   );
 };
 
-export default ProtectedRoute(Setup);
+export default Setup;

@@ -1,7 +1,6 @@
 import React from "react";
 import { VerifyAccountScreen } from "@/screens";
 import Head from "next/head";
-import ProtectedRoute from "@/components/ProtectedRoutes/ProtectedRoute";
 
 const Verify = () => {
   return (
@@ -31,4 +30,4 @@ const Verify = () => {
   );
 };
 
-export default ProtectedRoute(Verify);
+export default Verify;

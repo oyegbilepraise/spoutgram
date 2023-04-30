@@ -1,7 +1,6 @@
 import React from "react";
 import { BookmarkScreen } from "@/screens";
 import Head from "next/head";
-import ProtectedRoute from "@/components/ProtectedRoutes/ProtectedRoute";
 
 const Bookmark = () => {
   return (
@@ -32,4 +31,4 @@ const Bookmark = () => {
   );
 };
 
-export default ProtectedRoute(Bookmark);
+export default Bookmark;

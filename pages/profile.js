@@ -1,7 +1,6 @@
 import React from "react";
 import { ProfileScreen } from "@/screens";
 import Head from "next/head";
-import ProtectedRoute from "@/components/ProtectedRoutes/ProtectedRoute";
 
 const Profile = () => {
   return (
@@ -56,4 +55,4 @@ const Profile = () => {
   );
 };
 
-export default ProtectedRoute(Profile);
+export default Profile;

@@ -5,48 +5,70 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-const ProtectedRoute = (WrappedComponent) => {
-  const Wrapper = (props) => {
-    const [error, setError] = useState("");
-    const router = useRouter();
-    const dispatch = useDispatch();
-    const { user, apiError } = useSelector((state) => state?.auth?.getUser);
-    const isAuthenticated = !!Cookies.get("token");
+const ProtectedRoute = ({ children }) => {
+  const [error, setError] = useState("");
+  const router = useRouter();
+  const dispatch = useDispatch();
+  const { user, apiError } = useSelector((state) => state?.auth?.getUser);
+  const isAuthenticated = Cookies.get("token");
 
-    useEffect(() => {
-      // If user is not authenticated, redirect to login page
-      if (!isAuthenticated) {
-        router.push(Routes.LOGIN);
-        return;
-      }
-
-      // Get user details
+  useEffect(() => {
+    if (dispatch && dispatch !== null && dispatch !== undefined) {
       dispatch(getUserAction(isAuthenticated));
+    }
+  }, [dispatch, isAuthenticated]);
 
-      // Handle api error
-      if (apiError) {
-        setError("Oops! Something went wrong. Please try again later.");
-        return;
-      }
+  const handleAuthentication = () => {
+    //if there is no token go to login
+    if (!isAuthenticated) {
+      router.push(Routes.LOGIN);
+      console.log("push to login from protected route not token");
+      return;
+    }
 
-      // If user is not verified, redirect to verify page
-      if (user && !user.isVerified && router.pathname !== Routes.VERIFY) {
+    // Handle api error
+    if (apiError) {
+      setError("Oops! Something went wrong. Please try again later.");
+      return;
+    }
+    // if the api call is successful and user details are gotten
+    if (user?.success) {
+      //if the account is not verified go to verified
+      if (!user?.data?.isAccountVerified && router.pathname !== Routes.VERIFY) {
+        console.log("push to verify from protected route");
         router.push(Routes.VERIFY);
         return;
-      }
-
-      // If user is verified and has no profile, go to create profile page
-      if (user && !user.profile && router.pathname !== Routes.CREATE_PROFILE) {
+      } else if (
+        //if the user doesnt have a profile go to create profile
+        !user?.data?.profile &&
+        router.pathname !== Routes.CREATE_PROFILE
+      ) {
+        console.log("push to create profile from protected route");
         router.push(Routes.CREATE_PROFILE);
         return;
+      } else if (
+        //if the route is either login or signup go to home
+        router.pathname.includes(Routes.LOGIN || Routes.SIGNUP)
+      ) {
+        router.push(Routes.HOME);
+        console.log("push to home from protected route");
+        return;
+      } else if (
+        router.pathname.includes(
+          Routes.FORGOT_PASSWORD || Routes.CONFIRM_CHANGE_PASSWORD
+        )
+      ) {
+        router.push(Routes.HOME);
+        console.log("push to home from protected route");
+        return;
       }
-    }, [apiError, dispatch, isAuthenticated, router, user]);
-
-    // Render error message or wrapped component
-    return error ? <p>{error}</p> : <WrappedComponent {...props} />;
+    }
   };
+  useEffect(() => {
+    handleAuthentication();
+  }, [isAuthenticated, apiError, user]);
 
-  return Wrapper;
+  return children;
 };
 
 export default ProtectedRoute;

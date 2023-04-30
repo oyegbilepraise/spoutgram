@@ -1,7 +1,6 @@
 import React from "react";
 import { SettingsScreen } from "@/screens";
 import Head from "next/head";
-import ProtectedRoute from "@/components/ProtectedRoutes/ProtectedRoute";
 
 const Settings = () => {
   return (
@@ -32,4 +31,4 @@ const Settings = () => {
   );
 };
 
-export default ProtectedRoute(Settings);
+export default Settings;

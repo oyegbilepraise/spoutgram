@@ -6,7 +6,7 @@ import {
   registerUserAction,
 } from "@/redux/slices/authSlice/authSlice";
 import { AuthLayout } from "@/layout";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   HideSvg,
   ShowSvg,
@@ -19,6 +19,7 @@ import {
 import * as Yup from "yup";
 import Link from "next/link";
 import styles from "@/layout/AuthLayout/AuthLayout.module.css";
+import Routes from "@/utils/routes";
 
 const signupValidationSchema = Yup.object().shape({
   email: Yup.string()
@@ -39,7 +40,7 @@ const SignUpScreen = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const storedData = useSelector((state) => state?.auth?.registerUser);
-
+  const codeSent = useSelector((state) => state?.auth?.verifyUserEmail);
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -52,15 +53,23 @@ const SignUpScreen = () => {
     },
     validationSchema: signupValidationSchema,
   });
-
-  if (
-    storedData?.registered.success &&
-    !storedData?.registered.isAccountVerified
-  ) {
-    dispatch(generateEmailVerificationAction());
-    router.push("/verify");
-  }
-
+  useEffect(() => {
+    if (codeSent.sucess) {
+      router.push(Routes.VERIFY);
+    }
+  }, [codeSent.sucess]);
+  useEffect(() => {
+    if (
+      storedData?.registered.success &&
+      !storedData?.registered.isAccountVerified
+    ) {
+      dispatch(generateEmailVerificationAction());
+    }
+  }, [
+    dispatch,
+    storedData?.registered.isAccountVerified,
+    storedData?.registered.success,
+  ]);
   const [password, setPassword] = useState("");
   const [visible, setVisible] = useState(false);
   const [visibleOne, setVisibleOne] = useState(false);

@@ -1,7 +1,6 @@
 import React from "react";
 import { PodcastStatusScreen } from "@/screens";
 import Head from "next/head";
-import ProtectedRoute from "@/components/ProtectedRoutes/ProtectedRoute";
 
 const PostStatus = () => {
   return (
@@ -35,4 +34,4 @@ const PostStatus = () => {
   );
 };
 
-export default ProtectedRoute(PostStatus);
+export default PostStatus;

@@ -1,7 +1,6 @@
 import React from "react";
 import { LoginScreen } from "@/screens";
 import Head from "next/head";
-import UnauthenticatedRoute from "@/components/ProtectedRoutes/UnauthenticatedRoute";
 
 const Login = () => {
   return (
@@ -57,4 +56,4 @@ const Login = () => {
   );
 };
 
-export default UnauthenticatedRoute(Login);
+export default Login;

@@ -53,4 +53,4 @@ function Home() {
     </>
   );
 }
-export default ProtectedRoute(Home);
+export default Home;

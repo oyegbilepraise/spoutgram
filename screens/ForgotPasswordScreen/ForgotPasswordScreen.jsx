@@ -18,6 +18,7 @@ import { AuthLayout } from "@/layout";
 import styles from "@/layout/AuthLayout/AuthLayout.module.css";
 import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
+import Routes from "@/utils/routes";
 
 const forgotValidationSchema = Yup.object().shape({
   email: Yup.string()
@@ -43,11 +44,12 @@ const ForgotPasswordScreen = () => {
     // validationSchema: forgotValidationSchema,
   });
 
-  if (storeData.isEmailAvailable) {
-    router.push("/confirm-change-password");
-
-    return () => clearTimeout(timeoutId);
-  }
+  useEffect(() => {
+    if (storeData.isEmailAvailable) {
+      router.push(Routes.CONFIRM_CHANGE_PASSWORD);
+      return;
+    }
+  }, [storeData.isEmailAvailable]);
 
   return (
     <AuthLayout>
