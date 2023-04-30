@@ -17,7 +17,6 @@ import {
 import { AuthLayout } from "@/layout";
 import styles from "@/layout/AuthLayout/AuthLayout.module.css";
 import Cookies from "js-cookie";
-import { useEffect, useState } from "react";
 import Routes from "@/utils/routes";
 
 const forgotValidationSchema = Yup.object().shape({
