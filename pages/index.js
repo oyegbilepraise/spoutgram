@@ -1,7 +1,36 @@
 import ProtectedRoute from "@/components/ProtectedRoutes/ProtectedRoute";
 import { HomeScreen } from "@/screens";
 import Head from "next/head";
+import axios from "axios";
+import { useState, useEffect } from "react";
+
+
+const oauthEndpoint = "http://localhost:5050"
+
 function Home() {
+  const [user, setUser ] = useState(null)
+  useEffect(() => {
+    const getUser = async () => {
+      try {
+        const url = `${oauthEndpoint}/api/v1/auth/welcome`
+        const { data } = await axios.get(url, { withCredentials: true })
+        console.log(data)
+        localStorage.setItem("authToken", data.user.token)
+        if (data.hasProfile === false) {
+          console.log(data, 'hiii')
+          //routes to create-profile
+        } else {
+          console.log(data, 'hello')
+          //routes to home
+        }
+        setUser(data.user._json)
+      } catch (e) {
+        console.log(e)
+      }
+    }
+
+    getUser()
+  }, [])
   return (
     <>
       <Head>

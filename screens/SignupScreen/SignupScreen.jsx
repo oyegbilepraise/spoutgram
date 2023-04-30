@@ -1,7 +1,6 @@
 import { useRouter } from "next/router"
 import { useFormik } from 'formik'
 import { useDispatch, useSelector } from 'react-redux'
-import { registerUserAction } from '@/redux/slices/authSlice/authSlice'
 import {
   generateEmailVerificationAction,
   registerUserAction
@@ -10,16 +9,6 @@ import { AuthLayout } from '@/layout'
 import {useState} from 'react'
 import { HideSvg, ShowSvg, GoogleSvg, TwitterSvg, AppleSvg, CautionSvg, ErrorSvg, BtnloadSvg } from '../../components';
 import * as Yup from 'yup'
-import {
-  HideSvg,
-  ShowSvg,
-  GoogleSvg,
-  TwitterSvg,
-  AppleSvg,
-  CautionSvg,
-  ErrorSvg,
-  BtnloadSvg,
-} from "../../components";
 import Link from "next/link"
 import styles from '@/layout/AuthLayout/AuthLayout.module.css'
 import axios from "axios"
@@ -40,6 +29,7 @@ const signupValidationSchema = Yup.object().shape({
     .oneOf([Yup.ref('password')], 'Password does not match')
 })
 
+const oauthEndpoint = "http://localhost:5050"
 const SignUpScreen = () => {
   const router = useRouter();
   const dispatch = useDispatch();
@@ -48,13 +38,25 @@ const SignUpScreen = () => {
 
   const handleGoogleLogin = async ()=>{
   try {
-    //const { data } = await axios.get("http://localhost:5050/api/v1/auth/google");
+    if (typeof window !== 'undefined') {
+      window.open(
+        `${oauthEndpoint}/api/v1/auth/google/callback`,
+        "_self"
+      );
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+const handleTwitterLogin =async ()=>{
+  try {
     window.open(
-      `${process.env.API_LINK}/api/v1/auth/google/callback`,
+      `${oauthEndpoint}/api/v1/auth/twitter/callback`,
       "_self"
     )
   } catch (error) {
-    console.log(error);
+    console.log(err);
   }
 }
   const formik = useFormik({
@@ -102,7 +104,7 @@ const SignUpScreen = () => {
 
                 <div>
                   {/* continue with twitter */}
-                  <button className={`${styles.oauths_} ${styles.twtr_oauth}`}>
+                  <button className={`${styles.oauths_} ${styles.twtr_oauth}`} onClick={handleTwitterLogin}>
                     <TwitterSvg />
                     Continue with Twitter
                   </button>

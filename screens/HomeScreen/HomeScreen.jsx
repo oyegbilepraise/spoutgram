@@ -8,7 +8,8 @@ import { useState } from "react";
 
 import Link from "next/link";
 
-const HomeScreen = () => {
+const HomeScreen = (props) => {
+  const { user } = props
   const [showPostSettings, setShowPostSettings] = useState(false);
 
   return (

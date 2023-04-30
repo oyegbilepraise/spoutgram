@@ -26,8 +26,20 @@ const loginFormSchema = Yup.object().shape({
     .required("Please enter your email address"),
   password: Yup.string().required("Please enter your password"),
 });
-
+const oauthEndpoint = "http://localhost:5050"
 const LoginScreen = () => {
+  const handleGoogleLogin = async ()=>{
+    try {
+      if (typeof window !== 'undefined') {
+        window.open(
+          `${oauthEndpoint}/api/v1/auth/google/callback`,
+          "_self"
+        );
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
   const router = useRouter();
   const dispatch = useDispatch();
   const { loading, appError, user } = useSelector(
@@ -65,7 +77,7 @@ const LoginScreen = () => {
               <div className={styles._xpnds_oauths_div}>
                 <div>
                   {/* continue with google */}
-                  <button className={`${styles.oauths_} ${styles.ggl_oauth}`}>
+                  <button className={`${styles.oauths_} ${styles.ggl_oauth}`} onClick={handleGoogleLogin}>
                     <GoogleSvg />
                     Continue with Google
                   </button>

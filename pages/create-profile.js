@@ -1,20 +1,21 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import { CreateProfileScreen} from '@/screens'
 import Head from 'next/head'
 import axios from 'axios'
 import ProtectedRoute from '@/components/ProtectedRoutes/ProtectedRoute'
 
+const oauthLink = "http://localhost:5050"
 const CreateProfile = () => {
   const [user, setUser] = useState(null)
 
   useEffect(() => {
     const getUser = async () => {
       try {
-        const url = `${process.env.API_LINK}/api/v1/auth/welcome`
+        const url = `${oauthLink}/api/v1/auth/welcome`
         const { data } = await axios.get(url, { withCredentials: true })
         console.log(data)
         localStorage.setItem("authToken", data.user.token)
-        if (data.hasProfile === false) {
+        if (data.isHasProfile === false) {
           console.log(data, 'hiii')
           //routes to create-profile
         } else {
