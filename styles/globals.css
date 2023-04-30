@@ -95,3 +95,6 @@ div {
     appearance: none;
     -webkit-appearance: none;
 }
+button:focus, a:focus {
+  outline: 2px solid var(--transparent);
+}

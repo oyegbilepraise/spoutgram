@@ -15,12 +15,13 @@ import {
 } from "../../components";
 import Link from "next/link";
 import * as Yup from "yup";
+import { useState } from "react";
 import styles from "@/layout/AuthLayout/AuthLayout.module.css";
 
 const verifyEmailSchema = Yup.object().shape({
   code: Yup.string()
     .required("Code is required")
-    .matches(/^\d{4}$/, "Invalid code format"),
+    .matches(/^\d{6}$/, "Invalid code format"),
 });
 
 const VerifyAccountScreen = () => {
@@ -48,6 +49,15 @@ const VerifyAccountScreen = () => {
   const handleResendCode = () => {
     dispatch(generateEmailVerificationAction());
   };
+
+  const [showCodeError, setShowCodeError] = useState(false);
+
+  function handleCodeFocus() {
+    setShowCodeError(true);
+  }
+  function handleCodeBlur() {
+    setShowCodeError(false);
+  }
 
   return (
     <AuthLayout>
@@ -103,7 +113,8 @@ const VerifyAccountScreen = () => {
                     type="text"
                     alue={formik.values.code}
                     onChange={formik.handleChange("code")}
-                    onBlur={formik.handleBlur}
+                    // onBlur={formik.handleBlur}
+                    onFocus={handleCodeFocus} onBlur={handleCodeBlur}
                     name="code"
                     autoComplete="off"
                     placeholder="Code"
@@ -113,12 +124,20 @@ const VerifyAccountScreen = () => {
                   {/* error svg */}
                   {formik.touched.code && formik.errors.code ? (
                     <span className={styles.__spanerror}>
-                      <ErrorSvg />
+                      <div style={{position: "relative"}}>
+                        {/* this is the email error msg */}
+                        {showCodeError && formik.touched.code && formik.errors.code
+                            ?
+                            (
+                            <span className={styles.span__inperr}>
+                              <span>{formik.errors.code}</span>
+                            </span>
+                            )
+                        : null}
+                        <ErrorSvg />
+                      </div>
                     </span>
                   ) : null}
-                  {formik.touched.code && formik.errors.code
-                    ? formik.errors.code
-                    : null}
                   {/* error svg  */}
                 </div>
               </div>

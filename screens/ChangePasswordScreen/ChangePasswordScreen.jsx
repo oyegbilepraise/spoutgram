@@ -11,12 +11,9 @@ import { useState } from "react";
 import {
   HideSvg,
   ShowSvg,
-  GoogleSvg,
-  TwitterSvg,
-  AppleSvg,
-  CautionSvg,
   ErrorSvg,
   BtnloadSvg,
+  CautionSvg,
 } from "../../components";
 import * as Yup from "yup";
 import Link from "next/link";
@@ -24,15 +21,15 @@ import styles from "@/layout/AuthLayout/AuthLayout.module.css";
 
 const changeValidationSchema = Yup.object().shape({
   password: Yup.string()
-    .required("Please enter your password")
+    .required("Password is required")
     .matches(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
-      "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character"
+      /^.{8,}$/,
+      "Password should be at least 8 characters"
     ),
   confirmPassword: Yup.string()
-    .required("Please confirm your password")
+    .required("Confirm Password is required")
     .oneOf([Yup.ref("password")], "Password does not match"),
-});
+  });
 
 const ChangePasswordScreen = () => {
   const router = useRouter();
@@ -59,6 +56,23 @@ const ChangePasswordScreen = () => {
 
   const [visible, setVisible] = useState(false);
   const [visibleOne, setVisibleOne] = useState(false);
+
+  const [showPasswordError, setShowPasswordError] = useState(false);
+  const [showCPasswordError, setShowCPasswordError] = useState(false);
+
+  function handlePasswordFocus() {
+    setShowPasswordError(true);
+  }
+  function handlePasswordBlur() {
+    setShowPasswordError(false);
+  }
+
+  function handleCPasswordFocus() {
+    setShowCPasswordError(true);
+  }
+  function handleCPasswordBlur() {
+    setShowCPasswordError(false);
+  }
 
   return (
     <AuthLayout>
@@ -102,15 +116,7 @@ const ChangePasswordScreen = () => {
               {storeData?.apiError && (
                 <div style={{ paddingTop: "5px" }}>
                   <span className={styles.error__msg__xyx}>
-                    {/* <svg
-                      className={styles.error__inval}
-                      width={17}
-                      height={17}
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 24 24"
-                    >
-                      <path d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM11.0026 16L18.0737 8.92893L16.6595 7.51472L11.0026 13.1716L8.17421 10.3431L6.75999 11.7574L11.0026 16Z"></path>
-                    </svg> */}
+                    <CautionSvg/>
                     <span className={styles.error__txt__xyx}>
                       {storeData?.apiError}
                     </span>
@@ -123,9 +129,11 @@ const ChangePasswordScreen = () => {
                     type={visible ? "text" : "password"}
                     value={formik.values.password}
                     onChange={formik.handleChange("password")}
-                    onBlur={formik.handleBlur}
+                    // onBlur={formik.handleBlur}
+                    onFocus={handlePasswordFocus} onBlur={handlePasswordBlur}
                     name="password"
                     placeholder="Password"
+                    spellcheck="false"
                     className={`${styles.data_content_pass} ${styles._00x00_pwd}`}
                   />
                   <span className={styles.absolute__span}>
@@ -135,9 +143,13 @@ const ChangePasswordScreen = () => {
 
                     {/* error svg  */}
                     {formik.touched.password && formik.errors.password ? (
-                      <span
-                        className={`${styles.__spanerror} ${styles.passwrd__error}`}
-                      >
+                      <span className={`${styles.__spanerror} ${styles.passwrd__error}`} style={{position: "relative"}}>
+                        {/* this is the password error msg */}
+                        {showPasswordError && formik.touched.password && formik.errors.password
+                            ? (<span className={styles.span__inperr}>
+                              <span>{formik.errors.password}</span>
+                            </span>)
+                        : null}
                         <ErrorSvg />
                       </span>
                     ) : null}
@@ -149,9 +161,11 @@ const ChangePasswordScreen = () => {
                     type={visibleOne ? "text" : "password"}
                     value={formik.values.confirmPassword}
                     onChange={formik.handleChange("confirmPassword")}
-                    onBlur={formik.handleBlur}
+                    // onBlur={formik.handleBlur}
+                    onFocus={handleCPasswordFocus} onBlur={handleCPasswordBlur}
                     name="confirmPassword"
                     placeholder="Confirm Password"
+                    spellcheck="false"
                     className={`${styles.data_content_pass} ${styles._00x00_pwd}`}
                   />
 
@@ -163,9 +177,13 @@ const ChangePasswordScreen = () => {
                     {/* error svg  */}
                     {formik.touched.confirmPassword &&
                     formik.errors.confirmPassword ? (
-                      <span
-                        className={`${styles.__spanerror} ${styles.passwrd__error}`}
-                      >
+                      <span className={`${styles.__spanerror} ${styles.passwrd__error}`} style={{position: "relative"}}>
+                        {/* this is the confirm password  error msg */}
+                        {showCPasswordError && formik.touched.confirmPassword && formik.errors.confirmPassword
+                            ? (<span className={styles.span__inperr}>
+                              <span>{formik.errors.confirmPassword}</span>
+                            </span>)
+                        : null}
                         <ErrorSvg />
                       </span>
                     ) : null}

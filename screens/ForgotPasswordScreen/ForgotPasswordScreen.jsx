@@ -1,40 +1,32 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
-
 import { useFormik } from "formik";
 import * as Yup from "yup";
-
 import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
 import {
   forgotPasswordAction,
   registerUserAction,
 } from "@/redux/slices/authSlice/authSlice"; //this registerUserAction should be replaced with the appropriate redux user action
 import { useSelector } from "react-redux";
 import {
-  HideSvg,
-  ShowSvg,
-  GoogleSvg,
-  TwitterSvg,
-  AppleSvg,
   CautionSvg,
   ErrorSvg,
   BtnloadSvg,
 } from "../../components";
 import { AuthLayout } from "@/layout";
-
 import styles from "@/layout/AuthLayout/AuthLayout.module.css";
 
 const forgotValidationSchema = Yup.object().shape({
   email: Yup.string()
-    .email("Enter a valid email")
-    .required("Please enter your email address"),
+    .email("Invalid email format")
+    .required("Email is required"),
 });
 
 const ForgotPasswordScreen = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const storeData = useSelector((store) => store?.auth?.forgotPassword);
-
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -48,6 +40,15 @@ const ForgotPasswordScreen = () => {
 
   if (storeData.isEmailAvailable) {
     router.push("/confirm-change-password");
+  }
+
+  const [showEmailError, setShowEmailError] = useState(false);
+
+  function handleEmailFocus() {
+    setShowEmailError(true);
+  }
+  function handleEmailBlur() {
+    setShowEmailError(false);
   }
 
   return (
@@ -88,7 +89,8 @@ const ForgotPasswordScreen = () => {
                     type="text"
                     value={formik.values.email}
                     onChange={formik.handleChange("email")}
-                    onBlur={formik.handleBlur}
+                    onFocus={handleEmailFocus} 
+                    onBlur={handleEmailBlur}
                     name="email"
                     placeholder="Email"
                     className={styles.data_content_pass}
@@ -97,7 +99,18 @@ const ForgotPasswordScreen = () => {
                   {/* error svg */}
                   {formik.touched.email && formik.errors.email ? (
                     <span className={styles.__spanerror}>
-                      <ErrorSvg />
+                      <div style={{position: "relative"}}>
+                        {/* this is the email error msg */}
+                        {showEmailError && formik.touched.email && formik.errors.email
+                            ?
+                            (
+                            <span className={styles.span__inperr}>
+                              <span>{formik.errors.email}</span>
+                            </span>
+                            )
+                        : null}
+                        <ErrorSvg />
+                      </div>
                     </span>
                   ) : null}
 

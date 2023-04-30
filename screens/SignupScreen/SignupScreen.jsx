@@ -12,7 +12,6 @@ import {
   ShowSvg,
   GoogleSvg,
   TwitterSvg,
-  AppleSvg,
   CautionSvg,
   ErrorSvg,
   BtnloadSvg,
@@ -23,16 +22,16 @@ import styles from "@/layout/AuthLayout/AuthLayout.module.css";
 
 const signupValidationSchema = Yup.object().shape({
   email: Yup.string()
-    .email("Please enter a valid email address")
-    .required("Please enter your email address."),
+    .email("Invalid email format")
+    .required("Email is required"),
   password: Yup.string()
-    .required("Please enter your password")
+    .required("Password is required")
     .matches(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()_+={}[\]|\\:;"'<,>.?/])(?=.{8,})/,
-      "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character"
+      /^.{8,}$/,
+      "Password should be at least 8 characters"
     ),
   confirmPassword: Yup.string()
-    .required("Please confirm your password")
+    .required("Confirm Password is required")
     .oneOf([Yup.ref("password")], "Password does not match"),
 });
 
@@ -60,9 +59,32 @@ const SignUpScreen = () => {
   }
 
   const [password, setPassword] = useState("");
-
   const [visible, setVisible] = useState(false);
   const [visibleOne, setVisibleOne] = useState(false);
+  const [showEmailError, setShowEmailError] = useState(false);
+  const [showPasswordError, setShowPasswordError] = useState(false);
+  const [showCPasswordError, setShowCPasswordError] = useState(false);
+
+  function handleEmailFocus() {
+    setShowEmailError(true);
+  }
+  function handleEmailBlur() {
+    setShowEmailError(false);
+  }
+
+  function handlePasswordFocus() {
+    setShowPasswordError(true);
+  }
+  function handlePasswordBlur() {
+    setShowPasswordError(false);
+  }
+
+  function handleCPasswordFocus() {
+    setShowCPasswordError(true);
+  }
+  function handleCPasswordBlur() {
+    setShowCPasswordError(false);
+  }
 
   return (
     <AuthLayout>
@@ -77,7 +99,7 @@ const SignUpScreen = () => {
                   {/* continue with google */}
                   <button className={`${styles.oauths_} ${styles.ggl_oauth}`}>
                     <GoogleSvg />
-                    Continue with Google
+                    Continue With Google
                   </button>
                 </div>
 
@@ -85,15 +107,7 @@ const SignUpScreen = () => {
                   {/* continue with twitter */}
                   <button className={`${styles.oauths_} ${styles.twtr_oauth}`}>
                     <TwitterSvg />
-                    Continue with Twitter
-                  </button>
-                </div>
-
-                <div>
-                  {/* continue with apple */}
-                  <button className={`${styles.oauths_} ${styles.appl_oauth}`}>
-                    <AppleSvg />
-                    Continue with Apple
+                    Continue With Twitter
                   </button>
                 </div>
               </div>
@@ -114,110 +128,89 @@ const SignUpScreen = () => {
               )}
 
               <div className={styles.xpnd_inpts} style={{ paddingTop: "14px" }}>
-                <div style={{ position: "relative" }}>
-                  <input
-                    type="text"
-                    value={formik.values.email}
-                    onChange={formik.handleChange("email")}
-                    onBlur={formik.handleBlur}
-                    name="email"
-                    placeholder="Email"
-                    className={styles.data_content_pass}
-                  />
 
+                <div style={{ position: "relative" }}>
+                  {/* email input */}
+                  <input type="text" spellcheck="false"  value={formik.values.email} onChange={formik.handleChange("email")} onFocus={handleEmailFocus} onBlur={handleEmailBlur} name="email" placeholder="Email" className={styles.data_content_pass} />
                   {/* error svg */}
                   {formik.touched.email && formik.errors.email ? (
                     <span className={styles.__spanerror}>
-                      <ErrorSvg />
+                      <div style={{position: "relative"}}>
+                        {/* this is the email error msg */}
+                        {showEmailError && formik.touched.email && formik.errors.email
+                            ?
+                            (
+                            <span className={styles.span__inperr}>
+                              <span>{formik.errors.email}</span>
+                            </span>
+                            )
+                        : null}
+                        <ErrorSvg />
+                      </div>
                     </span>
                   ) : null}
-                  {/* we need to let the user know what's truly wrong I don't think the X is enough but you can remove this if you see it somehow  */}
-                  {/* {formik.touched.email && formik.errors.email
-                    ? formik.errors.email
-                    : null} */}
-                  {/* error svg  */}
                 </div>
 
                 <div style={{ position: "relative" }}>
-                  <input
-                    type={visible ? "text" : "password"}
-                    value={formik.values.password}
-                    onChange={formik.handleChange("password")}
-                    onBlur={formik.handleBlur}
-                    name="password"
-                    placeholder="Password"
-                    className={`${styles.data_content_pass} ${styles._00x00_pwd}`}
-                  />
-
+                  {/* password input */}
+                  <input type={visible ? "text" : "password"} value={formik.values.password} onChange={formik.handleChange("password")} onFocus={handlePasswordFocus} onBlur={handlePasswordBlur} name="password" placeholder="Password" className={`${styles.data_content_pass} ${styles._00x00_pwd}`} />
+                  {/* show and hide password svg */}
                   <span className={styles.absolute__span}>
                     <span onClick={() => setVisible(!visible)}>
                       {visible ? <HideSvg /> : <ShowSvg />}
                     </span>
-
                     {/* error svg  */}
                     {formik.touched.password && formik.errors.password ? (
-                      <span
-                        className={`${styles.__spanerror} ${styles.passwrd__error}`}
-                      >
+                      <span className={`${styles.__spanerror} ${styles.passwrd__error}`} style={{position: "relative"}}>
+                        {/* this is the password error msg */}
+                        {showPasswordError && formik.touched.password && formik.errors.password
+                            ? (<span className={styles.span__inperr}>
+                              <span>{formik.errors.password}</span>
+                            </span>)
+                        : null}
                         <ErrorSvg />
                       </span>
                     ) : null}
                     {/* error svg  */}
                   </span>
-                  {/* we need to let the user know what's truly wrong I don't think the X is enough but you can remove this if you see it somehow  */}
-                  {/* {formik.touched.password && formik.errors.password
-                    ? formik.errors.password
-                    : null} */}
                 </div>
-                <div style={{ position: "relative" }}>
-                  <input
-                    type={visibleOne ? "text" : "password"}
-                    value={formik.values.confirmPassword}
-                    onChange={formik.handleChange("confirmPassword")}
-                    onBlur={formik.handleBlur}
-                    name="confirmPassword"
-                    placeholder="Confirm Password"
-                    className={`${styles.data_content_pass} ${styles._00x00_pwd}`}
-                  />
+                
 
+                <div style={{ position: "relative" }}>
+                  {/* confirm password input */}
+                  <input type={visibleOne ? "text" : "password"} value={formik.values.confirmPassword} onChange={formik.handleChange("confirmPassword")} onFocus={handleCPasswordFocus} onBlur={handleCPasswordBlur} name="confirmPassword" placeholder="Confirm Password" className={`${styles.data_content_pass} ${styles._00x00_pwd}`} />
+                  {/* show and hide password svg */}
                   <span className={styles.absolute__span}>
                     <span onClick={() => setVisibleOne(!visibleOne)}>
                       {visibleOne ? <HideSvg /> : <ShowSvg />}
                     </span>
-
                     {/* error svg  */}
                     {formik.touched.confirmPassword &&
                     formik.errors.confirmPassword ? (
-                      <span
-                        className={`${styles.__spanerror} ${styles.passwrd__error}`}
-                      >
+                      <span className={`${styles.__spanerror} ${styles.passwrd__error}`} style={{position: "relative"}}>
+                        {/* this is the confirm password  error msg */}
+                        {showCPasswordError && formik.touched.confirmPassword && formik.errors.confirmPassword
+                            ? (<span className={styles.span__inperr}>
+                              <span>{formik.errors.confirmPassword}</span>
+                            </span>)
+                        : null}
                         <ErrorSvg />
                       </span>
                     ) : null}
-                    {/* we need to let the user know what's truly wrong I don't think the X is enough but you can remove this if you see it somehow  */}
-                    {/* {formik.touched.confirmPassword &&
-                    formik.errors.confirmPassword
-                      ? formik.errors.confirmPassword
-                      : null} */}
-                    {/* error svg  */}
                   </span>
                 </div>
+
               </div>
 
               <div>
                 {storedData?.loading ? (
-                  <button
-                    className={styles.pass_data_bd}
-                    type="submit"
-                    style={{ position: "relative" }}
-                    disabled
-                  >
+                  <button className={styles.pass_data_bd} type="submit" style={{ position: "relative" }} disabled >
                     <>
                       <BtnloadSvg />
                     </>
                     Sign up
                   </button>
-                ) : (
+                  ) : (
                   <button className={styles.pass_data_bd} type="submit">
                     Sign up
                   </button>
@@ -226,11 +219,7 @@ const SignUpScreen = () => {
 
               <span className={styles.xkktndckl}>
                 By signing up you agree to our{" "}
-                <a
-                  href="/terms-of-service"
-                  target="_blank"
-                  style={{ color: "#54cfff" }}
-                >
+                <a href="/terms-of-service" target="_blank" style={{ color: "#54cfff" }} >
                   Terms of Use
                 </a>{" "}
                 &{" "}
