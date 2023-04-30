@@ -1,7 +1,7 @@
 import React from "react";
 import { ConfirmPasswordChangeScreen } from "@/screens";
 import Head from "next/head";
-import ForgotPasswordProtected from "@/components/ProtectedRoutes/ProtectedForgotPassword";
+import UnauthenticatedRoute from "@/components/ProtectedRoutes/UnauthenticatedRoute";
 
 const ConfirmChangePassword = () => {
   return (
@@ -34,4 +34,4 @@ const ConfirmChangePassword = () => {
   );
 };
 
-export default ForgotPasswordProtected(ConfirmChangePassword);
+export default UnauthenticatedRoute(ConfirmChangePassword);

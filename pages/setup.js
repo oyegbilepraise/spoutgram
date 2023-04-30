@@ -1,11 +1,12 @@
-import React from 'react'
-import { SetupScreen } from '@/screens'
-import Head from 'next/head'
+import React from "react";
+import { SetupScreen } from "@/screens";
+import Head from "next/head";
+import ProtectedRoute from "@/components/ProtectedRoutes/ProtectedRoute";
 
 const Setup = () => {
   return (
     <>
-     <Head>
+      <Head>
         <title>Spoutgram / Setup</title>
         <>
           <meta charSet="UTF-8" />
@@ -13,7 +14,10 @@ const Setup = () => {
           <meta name="locale" content="en_US" />
           <meta name="theme-color" content="#ffffff" />
           <meta name="robots" content="noindex" />
-          <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0,viewport-fit=cover" />
+          <meta
+            name="viewport"
+            content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0,viewport-fit=cover"
+          />
           <meta name="description" content="Setup Page." />
           <meta property="og:site_name" content="Spoutgram" />
           <meta property="og:title" content="Spoutgram / Setup." />
@@ -23,10 +27,9 @@ const Setup = () => {
         </>
         <link rel="icon" href="/apple-touch-icon.png" type="image/png" />
       </Head>
-      <SetupScreen/>
+      <SetupScreen />
     </>
-    
-  )
-}
+  );
+};
 
-export default Setup
+export default ProtectedRoute(Setup);

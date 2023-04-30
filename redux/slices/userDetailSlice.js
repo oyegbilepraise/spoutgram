@@ -2,23 +2,24 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { postRequest } from "../api";
 import { URL } from "../urls";
 import Cookies from "js-cookie";
+import { baseUrl } from "../baseUrl";
 
 // Create user profile
 export const createProfileAction = createAsyncThunk(
-  "users/create-profile",
+  "/users/create-profile",
   async (payload, { rejectWithValue }) => {
     const token = Cookies.get("token");
     try {
       const res = await postRequest({
-        url: URL.createProfile,
+        url: `${baseUrl}${URL.createProfile}`,
         data: payload,
         token,
       });
       console.log(res.data);
       return res.data;
     } catch (err) {
-      console.log(err.response);
-      return rejectWithValue(err?.response?.data?.message);
+      console.log(err);
+      return rejectWithValue(err?.response?.data?.data);
     }
   }
 );
@@ -26,16 +27,14 @@ export const createProfileAction = createAsyncThunk(
 const userDetailSlice = createSlice({
   name: "userDetails",
   initialState: {
-    userProfile: Cookies.get("user-profile")
-      ? Cookies.get("user-profile")
-      : {
-          name: "",
-          username: "",
-          dob: "",
-          location: "",
-          website: "",
-          bio: "",
-        },
+    userProfile: {
+      name: "",
+      username: "",
+      dob: "",
+      location: "",
+      website: "",
+      bio: "",
+    },
     currentComponent: 1,
     profileCreation: {
       loading: false,
@@ -55,6 +54,8 @@ const userDetailSlice = createSlice({
     // create profile.
     builder.addCase(createProfileAction.pending, (state) => {
       state.profileCreation.loading = true;
+      state.profileCreation.profile = {};
+      state.profileCreation.appError = null;
     });
     builder.addCase(createProfileAction.fulfilled, (state, action) => {
       state.profileCreation.loading = false;

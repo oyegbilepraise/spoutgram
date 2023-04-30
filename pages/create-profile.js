@@ -1,7 +1,7 @@
 import React from "react";
 import { CreateProfileScreen } from "@/screens";
 import Head from "next/head";
-import ProtectRoute from "@/components/ProtectedRoutes/ProtectedRoute";
+import ProtectedRoute from "@/components/ProtectedRoutes/ProtectedRoute";
 
 const CreateProfile = () => {
   return (
@@ -34,4 +34,4 @@ const CreateProfile = () => {
   );
 };
 
-export default CreateProfile;
+export default ProtectedRoute(CreateProfile);

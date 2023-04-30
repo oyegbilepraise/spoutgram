@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { postRequest, putRequest } from "../../api";
+import { getRequest, postRequest, putRequest } from "../../api";
 import { URL } from "../../urls";
 import Cookies from "js-cookie";
 import { baseUrl } from "@/redux/baseUrl";
@@ -109,13 +109,21 @@ export const changePasswordAction = createAsyncThunk(
   }
 );
 
-// Local storage.
-// let userFromStorage
-//   if (typeof window !== 'undefined') {
-//     // Perform localStorage action
-//     userFromStorage = localStorage.getItem('userInfo') ?
-//   JSON.parse(localStorage.getItem('userInfo')) : null;
-//   }
+//get User
+export const getUserAction = createAsyncThunk(
+  "/auth",
+  async (payload, { rejectWithValue }) => {
+    try {
+      const res = await getRequest({
+        url: `${baseUrl}${auth}`,
+        token: payload,
+      });
+      return res.data;
+    } catch (err) {
+      return rejectWithValue(err?.response?.data?.message);
+    }
+  }
+);
 
 const authSlice = createSlice({
   name: "auth",
@@ -153,9 +161,27 @@ const authSlice = createSlice({
       isConfirmed: false,
       message: {},
     },
+    getUser: {
+      loading: false,
+      apiError: null,
+      user: {},
+    },
   },
   reducers: {},
   extraReducers: (builder) => {
+    //get User
+    builder.addCase(getUserAction.pending, (state) => {
+      state.getUser.loading = true;
+    });
+    builder.addCase(getUserAction.fulfilled, (state, action) => {
+      state.getUser.loading = false;
+      state.getUser.user = action?.payload;
+    });
+    builder.addCase(getUserAction.rejected, (state, action) => {
+      state.getUser.loading = false;
+      state.getUser.apiError = action?.payload;
+    });
+
     // Register.
     builder.addCase(registerUserAction.pending, (state) => {
       state.registerUser.loading = true;
@@ -189,6 +215,9 @@ const authSlice = createSlice({
     // Verify User mail code input.
     builder.addCase(verifyEmailAction.pending, (state) => {
       state.verifyCode.loading = true;
+      state.verifyCode.user = {};
+      state.verifyCode.verified = false;
+      state.verifyCode.appError = null;
     });
     builder.addCase(verifyEmailAction.fulfilled, (state, action) => {
       state.verifyCode.loading = false;
@@ -203,6 +232,8 @@ const authSlice = createSlice({
     // Log user in
     builder.addCase(loginUserAction.pending, (state) => {
       state.loginUser.loading = true;
+      state.loginUser.appError = null;
+      state.loginUser.user = {};
     });
     builder.addCase(loginUserAction.fulfilled, (state, action) => {
       state.loginUser.loading = false;
@@ -216,6 +247,9 @@ const authSlice = createSlice({
     //Forgot Password
     builder.addCase(forgotPasswordAction.pending, (state) => {
       state.forgotPassword.loading = true;
+      state.forgotPassword.message = {};
+      state.forgotPassword.apiError = null;
+      state.forgotPassword.isEmailAvailable = false;
     });
     builder.addCase(forgotPasswordAction.fulfilled, (state, action) => {
       state.forgotPassword.loading = false;
@@ -230,6 +264,9 @@ const authSlice = createSlice({
     //Change Password
     builder.addCase(changePasswordAction.pending, (state) => {
       state.changePassword.loading = true;
+      state.changePassword.apiError = null;
+      state.changePassword.message = {};
+      state.changePassword.isConfirmed = false;
     });
     builder.addCase(changePasswordAction.fulfilled, (state, action) => {
       state.changePassword.loading = false;

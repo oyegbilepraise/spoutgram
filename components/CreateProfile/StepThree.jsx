@@ -360,7 +360,6 @@ const StepThree = () => {
           <button
             style={{ width: "100%" }}
             className={styles.pass_data_bd}
-            onClick={handleSubmit}
             type="submit"
           >
             Create

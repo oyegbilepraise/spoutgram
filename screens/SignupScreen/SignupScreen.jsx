@@ -53,7 +53,10 @@ const SignUpScreen = () => {
     validationSchema: signupValidationSchema,
   });
 
-  if (storedData?.registered.success) {
+  if (
+    storedData?.registered.success &&
+    !storedData?.registered.isAccountVerified
+  ) {
     dispatch(generateEmailVerificationAction());
     router.push("/verify");
   }
@@ -223,9 +226,9 @@ const SignUpScreen = () => {
                   Terms of Use
                 </a>{" "}
                 &{" "}
-                <a href="/cookie-policy" style={{ color: "#54cfff" }}>
+                <Link href="/cookie-policy" style={{ color: "#54cfff" }}>
                   Cookie Policy
-                </a>
+                </Link>
                 .
               </span>
               <span className={styles.ouplskk}>

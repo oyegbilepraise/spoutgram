@@ -1,5 +1,8 @@
 import styles from "@/layout/AuthLayout/AuthLayout.module.css";
-import { addDetailsToUserProfile, nextComponent,} from "@/redux/slices/userDetailSlice";
+import {
+  addDetailsToUserProfile,
+  nextComponent,
+} from "@/redux/slices/userDetailSlice";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -12,7 +15,7 @@ import {
   ErrorSvg,
   BtnloadSvg,
 } from "../../components";
-const StepOne = () => {
+const StepOne = ({ values, handleDetailsInput }) => {
   // toggles
   // const [status, setStatus] = useState(false);
   // const [organStatus, setOrganStatus] = useState(false);
@@ -20,23 +23,22 @@ const StepOne = () => {
   // defined dob, but I didn't add other things
 
   // this is the validation for Date of Birth
-  const [dob, setDob] = useState('');
+  const [dob, setDob] = useState("");
 
-  
   const handleInputChange = (event) => {
     const inputVal = event.target.value;
     const regex = /^[0-9/]*$/;
     if (regex.test(inputVal)) {
       // Format the input value with slashes after MM and DD
       if (inputVal.length === 2 && dob.length === 1) {
-        setDob(inputVal + '/');
+        setDob(inputVal + "/");
       } else if (inputVal.length === 5 && dob.length === 4) {
-        setDob(inputVal + '/');
+        setDob(inputVal + "/");
       } else {
         setDob(inputVal);
       }
       // Restrict year input to four digits
-      const parts = inputVal.split('/');
+      const parts = inputVal.split("/");
       if (parts.length === 3) {
         const month = parts[0];
         const day = parts[1];
@@ -74,12 +76,11 @@ const StepOne = () => {
     }
   };
   const handleInputFocus = () => {
-    document.getElementById('dob-input').placeholder = 'MM/DD/YYYY';
+    document.getElementById("dob-input").placeholder = "MM/DD/YYYY";
   };
   const handleInputBlur = () => {
-    document.getElementById('dob-input').placeholder = 'Date of Birth';
+    document.getElementById("dob-input").placeholder = "Date of Birth";
   };
-  
 
   //   values
   // const [statusValue, setStatusValue] = useState("");
@@ -133,13 +134,6 @@ const StepOne = () => {
   // sending the data to redux
   const handleNext = () => {
     dispatch(nextComponent(2));
-    dispatch(
-      addDetailsToUserProfile({
-        name: names.name,
-        username: names.username,
-        dob,
-      })
-    );
   };
 
   return (
@@ -148,10 +142,15 @@ const StepOne = () => {
         {/* this is the name */}
         <div className={styles.ibistro__xyz__one}>
           <div style={{ position: "relative" }}>
-          <input type="text" placeholder="Name" className={styles.data_content_pass} name="name"
-          //  value={names.name} 
-          //  onChange={handleNamesInput}  
-           />
+            <input
+              type="text"
+              placeholder="Name"
+              className={styles.data_content_pass}
+              name="name"
+              value={values.name}
+              onChange={handleDetailsInput}
+            />
+
             <span className={styles.absolute__span}>
               <span>
                 <svg
@@ -179,10 +178,14 @@ const StepOne = () => {
         {/* this is the username */}
         <div className={styles.ibistro__xyz__one}>
           <div style={{ position: "relative" }}>
-          <input type="text" placeholder="Username" className={styles.data_content_pass} name="username" 
-          // value={names.username} 
-          // onChange={handleNamesInput}  
-          />
+            <input
+              type="text"
+              placeholder="Username"
+              className={styles.data_content_pass}
+              name="username"
+              value={values.username}
+              onChange={handleDetailsInput}
+            />
             <span className={styles.absolute__span}>
               <span>
                 <svg
@@ -213,10 +216,11 @@ const StepOne = () => {
             <input
               id="dob-input"
               type="text"
+              name="dateOfBirth"
               placeholder="Date of Birth"
               className={styles.data_content_pass}
-              value={dob}
-              onChange={handleInputChange}
+              value={values.dateOfBirth}
+              // onChange={handleInputChange}
               onFocus={handleInputFocus}
               onBlur={handleInputBlur}
             />
@@ -246,21 +250,23 @@ const StepOne = () => {
       </div>
 
       <div>
-        <button  className={styles.pass_data_bd} onClick={handleNext}>Next</button>
+        <button className={styles.pass_data_bd} onClick={handleNext}>
+          Next
+        </button>
       </div>
 
       {/* {statusValue !== "" && names.username !== "" && names.name !== "" && ( */}
 
-        {/* <button  className={styles.pass_data_bd} onClick={handleNext}>Next</button>
+      {/* <button  className={styles.pass_data_bd} onClick={handleNext}>Next</button>
         // <div className={styles.btn_data_container}>
         //   <span className={styles.xspanfloat}>
         //     <div */}
-        {/* //       className={`${styles.submit_user_data} ${styles.upload_all_dt}`}
+      {/* //       className={`${styles.submit_user_data} ${styles.upload_all_dt}`}
         //       onClick={handleNext}
         //     > */}
-        {/* //       Next */}
-        {/* //       <svg */}
-        {/* //         className={styles.arrow_next}
+      {/* //       Next */}
+      {/* //       <svg */}
+      {/* //         className={styles.arrow_next}
         //         xmlns="http://www.w3.org/2000/svg"
         //         width="24"
         //         height="24"
@@ -273,9 +279,9 @@ const StepOne = () => {
         //       >
         //         <path d="M5 12h13M12 5l7 7-7 7" />
         //       </svg> */}
-        {/* //     </div> */}
-        {/* //   </span> */}
-        {/* // </div> */}
+      {/* //     </div> */}
+      {/* //   </span> */}
+      {/* // </div> */}
       {/* // )} */}
     </>
   );

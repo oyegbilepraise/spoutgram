@@ -1,32 +1,49 @@
+import { getUserAction } from "@/redux/slices/authSlice/authSlice";
+import Routes from "@/utils/routes";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 const ProtectedRoute = (WrappedComponent) => {
   const Wrapper = (props) => {
+    const [error, setError] = useState("");
     const router = useRouter();
-    const { user } = useSelector((state) => state?.auth?.loginUser);
+    const dispatch = useDispatch();
+    const { user, apiError } = useSelector((state) => state?.auth?.getUser);
+    const isAuthenticated = !!Cookies.get("token");
 
-    // check for authentication status on mount
     useEffect(() => {
-      // check if user is authenticated
-      const isAuthenticated = Cookies.get("token");
+      // If user is not authenticated, redirect to login page
+      if (!isAuthenticated) {
+        router.push(Routes.LOGIN);
+        return;
+      }
 
-      // if user is not authenticated, redirect to login page
-      if (!isAuthenticated && !user.hasProfile) {
-        router.push("/login");
-      }
-      if (isAuthenticated && user.hasProfile) {
-        router.push("/");
-      }
-      if (isAuthenticated && !user.hasProfile) {
-        router.push("/create-profile");
-      }
-    }, []);
+      // Get user details
+      dispatch(getUserAction(isAuthenticated));
 
-    // if user is authenticated, render the target page
-    return <WrappedComponent {...props} />;
+      // Handle api error
+      if (apiError) {
+        setError("Oops! Something went wrong. Please try again later.");
+        return;
+      }
+
+      // If user is not verified, redirect to verify page
+      if (user && !user.isVerified && router.pathname !== Routes.VERIFY) {
+        router.push(Routes.VERIFY);
+        return;
+      }
+
+      // If user is verified and has no profile, go to create profile page
+      if (user && !user.profile && router.pathname !== Routes.CREATE_PROFILE) {
+        router.push(Routes.CREATE_PROFILE);
+        return;
+      }
+    }, [apiError, dispatch, isAuthenticated, router, user]);
+
+    // Render error message or wrapped component
+    return error ? <p>{error}</p> : <WrappedComponent {...props} />;
   };
 
   return Wrapper;

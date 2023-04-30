@@ -1,7 +1,10 @@
 import { useRouter } from "next/router";
 import { useFormik } from "formik";
 import { useDispatch } from "react-redux";
-import { registerUserAction } from "@/redux/slices/authSlice/authSlice"; //this registerUserAction should be replaced with the appropriate redux user action
+import {
+  forgotPasswordAction,
+  registerUserAction,
+} from "@/redux/slices/authSlice/authSlice"; //this registerUserAction should be replaced with the appropriate redux user action
 import { useSelector } from "react-redux";
 import { AuthLayout } from "@/layout";
 import {
@@ -9,10 +12,13 @@ import {
   ErrorSvg,
   ResendLdSvg,
   BtnloadSvg,
+  CautionSvg,
 } from "../../components";
 import Link from "next/link";
 import styles from "@/layout/AuthLayout/AuthLayout.module.css";
 import * as Yup from "yup";
+import Cookies from "js-cookie";
+import { useEffect } from "react";
 
 const confirmValidationSchema = Yup.object().shape({
   code: Yup.string()
@@ -23,8 +29,8 @@ const confirmValidationSchema = Yup.object().shape({
 const ConfirmPasswordChangeScreen = () => {
   const router = useRouter();
   const dispatch = useDispatch();
-  const storeData = useSelector((store) => store?.auth);
-
+  const storeData = useSelector((store) => store?.auth?.forgotPassword);
+  const email = Cookies.get("email");
   const formik = useFormik({
     initialValues: {
       code: "",
@@ -35,11 +41,9 @@ const ConfirmPasswordChangeScreen = () => {
     validationSchema: confirmValidationSchema,
   });
 
-  if (storeData.isLoggedIn) {
-    //this should be changed to the appropiate function i.e if{storeData.isConfirmed}
-    router.push("/change-password");
-  }
-  const resendEmail = () => {};
+  const resendEmail = () => {
+    dispatch(forgotPasswordAction({ email }));
+  };
 
   return (
     <AuthLayout>
@@ -67,23 +71,26 @@ const ConfirmPasswordChangeScreen = () => {
                 If you can't find the email, check your spam.
               </span>
 
-              <div style={{ paddingTop: "5px" }}>
-                <span className={styles.error__msg__xyx}>
-                  <svg
-                    className={styles.error__inval}
-                    width={17}
-                    height={17}
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM11.0026 16L18.0737 8.92893L16.6595 7.51472L11.0026 13.1716L8.17421 10.3431L6.75999 11.7574L11.0026 16Z"></path>
-                  </svg>
-                  <span className={styles.error__txt__xyx}>
-                    Confirmation email resent!
+              {storeData.apiError && (
+                <div style={{ paddingTop: "5px" }}>
+                  <span className={styles.error__msg__xyx}>
+                    <CautionSvg />
+                    <span className={styles.error__txt__xyx}>
+                      {storeData.apiError}
+                    </span>
                   </span>
-                </span>
-              </div>
-
+                </div>
+              )}
+              {storeData.message.message && (
+                <div style={{ paddingTop: "5px" }}>
+                  <span className={styles.error__msg__xyx}>
+                    <CautionSvg />
+                    <span className={styles.error__txt__xyx}>
+                      {storeData.message.message}
+                    </span>
+                  </span>
+                </div>
+              )}
               <div className={styles.xpnd_inpts} style={{ paddingTop: "14px" }}>
                 <div style={{ position: "relative", display: "none" }}>
                   <input

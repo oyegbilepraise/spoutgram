@@ -1,7 +1,7 @@
 import React from "react";
 import { VerifyAccountScreen } from "@/screens";
 import Head from "next/head";
-import ForgotPasswordProtected from "@/components/ProtectedRoutes/ProtectedForgotPassword";
+import ProtectedRoute from "@/components/ProtectedRoutes/ProtectedRoute";
 
 const Verify = () => {
   return (
@@ -31,4 +31,4 @@ const Verify = () => {
   );
 };
 
-export default ForgotPasswordProtected(Verify);
+export default ProtectedRoute(Verify);

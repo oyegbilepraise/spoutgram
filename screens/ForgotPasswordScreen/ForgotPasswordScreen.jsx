@@ -16,6 +16,8 @@ import {
 } from "../../components";
 import { AuthLayout } from "@/layout";
 import styles from "@/layout/AuthLayout/AuthLayout.module.css";
+import Cookies from "js-cookie";
+import { useEffect, useState } from "react";
 
 const forgotValidationSchema = Yup.object().shape({
   email: Yup.string()
@@ -27,28 +29,24 @@ const ForgotPasswordScreen = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const storeData = useSelector((store) => store?.auth?.forgotPassword);
+  const [response, setResponse] = useState("");
+  const email = Cookies.get("email");
   const formik = useFormik({
     initialValues: {
-      email: "",
+      email: email || "",
     },
     onSubmit: (values) => {
-      console.log(values);
+      setResponse("");
       dispatch(forgotPasswordAction(values));
+      Cookies.set("email", values.email);
     },
-    validationSchema: forgotValidationSchema,
+    // validationSchema: forgotValidationSchema,
   });
 
   if (storeData.isEmailAvailable) {
     router.push("/confirm-change-password");
-  }
 
-  const [showEmailError, setShowEmailError] = useState(false);
-
-  function handleEmailFocus() {
-    setShowEmailError(true);
-  }
-  function handleEmailBlur() {
-    setShowEmailError(false);
+    return () => clearTimeout(timeoutId);
   }
 
   return (
@@ -78,7 +76,17 @@ const ForgotPasswordScreen = () => {
                   <span className={styles.error__msg__xyx}>
                     <CautionSvg />
                     <span className={styles.error__txt__xyx}>
-                      Email not registered!
+                      {storeData.apiError}
+                    </span>
+                  </span>
+                </div>
+              )}
+              {storeData.message.message && (
+                <div style={{ paddingTop: "5px" }}>
+                  <span className={styles.error__msg__xyx}>
+                    <CautionSvg />
+                    <span className={styles.error__txt__xyx}>
+                      {storeData.message.message}
                     </span>
                   </span>
                 </div>
@@ -140,6 +148,7 @@ const ForgotPasswordScreen = () => {
                   </button>
                 )}
               </div>
+
               <span className={styles.ouplskk}>
                 <Link href="/login">Back to Sign in</Link>
               </span>

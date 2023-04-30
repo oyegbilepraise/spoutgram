@@ -16,20 +16,12 @@ import {
   BtnloadSvg,
 } from "../../components";
 
-const StepTwo = () => {
+const StepTwo = ({ values, handleDetailsInput }) => {
   // storing the current data into state before sending to create profile
   const [bioTxtValue, setBioTxtValue] = useState("");
-  const [userLocation, setUserLocation] = useState("");
-  const [linkText, setLinkText] = useState("");
 
   //   Code to prevent user from typing at max text
   const [txtLeft, setTxtLeft] = useState(150);
-
-  const handleBio = (e) => {
-    if (e.target.value.length <= 150) {
-      setBioTxtValue(e.target.value);
-    }
-  };
 
   //   function to handle user input when they copy a text and paste
   const handlePaste = (e) => {
@@ -59,23 +51,9 @@ const StepTwo = () => {
   const dispatch = useDispatch();
   const userDetails = useSelector((state) => state.userDetails.userProfile);
 
-  // get the data from redux and show to the user
-  useEffect(() => {
-    setUserLocation(userDetails.location);
-    setLinkText(userDetails.website);
-    setBioTxtValue(userDetails.bio);
-  }, []);
-
   // sending the data to redux
   const handleNext = () => {
     dispatch(nextComponent(3));
-    dispatch(
-      addDetailsToUserProfile({
-        location: userLocation,
-        website: linkText,
-        bio: bioTxtValue,
-      })
-    );
   };
 
   return (
@@ -86,10 +64,11 @@ const StepTwo = () => {
           <div style={{ position: "relative" }}>
             <input
               type="text"
+              name="location"
               placeholder="Location"
               className={styles.data_content_pass}
-              value={userLocation}
-              onChange={(e) => setUserLocation(e.target.value)}
+              value={values.location}
+              onChange={handleDetailsInput}
             />
             <span
               style={{ marginTop: "2px" }}
@@ -135,10 +114,11 @@ const StepTwo = () => {
           <div style={{ position: "relative" }}>
             <input
               type="text"
-              placeholder="Website or Bio link"
+              name="website"
+              placeholder="Website "
               className={styles.data_content_pass}
-              value={linkText}
-              onChange={(e) => setLinkText(e.target.value)}
+              value={values.website}
+              onChange={handleDetailsInput}
             />
             <span
               style={{ marginTop: "2px" }}
@@ -205,8 +185,9 @@ const StepTwo = () => {
             <textarea
               className={styles.user_bio_data}
               placeholder="Bio"
-              value={bioTxtValue}
-              onChange={handleBio}
+              name="bio"
+              value={values.bio}
+              onChange={handleDetailsInput}
               onPaste={handlePaste}
             />
             <span className={styles.count_bio_words}>

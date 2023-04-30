@@ -1,7 +1,7 @@
 import React from "react";
 import { ForgotPasswordScreen } from "@/screens";
 import Head from "next/head";
-import ForgotPasswordProtected from "@/components/ProtectedRoutes/ProtectedForgotPassword";
+import UnauthenticatedRoute from "@/components/ProtectedRoutes/UnauthenticatedRoute";
 
 const ForgotPassword = () => {
   return (
@@ -34,4 +34,4 @@ const ForgotPassword = () => {
   );
 };
 
-export default ForgotPasswordProtected(ForgotPassword);
+export default UnauthenticatedRoute(ForgotPassword);

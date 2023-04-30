@@ -1,6 +1,6 @@
 export const URL = {
   // Auth
-  auth: "auth",
+  auth: "/auth",
   login: "/auth/login",
   register: "/auth/register",
   generateEmailOTP: "/auth/generate-email-verification-token",
@@ -9,7 +9,7 @@ export const URL = {
   changePassword: "/auth/reset-password",
 
   // Users
-  createProfile: "users/create-profile",
+  createProfile: "/users/create-profile",
 
   // Posts
 
