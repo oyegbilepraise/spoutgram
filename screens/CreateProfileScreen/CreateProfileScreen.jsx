@@ -97,32 +97,14 @@ const CreateProfileScreen = () => {
     Cookies.set("user-details", JSON.stringify(values));
   };
 
-  // defining values
-  const [names, setNames] = useState({
-    name: "",
-    username: "",
-  });
   // sending the data to redux
   // get the data from redux and show to the user
   // storing the current data into state before sending to create profile
-  const [bioTxtValue, setBioTxtValue] = useState("");
-  const [userLocation, setUserLocation] = useState("");
-  const [linkText, setLinkText] = useState("");
+
   const userDetails = useSelector((state) => state.userDetails.userProfile);
-  useEffect(() => {
-    setUserLocation(userDetails.location);
-    setLinkText(userDetails.website);
-    setBioTxtValue(userDetails.bio);
-  }, []);
+
   const handleNext = () => {
     dispatch(nextComponent(3));
-    dispatch(
-      addDetailsToUserProfile({
-        location: userLocation,
-        website: linkText,
-        bio: bioTxtValue,
-      })
-    );
   };
 
   const [file, setFile] = useState();
@@ -141,7 +123,7 @@ const CreateProfileScreen = () => {
         return;
       }
     }
-  }, [profile.updatedUser]);
+  }, [profile.updatedUser, router]);
   return (
     <AuthLayout>
       <main className={styles.__main} role="main">
@@ -150,6 +132,7 @@ const CreateProfileScreen = () => {
             {/* api messages  */}
             {loading && <p>Creating profile ...</p>}
             {appError && <p>{appError}</p>}
+            {profile?.message && <p>{profile?.message}</p>}
             {profile.updatedUser && <p>profile created successfully</p>}
             {/* api messages  */}
 
@@ -230,7 +213,8 @@ const CreateProfileScreen = () => {
               style={{ paddingTop: "14px", display: "none" }}
             >
               {/* Start Profile Component */}
-              <form onSubmit={handleSubmit}>
+
+              <form>
                 {/* first component */}
 
                 {current === 1 && (
@@ -257,11 +241,12 @@ const CreateProfileScreen = () => {
                   />
                 )}
               </form>
+
               {/* End User Profile Component */}
             </div>
 
             {/* this is the form that would proccess all the users data for create-profile */}
-            <form onSubmit={formik.handleSubmit}>
+            <form onSubmit={handleSubmit}>
               {/* upload profile pic */}
               <input type="file" name="" onChange={getFile} accept="img" />
               <img
@@ -282,8 +267,8 @@ const CreateProfileScreen = () => {
                     placeholder="Name"
                     className={styles.data_content_pass}
                     name="name"
-                    value={names.name}
-                    //  onChange={handleNamesInput}
+                    value={values.name}
+                    onChange={handleDetailsInput}
                   />
                   <span className={styles.absolute__span}>
                     <span>
@@ -317,8 +302,8 @@ const CreateProfileScreen = () => {
                     placeholder="Username"
                     className={styles.data_content_pass}
                     name="username"
-                    value={names.username}
-                    // onChange={handleNamesInput}
+                    value={values.username}
+                    onChange={handleDetailsInput}
                   />
                   <span className={styles.absolute__span}>
                     <span>
@@ -350,10 +335,11 @@ const CreateProfileScreen = () => {
                   <input
                     id="dob-input"
                     type="text"
+                    // name="dateOfBirth"
                     placeholder="Date of Birth"
                     className={styles.data_content_pass}
-                    // value={dob}
-                    // onChange={handleInputChange}
+                    value={values.dateOfBirth}
+                    onChange={handleDetailsInput}
                     // onFocus={handleInputFocus}
                     // onBlur={handleInputBlur}
                   />
@@ -387,9 +373,10 @@ const CreateProfileScreen = () => {
                   <input
                     type="text"
                     placeholder="Location"
+                    name="location"
                     className={styles.data_content_pass}
-                    value={userLocation}
-                    // onChange={(e) => setUserLocation(e.target.value)}
+                    value={values.location}
+                    onChange={handleDetailsInput}
                   />
                   <span
                     style={{ marginTop: "2px" }}
@@ -433,10 +420,11 @@ const CreateProfileScreen = () => {
                 <div style={{ position: "relative" }}>
                   <input
                     type="text"
-                    placeholder="Website or Bio link"
+                    name="website"
+                    placeholder="Website"
                     className={styles.data_content_pass}
-                    value={linkText}
-                    // onChange={(e) => setLinkText(e.target.value)}
+                    value={values.website}
+                    onChange={handleDetailsInput}
                   />
                   <span
                     style={{ marginTop: "2px" }}
@@ -483,8 +471,9 @@ const CreateProfileScreen = () => {
                   <textarea
                     className={styles.user_bio_data}
                     placeholder="Bio"
-                    // value={bioTxtValue}
-                    // onChange={handleBio}
+                    name="bio"
+                    value={values.bio}
+                    onChange={handleDetailsInput}
                     // onPaste={handlePaste}
                   />
                   <span className={styles.count_bio_words}>
@@ -497,6 +486,7 @@ const CreateProfileScreen = () => {
                 <button className={styles.pass_data_bd} type="submit">
                   Create Profile
                 </button>
+                {loading && <p>creating profile ...</p>}
               </div>
             </form>
             {/* this is the form that would proccess all the users data for create-profile */}

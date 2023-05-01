@@ -47,26 +47,31 @@ const LoginScreen = () => {
   useEffect(() => {
     if (user.token) {
       if (
+        //if the acount is not verified, generate token and re route to verify
         user.isAccountVerified === false &&
         router.pathname !== Routes.VERIFY
       ) {
+        dispatch(generateEmailVerificationAction());
         router.push(Routes.VERIFY);
         console.log("push to verify from login");
         return;
       } else if (
+        // if there is no profile and user is verified, re route to profile
         user.profile === false &&
+        user.isAccountVerified &&
         router.pathname !== Routes.CREATE_PROFILE
       ) {
         console.log("push to profile from login");
         router.push(Routes.CREATE_PROFILE);
         return;
       } else {
+        // if you are verified and have a profile go to home
         router.push(Routes.HOME);
         console.log("push to home from login");
         return;
       }
     }
-  }, [user.isAccountVerified, user.profile, user.token]);
+  }, [dispatch, router, user.isAccountVerified, user.profile, user.token]);
 
   const [visible, setVisible] = useState(false);
 
@@ -126,21 +131,29 @@ const LoginScreen = () => {
 
               <div className={styles.xpnd_inpts} style={{ paddingTop: "14px" }}>
                 <div style={{ position: "relative" }}>
-
-                  <input type="text" value={formik.values.email} onChange={formik.handleChange("email")} onFocus={handleEmailFocus}  onBlur={handleEmailBlur} spellcheck="false" name="email" placeholder="Email" className={styles.data_content_pass} />
+                  <input
+                    type="text"
+                    value={formik.values.email}
+                    onChange={formik.handleChange("email")}
+                    onFocus={handleEmailFocus}
+                    onBlur={handleEmailBlur}
+                    spellcheck="false"
+                    name="email"
+                    placeholder="Email"
+                    className={styles.data_content_pass}
+                  />
                   {/* error svg */}
                   {formik.touched.email && formik.errors.email ? (
                     <span className={styles.__spanerror}>
-                      <div style={{position: "relative"}}>
+                      <div style={{ position: "relative" }}>
                         {/* this is the email error msg */}
-                        {showEmailError && formik.touched.email && formik.errors.email
-                            ?
-                            (
-                            <span className={styles.span__inperr}>
-                              <span>{formik.errors.email}</span>
-                            </span>
-                            )
-                        : null}
+                        {showEmailError &&
+                        formik.touched.email &&
+                        formik.errors.email ? (
+                          <span className={styles.span__inperr}>
+                            <span>{formik.errors.email}</span>
+                          </span>
+                        ) : null}
                         <ErrorSvg />
                       </div>
                     </span>
@@ -149,20 +162,35 @@ const LoginScreen = () => {
                 </div>
 
                 <div style={{ position: "relative" }}>
-                  <input type={visible ? "text" : "password"} value={formik.values.password} onChange={formik.handleChange("password")} onFocus={handlePasswordFocus} onBlur={handlePasswordBlur} autoCorrect="false" placeholder="Password" name="password" className={`${styles.data_content_pass} ${styles._00x00_pwd}`} />
+                  <input
+                    type={visible ? "text" : "password"}
+                    value={formik.values.password}
+                    onChange={formik.handleChange("password")}
+                    onFocus={handlePasswordFocus}
+                    onBlur={handlePasswordBlur}
+                    autoCorrect="false"
+                    placeholder="Password"
+                    name="password"
+                    className={`${styles.data_content_pass} ${styles._00x00_pwd}`}
+                  />
                   <span className={styles.absolute__span}>
                     <span onClick={() => setVisible(!visible)}>
                       {visible ? <HideSvg /> : <ShowSvg />}
                     </span>
                     {/* error svg  */}
                     {formik.touched.password && formik.errors.password ? (
-                      <span className={`${styles.__spanerror} ${styles.passwrd__error}`} style={{position: "relative"}}>
+                      <span
+                        className={`${styles.__spanerror} ${styles.passwrd__error}`}
+                        style={{ position: "relative" }}
+                      >
                         {/* this is the password error msg */}
-                        {showPasswordError && formik.touched.password && formik.errors.password
-                            ? (<span className={styles.span__inperr}>
-                              <span>{formik.errors.password}</span>
-                            </span>)
-                        : null}
+                        {showPasswordError &&
+                        formik.touched.password &&
+                        formik.errors.password ? (
+                          <span className={styles.span__inperr}>
+                            <span>{formik.errors.password}</span>
+                          </span>
+                        ) : null}
                         <ErrorSvg />
                       </span>
                     ) : null}
@@ -174,7 +202,6 @@ const LoginScreen = () => {
                       <Link href="/forgot-password">Forgot Password?</Link>
                     </span>
                   </span>
-
                 </div>
               </div>
 
