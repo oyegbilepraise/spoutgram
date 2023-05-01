@@ -95,6 +95,7 @@ const CreateProfileScreen = () => {
     setLinkText(userDetails.website);
     setBioTxtValue(userDetails.bio);
   }, []);
+  
   const handleNext = () => {
     dispatch(nextComponent(3));
     dispatch(
@@ -112,17 +113,17 @@ const CreateProfileScreen = () => {
     setFile(URL.createObjectURL(event.target.files[0]))
   }
 
-  useEffect(() => {
-    if (profile.updatedUser) {
-      if (!profile?.updatedUser?.isAccountVerified) {
-        router.push(Routes.VERIFY);
-        return;
-      } else {
-        router.push(Routes.HOME);
-        return;
-      }
-    }
-  }, [profile.updatedUser]);
+  // useEffect(() => {
+  //   if (profile.updatedUser) {
+  //     if (!profile?.updatedUser?.isAccountVerified) {
+  //       router.push(Routes.VERIFY);
+  //       return;
+  //     } else {
+  //       router.push(Routes.HOME);
+  //       return;
+  //     }
+  //   }
+  // }, [profile.updatedUser]);
   return (
     <AuthLayout>
       <main className={styles.__main} role="main">
