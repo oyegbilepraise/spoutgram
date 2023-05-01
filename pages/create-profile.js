@@ -3,15 +3,16 @@ import { CreateProfileScreen} from '@/screens'
 import Head from 'next/head'
 import axios from 'axios'
 import ProtectedRoute from '@/components/ProtectedRoutes/ProtectedRoute'
+import { baseUrl } from '@/redux/baseUrl'
 
-const oauthLink = "http://localhost:5050"
+
 const CreateProfile = () => {
   const [user, setUser] = useState(null)
 
   useEffect(() => {
     const getUser = async () => {
       try {
-        const url = `${oauthLink}/api/v1/auth/welcome`
+        const url = `${baseUrl}/auth/welcome`
         const { data } = await axios.get(url, { withCredentials: true })
         console.log(data)
         localStorage.setItem("authToken", data.user.token)
@@ -62,8 +63,4 @@ const CreateProfile = () => {
   )
 }
 
-<<<<<<< HEAD
 export default CreateProfile;
-=======
-export default ProtectedRoute(CreateProfile)
->>>>>>> fe30a49a9940dac540affb378faa2a6d39e1ea53
