@@ -13,60 +13,93 @@ const ProtectedRoute = ({ children }) => {
   const isAuthenticated = Cookies.get("token");
 
   useEffect(() => {
-    if (dispatch && dispatch !== null && dispatch !== undefined) {
-      dispatch(getUserAction(isAuthenticated));
+    //only make the call when there is a token and when dispatch is mounted
+    if (isAuthenticated) {
+      if (dispatch && dispatch !== null && dispatch !== undefined) {
+        dispatch(getUserAction(isAuthenticated));
+        console.log("dispatched get User Action");
+      }
     }
   }, [dispatch, isAuthenticated]);
 
   const handleAuthentication = () => {
-    //if there is no token go to login
-    if (!isAuthenticated) {
-      router.push(Routes.LOGIN);
-      console.log("push to login from protected route not token");
-      return;
-    }
+    switch (true) {
+      //if there is no token go to token
+      case !isAuthenticated:
+        //if route is either login or signup dont do anything
+        if (
+          router.pathname.includes(Routes.LOGIN) ||
+          router.pathname.includes(Routes.SIGNUP)
+        ) {
+          return;
+        }
+        // make forgot password and confirm change password unaccessible if user is logged in(redirect to home)
+        else if (router.pathname.includes(Routes.PASSWORD)) {
+          return;
+          // push to login
+        } else router.push(Routes.LOGIN);
+        console.log("push to login from protected route not token");
+        return;
 
-    // Handle api error
-    if (apiError) {
-      setError("Oops! Something went wrong. Please try again later.");
-      return;
-    }
-    // if the api call is successful and user details are gotten
-    if (user?.success) {
-      //if the account is not verified go to verified
-      if (!user?.data?.isAccountVerified && router.pathname !== Routes.VERIFY) {
-        console.log("push to verify from protected route");
-        router.push(Routes.VERIFY);
+      // Handle api error
+      case apiError:
+        setError("Oops! Something went wrong. Please try again later.");
         return;
-      } else if (
+
+      // if the api call is successful and user details are gotten
+      case user?.success:
+        //if the account is not verified go to verified
+        if (
+          !user?.data?.isAccountVerified &&
+          router.pathname !== Routes.VERIFY
+        ) {
+          console.log("push to verify from protected route");
+          router.push(Routes.VERIFY);
+          return;
+          //if the user is not verified and the route is verify, remain on verify page
+        } else if (
+          !user?.data?.isAccountVerified &&
+          router.pathname === Routes.VERIFY
+        ) {
+          console.log("remain on verify page from protected route");
+          return;
+        }
         //if the user doesnt have a profile go to create profile
-        !user?.data?.profile &&
-        router.pathname !== Routes.CREATE_PROFILE
-      ) {
-        console.log("push to create profile from protected route");
-        router.push(Routes.CREATE_PROFILE);
-        return;
-      } else if (
+        else if (
+          !user?.data?.profile &&
+          router.pathname !== Routes.CREATE_PROFILE
+        ) {
+          console.log("push to create profile from protected route");
+          router.push(Routes.CREATE_PROFILE);
+          return;
+        }
+        //if the user is verified, does not have a profile and is on create profile page, remain on the profile page
+        else if (
+          !user?.data?.isAccountVerified &&
+          !user?.data?.profile &&
+          router.pathname === Routes.CREATE_PROFILE
+        ) {
+          console.log("remain on create profile from protected route");
+          return;
+          //if the link is change password link dont do anything
+        } else if (router.pathname.includes(Routes.CHANGE_PASSWORD)) {
+          return;
+        }
         //if the route is either login or signup go to home
-        router.pathname.includes(Routes.LOGIN || Routes.SIGNUP)
-      ) {
-        router.push(Routes.HOME);
-        console.log("push to home from protected route");
-        return;
-      } else if (
-        router.pathname.includes(
-          Routes.FORGOT_PASSWORD || Routes.CONFIRM_CHANGE_PASSWORD
-        )
-      ) {
-        router.push(Routes.HOME);
-        console.log("push to home from protected route");
-        return;
-      }
+        else {
+          router.push(Routes.HOME);
+          console.log("push to home from protected route");
+          return;
+        }
+        break;
+      default:
+        break;
     }
   };
   useEffect(() => {
     handleAuthentication();
-  }, [isAuthenticated, apiError, user]);
+    console.log("authentication is called");
+  }, [isAuthenticated, apiError, user, router.pathname]);
 
   return children;
 };

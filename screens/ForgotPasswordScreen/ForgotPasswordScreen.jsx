@@ -10,11 +10,7 @@ import {
   registerUserAction,
 } from "@/redux/slices/authSlice/authSlice"; //this registerUserAction should be replaced with the appropriate redux user action
 import { useSelector } from "react-redux";
-import {
-  CautionSvg,
-  ErrorSvg,
-  BtnloadSvg,
-} from "../../components";
+import { CautionSvg, ErrorSvg, BtnloadSvg } from "../../components";
 import { AuthLayout } from "@/layout";
 import styles from "@/layout/AuthLayout/AuthLayout.module.css";
 import Cookies from "js-cookie";
@@ -30,14 +26,12 @@ const ForgotPasswordScreen = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const storeData = useSelector((store) => store?.auth?.forgotPassword);
-  const [response, setResponse] = useState("");
   const email = Cookies.get("email");
   const formik = useFormik({
     initialValues: {
       email: email || "",
     },
     onSubmit: (values) => {
-      setResponse("");
       dispatch(forgotPasswordAction(values));
       Cookies.set("email", values.email);
     },
@@ -45,11 +39,11 @@ const ForgotPasswordScreen = () => {
   });
 
   useEffect(() => {
-    if (storeData.isEmailAvailable) {
+    if (storeData?.message?.success) {
       router.push(Routes.CONFIRM_CHANGE_PASSWORD);
       return;
     }
-  }, [storeData.isEmailAvailable]);
+  }, [router, storeData?.message?.success]);
 
 
   const [showEmailError, setShowEmailError] = useState(false);
@@ -93,12 +87,12 @@ const ForgotPasswordScreen = () => {
                   </span>
                 </div>
               )}
-              {storeData.message.message && (
+              {storeData?.message?.message && (
                 <div style={{ paddingTop: "5px" }}>
                   <span className={styles.error__msg__xyx}>
                     <CautionSvg />
                     <span className={styles.error__txt__xyx}>
-                      {storeData.message.message}
+                      {storeData?.message?.message}
                     </span>
                   </span>
                 </div>
@@ -109,8 +103,8 @@ const ForgotPasswordScreen = () => {
                     type="text"
                     value={formik.values.email}
                     onChange={formik.handleChange("email")}
-                    onFocus={handleEmailFocus} 
-                    onBlur={handleEmailBlur}
+                    // onFocus={handleEmailFocus}
+                    // onBlur={handleEmailBlur}
                     name="email"
                     placeholder="Email"
                     className={styles.data_content_pass}
@@ -119,16 +113,15 @@ const ForgotPasswordScreen = () => {
                   {/* error svg */}
                   {formik.touched.email && formik.errors.email ? (
                     <span className={styles.__spanerror}>
-                      <div style={{position: "relative"}}>
+                      <div style={{ position: "relative" }}>
                         {/* this is the email error msg */}
-                        {showEmailError && formik.touched.email && formik.errors.email
-                            ?
-                            (
-                            <span className={styles.span__inperr}>
-                              <span>{formik.errors.email}</span>
-                            </span>
-                            )
-                        : null}
+                        {showEmailError &&
+                        formik.touched.email &&
+                        formik.errors.email ? (
+                          <span className={styles.span__inperr}>
+                            <span>{formik.errors.email}</span>
+                          </span>
+                        ) : null}
                         <ErrorSvg />
                       </div>
                     </span>
