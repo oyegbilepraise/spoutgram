@@ -1,9 +1,36 @@
-import React from "react";
-import { CreateProfileScreen } from "@/screens";
-import Head from "next/head";
-import ProtectedRoute from "@/components/ProtectedRoutes/ProtectedRoute";
+import React, {useState, useEffect} from 'react'
+import { CreateProfileScreen} from '@/screens'
+import Head from 'next/head'
+import axios from 'axios'
+import ProtectedRoute from '@/components/ProtectedRoutes/ProtectedRoute'
 
+const oauthLink = "http://localhost:5050"
 const CreateProfile = () => {
+  const [user, setUser] = useState(null)
+
+  useEffect(() => {
+    const getUser = async () => {
+      try {
+        const url = `${oauthLink}/api/v1/auth/welcome`
+        const { data } = await axios.get(url, { withCredentials: true })
+        console.log(data)
+        localStorage.setItem("authToken", data.user.token)
+        if (data.isHasProfile === false) {
+          console.log(data, 'hiii')
+          //routes to create-profile
+        } else {
+          console.log(data, 'hello')
+          //routes to home
+        }
+        setUser(data.user._json)
+      } catch (e) {
+        console.log(e)
+      }
+    }
+
+    getUser()
+  }, [])
+
   return (
     <>
       <Head>
@@ -31,7 +58,12 @@ const CreateProfile = () => {
       </Head>
       <CreateProfileScreen />
     </>
-  );
-};
+    
+  )
+}
 
+<<<<<<< HEAD
 export default CreateProfile;
+=======
+export default ProtectedRoute(CreateProfile)
+>>>>>>> fe30a49a9940dac540affb378faa2a6d39e1ea53

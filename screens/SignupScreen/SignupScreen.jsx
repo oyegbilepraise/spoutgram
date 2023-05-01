@@ -1,6 +1,6 @@
-import { useRouter } from "next/router";
-import { useFormik } from "formik";
-import { useDispatch, useSelector } from "react-redux";
+import { useRouter } from "next/router"
+import { useFormik } from 'formik'
+import { useDispatch, useSelector } from 'react-redux'
 import {
   generateEmailVerificationAction,
   registerUserAction,
@@ -20,8 +20,13 @@ import * as Yup from "yup";
 import Link from "next/link";
 import styles from "@/layout/AuthLayout/AuthLayout.module.css";
 import Routes from "@/utils/routes";
+import axios from "axios"
+import { from } from "form-data"
+import {baseUrl} from "../../redux/baseUrl"
 
-const signupValidationSchema = Yup.object().shape({
+
+
+const signupValidationSchema = Yup.object().shape({ 
   email: Yup.string()
     .email("Invalid email format")
     .required("Email is required"),
@@ -41,6 +46,31 @@ const SignUpScreen = () => {
   const dispatch = useDispatch();
   const storedData = useSelector((state) => state?.auth?.registerUser);
   const codeSent = useSelector((state) => state?.auth?.verifyUserEmail);
+
+
+  const handleGoogleLogin = async ()=>{
+  try {
+    if (typeof window !== 'undefined') {
+      window.open(
+        `${baseUrl}/auth/google/callback`,
+        "_self"
+      );
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+const handleTwitterLogin =async ()=>{
+  try {
+    window.open(
+      `${baseUrl}/auth/twitter/callback`,
+      "_self"
+    )
+  } catch (error) {
+    console.log(err);
+  }
+}
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -109,7 +139,7 @@ const SignUpScreen = () => {
               <div className={styles._xpnds_oauths_div}>
                 <div>
                   {/* continue with google */}
-                  <button className={`${styles.oauths_} ${styles.ggl_oauth}`}>
+                  <button className={`${styles.oauths_} ${styles.ggl_oauth}`} onClick={handleGoogleLogin}>
                     <GoogleSvg />
                     Continue With Google
                   </button>
@@ -117,7 +147,7 @@ const SignUpScreen = () => {
 
                 <div>
                   {/* continue with twitter */}
-                  <button className={`${styles.oauths_} ${styles.twtr_oauth}`}>
+                  <button className={`${styles.oauths_} ${styles.twtr_oauth}`} onClick={handleTwitterLogin}>
                     <TwitterSvg />
                     Continue With Twitter
                   </button>
