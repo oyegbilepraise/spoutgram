@@ -111,14 +111,16 @@ const VerifyAccountScreen = () => {
                 <div style={{ position: "relative" }}>
                   <input
                     type="text"
-                    alue={formik.values.code}
+                    value={formik.values.code}
                     onChange={formik.handleChange("code")}
                     // onBlur={formik.handleBlur}
                     onFocus={handleCodeFocus} onBlur={handleCodeBlur}
                     name="code"
+                    maxlength="6"
                     autoComplete="off"
                     placeholder="Code"
-                    className={styles.data_content_pass}
+                    pattern="[0-9]{1,6}"
+                    className={`${styles.data_content_pass} ${styles.data_content_inpcode}`}
                   />
 
                   {/* error svg */}
@@ -194,7 +196,7 @@ const VerifyAccountScreen = () => {
                   </span>
                 )}
               </div>
-              <span className={`${styles.ouplskk} ${styles.topme__}`}>
+              <span className={styles.ouplskk}>
                 <Link href="/signup">Back to Sign up</Link>
               </span>
             </div>

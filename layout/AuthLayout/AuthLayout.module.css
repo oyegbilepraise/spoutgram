@@ -108,6 +108,25 @@ input[type="text"].data_content_pass:focus, input[type="password"].data_content_
 input[type="text"].data_content_pass:focus::placeholder, input[type="password"].data_content_pass:focus::placeholder {
   color: var(--transparent-brand-color-placeholder);
 }
+input[type="text"].data_content_inpcode {
+  text-align: center;
+  transition: 0.1s all;
+  padding-left: 0px;
+}
+input[type="text"].data_content_inpcode:focus {
+  text-align: center;
+  letter-spacing: 3px;
+  font-size: 20px;
+  font-family: var(--global-bold);
+  transition: 0.1s all;
+}
+input[type="text"].data_content_inpcode:not(:focus):not(:placeholder-shown) {
+  text-align: center;
+  letter-spacing: 3px;
+  font-size: 20px;
+  font-family: var(--global-bold);
+  transition: 0.5s all;
+}
 .pass_data_bd {
   width: 100%;
   background-color: var(--brand-color);
@@ -1039,6 +1058,27 @@ input[type="text"].data_content_pass:focus::placeholder, input[type="password"].
   }
   .span__inperr {
     display: none;
+  }
+  input[type="text"].data_content_inpcode {
+    text-align: center;
+    transition: 0.1s all;
+    padding-left: 0px;
+  }
+  input[type="text"].data_content_inpcode:focus {
+    text-align: center;
+    letter-spacing: 3px;
+    font-size: 16px;
+    font-family: var(--global-bold);
+    font-weight: 600;
+    transition: 0.1s all;
+  }
+  input[type="text"].data_content_inpcode:not(:focus):not(:placeholder-shown) {
+    text-align: center;
+    letter-spacing: 3px;
+    font-size: 16px;
+    font-family: var(--global-bold);
+    font-weight: 600;
+    transition: 0.5s all;
   }
 }
 
