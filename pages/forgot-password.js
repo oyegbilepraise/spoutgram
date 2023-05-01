@@ -1,8 +1,6 @@
 import React from "react";
 import { ForgotPasswordScreen } from "@/screens";
 import Head from "next/head";
-import React, {useState, useEffect} from 'react'
-
 
 const ForgotPassword = () => {
   return (
