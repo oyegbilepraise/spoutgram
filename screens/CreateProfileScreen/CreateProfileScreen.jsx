@@ -256,7 +256,7 @@ const CreateProfileScreen = () => {
             </div>
 
             {/* this is the form that would proccess all the users data for create-profile */}
-            <form onSubmit={formik.handleSubmit}>
+            <form >
               {/* upload profile pic */}
               <input type="file" name="" onChange={getFile} accept="img" />
               <img
