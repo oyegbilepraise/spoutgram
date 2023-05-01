@@ -52,7 +52,7 @@ const SignUpScreen = () => {
   try {
     if (typeof window !== 'undefined') {
       window.open(
-        `${baseUrlTest}/auth/google/callback`,
+        `${baseUrl}/auth/google/callback`,
         "_self"
       );
     }
@@ -64,7 +64,7 @@ const SignUpScreen = () => {
 const handleTwitterLogin =async ()=>{
   try {
     window.open(
-      `${baseUrlTest}/auth/twitter/callback`,
+      `${baseUrl}/auth/twitter/callback`,
       "_self"
     )
   } catch (error) {

@@ -12,7 +12,7 @@ const CreateProfile = () => {
   useEffect(() => {
     const getUser = async () => {
       try {
-        const url = `${baseUrlTest}/auth/welcome`
+        const url = `${baseUrl}/auth/welcome`
         const { data } = await axios.get(url, { withCredentials: true })
         //save the token in session storage!!!        
         localStorage.setItem("authToken", data.user.token)

@@ -45,7 +45,7 @@ const LoginScreen = () => {
   const handleTwitterLogin =async ()=>{
     try {
       window.open(
-        `${baseUrlTest}/auth/twitter/callback`,
+        `${baseUrl}/auth/twitter/callback`,
         "_self"
       )
     } catch (error) {
