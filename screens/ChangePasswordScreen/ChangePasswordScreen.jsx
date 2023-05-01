@@ -7,7 +7,7 @@ import {
 } from "@/redux/slices/authSlice/authSlice"; //this registerUserAction should be replaced with the appropriate redux user action
 import { useSelector } from "react-redux";
 import { AuthLayout } from "@/layout";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   HideSvg,
   ShowSvg,
@@ -18,6 +18,7 @@ import {
 import * as Yup from "yup";
 import Link from "next/link";
 import styles from "@/layout/AuthLayout/AuthLayout.module.css";
+import Routes from "@/utils/routes";
 
 const changeValidationSchema = Yup.object().shape({
   password: Yup.string()
@@ -47,9 +48,11 @@ const ChangePasswordScreen = () => {
     },
     validationSchema: changeValidationSchema,
   });
-  if (storeData.message.success) {
-    router.push("/login");
-  }
+  useEffect(() => {
+    if (storeData.message.success) {
+      router.push(Routes.LOGIN);
+    }
+  }, [storeData.message.success]);
 
   const [password, setPassword] = useState("");
 

@@ -35,6 +35,7 @@ import Cookies from "js-cookie";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { createProfileAction } from "@/redux/slices/userDetailSlice";
+import Routes from "@/utils/routes";
 
 // Yup ValidationSchema.
 // const createProfileValidationSchema = Yup.object().shape({
@@ -96,13 +97,6 @@ const CreateProfileScreen = () => {
     Cookies.set("user-details", JSON.stringify(values));
   };
 
-  if (profile.updatedUser) {
-    router.push("/");
-  }
-  if (appError) {
-    console.log(appError);
-  }
-
   // defining values
   const [names, setNames] = useState({
     name: "",
@@ -137,6 +131,17 @@ const CreateProfileScreen = () => {
     setFile(URL.createObjectURL(event.target.files[0]));
   }
 
+  useEffect(() => {
+    if (profile.updatedUser) {
+      if (!profile?.updatedUser?.isAccountVerified) {
+        router.push(Routes.VERIFY);
+        return;
+      } else {
+        router.push(Routes.HOME);
+        return;
+      }
+    }
+  }, [profile.updatedUser]);
   return (
     <AuthLayout>
       <main className={styles.__main} role="main">

@@ -13,6 +13,8 @@ import {
 import { useState } from "react";
 import { SpoutgramSvg, HomeSvg } from "../../components";
 import { useRouter } from "next/router";
+import Cookies from "js-cookie";
+import Routes from "@/utils/routes";
 
 const LeftSidebar = () => {
   const [showMore, setShowMore] = useState(false);
@@ -29,6 +31,10 @@ const LeftSidebar = () => {
   // show more toggle function
   const handleShowMore = () => {
     setShowMore((prev) => !prev);
+  };
+  const logout = () => {
+    Cookies.remove("token");
+    router.push(Routes.LOGIN);
   };
 
   return (
@@ -120,7 +126,9 @@ const LeftSidebar = () => {
             <Link href="/edit">
               <span className={styles.xmmx___stan}>Edit your profile</span>
             </Link>
-            <span className={styles.xmmx___stan}>Logout of this account</span>
+            <span onClick={logout} className={styles.xmmx___stan}>
+              Logout of this account
+            </span>
           </div>
         )}
 

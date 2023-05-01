@@ -50,9 +50,14 @@ export const verifyEmailAction = createAsyncThunk(
         data: payload,
         token: token,
       });
+      console.log(res.data);
       return res.data;
     } catch (err) {
-      return rejectWithValue(err?.response?.data?.message);
+      console.log(err);
+      return (
+        rejectWithValue(err?.message) ||
+        rejectWithValue(err?.response?.data?.message)
+      );
     }
   }
 );
@@ -115,7 +120,7 @@ export const getUserAction = createAsyncThunk(
   async (payload, { rejectWithValue }) => {
     try {
       const res = await getRequest({
-        url: `${baseUrl}${auth}`,
+        url: `${baseUrl}${URL.auth}`,
         token: payload,
       });
       return res.data;
@@ -141,7 +146,7 @@ const authSlice = createSlice({
     },
     verifyUserEmail: {
       loading: false,
-      codeSent: false,
+      codeSent: null,
       appError: null,
     },
     loginUser: {
@@ -172,6 +177,8 @@ const authSlice = createSlice({
     //get User
     builder.addCase(getUserAction.pending, (state) => {
       state.getUser.loading = true;
+      state.getUser.user = {};
+      state.getUser.apiError = null;
     });
     builder.addCase(getUserAction.fulfilled, (state, action) => {
       state.getUser.loading = false;
@@ -185,6 +192,8 @@ const authSlice = createSlice({
     // Register.
     builder.addCase(registerUserAction.pending, (state) => {
       state.registerUser.loading = true;
+      state.registerUser.registered = {};
+      state.registerUser.appError = null;
     });
     builder.addCase(registerUserAction.fulfilled, (state, action) => {
       state.registerUser.loading = false;
@@ -198,17 +207,22 @@ const authSlice = createSlice({
     // Send Email Verification Code.
     builder.addCase(generateEmailVerificationAction.pending, (state) => {
       state.verifyUserEmail.loading = true;
+      state.verifyUserEmail.codeSent = null;
+      state.verifyUserEmail.appError = null;
     });
-    builder.addCase(generateEmailVerificationAction.fulfilled, (state) => {
-      state.verifyUserEmail.loading = false;
-      state.verifyUserEmail.codeSent = true;
-    });
+    builder.addCase(
+      generateEmailVerificationAction.fulfilled,
+      (state, action) => {
+        state.verifyUserEmail.loading = false;
+        state.verifyUserEmail.codeSent = action.payload;
+      }
+    );
     builder.addCase(
       generateEmailVerificationAction.rejected,
       (state, action) => {
         state.verifyUserEmail.loading = false;
         state.verifyUserEmail.appError = action?.payload;
-        state.verifyUserEmail.codeSent = false;
+        state.verifyUserEmail.codeSent = null;
       }
     );
 

@@ -1,7 +1,6 @@
 import React from "react";
 import { SubscriptionScreen } from "@/screens";
 import Head from "next/head";
-import ProtectedRoute from "@/components/ProtectedRoutes/ProtectedRoute";
 
 const Subscription = () => {
   return (
@@ -35,4 +34,4 @@ const Subscription = () => {
   );
 };
 
-export default ProtectedRoute(Subscription);
+export default Subscription;

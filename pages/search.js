@@ -1,7 +1,6 @@
 import React from "react";
 import { SearchScreen } from "@/screens";
 import Head from "next/head";
-import ProtectedRoute from "@/components/ProtectedRoutes/ProtectedRoute";
 
 const Search = () => {
   return (
@@ -32,4 +31,4 @@ const Search = () => {
   );
 };
 
-export default ProtectedRoute(Search);
+export default Search;
