@@ -22,7 +22,7 @@ import styles from "@/layout/AuthLayout/AuthLayout.module.css";
 import Routes from "@/utils/routes";
 import axios from "axios"
 import { from } from "form-data"
-import {baseUrl} from "../../redux/baseUrl"
+import {baseUrl, baseUrlTest} from "../../redux/baseUrl"
 
 
 
@@ -52,7 +52,7 @@ const SignUpScreen = () => {
   try {
     if (typeof window !== 'undefined') {
       window.open(
-        `${baseUrl}/auth/google/callback`,
+        `${baseUrlTest}/auth/google/callback`,
         "_self"
       );
     }
@@ -64,7 +64,7 @@ const SignUpScreen = () => {
 const handleTwitterLogin =async ()=>{
   try {
     window.open(
-      `${baseUrl}/auth/twitter/callback`,
+      `${baseUrlTest}/auth/twitter/callback`,
       "_self"
     )
   } catch (error) {

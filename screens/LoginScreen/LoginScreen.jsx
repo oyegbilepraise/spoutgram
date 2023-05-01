@@ -18,6 +18,7 @@ import * as Yup from "yup";
 import Link from "next/link";
 import styles from "@/layout/AuthLayout/AuthLayout.module.css";
 import Routes from "@/utils/routes";
+import { baseUrl, baseUrlTest } from "@/redux/baseUrl";
 
 const loginFormSchema = Yup.object().shape({
   email: Yup.string()
@@ -27,6 +28,7 @@ const loginFormSchema = Yup.object().shape({
 });
 const oauthEndpoint = "http://localhost:5050"
 const LoginScreen = () => {
+  // google login
   const handleGoogleLogin = async ()=>{
     try {
       if (typeof window !== 'undefined') {
@@ -38,7 +40,19 @@ const LoginScreen = () => {
     } catch (error) {
       console.log(error);
     }
+  };
+// twitter Login
+  const handleTwitterLogin =async ()=>{
+    try {
+      window.open(
+        `${baseUrlTest}/auth/twitter/callback`,
+        "_self"
+      )
+    } catch (error) {
+      console.log(error);
+    }
   }
+  
   const router = useRouter();
   const dispatch = useDispatch();
   const { loading, appError, user } = useSelector(
@@ -117,7 +131,7 @@ const LoginScreen = () => {
 
                 <div>
                   {/* continue with twitter */}
-                  <button className={`${styles.oauths_} ${styles.twtr_oauth}`}>
+                  <button className={`${styles.oauths_} ${styles.twtr_oauth}`} onClick={handleTwitterLogin}>
                     <TwitterSvg />
                     Continue with Twitter
                   </button>

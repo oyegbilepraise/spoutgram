@@ -3,7 +3,7 @@ import { CreateProfileScreen} from '@/screens'
 import Head from 'next/head'
 import axios from 'axios'
 import ProtectedRoute from '@/components/ProtectedRoutes/ProtectedRoute'
-import { baseUrl } from '@/redux/baseUrl'
+import { baseUrl, baseUrlTest } from '@/redux/baseUrl'
 
 
 const CreateProfile = () => {
@@ -12,9 +12,9 @@ const CreateProfile = () => {
   useEffect(() => {
     const getUser = async () => {
       try {
-        const url = `${baseUrl}/auth/welcome`
+        const url = `${baseUrlTest}/auth/welcome`
         const { data } = await axios.get(url, { withCredentials: true })
-        console.log(data)
+        //save the token in session storage!!!        
         localStorage.setItem("authToken", data.user.token)
         if (data.isHasProfile === false) {
           console.log(data, 'hiii')
