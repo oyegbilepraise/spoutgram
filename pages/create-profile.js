@@ -4,6 +4,7 @@ import Head from 'next/head'
 import axios from 'axios'
 import ProtectedRoute from '@/components/ProtectedRoutes/ProtectedRoute'
 import { baseUrl, baseUrlTest } from '@/redux/baseUrl'
+import Cookies from 'js-cookie'
 
 
 const CreateProfile = () => {
@@ -15,7 +16,7 @@ const CreateProfile = () => {
         const url = `${baseUrlTest}/auth/welcome`
         const { data } = await axios.get(url, { withCredentials: true })
         //save the token in session storage!!!        
-        localStorage.setItem("authToken", data.user.token)
+        Cookies.set("token", data.user.token)
         if (data.isHasProfile === false) {
           console.log(data, 'hiii')
           //routes to create-profile
