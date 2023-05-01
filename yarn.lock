@@ -214,15 +214,9 @@
   dependencies:
     "glob" "7.1.7"
 
-<<<<<<< HEAD
-"@next/swc-darwin-x64@13.2.4":
-  "integrity" "sha512-a6LBuoYGcFOPGd4o8TPo7wmv5FnMr+Prz+vYHopEDuhDoMSHOnC+v+Ab4D7F0NMZkvQjEJQdJS3rqgFhlZmKlw=="
-  "resolved" "https://registry.npmjs.org/@next/swc-darwin-x64/-/swc-darwin-x64-13.2.4.tgz"
-=======
 "@next/swc-darwin-arm64@13.2.4":
   "integrity" "sha512-S6vBl+OrInP47TM3LlYx65betocKUUlTZDDKzTiRDbsRESeyIkBtZ6Qi5uT2zQs4imqllJznVjFd1bXLx3Aa6A=="
   "resolved" "https://registry.npmjs.org/@next/swc-darwin-arm64/-/swc-darwin-arm64-13.2.4.tgz"
->>>>>>> 047d2340c44f459010511fa25fecff4def9fb78d
   "version" "13.2.4"
 
 "@nodelib/fs.scandir@2.1.5":
@@ -516,10 +510,10 @@
   "resolved" "https://registry.npmjs.org/axe-core/-/axe-core-4.6.3.tgz"
   "version" "4.6.3"
 
-"axios@^1.3.4":
-  "integrity" "sha512-toYm+Bsyl6VC5wSkfkbbNB6ROv7KY93PEBBL6xyDczaIHasAiv4wPqQ/c4RjoQzipxRD2W5g21cOqQulZ7rHwQ=="
-  "resolved" "https://registry.npmjs.org/axios/-/axios-1.3.4.tgz"
-  "version" "1.3.4"
+"axios@^1.3.6":
+  "integrity" "sha512-S4XCWMEmzvo64T9GfvQDOXgYRDJ/wsSZc7Jvdgx5u1sd0JwsuPLqb3SYmusag+edF6ziyMensPVqLTSc1PiSEA=="
+  "resolved" "https://registry.npmjs.org/axios/-/axios-1.4.0.tgz"
+  "version" "1.4.0"
   dependencies:
     "follow-redirects" "^1.15.0"
     "form-data" "^4.0.0"
@@ -770,6 +764,11 @@
   dependencies:
     "@babel/runtime" "^7.8.7"
     "csstype" "^3.0.2"
+
+"dotenv@^16.0.3":
+  "integrity" "sha512-7GO6HghkA5fYG9TYnNxi14/7K9f5occMlp3zXAuSxn7CKCxt9xbNWG7yF8hTCSUchlfWSe3uLmlPfigevRItzQ=="
+  "resolved" "https://registry.npmjs.org/dotenv/-/dotenv-16.0.3.tgz"
+  "version" "16.0.3"
 
 "emoji-regex@^9.2.2":
   "integrity" "sha512-L18DaJsXSUk2+42pv8mLs5jJT2hqFkFE4j21wOmgbUqsZ2hL72NsUU785g9RXgo3s0ZNgVl42TiHp3ZtOv/Vyg=="

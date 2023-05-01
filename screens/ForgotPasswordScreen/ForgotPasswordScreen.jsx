@@ -3,7 +3,8 @@ import { useRouter } from "next/router";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useDispatch } from "react-redux";
-import { useEffect, useState } from "react";
+import {useState, useEffect} from 'react'
+
 import {
   forgotPasswordAction,
   registerUserAction,
@@ -43,6 +44,16 @@ const ForgotPasswordScreen = () => {
       return;
     }
   }, [router, storeData?.message?.success]);
+
+
+  const [showEmailError, setShowEmailError] = useState(false);
+  
+  function handleEmailFocus() {
+    setShowEmailError(true);
+  }
+  function handleEmailBlur() {
+    setShowEmailError(false);
+  }
 
   return (
     <AuthLayout>

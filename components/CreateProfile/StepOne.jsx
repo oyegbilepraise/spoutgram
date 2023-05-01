@@ -147,7 +147,7 @@ const StepOne = ({ values, handleDetailsInput }) => {
               placeholder="Name"
               className={styles.data_content_pass}
               name="name"
-              value={values.name}
+              //value={values.name}
               onChange={handleDetailsInput}
             />
 
@@ -183,7 +183,7 @@ const StepOne = ({ values, handleDetailsInput }) => {
               placeholder="Username"
               className={styles.data_content_pass}
               name="username"
-              value={values.username}
+              //value={values.username}
               onChange={handleDetailsInput}
             />
             <span className={styles.absolute__span}>
@@ -219,7 +219,7 @@ const StepOne = ({ values, handleDetailsInput }) => {
               name="dateOfBirth"
               placeholder="Date of Birth"
               className={styles.data_content_pass}
-              value={values.dateOfBirth}
+              //value={values.dateOfBirth}
               // onChange={handleInputChange}
               onFocus={handleInputFocus}
               onBlur={handleInputBlur}

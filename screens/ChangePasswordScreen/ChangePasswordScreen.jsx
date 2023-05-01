@@ -112,6 +112,7 @@ const ChangePasswordScreen = () => {
                   </span>
                 </div>
               )}
+
               {storeData?.apiError && (
                 <div style={{ paddingTop: "5px" }}>
                   <span className={styles.error__msg__xyx}>
