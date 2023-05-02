@@ -31,7 +31,6 @@ import StepOne from "@/components/CreateProfile/StepOne";
 import { useEffect } from "react";
 import StepTwo from "@/components/CreateProfile/StepTwo";
 import dynamic from "next/dynamic";
-import Cookies from "js-cookie";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { createProfileAction } from "@/redux/slices/userDetailSlice";
@@ -53,11 +52,23 @@ const StepThree = dynamic(
 const CreateProfileScreen = () => {
   const dispatch = useDispatch();
   const router = useRouter();
-  // const storeData = useSelector((store) => store?.auth);
-  const { user } = useSelector((state) => state?.auth?.loginUser);
+  //get profile creation details from store
+  const { loading, appError, profile } = useSelector(
+    (state) => state?.userDetails?.profileCreation
+  );
+
   const formik = useFormik({
+    initialValues: {
+      name: "",
+      username: "",
+      dateOfBirth: "",
+      location: "",
+      bio: "",
+      website: "",
+      profilePhoto: "",
+    },
     onSubmit: (values) => {
-      console.log(values);
+      values && dispatch(createProfileAction(values));
     },
     // validationSchema: createProfileValidationSchema,
   });
@@ -220,7 +231,7 @@ const CreateProfileScreen = () => {
 
 
             {/* this is the form that would proccess all the users data for create-profile */}
-            <form >
+            <form onSubmit={formik.handleSubmit}>
               {/* upload profile pic */}
               <input type="file" name="" onChange={getFile} accept="img" />
               <img src={file} style={{border: "1px solid black", borderRadius: "8px", width: "100px", height:"100px"}}/>
@@ -229,10 +240,14 @@ const CreateProfileScreen = () => {
               {/* this is the name */}
               <div className={styles.ibistro__xyz__one}>
                 <div style={{ position: "relative" }}>
-                <input type="text" placeholder="Name" className={styles.data_content_pass} name="name"
-                 value={names.name} 
-                //  onChange={handleNamesInput}  
-                />
+                  <input
+                    type="text"
+                    placeholder="Name"
+                    className={styles.data_content_pass}
+                    name="name"
+                    value={formik.values.name}
+                    onChange={formik.handleChange("name")}
+                  />
                   <span className={styles.absolute__span}>
                     <span>
                       <svg
@@ -260,10 +275,14 @@ const CreateProfileScreen = () => {
               {/* this is the username */}
               <div className={styles.ibistro__xyz__one}>
                 <div style={{ position: "relative" }}>
-                <input type="text" placeholder="Username" className={styles.data_content_pass} name="username" 
-                value={names.username} 
-                // onChange={handleNamesInput}  
-                />
+                  <input
+                    type="text"
+                    placeholder="Username"
+                    className={styles.data_content_pass}
+                    name="username"
+                    value={formik.values.username}
+                    onChange={formik.handleChange("username")}
+                  />
                   <span className={styles.absolute__span}>
                     <span>
                       <svg
@@ -294,10 +313,11 @@ const CreateProfileScreen = () => {
                   <input
                     id="dob-input"
                     type="text"
+                    name="dateOfBirth"
                     placeholder="Date of Birth"
                     className={styles.data_content_pass}
-                    // value={dob}
-                    // onChange={handleInputChange}
+                    value={formik.values.dateOfBirth}
+                    onChange={formik.handleChange("dateOfBirth")}
                     // onFocus={handleInputFocus}
                     // onBlur={handleInputBlur}
                   />
@@ -332,8 +352,8 @@ const CreateProfileScreen = () => {
                     type="text"
                     placeholder="Location"
                     className={styles.data_content_pass}
-                    value={userLocation}
-                    // onChange={(e) => setUserLocation(e.target.value)}
+                    value={formik.values.location}
+                    onChange={formik.handleChange("location")}
                   />
                   <span
                     style={{ marginTop: "2px" }}
@@ -376,8 +396,8 @@ const CreateProfileScreen = () => {
                     type="text"
                     placeholder="Website or Bio link"
                     className={styles.data_content_pass}
-                    value={linkText}
-                    // onChange={(e) => setLinkText(e.target.value)}
+                    value={formik.values.website}
+                    onChange={formik.handleChange("website")}
                   />
                   <span
                     style={{ marginTop: "2px" }}
@@ -408,8 +428,9 @@ const CreateProfileScreen = () => {
                   <textarea
                     className={styles.user_bio_data}
                     placeholder="Bio"
-                    // value={bioTxtValue}
-                    // onChange={handleBio}
+                    name="bio"
+                    value={formik.values.bio}
+                    onChange={formik.handleChange("bio")}
                     // onPaste={handlePaste}
                   />
                   <span className={styles.count_bio_words}>

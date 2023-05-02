@@ -12,9 +12,9 @@ export default function App({ Component, pageProps }) {
     <>
       <Preloader />
       <Provider store={store}>
-        {/* <ProtectedRoute> */}
+        <ProtectedRoute>
           <Component {...pageProps} />
-        {/* </ProtectedRoute> */}
+        </ProtectedRoute>
       </Provider>
     </>
   );

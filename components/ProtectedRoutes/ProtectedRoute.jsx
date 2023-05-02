@@ -31,6 +31,7 @@ const ProtectedRoute = ({ children }) => {
           router.pathname.includes(Routes.LOGIN) ||
           router.pathname.includes(Routes.SIGNUP)
         ) {
+          console.log("stay on login or signup from protected route");
           return;
         }
         // make forgot password and confirm change password unaccessible if user is logged in(redirect to home)
@@ -96,10 +97,10 @@ const ProtectedRoute = ({ children }) => {
         break;
     }
   };
-  useEffect(() => {
-    handleAuthentication();
-    console.log("authentication is called");
-  }, [isAuthenticated, apiError, user, router.pathname]);
+  // useEffect(() => {
+  //   handleAuthentication();
+  //   console.log("authentication is called");
+  // }, [isAuthenticated, apiError, user, router.pathname]);
 
   return children;
 };
