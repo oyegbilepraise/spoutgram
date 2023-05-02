@@ -31,7 +31,6 @@ import StepOne from "@/components/CreateProfile/StepOne";
 import { useEffect } from "react";
 import StepTwo from "@/components/CreateProfile/StepTwo";
 import dynamic from "next/dynamic";
-import Cookies from "js-cookie";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { createProfileAction } from "@/redux/slices/userDetailSlice";
@@ -53,11 +52,23 @@ const StepThree = dynamic(
 const CreateProfileScreen = () => {
   const dispatch = useDispatch();
   const router = useRouter();
-  // const storeData = useSelector((store) => store?.auth);
-  const { user } = useSelector((state) => state?.auth?.loginUser);
+  //get profile creation details from store
+  const { loading, appError, profile } = useSelector(
+    (state) => state?.userDetails?.profileCreation
+  );
+
   const formik = useFormik({
+    initialValues: {
+      name: "",
+      username: "",
+      dateOfBirth: "",
+      location: "",
+      bio: "",
+      website: "",
+      profilePhoto: "",
+    },
     onSubmit: (values) => {
-      console.log(values);
+      values && dispatch(createProfileAction(values));
     },
     // validationSchema: createProfileValidationSchema,
   });
@@ -221,7 +232,7 @@ const CreateProfileScreen = () => {
             </div>
 
             {/* this is the form that would proccess all the users data for create-profile */}
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={formik.handleSubmit}>
               {/* upload profile pic */}
               <input type="file" name="" onChange={getFile} accept="img" />
               <img
@@ -242,8 +253,8 @@ const CreateProfileScreen = () => {
                     placeholder="Name"
                     className={styles.data_content_pass}
                     name="name"
-                    value={values.name}
-                    onChange={handleDetailsInput}
+                    value={formik.values.name}
+                    onChange={formik.handleChange("name")}
                   />
                   <span className={styles.absolute__span}>
                     <span>
@@ -277,8 +288,8 @@ const CreateProfileScreen = () => {
                     placeholder="Username"
                     className={styles.data_content_pass}
                     name="username"
-                    value={values.username}
-                    onChange={handleDetailsInput}
+                    value={formik.values.username}
+                    onChange={formik.handleChange("username")}
                   />
                   <span className={styles.absolute__span}>
                     <span>
@@ -310,11 +321,11 @@ const CreateProfileScreen = () => {
                   <input
                     id="dob-input"
                     type="text"
-                    // name="dateOfBirth"
+                    name="dateOfBirth"
                     placeholder="Date of Birth"
                     className={styles.data_content_pass}
-                    value={values.dateOfBirth}
-                    onChange={handleDetailsInput}
+                    value={formik.values.dateOfBirth}
+                    onChange={formik.handleChange("dateOfBirth")}
                     // onFocus={handleInputFocus}
                     // onBlur={handleInputBlur}
                   />
@@ -350,8 +361,8 @@ const CreateProfileScreen = () => {
                     placeholder="Location"
                     name="location"
                     className={styles.data_content_pass}
-                    value={values.location}
-                    onChange={handleDetailsInput}
+                    value={formik.values.location}
+                    onChange={formik.handleChange("location")}
                   />
                   <span
                     style={{ marginTop: "2px" }}
@@ -398,8 +409,8 @@ const CreateProfileScreen = () => {
                     name="website"
                     placeholder="Website"
                     className={styles.data_content_pass}
-                    value={values.website}
-                    onChange={handleDetailsInput}
+                    value={formik.values.website}
+                    onChange={formik.handleChange("website")}
                   />
                   <span
                     style={{ marginTop: "2px" }}
@@ -447,8 +458,8 @@ const CreateProfileScreen = () => {
                     className={styles.user_bio_data}
                     placeholder="Bio"
                     name="bio"
-                    value={values.bio}
-                    onChange={handleDetailsInput}
+                    value={formik.values.bio}
+                    onChange={formik.handleChange("bio")}
                     // onPaste={handlePaste}
                   />
                   <span className={styles.count_bio_words}>
