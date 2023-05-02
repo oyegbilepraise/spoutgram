@@ -19,7 +19,7 @@ import styles from "@/layout/AuthLayout/AuthLayout.module.css";
 import {
   HideSvg,
   ShowSvg,
-  GoogleSvg,
+  GoogleSvg, 
   TwitterSvg,
   AppleSvg,
   CautionSvg,
@@ -78,19 +78,38 @@ const CreateProfileScreen = () => {
   // current component
   const current = useSelector((state) => state.userDetails.currentComponent);
 
+  // defining values
+  const [names, setNames] = useState({
+    name: "",
+    username: "",
+  });
   // sending the data to redux
   // get the data from redux and show to the user
   // storing the current data into state before sending to create profile
-
+  const [bioTxtValue, setBioTxtValue] = useState("");
+  const [userLocation, setUserLocation] = useState("");
+  const [linkText, setLinkText] = useState("");
   const userDetails = useSelector((state) => state.userDetails.userProfile);
+  useEffect(() => {
+    setUserLocation(userDetails.location);
+    setLinkText(userDetails.website);
+    setBioTxtValue(userDetails.bio);
+  }, []);
   const handleNext = () => {
     dispatch(nextComponent(3));
+    dispatch(
+      addDetailsToUserProfile({
+        location: userLocation,
+        website: linkText,
+        bio: bioTxtValue,
+      })
+    );
   };
 
-  const [file, setFile] = useState();
+  const [file, setFile] = useState()
 
   function getFile(event) {
-    setFile(URL.createObjectURL(event.target.files[0]));
+    setFile(URL.createObjectURL(event.target.files[0]))
   }
 
   useEffect(() => {
@@ -103,19 +122,12 @@ const CreateProfileScreen = () => {
         return;
       }
     }
-  }, [profile.updatedUser, router]);
+  }, [profile.updatedUser]);
   return (
     <AuthLayout>
       <main className={styles.__main} role="main">
         <div className={styles._xparnts_y}>
           <div className={styles._xparnts_cvr}>
-            {/* api messages  */}
-            {loading && <p>Creating profile ...</p>}
-            {appError && <p>{appError}</p>}
-            {profile?.message && <p>{profile?.message}</p>}
-            {profile.updatedUser && <p>profile created successfully</p>}
-            {/* api messages  */}
-
             {current === 1 && (
               <>
                 <span className={styles.data_pwd_lock}>
@@ -190,7 +202,7 @@ const CreateProfileScreen = () => {
             </span>
             <div
               className={styles.xpnd_inpts_new}
-              style={{ paddingTop: "14px", display: "none" }}
+              style={{ paddingTop: "14px" , display: "none"}}
             >
               {/* Start Profile Component */}
               {/* <form> */}
@@ -200,51 +212,27 @@ const CreateProfileScreen = () => {
               {/* second component */}
               {current === 2 && <StepTwo />}
 
-              {/* second component */}
-              {current === 2 && (
-                <StepTwo
-                  values={values}
-                  handleDetailsInput={handleDetailsInput}
-                />
-              )}
-
               {/* third component */}
-              {current === 3 && (
-                <StepThree
-                  values={values}
-                  handleDetailsInput={handleDetailsInput}
-                />
-              )}
+              {current === 3 && <StepThree />}
               {/* </form> */}
-
               {/* End User Profile Component */}
             </div>
 
+
             {/* this is the form that would proccess all the users data for create-profile */}
-            <form onSubmit={handleSubmit}>
+            <form >
               {/* upload profile pic */}
               <input type="file" name="" onChange={getFile} accept="img" />
-              <img
-                src={file}
-                style={{
-                  border: "1px solid black",
-                  borderRadius: "8px",
-                  width: "100px",
-                  height: "100px",
-                }}
-              />
+              <img src={file} style={{border: "1px solid black", borderRadius: "8px", width: "100px", height:"100px"}}/>
+
 
               {/* this is the name */}
               <div className={styles.ibistro__xyz__one}>
                 <div style={{ position: "relative" }}>
-                  <input
-                    type="text"
-                    placeholder="Name"
-                    className={styles.data_content_pass}
-                    name="name"
-                    value={values.name}
-                    onChange={handleDetailsInput}
-                  />
+                <input type="text" placeholder="Name" className={styles.data_content_pass} name="name"
+                 value={names.name} 
+                //  onChange={handleNamesInput}  
+                />
                   <span className={styles.absolute__span}>
                     <span>
                       <svg
@@ -272,14 +260,10 @@ const CreateProfileScreen = () => {
               {/* this is the username */}
               <div className={styles.ibistro__xyz__one}>
                 <div style={{ position: "relative" }}>
-                  <input
-                    type="text"
-                    placeholder="Username"
-                    className={styles.data_content_pass}
-                    name="username"
-                    value={values.username}
-                    onChange={handleDetailsInput}
-                  />
+                <input type="text" placeholder="Username" className={styles.data_content_pass} name="username" 
+                value={names.username} 
+                // onChange={handleNamesInput}  
+                />
                   <span className={styles.absolute__span}>
                     <span>
                       <svg
@@ -310,11 +294,10 @@ const CreateProfileScreen = () => {
                   <input
                     id="dob-input"
                     type="text"
-                    // name="dateOfBirth"
                     placeholder="Date of Birth"
                     className={styles.data_content_pass}
-                    value={values.dateOfBirth}
-                    onChange={handleDetailsInput}
+                    // value={dob}
+                    // onChange={handleInputChange}
                     // onFocus={handleInputFocus}
                     // onBlur={handleInputBlur}
                   />
@@ -348,10 +331,9 @@ const CreateProfileScreen = () => {
                   <input
                     type="text"
                     placeholder="Location"
-                    name="location"
                     className={styles.data_content_pass}
-                    value={values.location}
-                    onChange={handleDetailsInput}
+                    value={userLocation}
+                    // onChange={(e) => setUserLocation(e.target.value)}
                   />
                   <span
                     style={{ marginTop: "2px" }}
@@ -370,10 +352,7 @@ const CreateProfileScreen = () => {
                     <span>
                       <svg
                         className={styles.error______svg}
-                        style={{
-                          marginLeft: "10px",
-                          fill: "var(--brand-color)",
-                        }}
+                        style={{ marginLeft: "10px", fill: "var(--brand-color)" }}
                         width={17}
                         height={17}
                         xmlns="http://www.w3.org/2000/svg"
@@ -395,38 +374,23 @@ const CreateProfileScreen = () => {
                 <div style={{ position: "relative" }}>
                   <input
                     type="text"
-                    name="website"
-                    placeholder="Website"
+                    placeholder="Website or Bio link"
                     className={styles.data_content_pass}
-                    value={values.website}
-                    onChange={handleDetailsInput}
+                    value={linkText}
+                    // onChange={(e) => setLinkText(e.target.value)}
                   />
                   <span
                     style={{ marginTop: "2px" }}
                     className={styles.absolute__span}
                   >
                     <span>
-                      <svg
-                        className={styles.svg__signup__ll}
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                      >
+                      <svg className={styles.svg__signup__ll} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" >
                         <path d="M18.3643 15.5353L16.95 14.1211L18.3643 12.7069C20.3169 10.7543 20.3169 7.58847 18.3643 5.63585C16.4116 3.68323 13.2458 3.68323 11.2932 5.63585L9.87898 7.05007L8.46477 5.63585L9.87898 4.22164C12.6127 1.48797 17.0448 1.48797 19.7785 4.22164C22.5121 6.95531 22.5121 11.3875 19.7785 14.1211L18.3643 15.5353ZM15.5358 18.3638L14.1216 19.778C11.388 22.5117 6.9558 22.5117 4.22213 19.778C1.48846 17.0443 1.48846 12.6122 4.22213 9.87849L5.63634 8.46428L7.05055 9.87849L5.63634 11.2927C3.68372 13.2453 3.68372 16.4112 5.63634 18.3638C7.58896 20.3164 10.7548 20.3164 12.7074 18.3638L14.1216 16.9496L15.5358 18.3638ZM14.8287 7.75717L16.2429 9.17139L9.17187 16.2425L7.75766 14.8282L14.8287 7.75717Z" />
                       </svg>
                     </span>
 
                     <span>
-                      <svg
-                        className={styles.error______svg}
-                        style={{
-                          marginLeft: "10px",
-                          fill: "var(--brand-color)",
-                        }}
-                        width={17}
-                        height={17}
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                      >
+                      <svg className={styles.error______svg} style={{ marginLeft: "10px", fill: "var(--brand-color)" }} width={17} height={17} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" >
                         <path d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM11.0026 16L18.0737 8.92893L16.6595 7.51472L11.0026 13.1716L8.17421 10.3431L6.75999 11.7574L11.0026 16Z"></path>
                       </svg>
                     </span>
@@ -440,15 +404,12 @@ const CreateProfileScreen = () => {
                 </div>
 
                 {/* Bio  */}
-                <div
-                  style={{ marginBottom: 0, height: 100, position: "relative" }}
-                >
+                <div style={{ marginBottom: 0, height: 100, position: "relative" }}>
                   <textarea
                     className={styles.user_bio_data}
                     placeholder="Bio"
-                    name="bio"
-                    value={values.bio}
-                    onChange={handleDetailsInput}
+                    // value={bioTxtValue}
+                    // onChange={handleBio}
                     // onPaste={handlePaste}
                   />
                   <span className={styles.count_bio_words}>
@@ -458,11 +419,9 @@ const CreateProfileScreen = () => {
               </div>
 
               <div>
-                <button className={styles.pass_data_bd} type="submit">
-                  Create Profile
-                </button>
-                {loading && <p>creating profile ...</p>}
+               <button  className={styles.pass_data_bd} type="submit">Create Profile</button>
               </div>
+
             </form>
             {/* this is the form that would proccess all the users data for create-profile */}
           </div>

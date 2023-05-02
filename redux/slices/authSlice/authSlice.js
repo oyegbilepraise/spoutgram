@@ -13,9 +13,8 @@ export const registerUserAction = createAsyncThunk(
         url: `${baseUrl}${URL.register}`,
         data: payload,
       });
-      if (res.data.token) {
-        Cookies.set("token", res.data.token);
-      }
+      Cookies.set("token", res.data.token);
+      Cookies.set("verifyEmail", res.data.success);
       return res.data;
     } catch (err) {
       return rejectWithValue(err?.response?.data?.message);
@@ -45,18 +44,20 @@ export const verifyEmailAction = createAsyncThunk(
   "auth/verify-email",
   async (payload, { rejectWithValue }) => {
     const token = Cookies.get("token");
-    console.log(payload);
     try {
       const res = await postRequest({
         url: `${baseUrl}${URL.verifyEmail}`,
-        token: token,
         data: payload,
+        token: token,
       });
-
+      console.log(res.data);
       return res.data;
     } catch (err) {
       console.log(err);
-      return rejectWithValue(err?.response?.data?.data);
+      return (
+        rejectWithValue(err?.message) ||
+        rejectWithValue(err?.response?.data?.message)
+      );
     }
   }
 );
@@ -72,6 +73,7 @@ export const loginUserAction = createAsyncThunk(
       });
 
       Cookies.set("token", res.data.token);
+      Cookies.set("isLoggedIn", res.data.success);
       Cookies.set("email", res.data.email);
       return res.data;
     } catch (err) {
@@ -233,6 +235,7 @@ const authSlice = createSlice({
     });
     builder.addCase(verifyEmailAction.fulfilled, (state, action) => {
       state.verifyCode.loading = false;
+      state.verifyCode.verified = true;
       state.verifyCode.user = action?.payload;
     });
     builder.addCase(verifyEmailAction.rejected, (state, action) => {
@@ -260,9 +263,11 @@ const authSlice = createSlice({
       state.forgotPassword.loading = true;
       state.forgotPassword.message = {};
       state.forgotPassword.apiError = null;
+      state.forgotPassword.isEmailAvailable = false;
     });
     builder.addCase(forgotPasswordAction.fulfilled, (state, action) => {
       state.forgotPassword.loading = false;
+      state.forgotPassword.isEmailAvailable = true;
       state.forgotPassword.message = action?.payload;
     });
     builder.addCase(forgotPasswordAction.rejected, (state, action) => {
