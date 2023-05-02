@@ -53,16 +53,13 @@ const SignUpScreen = () => {
     }
   };
 
-const handleTwitterLogin =async ()=>{
-  try {
-    window.open(
-      `${baseUrl}/auth/twitter/callback`,
-      "_self"
-    )
-  } catch (error) {
-    console.log(err);
-  }
-}
+  const handleTwitterLogin = async () => {
+    try {
+      window.open(`${baseUrl}/auth/twitter/callback`, "_self");
+    } catch (error) {
+      console.log(err);
+    }
+  };
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -82,10 +79,11 @@ const handleTwitterLogin =async ()=>{
     }
   }, [codeSent.sucess, router]);
   useEffect(() => {
-    if (storedData?.registered.success) {
+    if (storedData?.registered?.success) {
       dispatch(generateEmailVerificationAction());
+      router.push(Routes.VERIFY);
     }
-  }, [dispatch, storedData?.registered.success]);
+  }, [dispatch, storedData?.registered?.success]);
   const [password, setPassword] = useState("");
   const [visible, setVisible] = useState(false);
   const [visibleOne, setVisibleOne] = useState(false);

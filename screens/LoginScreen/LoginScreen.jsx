@@ -10,7 +10,10 @@ import {
 } from "../../components";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-import { loginUserAction } from "@/redux/slices/authSlice/authSlice";
+import {
+  generateEmailVerificationAction,
+  loginUserAction,
+} from "@/redux/slices/authSlice/authSlice";
 import { useFormik } from "formik";
 import { AuthLayout } from "@/layout";
 import { useEffect, useState } from "react";
@@ -26,33 +29,27 @@ const loginFormSchema = Yup.object().shape({
     .required("Email is required"),
   password: Yup.string().required("Password is required"),
 });
-const oauthEndpoint = "http://localhost:5050"
+const oauthEndpoint = "http://localhost:5050";
 const LoginScreen = () => {
   // google login
-  const handleGoogleLogin = async ()=>{
+  const handleGoogleLogin = async () => {
     try {
-      if (typeof window !== 'undefined') {
-        window.open(
-          `${oauthEndpoint}/api/v1/auth/google/callback`,
-          "_self"
-        );
+      if (typeof window !== "undefined") {
+        window.open(`${oauthEndpoint}/api/v1/auth/google/callback`, "_self");
       }
     } catch (error) {
       console.log(error);
     }
   };
-// twitter Login
-  const handleTwitterLogin =async ()=>{
+  // twitter Login
+  const handleTwitterLogin = async () => {
     try {
-      window.open(
-        `${baseUrl}/auth/twitter/callback`,
-        "_self"
-      )
+      window.open(`${baseUrl}/auth/twitter/callback`, "_self");
     } catch (error) {
       console.log(error);
     }
-  }
-  
+  };
+
   const router = useRouter();
   const dispatch = useDispatch();
   const { loading, appError, user } = useSelector(
@@ -128,7 +125,10 @@ const LoginScreen = () => {
               <div className={styles._xpnds_oauths_div}>
                 <div>
                   {/* continue with google */}
-                  <button className={`${styles.oauths_} ${styles.ggl_oauth}`} onClick={handleGoogleLogin}>
+                  <button
+                    className={`${styles.oauths_} ${styles.ggl_oauth}`}
+                    onClick={handleGoogleLogin}
+                  >
                     <GoogleSvg />
                     Continue with Google
                   </button>
@@ -136,7 +136,10 @@ const LoginScreen = () => {
 
                 <div>
                   {/* continue with twitter */}
-                  <button className={`${styles.oauths_} ${styles.twtr_oauth}`} onClick={handleTwitterLogin}>
+                  <button
+                    className={`${styles.oauths_} ${styles.twtr_oauth}`}
+                    onClick={handleTwitterLogin}
+                  >
                     <TwitterSvg />
                     Continue with Twitter
                   </button>
