@@ -147,7 +147,6 @@ const LoginScreen = () => {
               </div>
 
               <div className={styles._oxr}>
-                <div></div>
                 <span className={styles.or}>OR</span>
               </div>
 
@@ -166,7 +165,7 @@ const LoginScreen = () => {
                     onChange={formik.handleChange("email")}
                     onFocus={handleEmailFocus}
                     onBlur={handleEmailBlur}
-                    spellcheck="false"
+                    spellCheck="false"
                     name="email"
                     placeholder="Email"
                     className={styles.data_content_pass}
@@ -177,8 +176,8 @@ const LoginScreen = () => {
                       <div style={{ position: "relative" }}>
                         {/* this is the email error msg */}
                         {showEmailError &&
-                        formik.touched.email &&
-                        formik.errors.email ? (
+                          formik.touched.email &&
+                          formik.errors.email ? (
                           <span className={styles.span__inperr}>
                             <span>{formik.errors.email}</span>
                           </span>
@@ -214,8 +213,8 @@ const LoginScreen = () => {
                       >
                         {/* this is the password error msg */}
                         {showPasswordError &&
-                        formik.touched.password &&
-                        formik.errors.password ? (
+                          formik.touched.password &&
+                          formik.errors.password ? (
                           <span className={styles.span__inperr}>
                             <span>{formik.errors.password}</span>
                           </span>

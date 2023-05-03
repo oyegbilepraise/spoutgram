@@ -114,7 +114,7 @@ export const changePasswordAction = createAsyncThunk(
 
 //get User
 export const getUserAction = createAsyncThunk(
-  "/auth",
+  "/auth/welcome",
   async (payload, { rejectWithValue }) => {
     try {
       const res = await getRequest({
