@@ -15,8 +15,9 @@ import {
 } from "../../components";
 import Link from "next/link";
 import * as Yup from "yup";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "@/layout/AuthLayout/AuthLayout.module.css";
+import Routes from "@/utils/routes";
 
 const verifyEmailSchema = Yup.object().shape({
   code: Yup.string()
@@ -36,19 +37,22 @@ const VerifyAccountScreen = () => {
       code: "",
     },
     onSubmit: (values) => {
-      const { code } = values;
-      dispatch(verifyEmailAction(code));
+      dispatch(verifyEmailAction(values));
     },
     validationSchema: verifyEmailSchema,
   });
-
-  if (verifyUserEmail?.verified) {
-    router.push("/create-profile");
-  }
-
+  useEffect(() => {
+    if (verifyCode?.user?.success) {
+      router.push(Routes.CREATE_PROFILE);
+    }
+  }, [router, verifyCode?.user]);
+  // resend verification code function
   const handleResendCode = () => {
     dispatch(generateEmailVerificationAction());
   };
+  // useEffect(() => {
+  //   dispatch(generateEmailVerificationAction());
+  // }, [dispatch]);
 
   const [showCodeError, setShowCodeError] = useState(false);
 
@@ -114,7 +118,8 @@ const VerifyAccountScreen = () => {
                     value={formik.values.code}
                     onChange={formik.handleChange("code")}
                     // onBlur={formik.handleBlur}
-                    onFocus={handleCodeFocus} onBlur={handleCodeBlur}
+                    onFocus={handleCodeFocus}
+                    onBlur={handleCodeBlur}
                     name="code"
                     maxlength="6"
                     autoComplete="off"
@@ -126,16 +131,15 @@ const VerifyAccountScreen = () => {
                   {/* error svg */}
                   {formik.touched.code && formik.errors.code ? (
                     <span className={styles.__spanerror}>
-                      <div style={{position: "relative"}}>
+                      <div style={{ position: "relative" }}>
                         {/* this is the email error msg */}
-                        {showCodeError && formik.touched.code && formik.errors.code
-                            ?
-                            (
-                            <span className={styles.span__inperr}>
-                              <span>{formik.errors.code}</span>
-                            </span>
-                            )
-                        : null}
+                        {showCodeError &&
+                        formik.touched.code &&
+                        formik.errors.code ? (
+                          <span className={styles.span__inperr}>
+                            <span>{formik.errors.code}</span>
+                          </span>
+                        ) : null}
                         <ErrorSvg />
                       </div>
                     </span>
@@ -176,7 +180,7 @@ const VerifyAccountScreen = () => {
                   </span>
                 )}
 
-                {verifyCode?.user.sucess && (
+                {verifyCode?.user?.sucess && (
                   <span className={styles._00rsnd}>
                     code verified
                     <svg

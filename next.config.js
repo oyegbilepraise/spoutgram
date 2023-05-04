@@ -1,9 +1,14 @@
 /** @type {import('next').NextConfig} */
+require('dotenv').config()
 const nextConfig = {
   reactStrictMode: true,
     images: {
     domains: ['res.cloudinary.com'],
   },
+  eslint:{
+    ignoreDuringBuilds: true,
+    ignoreDuringDevelopment: true,
+  }
 }
 
 module.exports = {

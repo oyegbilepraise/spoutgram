@@ -1,9 +1,38 @@
-import React from "react";
-import { CreateProfileScreen } from "@/screens";
-import Head from "next/head";
-import ProtectedRoute from "@/components/ProtectedRoutes/ProtectedRoute";
+import React, {useState, useEffect} from 'react'
+import { CreateProfileScreen} from '@/screens'
+import Head from 'next/head'
+import axios from 'axios'
+import ProtectedRoute from '@/components/ProtectedRoutes/ProtectedRoute'
+import { baseUrl, baseUrlTest } from '@/redux/baseUrl'
+import Cookies from 'js-cookie'
+
 
 const CreateProfile = () => {
+  const [user, setUser] = useState(null)
+
+  useEffect(() => {
+    const getUser = async () => {
+      try {
+        const url = `${baseUrl}/auth/welcome`
+        const { data } = await axios.get(url, { withCredentials: true })
+        //save the token in session storage!!!        
+        Cookies.set("token", data.user.token)
+        if (data.isHasProfile === false) {
+          console.log(data, 'hiii')
+          //routes to create-profile
+        } else {
+          console.log(data, 'hello')
+          //routes to home
+        }
+        setUser(data.user._json)
+      } catch (e) {
+        console.log(e)
+      }
+    }
+
+    getUser()
+  }, [])
+
   return (
     <>
       <Head>
@@ -31,7 +60,8 @@ const CreateProfile = () => {
       </Head>
       <CreateProfileScreen />
     </>
-  );
-};
+    
+  )
+}
 
 export default CreateProfile;
