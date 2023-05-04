@@ -1,15 +1,16 @@
 .authnav {
     width: 90%;
     margin: auto;
-    padding-top: 12px;
-    padding-bottom: 15px;
+    padding-top: 25px;
+    padding-bottom: 28px;
+    /* border: 1px solid black; */
   }
   .authnav > svg:nth-child(1) {
     width: 20px; height: 20px;
     display: none;
   }
   ._0004_logo_svg {
-    width: 130px;
+    width: 140px;
     margin: auto;
   }
 
