@@ -24,6 +24,7 @@ import Cookies from "js-cookie";
 import axios from "axios";
 import { from } from "form-data";
 import { baseUrl, baseUrlTest } from "../../redux/baseUrl";
+import { useSession, signIn, signOut } from "next-auth/react"
 
 const signupValidationSchema = Yup.object().shape({
   email: Yup.string()
@@ -42,6 +43,10 @@ const SignUpScreen = () => {
   const dispatch = useDispatch();
   const storedData = useSelector((state) => state?.auth?.registerUser);
   const codeSent = useSelector((state) => state?.auth?.verifyUserEmail);
+  const { data, status } = useSession()
+
+  console.log({ data, status });
+
 
   const handleGoogleLogin = async () => {
     try {
@@ -125,7 +130,7 @@ const SignUpScreen = () => {
                   {/* continue with google */}
                   <button
                     className={`${styles.oauths_} ${styles.ggl_oauth}`}
-                    onClick={handleGoogleLogin}
+                    onClick={() => signIn()}
                   >
                     <GoogleSvg />
                     Continue With Google
@@ -136,7 +141,7 @@ const SignUpScreen = () => {
                   {/* continue with twitter */}
                   <button
                     className={`${styles.oauths_} ${styles.twtr_oauth}`}
-                    onClick={handleTwitterLogin}
+                    onClick={() => signOut()}
                   >
                     <TwitterSvg />
                     Continue With Twitter
