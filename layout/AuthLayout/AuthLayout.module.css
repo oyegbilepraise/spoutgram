@@ -14,7 +14,7 @@
   width: 450px;
 } 
 ._0004_logo_svg {
-  width: 130px;
+  width: 190px;
   margin: auto;
 }
 .vdf_data, .span_dta_vn {
@@ -496,7 +496,7 @@ input[type="text"].data_content_inpcode:not(:focus):not(:placeholder-shown) {
   z-index: 100;
 }
 ._loader_img {
-  width: 180px;
+  width: 210px;
 }
 .react__loader__child__div {
   position: absolute;
