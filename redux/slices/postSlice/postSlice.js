@@ -11,8 +11,6 @@ export const createPostAction = createAsyncThunk(
 
   const token = Cookies.get("token");
     try {
-
-      console.log("formDataImage:",payload.getAll("image"), "Time:", new Date());
       const res = await postRequestWithImage({
         url: `${baseUrl}${URL.createPost}`,
         token:token,

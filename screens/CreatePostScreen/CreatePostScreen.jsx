@@ -53,7 +53,7 @@ const CreatePostScreen = () => {
     onSubmit: async (values) => {
 
       const formData = new FormData();
-      
+
       formData.append("title", values.title);
       formData.append("desc", values.desc);
 
@@ -245,7 +245,6 @@ Try QuillBot Now!</h5> */}
                   }
 
                 }
-                console.log("files: ",images);
 
                 setImages([...images, ...newImages]);
               }}
