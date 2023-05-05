@@ -12,7 +12,9 @@ export const URL = {
   createProfile: "/users/create-profile",
 
   // Posts
-
+createPost:"/posts/create",
+getPosts:"/posts/all-posts",
+likePost:"/posts/post/like"
   // Category
 
   // Comment

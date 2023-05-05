@@ -1,7 +1,6 @@
 import React from "react";
 import { EarningsScreen } from "@/screens";
 import Head from "next/head";
-import ProtectedRoute from "@/components/ProtectedRoutes/ProtectedRoute";
 
 const Earnings = () => {
   return (
@@ -32,4 +31,4 @@ const Earnings = () => {
   );
 };
 
-export default ProtectedRoute(Earnings);
+export default Earnings;

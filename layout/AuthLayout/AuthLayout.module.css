@@ -40,8 +40,8 @@
   transition: 0.5s all;
   font-size: 15px;
   background-color: rgb(248, 248, 248);
-  letter-spacing: 0.2px;
-  color: rgb(130, 130, 130);
+  letter-spacing: 0.3px;
+  color: rgb(140, 140, 140);
   border: 1px solid rgba(228, 228, 228, 0.264);
 }
 .oauths_:hover ._0016_auth_svg {
@@ -89,7 +89,7 @@
 input[type="text"].data_content_pass, input[type="password"].data_content_pass {
   height: 52px;
   width: 100%;
-  border-radius: 4px;
+  border-radius: 10px;
   padding-left: 15px;
   font-family: var(--global-regular);
   font-size: 15px;
@@ -494,7 +494,7 @@ input[type="text"].data_content_pass:focus::placeholder, input[type="password"].
   position: relative;
   right: 0px;
   top: 0px;
-  padding-left: 14px;
+  margin-left: 14px;
 }
 .absolute__span {
   position: absolute;
@@ -709,7 +709,38 @@ input[type="text"].data_content_pass:focus::placeholder, input[type="password"].
   transform: translate(-50%, -50%);
   padding: 0px;
 }
-
+.span__inperr {
+  /* border: 1px solid black; */
+  display: block;
+  padding-top: 3px; padding-bottom: 3px;
+  border-radius: 7px;
+  /* border: 1px solid var(--brand-color); */
+  background-color: #ff4242;
+  text-align: center;
+  position: absolute;
+  bottom: 18px;
+  width: max-content;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.span__inperr::after {
+  content: " ";
+  position: absolute;
+  top: 100%; /* At the bottom of the tooltip */
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #ff4242 transparent transparent transparent;
+}
+.span__inperr > span {
+  color: white;
+  font-family: var(--global-regular);
+  /* background-color: red; */
+  padding-left: 9px; padding-right: 9px;
+  font-size: 12px;
+  letter-spacing: 0.2px;
+}
 /* responsiveness */
 @media screen and (max-width: 520px) {
   ._xparnts, ._xparnts_y {
@@ -738,7 +769,7 @@ input[type="text"].data_content_pass:focus::placeholder, input[type="password"].
     font-size: 13px;
     background-color: rgb(248, 248, 248);
     letter-spacing: 0.2px;
-    color: rgb(110, 110, 110);
+    color: rgb(130, 130, 130);
     border: none;
   }
   ._0016_auth_svg {
@@ -768,9 +799,8 @@ input[type="text"].data_content_pass:focus::placeholder, input[type="password"].
     color: rgb(80, 80, 80);
   }
   input[type="text"].data_content_pass, input[type="password"].data_content_pass {
-    height: 45px;
+    height: 49px;
     width: 100%;
-    border-radius: 4px;
     padding-left: 15px;
     font-family: var(--global-regular);
     font-size: 13px;
@@ -781,7 +811,7 @@ input[type="text"].data_content_pass:focus::placeholder, input[type="password"].
     caret-color: var(--brand-color);
   }
   .xpnd_inpts > div, .ibistro__xyz__one > div {
-    height: 49px;
+    height: 53px;
   }
   .svg__showpaswd {
     width: 13px; height: 13px;
@@ -789,7 +819,7 @@ input[type="text"].data_content_pass:focus::placeholder, input[type="password"].
   .absolute__span {
     position: absolute;
     width: max-content;
-    right: 10px; top: 13px;
+    right: 13px; top: 14px;
   }
   .error______svg {
     height: 12px; height: 12px;
@@ -814,14 +844,14 @@ input[type="text"].data_content_pass:focus::placeholder, input[type="password"].
   }
   .__spanerror {
     position: absolute;
-    top: 13px;
+    top: 14px;
     right: 10px;
   }
   .passwrd__error {
     position: relative;
     right: 0px;
     top: 0px;
-    padding-left: 8px;
+    margin-left: 8px;
   }
   ._0013_span, .xkktndckl, ._000xsry, ._00sxtry {
     text-align: left;
@@ -857,10 +887,18 @@ input[type="text"].data_content_pass:focus::placeholder, input[type="password"].
     font-size: 13px;
   }
   .error__inval {
-    width: 18px; height: 18px;
-    top: 13px;
+    width: 16px; height: 16px;
+    top: 11px;
   }
   .error__msg__xyx {
+    border: 1px solid black;
+    display: block;
+    padding-top: 6px; padding-bottom: 6px;
+    border-radius: 5px;
+    border: 1px solid var(--brand-color);
+    background-color: #01a8ea33;
+    text-align: center;
+    position: relative;
     margin-top: 8px;
   }
   .data_pwd_lock {
@@ -998,6 +1036,9 @@ input[type="text"].data_content_pass:focus::placeholder, input[type="password"].
   }
   .react__loader__child__div {
     top: 45%;
+  }
+  .span__inperr {
+    display: none;
   }
 }
 

@@ -1,7 +1,6 @@
 import React from "react";
 import { EditProfileScreen } from "@/screens";
 import Head from "next/head";
-import ProtectedRoute from "@/components/ProtectedRoutes/ProtectedRoute";
 
 const EditProfile = () => {
   return (
@@ -32,4 +31,4 @@ const EditProfile = () => {
   );
 };
 
-export default ProtectedRoute(EditProfile);
+export default EditProfile;

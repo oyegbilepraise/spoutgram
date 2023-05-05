@@ -2,8 +2,9 @@ import styles from "@/layout/HomeLayout/HomeLayout.module.css";
 import img from '../../images/default-photo.svg'
 import people1 from '../../images/people-1.jpeg'
 import Image from "next/image";
+import PostedAt from "../PostedAt/postedAt";
 
-const ProfileImage = () => {
+const ProfileImage = ({time,posterId}) => {
   return (
     <div style={{ position: "relative" }}>
       <div className={styles.hover_main_image}>
@@ -164,7 +165,7 @@ const ProfileImage = () => {
           </span>
         </div>
         <div>
-          <span className={styles._000_dt_data}>17h</span>
+          <span className={styles._000_dt_data}><PostedAt time={time}/></span>
         </div>
       </div>
      

@@ -1,7 +1,6 @@
 import React from "react";
 import { CreatePostScreen } from "@/screens";
 import Head from "next/head";
-import ProtectedRoute from "@/components/ProtectedRoutes/ProtectedRoute";
 
 const CreatePost = () => {
   return (
@@ -32,4 +31,4 @@ const CreatePost = () => {
   );
 };
 
-export default ProtectedRoute(CreatePost);
+export default CreatePost;

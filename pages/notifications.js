@@ -1,7 +1,6 @@
 import React from "react";
 import { NotificationScreen } from "@/screens";
 import Head from "next/head";
-import ProtectedRoute from "@/components/ProtectedRoutes/ProtectedRoute";
 
 const Notification = () => {
   return (
@@ -35,4 +34,4 @@ const Notification = () => {
   );
 };
 
-export default ProtectedRoute(Notification);
+export default Notification;

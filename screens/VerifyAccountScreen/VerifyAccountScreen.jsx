@@ -15,12 +15,13 @@ import {
 } from "../../components";
 import Link from "next/link";
 import * as Yup from "yup";
+import { useState } from "react";
 import styles from "@/layout/AuthLayout/AuthLayout.module.css";
 
 const verifyEmailSchema = Yup.object().shape({
   code: Yup.string()
     .required("Code is required")
-    .matches(/^\d{4}$/, "Invalid code format"),
+    .matches(/^\d{6}$/, "Invalid code format"),
 });
 
 const VerifyAccountScreen = () => {
@@ -48,6 +49,15 @@ const VerifyAccountScreen = () => {
   const handleResendCode = () => {
     dispatch(generateEmailVerificationAction());
   };
+
+  const [showCodeError, setShowCodeError] = useState(false);
+
+  function handleCodeFocus() {
+    setShowCodeError(true);
+  }
+  function handleCodeBlur() {
+    setShowCodeError(false);
+  }
 
   return (
     <AuthLayout>
@@ -79,7 +89,7 @@ const VerifyAccountScreen = () => {
                       <path d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM11.0026 16L18.0737 8.92893L16.6595 7.51472L11.0026 13.1716L8.17421 10.3431L6.75999 11.7574L11.0026 16Z"></path>
                     </svg>
                     <span className={styles.error__txt__xyx}>
-                      Verification email resent!
+                      {verifyUserEmail?.codeSent?.message}
                     </span>
                   </span>
                 </div>
@@ -91,7 +101,7 @@ const VerifyAccountScreen = () => {
                   <span className={styles.error__msg__xyx}>
                     <CautionSvg />
                     <span className={styles.error__txt__xyx}>
-                      Invalid code!
+                      {verifyCode.appError}
                     </span>
                   </span>
                 </div>
@@ -103,7 +113,8 @@ const VerifyAccountScreen = () => {
                     type="text"
                     alue={formik.values.code}
                     onChange={formik.handleChange("code")}
-                    onBlur={formik.handleBlur}
+                    // onBlur={formik.handleBlur}
+                    onFocus={handleCodeFocus} onBlur={handleCodeBlur}
                     name="code"
                     autoComplete="off"
                     placeholder="Code"
@@ -113,12 +124,20 @@ const VerifyAccountScreen = () => {
                   {/* error svg */}
                   {formik.touched.code && formik.errors.code ? (
                     <span className={styles.__spanerror}>
-                      <ErrorSvg />
+                      <div style={{position: "relative"}}>
+                        {/* this is the email error msg */}
+                        {showCodeError && formik.touched.code && formik.errors.code
+                            ?
+                            (
+                            <span className={styles.span__inperr}>
+                              <span>{formik.errors.code}</span>
+                            </span>
+                            )
+                        : null}
+                        <ErrorSvg />
+                      </div>
                     </span>
                   ) : null}
-                  {formik.touched.code && formik.errors.code
-                    ? formik.errors.code
-                    : null}
                   {/* error svg  */}
                 </div>
               </div>
@@ -155,9 +174,9 @@ const VerifyAccountScreen = () => {
                   </span>
                 )}
 
-                {verifyUserEmail?.codeSent && (
+                {verifyCode?.user.sucess && (
                   <span className={styles._00rsnd}>
-                    Code sent
+                    code verified
                     <svg
                       className={styles.yxxz}
                       xmlns="http://www.w3.org/2000/svg"

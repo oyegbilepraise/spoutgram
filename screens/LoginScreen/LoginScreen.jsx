@@ -4,7 +4,6 @@ import {
   ShowSvg,
   GoogleSvg,
   TwitterSvg,
-  AppleSvg,
   CautionSvg,
   ErrorSvg,
   BtnloadSvg,
@@ -22,9 +21,9 @@ import Routes from "@/utils/routes";
 
 const loginFormSchema = Yup.object().shape({
   email: Yup.string()
-    .email("Enter a valid email")
-    .required("Please enter your email address"),
-  password: Yup.string().required("Please enter your password"),
+    .email("Invalid email format")
+    .required("Email is required"),
+  password: Yup.string().required("Password is required"),
 });
 
 const LoginScreen = () => {
@@ -45,15 +44,48 @@ const LoginScreen = () => {
     },
     validationSchema: loginFormSchema,
   });
-  if (user.token && user.accountVerified === false) {
-    router.push(Routes.VERIFY);
-  } else if (user.token && user.hasProfile === false) {
-    router.push(Routes.CREATE_PROFILE);
-  } else if (user.token && user.accountVerified && user.hasProfile) {
-    router.push(Routes.HOME);
-  }
+  useEffect(() => {
+    if (user.token) {
+      if (
+        user.isAccountVerified === false &&
+        router.pathname !== Routes.VERIFY
+      ) {
+        router.push(Routes.VERIFY);
+        console.log("push to verify from login");
+        return;
+      } else if (
+        user.profile === false &&
+        router.pathname !== Routes.CREATE_PROFILE
+      ) {
+        console.log("push to profile from login");
+        router.push(Routes.CREATE_PROFILE);
+        return;
+      } else {
+        router.push(Routes.HOME);
+        console.log("push to home from login");
+        return;
+      }
+    }
+  }, [user.isAccountVerified, user.profile, user.token]);
 
   const [visible, setVisible] = useState(false);
+
+  const [showEmailError, setShowEmailError] = useState(false);
+  const [showPasswordError, setShowPasswordError] = useState(false);
+
+  function handleEmailFocus() {
+    setShowEmailError(true);
+  }
+  function handleEmailBlur() {
+    setShowEmailError(false);
+  }
+
+  function handlePasswordFocus() {
+    setShowPasswordError(true);
+  }
+  function handlePasswordBlur() {
+    setShowPasswordError(false);
+  }
 
   return (
     <AuthLayout>
@@ -78,14 +110,6 @@ const LoginScreen = () => {
                     Continue with Twitter
                   </button>
                 </div>
-
-                <div>
-                  {/* continue with apple */}
-                  <button className={`${styles.oauths_} ${styles.appl_oauth}`}>
-                    <AppleSvg />
-                    Continue with Apple
-                  </button>
-                </div>
               </div>
 
               <div className={styles._oxr}>
@@ -102,48 +126,43 @@ const LoginScreen = () => {
 
               <div className={styles.xpnd_inpts} style={{ paddingTop: "14px" }}>
                 <div style={{ position: "relative" }}>
-                  <input
-                    type="text"
-                    value={formik.values.email}
-                    onChange={formik.handleChange("email")}
-                    onBlur={formik.handleBlur}
-                    autoCorrect="false"
-                    name="email"
-                    placeholder="Email"
-                    className={styles.data_content_pass}
-                  />
 
+                  <input type="text" value={formik.values.email} onChange={formik.handleChange("email")} onFocus={handleEmailFocus}  onBlur={handleEmailBlur} spellcheck="false" name="email" placeholder="Email" className={styles.data_content_pass} />
                   {/* error svg */}
                   {formik.touched.email && formik.errors.email ? (
                     <span className={styles.__spanerror}>
-                      <ErrorSvg />
+                      <div style={{position: "relative"}}>
+                        {/* this is the email error msg */}
+                        {showEmailError && formik.touched.email && formik.errors.email
+                            ?
+                            (
+                            <span className={styles.span__inperr}>
+                              <span>{formik.errors.email}</span>
+                            </span>
+                            )
+                        : null}
+                        <ErrorSvg />
+                      </div>
                     </span>
                   ) : null}
                   {/* error svg  */}
                 </div>
 
                 <div style={{ position: "relative" }}>
-                  <input
-                    type={visible ? "text" : "password"}
-                    value={formik.values.password}
-                    onChange={formik.handleChange("password")}
-                    onBlur={formik.handleBlur}
-                    autoCorrect="false"
-                    placeholder="Password"
-                    name="password"
-                    className={`${styles.data_content_pass} ${styles._00x00_pwd}`}
-                  />
-
+                  <input type={visible ? "text" : "password"} value={formik.values.password} onChange={formik.handleChange("password")} onFocus={handlePasswordFocus} onBlur={handlePasswordBlur} autoCorrect="false" placeholder="Password" name="password" className={`${styles.data_content_pass} ${styles._00x00_pwd}`} />
                   <span className={styles.absolute__span}>
                     <span onClick={() => setVisible(!visible)}>
                       {visible ? <HideSvg /> : <ShowSvg />}
                     </span>
-
                     {/* error svg  */}
                     {formik.touched.password && formik.errors.password ? (
-                      <span
-                        className={`${styles.__spanerror} ${styles.passwrd__error}`}
-                      >
+                      <span className={`${styles.__spanerror} ${styles.passwrd__error}`} style={{position: "relative"}}>
+                        {/* this is the password error msg */}
+                        {showPasswordError && formik.touched.password && formik.errors.password
+                            ? (<span className={styles.span__inperr}>
+                              <span>{formik.errors.password}</span>
+                            </span>)
+                        : null}
                         <ErrorSvg />
                       </span>
                     ) : null}
@@ -155,6 +174,7 @@ const LoginScreen = () => {
                       <Link href="/forgot-password">Forgot Password?</Link>
                     </span>
                   </span>
+
                 </div>
               </div>
 

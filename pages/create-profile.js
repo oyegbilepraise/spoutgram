@@ -34,4 +34,4 @@ const CreateProfile = () => {
   );
 };
 
-export default ProtectedRoute(CreateProfile);
+export default CreateProfile;
