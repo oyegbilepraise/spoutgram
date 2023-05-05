@@ -19,15 +19,6 @@ const dispatch=useDispatch()
       dispatch(getAllPostsAction(token));
   }, []);
 
-  // const posts = [
-  //   {
-  //     id: 1,
-  //     ProfileImage: <ProfileImage />,
-  //     title: "My take on this SVB Debacle.",
-  //     description: "there is something new happening everyday.",
-  //   },
-  // ];
-
   console.table(posts);
 
   return (
@@ -35,7 +26,7 @@ const dispatch=useDispatch()
       {posts.map((post,id) => {
         return (
           <div key={id} className={`${styles.div} ${styles.data_content}`}>
-            <ProfileImage time={post.updatedAt} posterId={post.owner} />
+            <ProfileImage post={post} />
             <div
               className={`${styles.data_content_all} ${styles._00dca} ${styles.data_no_content}`}
             >
@@ -47,11 +38,11 @@ const dispatch=useDispatch()
                 <span className={styles._ttl_contxt}>{post.desc}</span>
               </div>
               {/* John, this is the ImageCarousels */}
-              <ImageCarousels />
-              {/* <div className={styles.div__for__vid}>
-                John, this is the video
+              <ImageCarousels postImage={post.postImage} />
+              <div className={styles.div__for__vid}>
+                {/* John, this is the video */}
                 <HomeVideo />
-              </div> */}
+              </div>
               <div className={styles._00ftr_pst}>
                 <span className={styles._00mn_span} onClick={()=>dispatch(likePostAction({postId:post._id}))}>
                   <span>
