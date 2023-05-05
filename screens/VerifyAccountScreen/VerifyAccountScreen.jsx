@@ -43,7 +43,12 @@ const VerifyAccountScreen = () => {
   });
   useEffect(() => {
     if (verifyCode?.user?.success) {
+      console.log({ verifyCode });
       router.push(Routes.CREATE_PROFILE);
+    } else {
+      alert('error')
+      // console.log({ no: verifyCode });
+      setShowCodeError(true)
     }
   }, [router, verifyCode?.user]);
   // resend verification code function
@@ -54,7 +59,7 @@ const VerifyAccountScreen = () => {
   //   dispatch(generateEmailVerificationAction());
   // }, [dispatch]);
 
-  const [showCodeError, setShowCodeError] = useState(false);
+  const [showCodeError, setShowCodeError] = useState(true);
 
   function handleCodeFocus() {
     setShowCodeError(true);
@@ -134,8 +139,8 @@ const VerifyAccountScreen = () => {
                       <div style={{ position: "relative" }}>
                         {/* this is the email error msg */}
                         {showCodeError &&
-                        formik.touched.code &&
-                        formik.errors.code ? (
+                          formik.touched.code &&
+                          formik.errors.code ? (
                           <span className={styles.span__inperr}>
                             <span>{formik.errors.code}</span>
                           </span>

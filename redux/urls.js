@@ -1,6 +1,6 @@
 export const URL = {
   // Auth
-  auth: "/auth",
+  auth: "/auth/welcome",
   login: "/auth/login",
   register: "/auth/register",
   generateEmailOTP: "/auth/generate-email-verification-token",

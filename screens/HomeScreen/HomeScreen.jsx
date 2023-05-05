@@ -41,7 +41,7 @@ const HomeScreen = (props) => {
           </div>
           {/* image/video */}
           <div className={styles.media__preview} style={{ display: "none" }}>
-            <Image src="" alt="" className={styles.img__media__preview} />
+            <Image src="" alt="..." className={styles.img__media__preview} />
             <video src="" className={styles.vid__media__preview} controls="" />
           </div>
           {/* image/video */}
@@ -269,7 +269,7 @@ const HomeScreen = (props) => {
         <div className={styles.whats_yyy}>
           <div className={styles.parnt__cnt_wyyyt}>
             <div className={styles.inipic_xyz}>
-              <Image className={styles.img__winipc} src={img} />
+              <Image alt="img" className={styles.img__winipc} src={img} />
             </div>
             <div className={styles.ini__inp}>
               <Link href="/createpost">
