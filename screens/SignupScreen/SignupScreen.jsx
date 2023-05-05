@@ -172,7 +172,7 @@ const SignUpScreen = () => {
                   {/* email input */}
                   <input
                     type="text"
-                    spellcheck="false"
+                    spellCheck="false"
                     value={formik.values.email}
                     onChange={formik.handleChange("email")}
                     onFocus={handleEmailFocus}
@@ -187,8 +187,8 @@ const SignUpScreen = () => {
                       <div style={{ position: "relative" }}>
                         {/* this is the email error msg */}
                         {showEmailError &&
-                        formik.touched.email &&
-                        formik.errors.email ? (
+                          formik.touched.email &&
+                          formik.errors.email ? (
                           <span className={styles.span__inperr}>
                             <span>{formik.errors.email}</span>
                           </span>
@@ -224,8 +224,8 @@ const SignUpScreen = () => {
                       >
                         {/* this is the password error msg */}
                         {showPasswordError &&
-                        formik.touched.password &&
-                        formik.errors.password ? (
+                          formik.touched.password &&
+                          formik.errors.password ? (
                           <span className={styles.span__inperr}>
                             <span>{formik.errors.password}</span>
                           </span>
@@ -256,15 +256,15 @@ const SignUpScreen = () => {
                     </span>
                     {/* error svg  */}
                     {formik.touched.confirmPassword &&
-                    formik.errors.confirmPassword ? (
+                      formik.errors.confirmPassword ? (
                       <span
                         className={`${styles.__spanerror} ${styles.passwrd__error}`}
                         style={{ position: "relative" }}
                       >
                         {/* this is the confirm password  error msg */}
                         {showCPasswordError &&
-                        formik.touched.confirmPassword &&
-                        formik.errors.confirmPassword ? (
+                          formik.touched.confirmPassword &&
+                          formik.errors.confirmPassword ? (
                           <span className={styles.span__inperr}>
                             <span>{formik.errors.confirmPassword}</span>
                           </span>

@@ -28,8 +28,6 @@ const dispatch=useDispatch()
   //   },
   // ];
 
-  console.table(posts);
-
   return (
     <div>
       {posts.map((post,id) => {

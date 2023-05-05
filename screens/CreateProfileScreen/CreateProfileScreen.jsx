@@ -312,7 +312,7 @@ const CreateProfileScreen = () => {
                 <div style={{ position: "relative" }}>
                   <input
                     id="dob-input"
-                    type="text"
+                    type="date"
                     name="dateOfBirth"
                     placeholder="Date of Birth"
                     className={styles.data_content_pass}
