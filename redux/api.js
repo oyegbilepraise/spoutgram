@@ -21,10 +21,31 @@ console.log({"url":url,"token":token})
 
 // POST REQUEST
 export const postRequest = async ({ url, token, data, formData, params }) => {
+
+  
   const requestResponse = await API({
     headers: {
       Authorization: "Bearer " + token,
       "Content-Type": "application/json",
+    },
+    method: "POST",
+    url,
+    params,
+    data,
+    formData,
+  });
+  return requestResponse;
+};
+
+//POST WITH IMAGE
+export const postRequestWithImage = async ({ url, token,data, formData, params }) => {
+
+  console.log("Date:", new Date());
+  
+  const requestResponse = await API({
+    headers: {
+      Authorization: "Bearer " + token,
+      "Content-Type": "amultipart/form-data",
     },
     method: "POST",
     url,

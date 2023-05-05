@@ -1,4 +1,4 @@
-import { getRequest, patchRequest, postRequest } from "../../api";
+import { getRequest, patchRequest, postRequest, postRequestWithImage } from "../../api";
 import { baseUrl } from "../../baseUrl";
 import { URL } from "../../urls";
 import Cookies from "js-cookie";
@@ -8,13 +8,15 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 export const createPostAction = createAsyncThunk(
   "posts/create",
   async (payload, { rejectWithValue }) => {
+
   const token = Cookies.get("token");
-  console.log(payload);
     try {
-      const res = await postRequest({
+
+      console.log("formDataImage:",payload.getAll("image"), "Time:", new Date());
+      const res = await postRequestWithImage({
         url: `${baseUrl}${URL.createPost}`,
-        formData: payload,
-        token:token
+        token:token,
+        data:payload,
       });
       return res.data;
     } catch (err) {

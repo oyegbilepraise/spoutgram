@@ -9,8 +9,9 @@ import { createPostAction } from "@/redux/slices/postSlice/postSlice";
 import { useFormik } from "formik";
 import { BtnloadSvg } from "@/components";
 import Cookies from "js-cookie";
-
 const CreatePostScreen = () => {
+
+
   const [showPostSettings, setShowPostSettings] = useState(false);
   const dispatch = useDispatch();
   const token = Cookies.get("token");
@@ -27,6 +28,7 @@ const CreatePostScreen = () => {
   const VideoInputRef = useRef();
 
   const handleVideoChange = (event) => {
+    
     const selectedFiles = event.target.files;
 
     if (selectedFiles.length > 1) {
@@ -43,22 +45,23 @@ const CreatePostScreen = () => {
 
   // ------------ Function handling post submit -------------
   const [images, setImages] = useState([]);
+  
 
   const formik = useFormik({
+    
     initialValues: { title: "", desc: "", image: [] },
     onSubmit: async (values) => {
-      const formData = new FormData();
 
-      for (let i = 0; i < values.image.length; i++) {
-        formData.append("image", values.image[i]);
-      }
+      const formData = new FormData();
+      
       formData.append("title", values.title);
       formData.append("desc", values.desc);
 
-console.log(values);
-console.log(formData);
-
-      // dispatch(createPostAction(formData));
+      for (let i = 0; i < images.length; i++) {
+        formData.append("image", images[i]);
+      }
+     
+      dispatch(createPostAction(formData));
 
       values.title = "";
       values.desc = "";
@@ -224,6 +227,7 @@ Try QuillBot Now!</h5> */}
               name="image"
               style={{ display: "none" }}
               onChange={(event) => {
+
                 formik.setFieldValue("image", Array.from(event.target.files));
                 const newImages = [];
                 const files = event.target.files;
@@ -237,8 +241,11 @@ Try QuillBot Now!</h5> */}
                       return;
                     }
                     newImages.push(file);
+
                   }
+
                 }
+                console.log("files: ",images);
 
                 setImages([...images, ...newImages]);
               }}
