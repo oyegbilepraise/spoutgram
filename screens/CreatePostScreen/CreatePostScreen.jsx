@@ -1,35 +1,21 @@
 import { HomeLayout } from "@/layout";
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import styles from "@/layout/HomeLayout/HomeLayout.module.css";
 import "./CreatePostScreen.module.css";
 import VideoUploader from "@/components/VideoUpload/VideoUploader";
 import ImagePost from "./ImagePost";
+import { useDispatch, useSelector } from "react-redux";
+import { createPostAction } from "@/redux/slices/postSlice/postSlice";
+import { useFormik } from "formik";
+import { BtnloadSvg } from "@/components";
+import Cookies from "js-cookie";
 
 const CreatePostScreen = () => {
   const [showPostSettings, setShowPostSettings] = useState(false);
+  const dispatch = useDispatch();
+  const token = Cookies.get("token");
 
-  // ----- image uploader starts here -----
-  const [images, setImages] = useState([]);
   const fileInputRef = useRef();
-
-  const handleFileInputChange = (event) => {
-    const newImages = [];
-    const files = event.target.files;
-
-    for (let i = 0; i < files.length; i++) {
-      const file = files[i];
-
-      if (file.type.startsWith("image/")) {
-        if (images.length >= 4) {
-          alert("You can only upload up to 4 images.");
-          return;
-        }
-        newImages.push(file);
-      }
-    }
-
-    setImages([...images, ...newImages]);
-  };
 
   const handleButtonClick = () => {
     fileInputRef.current.click();
@@ -37,7 +23,7 @@ const CreatePostScreen = () => {
 
   // ----- video uploader starts here -----
   const [video, setVideo] = useState(null);
-  console.log(video);
+  // console.log(video);
   const VideoInputRef = useRef();
 
   const handleVideoChange = (event) => {
@@ -48,12 +34,49 @@ const CreatePostScreen = () => {
       return;
     }
     const selectedFile = selectedFiles[0];
-      setVideo(selectedFile);  
+    setVideo(selectedFile);
   };
 
   const handleVideoClick = () => {
     VideoInputRef.current.click();
   };
+
+  // ------------ Function handling post submit -------------
+  const [images, setImages] = useState([]);
+
+  const formik = useFormik({
+    initialValues: { title: "", desc: "", image: [] },
+    onSubmit: async (values) => {
+      const formData = new FormData();
+
+      for (let i = 0; i < values.image.length; i++) {
+        formData.append("image", values.image[i]);
+      }
+      formData.append("title", values.title);
+      formData.append("desc", values.desc);
+
+console.log(values);
+console.log(formData);
+
+      // dispatch(createPostAction(formData));
+
+      values.title = "";
+      values.desc = "";
+      values.image = [];
+      setImages([]);
+      fileInputRef.current.value = "";
+    },
+    validate: (values) => {
+      let errors = {};
+      if (values.title == "") {
+        errors.title = "Post title is required";
+      }
+      if (values.desc == "") {
+        errors.desc = "Post body is required";
+      }
+      return errors;
+    },
+  });
 
   return (
     <HomeLayout>
@@ -61,6 +84,43 @@ const CreatePostScreen = () => {
       <div class={`${styles.timeline} ${styles._000middlebar}`}>
         <nav className={styles.___main_nav}>
           <div>
+            {/* <h5>Why is GPT-4 called the AI of Ecommerce?
+Try the trial version here =>> https://www.chatgptexperts.online/ai4
+Take a look at what GPT-4 can do below and you will understand:
+- Data Analytics: GPT-4 can analyze data to understand customer behavior and uncover trends, supply and demand, and trends in the advertising sector.
+- Analysis of leads: GPT-4 can analyze customer data and make advertising recommendations based on previous purchase behavior, registration information, search history, etc.
+- Smart ad objects: GPT-4 can automatically create smart ad objects to increase interactivity, with factors such as age, gender, geographic location and interest.
+- Optimize ads: use Machine learning to predict the performance of advertising campaigns based on historical data
+use algorithms to optimize ad campaigns, from ad format, positioning, pricing and ad content. GPT-4 can also track ad results and re-optimize campaigns over time.
+- Deep Learning: GPT-4 can use Deep Learning to analyze images and videos to determine appropriate and effective advertising content.
+With these technologies, GPT-4 can help advertisers optimize their campaigns for greater efficiency, cost savings, and increased sales.</h5> */}
+
+            {/* <h5>© 2023 UTME | JTSF
+➡️ Chemistry.
+As posted by a scholar on the JTSF Platform.
+1. This is the last question that I remembered.What is the colour of Phenophtalein in an acid. 
+A. Pink 
+B.Colourless 
+C.Red 
+D. Purple
+2. Which of the following has the highest-octane number?
+A. Straight chain aliphatic compound
+B. Branched chain aliphatic compound
+C. Aromatic compound
+D. Cyclic aliphatic compound
+3. What type of solution crystallizes out on agitation?
+A. Saturated
+B. Unsaturated
+C. Supersaturated
+Drop more and let everyone have an idea of what to expect 🤝🔥</h5> */}
+
+            {/* <h5>Happy 23th Birthday 🎂 To Popular Nigeria Singer, Rema  🍾🍹🥂🍾
+PLEASE FOLLOW TINGLESPICEY FOR MORE CONTENT. THANK YOU ❤💙</h5> */}
+
+            {/* <h5>Want to communicate effectively? QuillBot ensures that everything you write comes across the way you intend.
+Join over 50 million QuillBot users and see what better, clearer writing can do for you.
+Try QuillBot Now!</h5> */}
+
             <span class={styles.icon_back}>
               <svg
                 class={styles._00_history__back}
@@ -81,27 +141,35 @@ const CreatePostScreen = () => {
           </div>
         </nav>
 
-        <div
+        <form
           className={styles.post__compose__container}
           style={{ display: "" }}
+          onSubmit={formik.handleSubmit}
         >
           <div className={styles.pcc__child}>
             <div style={{ display: "" }}>
               <textarea
                 className={`${styles.post__data__content} ${styles.title__content}`}
                 placeholder="Post Title"
-                defaultValue={""}
+                name="title"
+                value={formik.values.title}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
               />
             </div>
             <div>
               <textarea
                 className={styles.post__data__content}
                 placeholder="Start Post"
-                defaultValue={""}
+                name="desc"
+                value={formik.values.desc}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
               />
             </div>
           </div>
-
+          {/* {formik.touched.title && <div style={{color:"rgb(238, 5, 5", fontSize:'14px', marginLeft:"5px"}}>{formik.errors.title}</div>}
+          {formik.touched.desc && <div style={{color:"rgb(238, 5, 5", fontSize:'14px', marginLeft:"5px"}}>{formik.errors.desc}</div>} */}
           {/* image/video */}
           <div className={styles.media__preview} style={{ display: "" }}>
             {/*image parent container */}
@@ -151,11 +219,29 @@ const CreatePostScreen = () => {
             </div>
             <input
               type="file"
-              accept=".jpg"
               multiple
               ref={fileInputRef}
+              name="image"
               style={{ display: "none" }}
-              onChange={handleFileInputChange}
+              onChange={(event) => {
+                formik.setFieldValue("image", Array.from(event.target.files));
+                const newImages = [];
+                const files = event.target.files;
+
+                for (let i = 0; i < files.length; i++) {
+                  const file = files[i];
+
+                  if (file.type.startsWith("image/")) {
+                    if (images.length >= 4) {
+                      alert("You can only upload up to 4 images.");
+                      return;
+                    }
+                    newImages.push(file);
+                  }
+                }
+
+                setImages([...images, ...newImages]);
+              }}
             />
 
             {/* video uploader */}
@@ -345,10 +431,16 @@ const CreatePostScreen = () => {
               )}
             </div>
             <div>
-              <button className={styles.data_vh_post}>Post</button>
+              <button
+                className={styles.data_vh_post}
+                type="submit"
+                disabled={formik.values.title == "" || formik.values.desc == ""}
+              >
+                Post
+              </button>
             </div>
           </div>
-        </div>
+        </form>
       </div>
       {/* div.timeline -> middle */}
     </HomeLayout>

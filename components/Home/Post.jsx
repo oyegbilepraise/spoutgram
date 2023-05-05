@@ -2,43 +2,58 @@ import styles from "@/layout/HomeLayout/HomeLayout.module.css";
 import ProfileImage from "./ProfileImage";
 import HomeVideo from "./HomeVideo";
 import ImageCarousels from "./ImageCarousels";
+import { useEffect } from "react";
+import { useDispatch,useSelector } from "react-redux";
+import { getAllPostsAction, likePostAction } from "@/redux/slices/postSlice/postSlice";
+import Cookies from "js-cookie";
 
 const Post = () => {
-  const posts = [
-    {
-      id: 1,
-      ProfileImage: <ProfileImage />,
-      title: "My take on this SVB Debacle.",
-      description: "there is something new happening everyday.",
-    },
-  ];
+const dispatch=useDispatch()
+  const token = Cookies.get("token");
+   const { loading, apiError, posts } = useSelector(
+    (state) => state?.postMe?.allPosts
+  );
+
+
+  useEffect(() => {
+      dispatch(getAllPostsAction(token));
+  }, []);
+
+  // const posts = [
+  //   {
+  //     id: 1,
+  //     ProfileImage: <ProfileImage />,
+  //     title: "My take on this SVB Debacle.",
+  //     description: "there is something new happening everyday.",
+  //   },
+  // ];
 
   console.table(posts);
 
   return (
     <div>
-      {posts.map(({ id, ProfileImage, title, description }) => {
+      {posts.map((post,id) => {
         return (
           <div key={id} className={`${styles.div} ${styles.data_content}`}>
-            {ProfileImage}
+            <ProfileImage time={post.updatedAt} posterId={post.owner} />
             <div
               className={`${styles.data_content_all} ${styles._00dca} ${styles.data_no_content}`}
             >
               <div>
-                <span className={styles._ttl_top}>{title}</span>
+                <span className={styles._ttl_top}>{post.title}</span>
               </div>
 
               <div>
-                <span className={styles._ttl_contxt}>{description}</span>
+                <span className={styles._ttl_contxt}>{post.desc}</span>
               </div>
               {/* John, this is the ImageCarousels */}
               <ImageCarousels />
-              <div className={styles.div__for__vid}>
-                {/* John, this is the video */}
+              {/* <div className={styles.div__for__vid}>
+                John, this is the video
                 <HomeVideo />
-              </div>
+              </div> */}
               <div className={styles._00ftr_pst}>
-                <span className={styles._00mn_span}>
+                <span className={styles._00mn_span} onClick={()=>dispatch(likePostAction({postId:post._id}))}>
                   <span>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"

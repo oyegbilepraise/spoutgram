@@ -1,6 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
 import authSlice from "./slices/authSlice/authSlice";
 import userDetailSlice from "./slices/userDetailSlice";
+import postSlice from "./slices/postSlice/postSlice";
+
+
 // import {
 //   persistStore,
 //   persistReducer,
@@ -25,6 +28,7 @@ export const store = configureStore({
   reducer: {
     userDetails: userDetailSlice,
     auth: authSlice,
+    postMe: postSlice,
   },
   // middleware: (getDefaultMiddleware) =>
   //   getDefaultMiddleware({
