@@ -170,7 +170,15 @@ const authSlice = createSlice({
       user: {},
     },
   },
-  reducers: {},
+  reducers: {
+    // logout(state) {
+    //   state.getUser.user = {}
+    // }
+    logout: (state) => {
+      state.getUser.user = {};
+      state.loginUser.user = {}
+    }
+  },
   extraReducers: (builder) => {
     //get User
     builder.addCase(getUserAction.pending, (state) => {
@@ -255,6 +263,8 @@ const authSlice = createSlice({
       state.loginUser.appError = action?.payload;
     });
 
+
+
     //Forgot Password
     builder.addCase(forgotPasswordAction.pending, (state) => {
       state.forgotPassword.loading = true;
@@ -289,5 +299,7 @@ const authSlice = createSlice({
     });
   },
 });
+
+export const { logout } = authSlice.actions
 
 export default authSlice.reducer;

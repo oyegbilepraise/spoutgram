@@ -15,15 +15,18 @@ import { SpoutgramSvg, HomeSvg } from "../../components";
 import { useRouter } from "next/router";
 import Cookies from "js-cookie";
 import Routes from "@/utils/routes";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from '../../redux/slices/authSlice/authSlice'
 
 const LeftSidebar = () => {
   const [showMore, setShowMore] = useState(false);
   const [showLogout, setShowLogout] = useState(false);
+  const dispatch = useDispatch();
+  // const [user, setUser] = useState('');
 
   const { user, apiError } = useSelector((state) => state?.auth?.getUser);
   // setUserDetails(user)
-  console.log({ user });
+  // console.log({ user });
 
   // const details = useSelector((state) => state)
   // console.log({ details });
@@ -40,9 +43,16 @@ const LeftSidebar = () => {
   const handleShowMore = () => {
     setShowMore((prev) => !prev);
   };
-  const logout = () => {
-    Cookies.remove("token");
-    router.push(Routes.LOGIN);
+  const logoutFunc = () => {
+    try {
+      // console.log({ myreducer });
+      // router.push('/login')
+      dispatch(logout())
+      Cookies.remove("token");
+      router.push(Routes.LOGIN);
+    } catch (error) {
+      console.log({ error });
+    }
   };
 
   return (
@@ -134,7 +144,7 @@ const LeftSidebar = () => {
             <Link href="/edit">
               <span className={styles.xmmx___stan}>Edit your profile</span>
             </Link>
-            <span onClick={logout} className={styles.xmmx___stan}>
+            <span onClick={logoutFunc} className={styles.xmmx___stan}>
               Logout of this account
             </span>
           </div>

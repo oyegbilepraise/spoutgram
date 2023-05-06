@@ -45,7 +45,7 @@ const SignUpScreen = () => {
   const codeSent = useSelector((state) => state?.auth?.verifyUserEmail);
   const { data, status } = useSession()
 
-  console.log({ data, status });
+  // console.log({ data, status });
 
 
   const handleGoogleLogin = async () => {
@@ -89,7 +89,7 @@ const SignUpScreen = () => {
       router.push(Routes.VERIFY);
     }
   }, [dispatch, storedData?.registered?.success]);
-  const [password, setPassword] = useState("");
+  // const [password, setPassword] = useState("");
   const [visible, setVisible] = useState(false);
   const [visibleOne, setVisibleOne] = useState(false);
   const [showEmailError, setShowEmailError] = useState(false);

@@ -67,6 +67,8 @@ const LoginScreen = () => {
     },
     validationSchema: loginFormSchema,
   });
+  
+
   useEffect(() => {
     if (user.token) {
       if (
@@ -87,12 +89,15 @@ const LoginScreen = () => {
         console.log("push to profile from login");
         router.push(Routes.CREATE_PROFILE);
         return;
-      } else {
+      } else if (user.isAccountVerified && user.profile) {
+        console.log({ user });
         // if you are verified and have a profile go to home
         router.push(Routes.HOME);
         console.log("push to home from login");
         return;
       }
+    } else {
+      router.push(Routes.LOGIN);
     }
   }, [dispatch, router, user.isAccountVerified, user.profile, user.token]);
 
