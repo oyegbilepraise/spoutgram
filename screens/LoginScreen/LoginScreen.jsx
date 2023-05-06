@@ -18,7 +18,7 @@ import { useFormik } from "formik";
 import { AuthLayout } from "@/layout";
 import { useEffect, useState } from "react";
 import * as Yup from "yup";
-import Link from "next/link";
+import Link from "next/link"; 
 import styles from "@/layout/AuthLayout/AuthLayout.module.css";
 import Routes from "@/utils/routes";
 import { baseUrl, baseUrlTest } from "@/redux/baseUrl";
@@ -125,7 +125,7 @@ const LoginScreen = () => {
               <div className={styles._xpnds_oauths_div}>
                 <div>
                   {/* continue with google */}
-                  <button
+                  <button type="button"
                     className={`${styles.oauths_} ${styles.ggl_oauth}`}
                     onClick={handleGoogleLogin}
                   >
@@ -136,7 +136,7 @@ const LoginScreen = () => {
 
                 <div>
                   {/* continue with twitter */}
-                  <button
+                  <button type="button"
                     className={`${styles.oauths_} ${styles.twtr_oauth}`}
                     onClick={handleTwitterLogin}
                   >
@@ -166,6 +166,7 @@ const LoginScreen = () => {
                     onChange={formik.handleChange("email")}
                     onFocus={handleEmailFocus}
                     onBlur={handleEmailBlur}
+                    autoComplete="off"
                     spellcheck="false"
                     name="email"
                     placeholder="Email"
@@ -198,6 +199,7 @@ const LoginScreen = () => {
                     onFocus={handlePasswordFocus}
                     onBlur={handlePasswordBlur}
                     autoCorrect="false"
+                    spellCheck="false"
                     placeholder="Password"
                     name="password"
                     className={`${styles.data_content_pass} ${styles._00x00_pwd}`}

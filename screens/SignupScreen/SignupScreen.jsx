@@ -123,7 +123,7 @@ const SignUpScreen = () => {
               <div className={styles._xpnds_oauths_div}>
                 <div>
                   {/* continue with google */}
-                  <button
+                  <button type="button"
                     className={`${styles.oauths_} ${styles.ggl_oauth}`}
                     onClick={handleGoogleLogin}
                   >
@@ -134,7 +134,7 @@ const SignUpScreen = () => {
 
                 <div>
                   {/* continue with twitter */}
-                  <button
+                  <button type="button"
                     className={`${styles.oauths_} ${styles.twtr_oauth}`}
                     onClick={handleTwitterLogin}
                   >
@@ -179,6 +179,8 @@ const SignUpScreen = () => {
                     onBlur={handleEmailBlur}
                     name="email"
                     placeholder="Email"
+                    autoComplete="off"
+                    spellCheck="false"
                     className={styles.data_content_pass}
                   />
                   {/* error svg */}
@@ -208,6 +210,7 @@ const SignUpScreen = () => {
                     onFocus={handlePasswordFocus}
                     onBlur={handlePasswordBlur}
                     name="password"
+                    spellCheck="false"
                     placeholder="Password"
                     className={`${styles.data_content_pass} ${styles._00x00_pwd}`}
                   />
@@ -246,6 +249,7 @@ const SignUpScreen = () => {
                     onFocus={handleCPasswordFocus}
                     onBlur={handleCPasswordBlur}
                     name="confirmPassword"
+                    spellCheck="false"
                     placeholder="Confirm Password"
                     className={`${styles.data_content_pass} ${styles._00x00_pwd}`}
                   />

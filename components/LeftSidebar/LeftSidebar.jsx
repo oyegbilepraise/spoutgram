@@ -87,7 +87,7 @@ const LeftSidebar = () => {
 
       {/* Subscriptions */}
       <Link href="/subscriptions" className={styles.Link}>
-        <div className={isActive("/subscriptions")}>
+        <div className={isActive("/subscriptions")}> 
           <SubscriptionSvg />
           <span className={styles.span_data_sidebar}>Subscriptions</span>
         </div>

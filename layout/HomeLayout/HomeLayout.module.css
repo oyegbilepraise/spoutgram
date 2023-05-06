@@ -95,6 +95,7 @@
 }
 .___main_nav {
     border-bottom: var(--border-all);
+    border-bottom: var(--transparent);
     padding-top: 13px; padding-bottom: 13px; padding-left: 18px;
     position: sticky;
     top: -2px;
