@@ -295,7 +295,7 @@ const CreateProfileScreen = () => {
               {/* this is the date of birth */}
               <div className={styles.ibistro__xyz__one}>
                 <div style={{ position: "relative" }}>
-                  <input id="dob-input" type="text" autoComplete="off" name="dateOfBirth" placeholder="Date of Birth" className={styles.data_content_pass} value={formik.values.dateOfBirth} onChange={formik.handleChange("dateOfBirth")} onFocus={handleDobFocus}
+                  <input id="dob-input" type="date" autoComplete="off" name="dateOfBirth" placeholder="Date of Birth" className={styles.data_content_pass} value={formik.values.dateOfBirth} onChange={formik.handleChange("dateOfBirth")} onFocus={handleDobFocus}
                   onBlur={handleDobBlur}/>
                   <span className={styles.absolute__span}>
 
