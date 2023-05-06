@@ -56,6 +56,8 @@ const CreatePostScreen = () => {
 
       formData.append("title", values.title);
       formData.append("desc", values.desc);
+      formData.append("video", video);
+
 
       for (let i = 0; i < images.length; i++) {
         formData.append("image", images[i]);

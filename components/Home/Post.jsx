@@ -19,18 +19,7 @@ const dispatch=useDispatch()
       dispatch(getAllPostsAction(token));
   }, []);
 
-<<<<<<< HEAD
-  // const posts = [
-  //   {
-  //     id: 1,
-  //     ProfileImage: <ProfileImage />,
-  //     title: "My take on this SVB Debacle.",
-  //     description: "there is something new happening everyday.",
-  //   },
-  // ];
-=======
   console.table(posts);
->>>>>>> 8fd2575a4b30302eeabf69f874697f585b7bbd8e
 
   return (
     <div>
