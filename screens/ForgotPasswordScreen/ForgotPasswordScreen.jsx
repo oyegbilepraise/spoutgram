@@ -12,7 +12,7 @@ import {
 import { useSelector } from "react-redux";
 import { CautionSvg, ErrorSvg, BtnloadSvg } from "../../components";
 import { AuthLayout } from "@/layout";
-import styles from "@/layout/AuthLayout/AuthLayout.module.css";
+import styles from "@/layout/AuthLayout/AuthLayout.module.css"; 
 import Cookies from "js-cookie";
 import Routes from "@/utils/routes";
 
@@ -35,7 +35,7 @@ const ForgotPasswordScreen = () => {
       dispatch(forgotPasswordAction(values));
       Cookies.set("email", values.email);
     },
-    // validationSchema: forgotValidationSchema,
+    validationSchema: forgotValidationSchema, //this was comment before my Bitee, I don't know why he did it....but, yh.
   });
 
   useEffect(() => {
@@ -103,9 +103,11 @@ const ForgotPasswordScreen = () => {
                     type="text"
                     value={formik.values.email}
                     onChange={formik.handleChange("email")}
-                    // onFocus={handleEmailFocus}
-                    // onBlur={handleEmailBlur}
+                    onFocus={handleEmailFocus}
+                    onBlur={handleEmailBlur}
                     name="email"
+                    spellCheck="false"
+                    autoComplete="off"
                     placeholder="Email"
                     className={styles.data_content_pass}
                   />
