@@ -6,7 +6,19 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import Select from "react-select";
 import styles from "@/layout/AuthLayout/AuthLayout.module.css";
-import {  ErrorSvg, CautionSvg, BtnloadSvg } from "../../components";
+
+// Components
+// import { BasicProfileInfo, MoreProfileInfo, ProfileInfo } from "@/components";
+import {
+  HideSvg,
+  ShowSvg,
+  GoogleSvg, 
+  TwitterSvg,
+  AppleSvg,
+  CautionSvg,
+  ErrorSvg,
+  BtnloadSvg,
+} from "../../components";
 import { AuthLayout } from "@/layout";
 import { useEffect } from "react";
 import dynamic from "next/dynamic";
@@ -82,6 +94,7 @@ const CreateProfileScreen = () => {
   //   dispatch(nextComponent(3));
   // };
 
+  
   useEffect(() => {
     if (profile.updatedUser) {
       if (!profile?.updatedUser?.isAccountVerified) {
@@ -141,6 +154,9 @@ const CreateProfileScreen = () => {
             {/* this is the form that would proccess all the users data for create-profile */}
             <form onSubmit={formik.handleSubmit}>
               {/* upload profile pic */}
+              {/* <input type="file" name="" onChange={getFile} accept="img" />
+              <img src={file} style={{border: "1px solid black", borderRadius: "8px", width: "100px", height:"100px"}}/> */}
+
 
               <div className={styles.image__wrapper__xx}>
 
@@ -314,28 +330,7 @@ const CreateProfileScreen = () => {
               {/* this is the date of birth */}
 
               <div>
-                {/* <button className={styles.pass_data_bd} type="submit">
-                  Create Profile
-                </button> */}
-                {/* {loading && <p>creating profile ...</p>} */}
-
-                {loading ? (
-                  <button
-                    className={styles.pass_data_bd}
-                    type="submit"
-                    style={{ position: "relative" }}
-                    disabled
-                  >
-                    <>
-                      <BtnloadSvg />
-                    </>
-                    Create Profile
-                  </button>
-                ) : (
-                  <button className={styles.pass_data_bd} type="submit">
-                    Create Profile
-                  </button>
-                )}
+               <button  className={styles.pass_data_bd} type="submit">Create Profile</button>
               </div>
 
             </form>
