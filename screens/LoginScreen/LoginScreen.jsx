@@ -71,6 +71,7 @@ const LoginScreen = () => {
 
   useEffect(() => {
     if (user.token) {
+      console.log({user});
       if (
         //if the acount is not verified, generate token and re route to verify
         user.isAccountVerified === false &&
@@ -82,7 +83,7 @@ const LoginScreen = () => {
         return;
       } else if (
         // if there is no profile and user is verified, re route to profile
-        user.profile === false &&
+        !user.profile &&
         user.isAccountVerified &&
         router.pathname !== Routes.CREATE_PROFILE
       ) {
@@ -99,7 +100,7 @@ const LoginScreen = () => {
     } else {
       router.push(Routes.LOGIN);
     }
-  }, [dispatch, router, user.isAccountVerified, user.profile, user.token]);
+  }, [dispatch, user?.isAccountVerified, user?.profile, user?.token]);
 
   const [visible, setVisible] = useState(false);
 
