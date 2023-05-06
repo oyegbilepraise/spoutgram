@@ -21,7 +21,7 @@ const HomeScreen = (props) => {
         <div className={styles.whats_yyy}>
           <div className={styles.parnt__cnt_wyyyt}>
             <div className={styles.inipic_xyz}>
-              <Image className={styles.img__winipc} src={img} />
+              <Image alt="img" className={styles.img__winipc} src={img} />
             </div>
             <div className={styles.ini__inp}>
               <Link href="/createpost">

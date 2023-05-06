@@ -24,6 +24,7 @@ import Cookies from "js-cookie";
 import axios from "axios";
 import { from } from "form-data";
 import { baseUrl, baseUrlTest } from "../../redux/baseUrl";
+import { useSession, signIn, signOut } from "next-auth/react"
 
 const signupValidationSchema = Yup.object().shape({
   email: Yup.string()
@@ -42,6 +43,10 @@ const SignUpScreen = () => {
   const dispatch = useDispatch();
   const storedData = useSelector((state) => state?.auth?.registerUser);
   const codeSent = useSelector((state) => state?.auth?.verifyUserEmail);
+  const { data, status } = useSession()
+
+  // console.log({ data, status });
+
 
   const handleGoogleLogin = async () => {
     try {
@@ -84,7 +89,7 @@ const SignUpScreen = () => {
       router.push(Routes.VERIFY);
     }
   }, [dispatch, storedData?.registered?.success]);
-  const [password, setPassword] = useState("");
+  // const [password, setPassword] = useState("");
   const [visible, setVisible] = useState(false);
   const [visibleOne, setVisibleOne] = useState(false);
   const [showEmailError, setShowEmailError] = useState(false);
@@ -125,7 +130,7 @@ const SignUpScreen = () => {
                   {/* continue with google */}
                   <button type="button"
                     className={`${styles.oauths_} ${styles.ggl_oauth}`}
-                    onClick={handleGoogleLogin}
+                    onClick={() => signIn()}
                   >
                     <GoogleSvg />
                     Continue With Google
@@ -136,7 +141,7 @@ const SignUpScreen = () => {
                   {/* continue with twitter */}
                   <button type="button"
                     className={`${styles.oauths_} ${styles.twtr_oauth}`}
-                    onClick={handleTwitterLogin}
+                    onClick={() => signOut()}
                   >
                     <TwitterSvg />
                     Continue With Twitter
@@ -172,7 +177,7 @@ const SignUpScreen = () => {
                   {/* email input */}
                   <input
                     type="text"
-                    spellcheck="false"
+                    spellCheck="false"
                     value={formik.values.email}
                     onChange={formik.handleChange("email")}
                     onFocus={handleEmailFocus}
@@ -180,7 +185,6 @@ const SignUpScreen = () => {
                     name="email"
                     placeholder="Email"
                     autoComplete="off"
-                    spellCheck="false"
                     className={styles.data_content_pass}
                   />
                   {/* error svg */}
@@ -189,8 +193,8 @@ const SignUpScreen = () => {
                       <div style={{ position: "relative" }}>
                         {/* this is the email error msg */}
                         {showEmailError &&
-                        formik.touched.email &&
-                        formik.errors.email ? (
+                          formik.touched.email &&
+                          formik.errors.email ? (
                           <span className={styles.span__inperr}>
                             <span>{formik.errors.email}</span>
                           </span>
@@ -227,8 +231,8 @@ const SignUpScreen = () => {
                       >
                         {/* this is the password error msg */}
                         {showPasswordError &&
-                        formik.touched.password &&
-                        formik.errors.password ? (
+                          formik.touched.password &&
+                          formik.errors.password ? (
                           <span className={styles.span__inperr}>
                             <span>{formik.errors.password}</span>
                           </span>
@@ -260,15 +264,15 @@ const SignUpScreen = () => {
                     </span>
                     {/* error svg  */}
                     {formik.touched.confirmPassword &&
-                    formik.errors.confirmPassword ? (
+                      formik.errors.confirmPassword ? (
                       <span
                         className={`${styles.__spanerror} ${styles.passwrd__error}`}
                         style={{ position: "relative" }}
                       >
                         {/* this is the confirm password  error msg */}
                         {showCPasswordError &&
-                        formik.touched.confirmPassword &&
-                        formik.errors.confirmPassword ? (
+                          formik.touched.confirmPassword &&
+                          formik.errors.confirmPassword ? (
                           <span className={styles.span__inperr}>
                             <span>{formik.errors.confirmPassword}</span>
                           </span>

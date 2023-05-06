@@ -13,8 +13,6 @@ const Post = () => {
     },
   ];
 
-  console.table(posts);
-
   return (
     <div>
       {posts.map(({ id, ProfileImage, title, description }) => {

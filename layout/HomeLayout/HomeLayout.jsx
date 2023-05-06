@@ -17,4 +17,4 @@ const HomeLayout = (props) => {
   )
 }
 
-export default HomeLayout 
+export default HomeLayout;

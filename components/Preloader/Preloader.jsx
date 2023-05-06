@@ -45,7 +45,11 @@ const Preloader = () => {
             preloader.remove();
             appbody.classList.remove(styles.no_scroll);
           }, 1000);
+<<<<<<< HEAD
         }, 6000);
+=======
+        }, 2000);
+>>>>>>> 460c6f484a7b38f8c76f4eec274951e71ad73373
         preloader.classList.remove(styles.fadeOut);
       }
     }
