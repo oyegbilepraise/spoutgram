@@ -5,7 +5,6 @@ import Image from "next/image";
 import PostedAt from "../PostedAt/postedAt";
 
 const ProfileImage = ({post}) => {
-console.log(post)
   return (
     <div style={{ position: "relative" }}>
       <div className={styles.hover_main_image}>
