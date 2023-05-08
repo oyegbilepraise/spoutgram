@@ -46,8 +46,6 @@ const VerifyAccountScreen = () => {
       console.log({ verifyCode });
       router.push(Routes.CREATE_PROFILE);
     } else {
-      alert('error')
-      // console.log({ no: verifyCode });
       setShowCodeError(true)
     }
   }, [router, verifyCode?.user]);

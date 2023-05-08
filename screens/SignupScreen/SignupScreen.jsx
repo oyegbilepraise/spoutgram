@@ -21,9 +21,7 @@ import Link from "next/link";
 import styles from "@/layout/AuthLayout/AuthLayout.module.css";
 import Routes from "@/utils/routes";
 import Cookies from "js-cookie";
-import axios from "axios";
-import { from } from "form-data";
-import { baseUrl, baseUrlTest } from "../../redux/baseUrl";
+import { baseUrl } from "../../redux/baseUrl";
 import { useSession, signIn, signOut } from "next-auth/react"
 
 const signupValidationSchema = Yup.object().shape({
