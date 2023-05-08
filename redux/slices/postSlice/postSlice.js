@@ -51,7 +51,7 @@ try {
 })
 
 const postSlice = createSlice({
-  name: "postMe",
+  name: "post",
   initialState: {
     createPost: { 
       loading: false,

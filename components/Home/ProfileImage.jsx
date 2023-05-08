@@ -10,7 +10,7 @@ console.log(post)
     <div style={{ position: "relative" }}>
       <div className={styles.hover_main_image}>
         <Image
-          src={post.profile.profilePhoto}
+          src={post.profile.profilePhoto==''?img:post.profile.profilePhoto}
           alt="profile-img"
           className={styles.data_content_pimg}
           width="22"
@@ -22,7 +22,7 @@ console.log(post)
           <div className={styles.flex_h_div}>
             <div>
               {/* {{#if this.owner_avatar_link}} */}
-              <Image src={post.profile.profilePhoto} alt="img" width="22" height="22" className={styles.image_h_c} />
+              <Image src={post.profile.profilePhoto==''?img:post.profile.profilePhoto} alt="img" width="22" height="22" className={styles.image_h_c} />
             </div>
             <div>
               <span className={`${styles.postt_name} ${styles._0022_nm_usr}`}>

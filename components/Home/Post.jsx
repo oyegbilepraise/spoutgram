@@ -11,7 +11,7 @@ const Post = () => {
 const dispatch=useDispatch()
   const token = Cookies.get("token");
    const { loading, apiError, posts } = useSelector(
-    (state) => state?.postMe?.allPosts
+    (state) => state?.post?.allPosts
   );
 
 
@@ -38,11 +38,14 @@ const dispatch=useDispatch()
                 <span className={styles._ttl_contxt}>{post.desc}</span>
               </div>
               {/* John, this is the ImageCarousels */}
-              <ImageCarousels postImage={post.postImage} />
+              {post.postImage.length!==0 && <ImageCarousels postImage={post.postImage} />}
+              {post.postVideo.length!==0 && 
               <div className={styles.div__for__vid}>
                 {/* John, this is the video */}
-                <HomeVideo />
+                <HomeVideo postVideo={post.postVideo}/>
               </div>
+              }
+              
               <div className={styles._00ftr_pst}>
                 <span className={styles._00mn_span} onClick={()=>dispatch(likePostAction({postId:post._id}))}>
                   <span>
