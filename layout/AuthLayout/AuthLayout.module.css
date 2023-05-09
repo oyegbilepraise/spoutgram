@@ -14,7 +14,7 @@
   width: 450px;
 } 
 ._0004_logo_svg {
-  width: 130px;
+  width: 190px;
   margin: auto;
 }
 .vdf_data, .span_dta_vn {
@@ -86,7 +86,7 @@
 .ibistro__xyz > div:nth-child(2) {
   width: 50%;
 }
-input[type="text"].data_content_pass, input[type="password"].data_content_pass {
+input[type="text"].data_content_pass, input[type="password"].data_content_pass,  input[type="date"].data_content_pass {
   height: 52px;
   width: 100%;
   border-radius: 10px;
@@ -98,19 +98,45 @@ input[type="text"].data_content_pass, input[type="password"].data_content_pass {
   border: 1px solid rgba(228, 228, 228, 0.264);
   caret-color: var(--brand-color);
 }
-input[type="text"].data_content_pass::placeholder, input[type="password"].data_content_pass::placeholder {
+input[type="text"].data_content_pass::placeholder, input[type="password"].data_content_pass::placeholder, input[type="date"].data_content_pass::placeholder {
   color: rgb(160, 160, 160);
   letter-spacing: 0.2px;
 }
-input[type="text"].data_content_pass:focus, input[type="password"].data_content_pass:focus {
+input[type="text"].data_content_pass:focus, input[type="password"].data_content_pass:focus, input[type="date"].data_content_pass:focus {
   border: 1px solid #01a8ea7a;
 }
-input[type="text"].data_content_pass:focus::placeholder, input[type="password"].data_content_pass:focus::placeholder {
+input[type="text"].data_content_pass:focus::placeholder, input[type="password"].data_content_pass:focus::placeholder, input[type="date"].data_content_pass:focus::placeholder {
   color: var(--transparent-brand-color-placeholder);
+}
+input[type="date"].data_content_pass {
+  color: rgb(160, 160, 160);
+  text-transform: uppercase;
+}
+input[type="text"].data_content_inpcode {
+  text-align: center;
+  transition: 0.1s all;
+  padding-left: 0px;
+}
+input[type="text"].data_content_inpcode:focus {
+  text-align: center;
+  letter-spacing: 3px;
+  font-size: 20px;
+  font-family: var(--global-bold);
+  transition: 0.1s all;
+}
+input[type="text"].data_content_inpcode:not(:focus):not(:placeholder-shown) {
+  text-align: center;
+  letter-spacing: 3px;
+  font-size: 20px;
+  font-family: var(--global-bold);
+  transition: 0.5s all;
 }
 .pass_data_bd {
   width: 100%;
   background-color: var(--brand-color);
+  /* background-color: #ff4976; */
+  background-color: #00A58F;
+  /* background-color: #fb1a47; */
   font-family: var(--global-medium);
   color: white;
   display: block;
@@ -138,7 +164,7 @@ input[type="text"].data_content_pass:focus::placeholder, input[type="password"].
   padding-top: 3px;
   color: #01A8EA;
   cursor: pointer;
-  letter-spacing: 0.2px;
+  letter-spacing: 0.1px;
 }
 .invalid_svg {
   width: 12px; height: 12px; margin-right: 4px;
@@ -404,7 +430,8 @@ input[type="text"].data_content_pass:focus::placeholder, input[type="password"].
   border-radius: 50%;
   position: relative;
   padding: 5px;
-  margin-top: 50px;
+  /* margin-top: 50px; */
+  margin-bottom: 25px;
 }
 .image__wrapper__xx {
   border: 2px solid rgb(235, 235, 235);
@@ -474,10 +501,10 @@ input[type="text"].data_content_pass:focus::placeholder, input[type="password"].
   width: 100vw;
   height: 100vh;
   background-color: white;
-  z-index: 100;
+  z-index: 1000;
 }
 ._loader_img {
-  width: 180px;
+  width: 190px;
 }
 .react__loader__child__div {
   position: absolute;
@@ -612,7 +639,7 @@ input[type="text"].data_content_pass:focus::placeholder, input[type="password"].
   border: 1px solid black;
   display: block;
   padding-top: 10px; padding-bottom: 10px;
-  border-radius: 5px;
+  border-radius: 1000px;
   border: 1px solid var(--brand-color);
   background-color: #01a8ea33;
   text-align: center;
@@ -798,7 +825,7 @@ input[type="text"].data_content_pass:focus::placeholder, input[type="password"].
     font-weight: 600;
     color: rgb(80, 80, 80);
   }
-  input[type="text"].data_content_pass, input[type="password"].data_content_pass {
+  input[type="text"].data_content_pass, input[type="password"].data_content_pass, input[type="date"].data_content_pass {
     height: 49px;
     width: 100%;
     padding-left: 15px;
@@ -830,7 +857,7 @@ input[type="text"].data_content_pass:focus::placeholder, input[type="password"].
   }
   .pass_data_bd {
     width: 100%;
-    background-color: var(--brand-color);
+    /* background-color: var(--brand-color); */
     font-family: var(--global-medium);
     color: white;
     display: block;
@@ -1039,6 +1066,27 @@ input[type="text"].data_content_pass:focus::placeholder, input[type="password"].
   }
   .span__inperr {
     display: none;
+  }
+  input[type="text"].data_content_inpcode {
+    text-align: center;
+    transition: 0.1s all;
+    padding-left: 0px;
+  }
+  input[type="text"].data_content_inpcode:focus {
+    text-align: center;
+    letter-spacing: 3px;
+    font-size: 16px;
+    font-family: var(--global-bold);
+    font-weight: 600;
+    transition: 0.1s all;
+  }
+  input[type="text"].data_content_inpcode:not(:focus):not(:placeholder-shown) {
+    text-align: center;
+    letter-spacing: 3px;
+    font-size: 16px;
+    font-family: var(--global-bold);
+    font-weight: 600;
+    transition: 0.5s all;
   }
 }
 

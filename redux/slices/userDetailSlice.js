@@ -15,10 +15,8 @@ export const createProfileAction = createAsyncThunk(
         data: payload,
         token,
       });
-      console.log(res.data);
       return res.data;
     } catch (err) {
-      console.log(err);
       return rejectWithValue(err?.response?.data?.data);
     }
   }

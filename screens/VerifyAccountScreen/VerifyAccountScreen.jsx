@@ -15,8 +15,9 @@ import {
 } from "../../components";
 import Link from "next/link";
 import * as Yup from "yup";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "@/layout/AuthLayout/AuthLayout.module.css";
+import Routes from "@/utils/routes";
 
 const verifyEmailSchema = Yup.object().shape({
   code: Yup.string()
@@ -29,28 +30,34 @@ const VerifyAccountScreen = () => {
   const dispatch = useDispatch();
 
   // get data from redux about verify email and verifyCode
-  const { verifyUserEmail, verifyCode } = useSelector((state) => state?.auth);
+  const { loading, verifyUserEmail, verifyCode } = useSelector((state) => state?.auth);
 
   const formik = useFormik({
     initialValues: {
       code: "",
     },
     onSubmit: (values) => {
-      const { code } = values;
-      dispatch(verifyEmailAction(code));
+      dispatch(verifyEmailAction(values));
     },
     validationSchema: verifyEmailSchema,
   });
-
-  if (verifyUserEmail?.verified) {
-    router.push("/create-profile");
-  }
-
+  useEffect(() => {
+    if (verifyCode?.user?.success) {
+      console.log({ verifyCode });
+      router.push(Routes.CREATE_PROFILE);
+    } else {
+      setShowCodeError(true)
+    }
+  }, [router, verifyCode?.user]);
+  // resend verification code function
   const handleResendCode = () => {
     dispatch(generateEmailVerificationAction());
   };
+  // useEffect(() => {
+  //   dispatch(generateEmailVerificationAction());
+  // }, [dispatch]);
 
-  const [showCodeError, setShowCodeError] = useState(false);
+  const [showCodeError, setShowCodeError] = useState(true);
 
   function handleCodeFocus() {
     setShowCodeError(true);
@@ -111,29 +118,31 @@ const VerifyAccountScreen = () => {
                 <div style={{ position: "relative" }}>
                   <input
                     type="text"
-                    alue={formik.values.code}
+                    value={formik.values.code}
                     onChange={formik.handleChange("code")}
                     // onBlur={formik.handleBlur}
-                    onFocus={handleCodeFocus} onBlur={handleCodeBlur}
+                    onFocus={handleCodeFocus}
+                    onBlur={handleCodeBlur}
                     name="code"
+                    maxlength="6"
                     autoComplete="off"
-                    placeholder="Code"
-                    className={styles.data_content_pass}
+                    placeholder="Code" 
+                    pattern="[0-9]{1,6}"
+                    className={`${styles.data_content_pass} ${styles.data_content_inpcode}`}
                   />
 
                   {/* error svg */}
                   {formik.touched.code && formik.errors.code ? (
                     <span className={styles.__spanerror}>
-                      <div style={{position: "relative"}}>
+                      <div style={{ position: "relative" }}>
                         {/* this is the email error msg */}
-                        {showCodeError && formik.touched.code && formik.errors.code
-                            ?
-                            (
-                            <span className={styles.span__inperr}>
-                              <span>{formik.errors.code}</span>
-                            </span>
-                            )
-                        : null}
+                        {showCodeError &&
+                          formik.touched.code &&
+                          formik.errors.code ? (
+                          <span className={styles.span__inperr}>
+                            <span>{formik.errors.code}</span>
+                          </span>
+                        ) : null}
                         <ErrorSvg />
                       </div>
                     </span>
@@ -143,12 +152,33 @@ const VerifyAccountScreen = () => {
               </div>
 
               <div>
-                <button
+
+              {loading ? (
+                  <button
+                  className={`${styles.pass_data_bd} ${styles.new__change__btn}`}
+                    type="submit"
+                    style={{ position: "relative" }}
+                    disabled
+                  >
+                    <>
+                      <BtnloadSvg />
+                    </>
+                    Verify
+                  </button>
+                ) : (
+                  <button className={`${styles.pass_data_bd} ${styles.new__change__btn}`} type="submit">
+                    Verify
+                  </button>
+                )}
+
+{/* {loading && <p>creating profile ...</p>} */}
+
+                {/* <button
                   className={`${styles.pass_data_bd} ${styles.new__change__btn}`}
                   type="submit"
-                >
+                > 
                   Verify
-                </button>
+                </button> */}
               </div>
               <div>
                 <span class={styles.sracde}>
@@ -174,7 +204,7 @@ const VerifyAccountScreen = () => {
                   </span>
                 )}
 
-                {verifyCode?.user.sucess && (
+                {verifyCode?.user?.success && (
                   <span className={styles._00rsnd}>
                     code verified
                     <svg
@@ -194,7 +224,7 @@ const VerifyAccountScreen = () => {
                   </span>
                 )}
               </div>
-              <span className={`${styles.ouplskk} ${styles.topme__}`}>
+              <span className={styles.ouplskk}>
                 <Link href="/signup">Back to Sign up</Link>
               </span>
             </div>

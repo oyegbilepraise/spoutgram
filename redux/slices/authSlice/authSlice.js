@@ -22,6 +22,23 @@ export const registerUserAction = createAsyncThunk(
   }
 );
 
+export const verifyUsername = createAsyncThunk(
+  "users/verify-username",
+  async (payload, { rejectWithValue }) => {
+    const token = Cookies.get("token");
+    try {
+      const res = await postRequest({
+        url: `${baseUrl}${URL.verifyUsername}`,
+        data: payload,
+        token: token
+      });
+      return res.data;
+    } catch (err) {
+      return rejectWithValue(err?.response?.data?.message);
+    }
+  }
+);
+
 // Generate email verification number
 export const generateEmailVerificationAction = createAsyncThunk(
   "auth/generateEmailVerification",
@@ -50,7 +67,6 @@ export const verifyEmailAction = createAsyncThunk(
         data: payload,
         token: token,
       });
-      console.log(res.data);
       return res.data;
     } catch (err) {
       console.log(err);
@@ -116,7 +132,7 @@ export const changePasswordAction = createAsyncThunk(
 
 //get User
 export const getUserAction = createAsyncThunk(
-  "/auth",
+  "/auth/welcome",
   async (payload, { rejectWithValue }) => {
     try {
       const res = await getRequest({
@@ -172,7 +188,15 @@ const authSlice = createSlice({
       user: {},
     },
   },
-  reducers: {},
+  reducers: {
+    // logout(state) {
+    //   state.getUser.user = {}
+    // }
+    logout: (state) => {
+      state.getUser.user = {};
+      state.loginUser.user = {}
+    }
+  },
   extraReducers: (builder) => {
     //get User
     builder.addCase(getUserAction.pending, (state) => {
@@ -258,6 +282,8 @@ const authSlice = createSlice({
       state.loginUser.appError = action?.payload;
     });
 
+
+
     //Forgot Password
     builder.addCase(forgotPasswordAction.pending, (state) => {
       state.forgotPassword.loading = true;
@@ -294,5 +320,7 @@ const authSlice = createSlice({
     });
   },
 });
+
+export const { logout } = authSlice.actions
 
 export default authSlice.reducer;

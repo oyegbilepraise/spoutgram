@@ -7,35 +7,50 @@ import ImagePost from "./ImagePost";
 import { useDispatch, useSelector } from "react-redux";
 import { createPostAction } from "@/redux/slices/postSlice/postSlice";
 import { useFormik } from "formik";
-import { BtnloadSvg } from "@/components";
 import Cookies from "js-cookie";
+import { useRouter } from "next/router";
+import Routes from "@/utils/routes";
+
 
 const CreatePostScreen = () => {
   const [showPostSettings, setShowPostSettings] = useState(false);
   const dispatch = useDispatch();
   const token = Cookies.get("token");
+  const router=useRouter()
+
+  const {reccentPost}=useSelector(state=>state?.post?.createPost)
 
   const fileInputRef = useRef();
 
   const handleButtonClick = () => {
     fileInputRef.current.click();
   };
+// console.log(reccentPost);
+//   useEffect(() => {
+//   if (reccentPost.success) {
+//     //  router.push(Routes.HOME);
+//         console.log("push to home from create-post");
+//   }
+//   }, [reccentPost])
+  
 
   // ----- video uploader starts here -----
-  const [video, setVideo] = useState(null);
+  const [videos, setVideos] = useState([]);
   // console.log(video);
   const VideoInputRef = useRef();
 
-  const handleVideoChange = (event) => {
-    const selectedFiles = event.target.files;
+  // const handleVideoChange = (event) => {
+    
+  //   const selectedFiles = event.target.files;
+  //   console.log(selectedFiles);
 
-    if (selectedFiles.length > 1) {
-      alert("Please select only one video file.");
-      return;
-    }
-    const selectedFile = selectedFiles[0];
-    setVideo(selectedFile);
-  };
+  //   if (selectedFiles.length > 1) {
+  //     alert("Please select only one video file.");
+  //     return;
+  //   }
+  //   const selectedFile = selectedFiles[0];
+  //   setVideo(selectedFile);
+  // };
 
   const handleVideoClick = () => {
     VideoInputRef.current.click();
@@ -43,39 +58,38 @@ const CreatePostScreen = () => {
 
   // ------------ Function handling post submit -------------
   const [images, setImages] = useState([]);
+  
 
   const formik = useFormik({
-    initialValues: { title: "", desc: "", image: [] },
+    
+    initialValues: { title: "", desc: "", images: [],videos:[] },
     onSubmit: async (values) => {
+
       const formData = new FormData();
 
-      for (let i = 0; i < values.image.length; i++) {
-        formData.append("image", values.image[i]);
-      }
       formData.append("title", values.title);
       formData.append("desc", values.desc);
+      // formData.append("video", video);
 
-console.log(values);
-console.log(formData);
 
-      // dispatch(createPostAction(formData));
-
+      for (let i = 0; i < values.images.length; i++) {
+        formData.append("image", values.images[i]);
+      }
+      for (let i = 0; i < values.videos.length; i++) {
+        formData.append("video", values.videos[i]);
+      }
+     
+      dispatch(createPostAction(formData));
+      console.log(values);
       values.title = "";
       values.desc = "";
-      values.image = [];
+      values.images = [];
       setImages([]);
+      setVideos([]);
       fileInputRef.current.value = "";
-    },
-    validate: (values) => {
-      let errors = {};
-      if (values.title == "") {
-        errors.title = "Post title is required";
-      }
-      if (values.desc == "") {
-        errors.desc = "Post body is required";
-      }
-      return errors;
-    },
+      VideoInputRef.current.value = "";
+      // router.push(Routes.HOME);
+    }
   });
 
   return (
@@ -84,43 +98,6 @@ console.log(formData);
       <div class={`${styles.timeline} ${styles._000middlebar}`}>
         <nav className={styles.___main_nav}>
           <div>
-            {/* <h5>Why is GPT-4 called the AI of Ecommerce?
-Try the trial version here =>> https://www.chatgptexperts.online/ai4
-Take a look at what GPT-4 can do below and you will understand:
-- Data Analytics: GPT-4 can analyze data to understand customer behavior and uncover trends, supply and demand, and trends in the advertising sector.
-- Analysis of leads: GPT-4 can analyze customer data and make advertising recommendations based on previous purchase behavior, registration information, search history, etc.
-- Smart ad objects: GPT-4 can automatically create smart ad objects to increase interactivity, with factors such as age, gender, geographic location and interest.
-- Optimize ads: use Machine learning to predict the performance of advertising campaigns based on historical data
-use algorithms to optimize ad campaigns, from ad format, positioning, pricing and ad content. GPT-4 can also track ad results and re-optimize campaigns over time.
-- Deep Learning: GPT-4 can use Deep Learning to analyze images and videos to determine appropriate and effective advertising content.
-With these technologies, GPT-4 can help advertisers optimize their campaigns for greater efficiency, cost savings, and increased sales.</h5> */}
-
-            {/* <h5>© 2023 UTME | JTSF
-➡️ Chemistry.
-As posted by a scholar on the JTSF Platform.
-1. This is the last question that I remembered.What is the colour of Phenophtalein in an acid. 
-A. Pink 
-B.Colourless 
-C.Red 
-D. Purple
-2. Which of the following has the highest-octane number?
-A. Straight chain aliphatic compound
-B. Branched chain aliphatic compound
-C. Aromatic compound
-D. Cyclic aliphatic compound
-3. What type of solution crystallizes out on agitation?
-A. Saturated
-B. Unsaturated
-C. Supersaturated
-Drop more and let everyone have an idea of what to expect 🤝🔥</h5> */}
-
-            {/* <h5>Happy 23th Birthday 🎂 To Popular Nigeria Singer, Rema  🍾🍹🥂🍾
-PLEASE FOLLOW TINGLESPICEY FOR MORE CONTENT. THANK YOU ❤💙</h5> */}
-
-            {/* <h5>Want to communicate effectively? QuillBot ensures that everything you write comes across the way you intend.
-Join over 50 million QuillBot users and see what better, clearer writing can do for you.
-Try QuillBot Now!</h5> */}
-
             <span class={styles.icon_back}>
               <svg
                 class={styles._00_history__back}
@@ -168,14 +145,12 @@ Try QuillBot Now!</h5> */}
               />
             </div>
           </div>
-          {/* {formik.touched.title && <div style={{color:"rgb(238, 5, 5", fontSize:'14px', marginLeft:"5px"}}>{formik.errors.title}</div>}
-          {formik.touched.desc && <div style={{color:"rgb(238, 5, 5", fontSize:'14px', marginLeft:"5px"}}>{formik.errors.desc}</div>} */}
           {/* image/video */}
           <div className={styles.media__preview} style={{ display: "" }}>
             {/*image parent container */}
             <ImagePost images={images} />
             {/*video parent container */}
-            <VideoUploader video={video} />
+            <VideoUploader videos={videos} />
           </div>
 
           {/* image/video */}
@@ -221,23 +196,26 @@ Try QuillBot Now!</h5> */}
               type="file"
               multiple
               ref={fileInputRef}
+              accept=".jpg"
               name="image"
               style={{ display: "none" }}
               onChange={(event) => {
-                formik.setFieldValue("image", Array.from(event.target.files));
+
+                formik.setFieldValue("images", Array.from(event.target.files));
                 const newImages = [];
                 const files = event.target.files;
 
                 for (let i = 0; i < files.length; i++) {
                   const file = files[i];
-
                   if (file.type.startsWith("image/")) {
-                    if (images.length >= 4) {
+                    if (formik.values.images.length >= 4) {
                       alert("You can only upload up to 4 images.");
                       return;
                     }
                     newImages.push(file);
+
                   }
+
                 }
 
                 setImages([...images, ...newImages]);
@@ -276,7 +254,29 @@ Try QuillBot Now!</h5> */}
               accept=".mp4"
               ref={VideoInputRef}
               style={{ display: "none" }}
-              onChange={handleVideoChange}
+              multiple
+              name="video"
+              onChange={(event)=>{
+                   formik.setFieldValue("videos", Array.from(event.target.files));
+                const newVideos = [];
+                const files = event.target.files;
+console.log(files);
+                for (let i = 0; i < files.length; i++) {
+                  const file = files[i];
+
+                  if (file.type.startsWith("video/")) {
+                    if (formik.values.videos.length >= 4) {
+                      alert("You can only upload up to 4 images.");
+                      return;
+                    }
+                    newVideos.push(file);
+
+                  }
+
+                }
+
+                setVideos([...videos,...newVideos]);
+              }}
             />
 
             <div className={styles._sxvg_div} style={{ width: "min-content" }}>
@@ -434,7 +434,7 @@ Try QuillBot Now!</h5> */}
               <button
                 className={styles.data_vh_post}
                 type="submit"
-                disabled={formik.values.title == "" || formik.values.desc == ""}
+                disabled={(formik.values.title == "" && formik.values.desc == "" && formik.values.images == "" && formik.values.videos == "")||(formik.values.title != "" && formik.values.desc == "" && formik.values.images == "" && formik.values.videos == "")}
               >
                 Post
               </button>

@@ -1,7 +1,39 @@
 import ProtectedRoute from "@/components/ProtectedRoutes/ProtectedRoute";
 import { HomeScreen } from "@/screens";
 import Head from "next/head";
+import axios from "axios";
+import { useState, useEffect } from "react";
+import { baseUrl } from "../redux/baseUrl"
+import Cookies from "js-cookie";
+import Routes from "@/utils/routes";
+import { useRouter } from "next/router";
 function Home() {
+  const router = useRouter();
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const token = Cookies.get("token");
+    if (!token) {
+      router.push(Routes.LOGIN);
+    }
+    const getUser = async () => {
+      try {
+        const url = `${baseUrl}/auth/welcome`
+        const { data } = await axios.get(url, { headers: { Authorization: `Bearer ${token}` } })
+        localStorage.setItem("authToken", JSON.stringify(data.data));
+        setUser(data.data);
+        if (data.data.profile === null) {
+          router.push(Routes.CREATE_PROFILE)
+        }
+      } catch (e) {
+        if (!e?.response?.data.status) {
+          Cookies.remove("token");
+          router.push(Routes.LOGIN)
+        }
+      }
+    }
+    getUser()
+  }, [])
   return (
     <>
       <Head>

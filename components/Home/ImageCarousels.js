@@ -4,7 +4,7 @@ import Image from "next/image";
 import Carousel from "react-multi-carousel";
 import people2 from "../../images/people-2.jpeg";
 
-function ImageCarousels({ count }) {
+function ImageCarousels({ postImage }) {
   const responsive = {
     desktop: {
       breakpoint: { max: 3000, min: 1024 },
@@ -24,9 +24,9 @@ function ImageCarousels({ count }) {
   };
   return (
     <div className={`${styles.data_content_img} ${styles.grid_101}`}>
-      {count === 1 ? (
+      {postImage.length === 1 ? (
         <Image
-          src={people2}
+          src={postImage[0]}
           alt="picgrid"
           className={styles._00img_data}
           width={1000}
@@ -47,15 +47,15 @@ function ImageCarousels({ count }) {
           transitionDuration={500}
           dotListClass="custom-dot-list-style"
         >
-          {[0, 1, 2].map((item) => (
+          {postImage.map((pic,id) => (
             <Image
-              src={people2}
+              src={pic!==null&&pic}
               alt="picgrid"
               className={styles._00img_data}
               width={1000}
               height={1000}
               priority
-              key={item}
+              key={id}
             />
           ))}
         </Carousel>
