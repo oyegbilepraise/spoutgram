@@ -168,7 +168,10 @@ const ProfileImage = ({post}) => {
           </span>
         </div>
         <div>
-          <span className={styles._000_dt_data}><PostedAt time={post.createdAt}/></span>
+          <span className={styles._000_dt_data}>
+            {}
+            <PostedAt time={post.createdAt}/> 
+          </span>
         </div>
       </div>
      

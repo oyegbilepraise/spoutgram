@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import ReactTimeAgo from 'react-time-ago'
+import moment from 'moment';
+
 
 const PostedAt = ({time}) => {
   // const [isAMinute, setIsAMinute] = useState(false)
@@ -20,10 +22,13 @@ const PostedAt = ({time}) => {
   //   return () => clearInterval(interval);
   // }, []);
 
+  let timeAge = moment.utc(time).local().startOf('seconds').fromNow() =="a few seconds ago" ?"now" :moment.utc(time).local().startOf('seconds').fromNow()
+
   return (
     <div>
     {/* {isAMinute?<ReactTimeAgo timeStyle='twitter' date={time} locale="en-US" />:'just now'} */}
-   <ReactTimeAgo timeStyle='twitter' date={time} locale="en-US" />
+   {/* <ReactTimeAgo timeStyle='twitter' date={time} locale="en-US" /> */}
+   {timeAge}
     </div>
   )
 }
