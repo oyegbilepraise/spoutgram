@@ -95,7 +95,7 @@
 }
 .___main_nav {
     border-bottom: var(--border-all);
-    border-bottom: var(--transparent);
+    /* border-bottom: var(--transparent); */
     padding-top: 13px; padding-bottom: 13px; padding-left: 18px;
     position: sticky;
     top: -2px;
@@ -233,8 +233,9 @@
 ._00img_data {
     border-radius: var(--modal-radius);
     border-radius: 20px;
-    width: 100%;
+    /* width: 100%; */
     max-height: 650px;
+    border: 1px solid rgb(238, 238, 238);
     object-fit: cover;
     /* margin: auto; */
     /* text-align: center; */

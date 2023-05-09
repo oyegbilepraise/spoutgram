@@ -86,7 +86,7 @@
 .ibistro__xyz > div:nth-child(2) {
   width: 50%;
 }
-input[type="text"].data_content_pass, input[type="password"].data_content_pass {
+input[type="text"].data_content_pass, input[type="password"].data_content_pass,  input[type="date"].data_content_pass {
   height: 52px;
   width: 100%;
   border-radius: 10px;
@@ -98,15 +98,19 @@ input[type="text"].data_content_pass, input[type="password"].data_content_pass {
   border: 1px solid rgba(228, 228, 228, 0.264);
   caret-color: var(--brand-color);
 }
-input[type="text"].data_content_pass::placeholder, input[type="password"].data_content_pass::placeholder {
+input[type="text"].data_content_pass::placeholder, input[type="password"].data_content_pass::placeholder, input[type="date"].data_content_pass::placeholder {
   color: rgb(160, 160, 160);
   letter-spacing: 0.2px;
 }
-input[type="text"].data_content_pass:focus, input[type="password"].data_content_pass:focus {
+input[type="text"].data_content_pass:focus, input[type="password"].data_content_pass:focus, input[type="date"].data_content_pass:focus {
   border: 1px solid #01a8ea7a;
 }
-input[type="text"].data_content_pass:focus::placeholder, input[type="password"].data_content_pass:focus::placeholder {
+input[type="text"].data_content_pass:focus::placeholder, input[type="password"].data_content_pass:focus::placeholder, input[type="date"].data_content_pass:focus::placeholder {
   color: var(--transparent-brand-color-placeholder);
+}
+input[type="date"].data_content_pass {
+  color: rgb(160, 160, 160);
+  text-transform: uppercase;
 }
 input[type="text"].data_content_inpcode {
   text-align: center;
@@ -130,6 +134,9 @@ input[type="text"].data_content_inpcode:not(:focus):not(:placeholder-shown) {
 .pass_data_bd {
   width: 100%;
   background-color: var(--brand-color);
+  /* background-color: #ff4976; */
+  background-color: #00A58F;
+  /* background-color: #fb1a47; */
   font-family: var(--global-medium);
   color: white;
   display: block;
@@ -818,7 +825,7 @@ input[type="text"].data_content_inpcode:not(:focus):not(:placeholder-shown) {
     font-weight: 600;
     color: rgb(80, 80, 80);
   }
-  input[type="text"].data_content_pass, input[type="password"].data_content_pass {
+  input[type="text"].data_content_pass, input[type="password"].data_content_pass, input[type="date"].data_content_pass {
     height: 49px;
     width: 100%;
     padding-left: 15px;
@@ -850,7 +857,7 @@ input[type="text"].data_content_inpcode:not(:focus):not(:placeholder-shown) {
   }
   .pass_data_bd {
     width: 100%;
-    background-color: var(--brand-color);
+    /* background-color: var(--brand-color); */
     font-family: var(--global-medium);
     color: white;
     display: block;
