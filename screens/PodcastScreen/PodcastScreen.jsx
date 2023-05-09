@@ -70,7 +70,7 @@ const PodcastScreen = () => {
             {/*  */}
             <div className={`${styles.div} ${styles.data_content}`}>
       {/* profile image */}
-      {/* <ProfileImage /> */}
+      <ProfileImage />
 
       {/* Post Body  */}
       <div className={`${styles.data_content_all} ${styles._00dca} ${styles.data_no_content}`} >

@@ -121,14 +121,17 @@ const CreateProfileScreen = () => {
 
     if (res.data.status) {
       setSuggestedUName('')
-      console.log('hi');
     } else {
-      let a = res?.data?.suggested
-      let b = []
-      a.forEach((item, i) => {
-        b.push({ value: 1, label: item })
-      })
-      setSuggestedUName(b);
+      if (res?.data?.suggested) {
+        let a = res?.data?.suggested
+        let b = []
+        a.forEach((item, i) => {
+          b.push({ value: 1, label: item })
+        })
+        setSuggestedUName(b);
+      } else {
+        setSuggestedUName('')
+      }
     }
 
     //   console.log({ re: res.data });
