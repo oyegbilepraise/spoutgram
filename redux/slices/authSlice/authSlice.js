@@ -22,6 +22,23 @@ export const registerUserAction = createAsyncThunk(
   }
 );
 
+export const verifyUsername = createAsyncThunk(
+  "users/verify-username",
+  async (payload, { rejectWithValue }) => {
+    const token = Cookies.get("token");
+    try {
+      const res = await postRequest({
+        url: `${baseUrl}${URL.verifyUsername}`,
+        data: payload,
+        token: token
+      });
+      return res.data;
+    } catch (err) {
+      return rejectWithValue(err?.response?.data?.message);
+    }
+  }
+);
+
 // Generate email verification number
 export const generateEmailVerificationAction = createAsyncThunk(
   "auth/generateEmailVerification",
@@ -50,7 +67,6 @@ export const verifyEmailAction = createAsyncThunk(
         data: payload,
         token: token,
       });
-      console.log(res.data);
       return res.data;
     } catch (err) {
       console.log(err);

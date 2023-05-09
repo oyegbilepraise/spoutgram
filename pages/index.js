@@ -24,9 +24,12 @@ function Home() {
         setUser(data.data);
         if (data.data.profile === null) {
           router.push(Routes.CREATE_PROFILE)
-        } 
+        }
       } catch (e) {
-        console.log(e)
+        if (!e?.response?.data.status) {
+          Cookies.remove("token");
+          router.push(Routes.LOGIN)
+        }
       }
     }
     getUser()
