@@ -6,20 +6,53 @@ import { useEffect } from "react";
 import { useDispatch,useSelector } from "react-redux";
 import { getAllPostsAction, likePostAction } from "@/redux/slices/postSlice/postSlice";
 import Cookies from "js-cookie";
+import { getUserAction } from "@/redux/slices/authSlice/authSlice";
 
 const Post = () => {
 const dispatch=useDispatch()
   const token = Cookies.get("token");
-   const { loading, apiError, posts } = useSelector(
+
+   const {posts } = useSelector(
     (state) => state?.post?.allPosts
   );
+   const { reccentPost } = useSelector(
+    (state) => state?.post?.likedPost
+  );
 
+    const {user} = useSelector((state) => state?.auth?.getUser);
 
   useEffect(() => {
-      dispatch(getAllPostsAction(token));
+    //only make the call when there is a token and when dispatch is mounted
+    if (token) {
+      if (dispatch && dispatch !== null && dispatch !== undefined) {
+        dispatch(getUserAction(token));
+        console.log("dispatched get User Action");
+      }
+    }
+  }, [dispatch, token]);
+    console.log(user);
+
+    useEffect(() => {
+  if (user.success) {
+    console.log(user.data.email);
+  }
+    }, [user.success])
+    
+
+
+  useEffect(() => { dispatch(getAllPostsAction(token));
   }, []);
 
-  console.table(posts);
+  console.log(posts);
+
+  useEffect(() => {
+  //  if (reccentPost) {
+   console.log(reccentPost);
+  //  }
+  }, [reccentPost.success])
+  
+  
+// style={post.likes.includes(user.data._id) && {color:'blue'}}
 
   return (
     <div>
@@ -47,7 +80,11 @@ const dispatch=useDispatch()
               }
               
               <div className={styles._00ftr_pst}>
-                <span className={styles._00mn_span} onClick={()=>dispatch(likePostAction({postId:post._id}))}>
+                <span className={styles._00mn_span} onClick={()=>{
+                dispatch(likePostAction({postId:post._id})
+                )
+                }
+                }>
                   <span>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -61,7 +98,7 @@ const dispatch=useDispatch()
                       <path d="M16.5 3C19.538 3 22 5.5 22 9c0 7-7.5 11-10 12.5C9.5 20 2 16 2 9c0-3.5 2.5-6 5.5-6C9.36 3 11 4 12 5c1-1 2.64-2 4.5-2zm-3.566 15.604c.881-.556 1.676-1.109 2.42-1.701C18.335 14.533 20 11.943 20 9c0-2.36-1.537-4-3.5-4-1.076 0-2.24.57-3.086 1.414L12 7.828l-1.414-1.414C9.74 5.57 8.576 5 7.5 5 5.56 5 4 6.656 4 9c0 2.944 1.666 5.533 4.645 7.903.745.592 1.54 1.145 2.421 1.7.299.189.595.37.934.572.339-.202.635-.383.934-.571z" />
                     </svg>
                   </span>
-                  <span className={styles._00mn_spn_cnt}>900</span>
+                  <span className={styles._00mn_spn_cnt}>{reccentPost.success && reccentPost.data._id==post._id? reccentPost.likes.length : post.likes.length}</span>
                 </span>
                 <span className={styles._00mn_span}>
                   <span>

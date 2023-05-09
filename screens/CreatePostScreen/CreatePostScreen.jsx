@@ -434,7 +434,7 @@ console.log(files);
               <button
                 className={styles.data_vh_post}
                 type="submit"
-                disabled={formik.values.title == "" || formik.values.desc == ""}
+                disabled={(formik.values.title == "" && formik.values.desc == "" && formik.values.images == "" && formik.values.videos == "")||(formik.values.title != "" && formik.values.desc == "" && formik.values.images == "" && formik.values.videos == "")}
               >
                 Post
               </button>
