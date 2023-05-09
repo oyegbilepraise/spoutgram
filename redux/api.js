@@ -9,7 +9,6 @@ export const API = axios.create({
 });
 
 export const getRequest = async ({ url, token, params }) => {
-console.log({"url":url,"token":token})
   const requestResponse = await API({
     headers: { Authorization: `Bearer ${token}` },
     method: "GET",

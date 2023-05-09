@@ -28,7 +28,7 @@ export const store = configureStore({
   reducer: {
     userDetails: userDetailSlice,
     auth: authSlice,
-    postMe: postSlice,
+    post: postSlice,
   },
   // middleware: (getDefaultMiddleware) =>
   //   getDefaultMiddleware({

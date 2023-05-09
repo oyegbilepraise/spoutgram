@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import styles from "@/layout/HomeLayout/HomeLayout.module.css";
 
-const VideoUploader = ({ video }) => {
+const VideoUploader = ({ videos }) => {
   //  custom button states
   const [playing, setPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
@@ -13,10 +13,13 @@ const VideoUploader = ({ video }) => {
   const progressBarRef = useRef();
   const volumeBarRef = useRef();
 
+  const videoUrl =(video)=>{
+  console.log(video);
     if (!video || !video.type) {
     return null;
   }
-  const videoUrl = video ? URL.createObjectURL(video) : null; // add a null-check here
+  return video ? URL.createObjectURL(video) : null; // add a null-check here
+  } 
 
   // ------ custom video starts here ------
   const togglePlay = () => {
@@ -70,6 +73,8 @@ const VideoUploader = ({ video }) => {
 
   return (
     <div>
+     {videos.map((video,id)=>{
+     <div key={id}>
       <video
         ref={videoRef}
         onTimeUpdate={handleTimeUpdate}
@@ -78,9 +83,10 @@ const VideoUploader = ({ video }) => {
         className={styles.vid__media__preview}
 
       >
-        <source src={videoUrl} type={video.type} />
+        <source src={videoUrl(video)} type={video.type} />
       </video>
-      <div>
+
+<div>
         <button onClick={togglePlay}>
           {playing ? (
             <svg
@@ -139,6 +145,8 @@ const VideoUploader = ({ video }) => {
           <button onClick={() => handlePlaybackRateChange(2)}>2x</button>
         </div>
       </div>
+     </div>
+     })}
     </div>
   );
 }

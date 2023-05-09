@@ -51,7 +51,7 @@ try {
 })
 
 const postSlice = createSlice({
-  name: "postMe",
+  name: "post",
   initialState: {
     createPost: { 
       loading: false,
@@ -66,7 +66,7 @@ const postSlice = createSlice({
     likedPost: { 
       loading: false,
       apiError: null,
-      post: {},
+      reccentPost: {},
       },
   },
   reducers: {},
@@ -104,12 +104,13 @@ const postSlice = createSlice({
 //likePost
 builder.addCase(likePostAction.pending,(state)=>{
 state.likedPost.loading=true;
-state.likedPost.post={};
+state.likedPost.reccentPost={};
 state.likedPost.apiError=null;
 })
 builder.addCase(likePostAction.fulfilled,(state,action)=>{
+console.log(state,action);
 state.createPost.loading=false
-state.createPost.post=action?.payload
+state.createPost.reccentPost=action?.payload
 })
 builder.addCase(likePostAction.rejected,(state,action)=>{
 state.createPost.loading=false

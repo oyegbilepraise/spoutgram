@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import styles from "@/layout/HomeLayout/HomeLayout.module.css";
 
-function HomeVideo() {
+function HomeVideo({postVideo}) {
   //  custom button states
   const [playing, setPlaying] = useState(false);
   const [buttonVisible, setButtonVisible] = useState(true);
@@ -68,8 +68,11 @@ function HomeVideo() {
   return (
     <div>
       <div>
+      {postVideo.map((videoUrl,id)=>{
+      return (
         <video
-          src="/podcast__tester.mp4"
+        key={id}
+          src={videoUrl}
           ref={videoRef}
           onTimeUpdate={handleTimeUpdate}
           onLoadedMetadata={handleLoadedMetadata}
@@ -80,6 +83,8 @@ function HomeVideo() {
           // currently, it's only play button that is working.
           //  check it out and come up with something. Sorry
         />
+      )
+      })}
       </div>
 
       <div>
