@@ -55,24 +55,24 @@ export const dislikePostAction= createAsyncThunk(
 async (postId,{rejectWithValue})=>{
 const token = Cookies.get("token");
 try {
-  const res=await patchRequest({url:`${baseUrl}${URL.likePost}`,data:postId,token})
+  const res=await patchRequest({url:`${baseUrl}${URL.dislikePost}`,data:postId,token})
   return res.data
 } catch (error) {
   return rejectWithValue(error);
 }
 })
 
-export const repostAction= createAsyncThunk(
-'post/repost', 
-async (postId,{rejectWithValue})=>{
-const token = Cookies.get("token");
-try {
-  const res=await patchRequest({url:`${baseUrl}${URL.likePost}`,data:postId,token})
-  return res.data
-} catch (error) {
-  return rejectWithValue(error);
-}
-})
+// export const repostAction= createAsyncThunk(
+// 'post/repost', 
+// async (postId,{rejectWithValue})=>{
+// const token = Cookies.get("token");
+// try {
+//   const res=await patchRequest({url:`${baseUrl}${URL.likePost}`,data:postId,token})
+//   return res.data
+// } catch (error) {
+//   return rejectWithValue(error);
+// }
+// })
 
 const postSlice = createSlice({
   name: "post",

@@ -20,6 +20,8 @@ const dispatch=useDispatch()
       dispatch(getAllPostsAction(token));
   }, []);
 
+  console.log(posts);
+
   return (
     <div>
     {loading? <div style={{height:"78vh"}} className="d-flex justify-content-center align-items-center">
