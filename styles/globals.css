@@ -39,7 +39,9 @@ html {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizelegibility;
 }
-
+body {
+  /* background-color: rgb(254, 254, 254); */
+}
 /* hide scrollbar  */
 .no-scroll {
   overflow: hidden;
