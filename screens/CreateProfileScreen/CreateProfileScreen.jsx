@@ -33,6 +33,7 @@ const createProfileValidationSchema = Yup.object().shape({
 
 
 const CreateProfileScreen = () => {
+
   const dispatch = useDispatch();
   const router = useRouter();
   //get profile creation details from store
@@ -151,6 +152,106 @@ const CreateProfileScreen = () => {
   }
 
 
+
+
+  // date code
+  const [months] = useState([
+    { id: 1, label: 'Jan', value: 1 },
+    { id: 2, label: 'Feb', value: 2 },
+    { id: 3, label: 'Mar', value: 3 },
+    { id: 4, label: 'Apr', value: 4 },
+    { id: 5, label: 'May', value: 5 },
+    { id: 6, label: 'Jun', value: 6 },
+    { id: 7, label: 'Jul', value: 7 },
+    { id: 8, label: 'Aug', value: 8 },
+    { id: 9, label: 'Sep', value: 9 },
+    { id: 10, label: 'Oct', value: 10 },
+    { id: 11, label: 'Nov', value: 11 },
+    { id: 12, label: 'Dec', value: 12 },
+  ]);
+  const [days, setDays] = useState([]);
+  const [years, setYears] = useState([]);
+  const [selectedMonth, setSelectedMonth] = useState('');
+  const [selectedDay, setSelectedDay] = useState('');
+  const [selectedYear, setSelectedYear] = useState('');
+
+  // Function to generate days based on selected month and year
+  const generateDays = (month, year) => {
+    const monthsWith31Days = [1, 3, 5, 7, 8, 10, 12];
+    const monthsWith30Days = [4, 6, 9, 11];
+    let maxDays = 31;
+
+    if (monthsWith30Days.includes(month)) {
+      maxDays = 30;
+    } else if (month === 2) {
+      if (year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0)) {
+        maxDays = 29; // Leap year
+      } else {
+        maxDays = 28; // Non-leap year
+      }
+    }
+
+    const daysArray = Array.from({ length: maxDays }, (_, index) => index + 1);
+    setDays(daysArray);
+  };
+
+  // Fill the years select options dynamically
+  const fillYears = () => {
+    const currentYear = new Date().getFullYear();
+    const yearsArray = Array.from({ length: 100 }, (_, index) => currentYear - index);
+    setYears(yearsArray);
+  };
+
+  // Event handler for month selection
+  const handleMonthChange = (event) => {
+    const month = parseInt(event.target.value, 10);
+    setSelectedMonth(month);
+    generateDays(month, selectedYear);
+  };
+
+  // Event handler for day selection
+  const handleDayChange = (event) => {
+    const day = parseInt(event.target.value, 10);
+    setSelectedDay(day);
+  };
+
+  // Event handler for year selection
+  const handleYearChange = (event) => {
+    const year = parseInt(event.target.value, 10);
+    setSelectedYear(year);
+    generateDays(selectedMonth, year);
+  };
+
+  // Fill the years select options when the component mounts
+  useEffect(() => {
+    fillYears();
+  }, []);
+
+  // date code
+
+  const [image, setImage] = useState(null);
+
+  // Function to handle image upload
+  const handleImageUpload = (event) => {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+
+    reader.onload = (e) => {
+      setImage(e.target.result);
+    };
+
+    if (file) {
+      reader.readAsDataURL(file);
+    }
+  };
+
+  // Function to handle image removal
+  const handleImageRemove = () => {
+    setImage(null);
+  };
+
+
+
   return (
     <AuthLayout>
       <main className={styles.__main} role="main">
@@ -170,19 +271,19 @@ const CreateProfileScreen = () => {
 
             {/* this is the form that would proccess all the users data for create-profile */}
             <form onSubmit={formik.handleSubmit}>
-              <div className={styles.image__wrapper__xx}>
+              {/* <div className={styles.image__wrapper__xx}>
                 <div
                   style={{
                     textAlign: "center", position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", width: "100%",
                   }}
-                >
+                 >
                   <svg className={styles.xyxy__svgg__upld} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" >
                     <path d="M4 22C4 17.5817 7.58172 14 12 14C16.4183 14 20 17.5817 20 22H18C18 18.6863 15.3137 16 12 16C8.68629 16 6 18.6863 6 22H4ZM12 13C8.685 13 6 10.315 6 7C6 3.685 8.685 1 12 1C15.315 1 18 3.685 18 7C18 10.315 15.315 13 12 13ZM12 11C14.21 11 16 9.21 16 7C16 4.79 14.21 3 12 3C9.79 3 8 4.79 8 7C8 9.21 9.79 11 12 11Z"></path>
                   </svg>
                   <span style={{ marginTop: "0px" }} className={styles._00sxtry}>
                     Profile Picture
                   </span>
-                  {/* Upload Picture */}
+                  Upload Picture
                 </div>
                 <span style={{ position: "absolute", right: "0px", bottom: "3px" }} >
                   <button type="button"
@@ -191,7 +292,75 @@ const CreateProfileScreen = () => {
                       xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 15V18H24V20H21V23H19V20H16V18H19V15H21ZM21.0082 3C21.556 3 22 3.44495 22 3.9934V13H20V5H4V18.999L14 9L17 12V14.829L14 11.8284L6.827 19H14V21H2.9918C2.44405 21 2 20.5551 2 20.0066V3.9934C2 3.44476 2.45531 3 2.9918 3H21.0082ZM8 7C9.10457 7 10 7.89543 10 9C10 10.1046 9.10457 11 8 11C6.89543 11 6 10.1046 6 9C6 7.89543 6.89543 7 8 7Z"></path></svg>
                   </button>
                 </span>
-              </div>
+              </div> */}
+
+              {!image && (
+                <div className={styles.image__wrapper__xx}>
+                  <div
+                    style={{
+                      textAlign: "center", position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", width: "100%",
+                    }}
+                  >
+                    <svg className={styles.xyxy__svgg__upld} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" >
+                      <path d="M4 22C4 17.5817 7.58172 14 12 14C16.4183 14 20 17.5817 20 22H18C18 18.6863 15.3137 16 12 16C8.68629 16 6 18.6863 6 22H4ZM12 13C8.685 13 6 10.315 6 7C6 3.685 8.685 1 12 1C15.315 1 18 3.685 18 7C18 10.315 15.315 13 12 13ZM12 11C14.21 11 16 9.21 16 7C16 4.79 14.21 3 12 3C9.79 3 8 4.79 8 7C8 9.21 9.79 11 12 11Z"></path>
+                    </svg>
+                    <span style={{ marginTop: "0px" }} className={styles._00sxtry}>
+                      Profile Picture
+                    </span>
+                    {/* Upload Picture */}
+                  </div>
+                  <span style={{ position: "absolute", right: "0px", bottom: "3px" }} >
+                    <button type="button" onClick={() => document.getElementById('fileInput').click()}
+                      style={{ width: "43px", cursor: "pointer", height: "43px", borderRadius: "50%", background: "rgb(248, 248, 248)", position: "relative" }}>
+                      <svg style={{ width: "19px", height: "19px", fill: "rgb(150, 150, 150)", boxSizing: "content-box", position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}
+                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 15V18H24V20H21V23H19V20H16V18H19V15H21ZM21.0082 3C21.556 3 22 3.44495 22 3.9934V13H20V5H4V18.999L14 9L17 12V14.829L14 11.8284L6.827 19H14V21H2.9918C2.44405 21 2 20.5551 2 20.0066V3.9934C2 3.44476 2.45531 3 2.9918 3H21.0082ZM8 7C9.10457 7 10 7.89543 10 9C10 10.1046 9.10457 11 8 11C6.89543 11 6 10.1046 6 9C6 7.89543 6.89543 7 8 7Z"></path></svg>
+                    </button>
+                    <input
+                      type="file"
+                      id="fileInput"
+                      accept="image/jpg, image/jpeg, image/png"
+                      onChange={handleImageUpload}
+                      style={{ display: 'none' }}
+                    />
+                  </span>
+                </div>
+              )}
+
+              {image && (
+                // <div>
+                //   <img src={image} alt="profile_image" />
+                //   <button onClick={handleImageRemove}>Remove image</button>
+                // </div>
+                <>
+                <div style={{position: "relative"}} className={styles.image__wrapper__}>
+                  <img
+                    src={image}
+                    alt="profile_avatar"
+                    className={styles.x_xjhhl_img}
+                    priority
+                  />
+                  <span style={{ position: "absolute", right: "0px", bottom: "3px" }} >
+                    <button type="button" onClick={() => document.getElementById('fileInput').click()}
+                      style={{ width: "43px", cursor: "pointer", height: "43px", borderRadius: "50%", background: "rgb(248, 248, 248)", position: "relative" }}>
+                      <svg style={{ width: "19px", height: "19px", fill: "rgb(150, 150, 150)", boxSizing: "content-box", position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}
+                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 15V18H24V20H21V23H19V20H16V18H19V15H21ZM21.0082 3C21.556 3 22 3.44495 22 3.9934V13H20V5H4V18.999L14 9L17 12V14.829L14 11.8284L6.827 19H14V21H2.9918C2.44405 21 2 20.5551 2 20.0066V3.9934C2 3.44476 2.45531 3 2.9918 3H21.0082ZM8 7C9.10457 7 10 7.89543 10 9C10 10.1046 9.10457 11 8 11C6.89543 11 6 10.1046 6 9C6 7.89543 6.89543 7 8 7Z"></path></svg>
+                    </button>
+                    <input
+                      type="file"
+                      id="fileInput"
+                      accept="image/jpg, image/jpeg, image/png"
+                      onChange={handleImageUpload}
+                      style={{ display: 'none' }}
+                    />
+                  </span>
+                </div>
+                <div style={{textAlign: "center"}}>
+                  <button
+                  style={{cursor: "pointer", marginBottom: "10px", padding: "10px", borderRadius: "8px", color: "white", background: "var(--brand-color)"}}
+                  onClick={handleImageRemove}>Remove image</button>
+                </div>
+                </>
+              )}
 
 
               {/*  */}
@@ -317,6 +486,47 @@ const CreateProfileScreen = () => {
                 </div>
               </div>
               {/* this is the date of birth */}
+
+
+              {/* this is the test */}
+              <div style={{justifyContent: "space-between", display: "flex"}}>
+                <span>
+                  <select className={styles.select__cpf} style={{width: "100px", textAlign: "center"}} name="month" id="month" value={selectedMonth}
+          onChange={handleMonthChange}>
+            <option value="">MM</option>
+                  {months.map((month) => (
+            <option key={month.id} value={month.value}>
+              {month.label}
+              </option>
+          ))}
+                  </select>
+                </span>
+
+                <span>
+                  <select className={styles.select__cpf} style={{width: "100px", textAlign: "center"}} name="day" id="day" value={selectedDay}
+          onChange={handleDayChange}>
+            <option value="">DD</option>
+                  {days.map((day) => (
+            <option key={day} value={day}>
+              {day}
+            </option>
+          ))}
+                  </select>
+                </span>
+
+                <span>
+                  <select className={styles.select__cpf} style={{width: "100px", textAlign: "center"}} name="year" id="year" value={selectedYear}
+          onChange={handleYearChange}>
+            <option value="">YYYY</option>
+                  {years.map((year) => (
+            <option key={year} value={year}>
+              {year}
+            </option>
+          ))}
+                  </select>
+                </span>
+              </div>
+              {/* this is the test */}
 
               <div>
                 <button className={styles.pass_data_bd} type="submit">Create Profile</button>
