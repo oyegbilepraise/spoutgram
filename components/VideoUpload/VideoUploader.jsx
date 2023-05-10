@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import styles from "@/layout/HomeLayout/HomeLayout.module.css";
 
-const VideoUploader = ({ videos }) => {
+const VideoUploader = ({ video }) => {
   //  custom button states
   const [playing, setPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
@@ -72,9 +72,7 @@ const VideoUploader = ({ videos }) => {
   // --------- custom video stops here --------
 
   return (
-    <div>
-     {videos.map((video,id)=>{
-     <div key={id}>
+     <div>
       <video
         ref={videoRef}
         onTimeUpdate={handleTimeUpdate}
@@ -145,8 +143,6 @@ const VideoUploader = ({ videos }) => {
           <button onClick={() => handlePlaybackRateChange(2)}>2x</button>
         </div>
       </div>
-     </div>
-     })}
     </div>
   );
 }

@@ -7,32 +7,20 @@ import ImagePost from "./ImagePost";
 import { useDispatch, useSelector } from "react-redux";
 import { createPostAction } from "@/redux/slices/postSlice/postSlice";
 import { useFormik } from "formik";
+import { BtnloadSvg } from "@/components";
 import Cookies from "js-cookie";
-import { useRouter } from "next/router";
-import Routes from "@/utils/routes";
-
-
 const CreatePostScreen = () => {
+
+
   const [showPostSettings, setShowPostSettings] = useState(false);
   const dispatch = useDispatch();
   const token = Cookies.get("token");
-  const router=useRouter()
-
-  const {reccentPost}=useSelector(state=>state?.post?.createPost)
 
   const fileInputRef = useRef();
 
   const handleButtonClick = () => {
     fileInputRef.current.click();
   };
-// console.log(reccentPost);
-//   useEffect(() => {
-//   if (reccentPost.success) {
-//     //  router.push(Routes.HOME);
-//         console.log("push to home from create-post");
-//   }
-//   }, [reccentPost])
-  
 
   // ----- video uploader starts here -----
   const [video, setVideo] = useState(null);
@@ -84,6 +72,7 @@ const CreatePostScreen = () => {
       fileInputRef.current.value = "";
     }
   });
+
   return (
     <HomeLayout>
       {/* div.timeline -> middle */}
@@ -198,6 +187,7 @@ const CreatePostScreen = () => {
 
                 for (let i = 0; i < files.length; i++) {
                   const file = files[i];
+
                   if (file.type.startsWith("image/")) {
                     if (images.length >= 4) {
                       alert("You can only upload up to 4 images.");
@@ -241,11 +231,11 @@ const CreatePostScreen = () => {
               <h6 className={styles.tooltip}>Video</h6>
             </div>
             <input
-            type="file"
-            accept=".mp4"
-            ref={VideoInputRef}
-            style={{ display: "none" }}
-            onChange={handleVideoChange}
+              type="file"
+              accept=".mp4"
+              ref={VideoInputRef}
+              style={{ display: "none" }}
+              onChange={handleVideoChange}
             />
 
             <div className={styles._sxvg_div} style={{ width: "min-content" }}>
@@ -403,7 +393,7 @@ const CreatePostScreen = () => {
               <button
                 className={styles.data_vh_post}
                 type="submit"
-                disabled={(formik.values.title == "" && formik.values.desc == "" && images == "" && video == "")||(formik.values.title != "" && formik.values.desc == "" && images == "" && video == "")}
+                disabled={formik.values.title == "" || formik.values.desc == ""}
               >
                 Post
               </button>
