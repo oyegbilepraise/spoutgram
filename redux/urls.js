@@ -14,7 +14,8 @@ export const URL = {
   // Posts
 createPost:"/posts/create",
 getPosts:"/posts/all-posts",
-likePost:"/posts/post/like"
+likePost:"/posts/post/like",
+dislikePost:"/posts/post/like",
   // Category
 
   // Comment
