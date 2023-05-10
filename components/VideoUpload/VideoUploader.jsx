@@ -13,13 +13,10 @@ const VideoUploader = ({ video }) => {
   const progressBarRef = useRef();
   const volumeBarRef = useRef();
 
-  const videoUrl =(video)=>{
-  console.log(video);
     if (!video || !video.type) {
     return null;
   }
-  return video ? URL.createObjectURL(video) : null; // add a null-check here
-  } 
+  const videoUrl = video ? URL.createObjectURL(video) : null; // add a null-check here
 
   // ------ custom video starts here ------
   const togglePlay = () => {
@@ -72,7 +69,7 @@ const VideoUploader = ({ video }) => {
   // --------- custom video stops here --------
 
   return (
-     <div>
+    <div>
       <video
         ref={videoRef}
         onTimeUpdate={handleTimeUpdate}
@@ -81,10 +78,9 @@ const VideoUploader = ({ video }) => {
         className={styles.vid__media__preview}
 
       >
-        <source src={videoUrl(video)} type={video.type} />
+        <source src={videoUrl} type={video.type} />
       </video>
-
-<div>
+      <div>
         <button onClick={togglePlay}>
           {playing ? (
             <svg
