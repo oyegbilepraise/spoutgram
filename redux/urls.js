@@ -7,15 +7,16 @@ export const URL = {
   verifyEmail: "/auth/verify-email",
   forgotPassword: "/auth/generate-forgotpassword-token",
   changePassword: "/auth/reset-password",
-
+  
   // Users
   createProfile: "/users/create-profile",
+  verifyUsername: "/users/verify-username",
 
   // Posts
 createPost:"/posts/create",
 getPosts:"/posts/all-posts",
 likePost:"/posts/post/like",
-dislikePost:"/posts/post/like",
+dislikePost:"/posts/post/dislike",
   // Category
 
   // Comment

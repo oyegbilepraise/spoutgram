@@ -30,7 +30,7 @@ const VerifyAccountScreen = () => {
   const dispatch = useDispatch();
 
   // get data from redux about verify email and verifyCode
-  const { verifyUserEmail, verifyCode } = useSelector((state) => state?.auth);
+  const { loading, verifyUserEmail, verifyCode } = useSelector((state) => state?.auth);
 
   const formik = useFormik({
     initialValues: {
@@ -46,8 +46,6 @@ const VerifyAccountScreen = () => {
       console.log({ verifyCode });
       router.push(Routes.CREATE_PROFILE);
     } else {
-      alert('error')
-      // console.log({ no: verifyCode });
       setShowCodeError(true)
     }
   }, [router, verifyCode?.user]);
@@ -128,7 +126,7 @@ const VerifyAccountScreen = () => {
                     name="code"
                     maxlength="6"
                     autoComplete="off"
-                    placeholder="Code"
+                    placeholder="Code" 
                     pattern="[0-9]{1,6}"
                     className={`${styles.data_content_pass} ${styles.data_content_inpcode}`}
                   />
@@ -154,12 +152,33 @@ const VerifyAccountScreen = () => {
               </div>
 
               <div>
-                <button
+
+              {loading ? (
+                  <button
+                  className={`${styles.pass_data_bd} ${styles.new__change__btn}`}
+                    type="submit"
+                    style={{ position: "relative" }}
+                    disabled
+                  >
+                    <>
+                      <BtnloadSvg />
+                    </>
+                    Verify
+                  </button>
+                ) : (
+                  <button className={`${styles.pass_data_bd} ${styles.new__change__btn}`} type="submit">
+                    Verify
+                  </button>
+                )}
+
+{/* {loading && <p>creating profile ...</p>} */}
+
+                {/* <button
                   className={`${styles.pass_data_bd} ${styles.new__change__btn}`}
                   type="submit"
-                >
+                > 
                   Verify
-                </button>
+                </button> */}
               </div>
               <div>
                 <span class={styles.sracde}>
@@ -185,7 +204,7 @@ const VerifyAccountScreen = () => {
                   </span>
                 )}
 
-                {verifyCode?.user?.sucess && (
+                {verifyCode?.user?.success && (
                   <span className={styles._00rsnd}>
                     code verified
                     <svg

@@ -16,12 +16,9 @@ const dispatch=useDispatch()
     (state) => state?.post?.allPosts
   );
 
-
   useEffect(() => {
       dispatch(getAllPostsAction(token));
   }, []);
-
-  console.table(posts);
 
   return (
     <div>

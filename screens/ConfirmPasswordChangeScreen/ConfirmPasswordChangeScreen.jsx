@@ -10,7 +10,7 @@ import { AuthLayout } from "@/layout";
 import {
   EnvelopeSvg,
   ErrorSvg,
-  ResendLdSvg,
+  ResendLdSvg, 
   BtnloadSvg,
   CautionSvg,
 } from "../../components";
@@ -137,7 +137,7 @@ const ConfirmPasswordChangeScreen = () => {
                   </button>
                 )}
               </div>
-              <div style={{ marginTop: "30px" }}>
+              <div style={{ marginTop: "-15px" }}>
                 <span class={styles.sracde}>
                   Didn't recieve any email?{" "}
                   <span onClick={resendEmail} className={styles.sapn__rsbd}>

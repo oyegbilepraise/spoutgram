@@ -18,7 +18,7 @@ import { useFormik } from "formik";
 import { AuthLayout } from "@/layout";
 import { useEffect, useState } from "react";
 import * as Yup from "yup";
-import Link from "next/link";
+import Link from "next/link"; 
 import styles from "@/layout/AuthLayout/AuthLayout.module.css";
 import Routes from "@/utils/routes";
 import { baseUrl, baseUrlTest } from "@/redux/baseUrl";
@@ -67,8 +67,11 @@ const LoginScreen = () => {
     },
     validationSchema: loginFormSchema,
   });
+  
+
   useEffect(() => {
     if (user.token) {
+      console.log({user});
       if (
         //if the acount is not verified, generate token and re route to verify
         user.isAccountVerified === false &&
@@ -80,21 +83,24 @@ const LoginScreen = () => {
         return;
       } else if (
         // if there is no profile and user is verified, re route to profile
-        user.profile === false &&
+        !user.profile &&
         user.isAccountVerified &&
         router.pathname !== Routes.CREATE_PROFILE
       ) {
         console.log("push to profile from login");
         router.push(Routes.CREATE_PROFILE);
         return;
-      } else {
+      } else if (user.isAccountVerified && user.profile) {
+        console.log({ user });
         // if you are verified and have a profile go to home
         router.push(Routes.HOME);
         console.log("push to home from login");
         return;
       }
+    } else {
+      router.push(Routes.LOGIN);
     }
-  }, [dispatch, router, user.isAccountVerified, user.profile, user.token]);
+  }, [dispatch, user?.isAccountVerified, user?.profile, user?.token]);
 
   const [visible, setVisible] = useState(false);
 
@@ -125,7 +131,7 @@ const LoginScreen = () => {
               <div className={styles._xpnds_oauths_div}>
                 <div>
                   {/* continue with google */}
-                  <button
+                  <button type="button"
                     className={`${styles.oauths_} ${styles.ggl_oauth}`}
                     onClick={handleGoogleLogin}
                   >
@@ -136,7 +142,7 @@ const LoginScreen = () => {
 
                 <div>
                   {/* continue with twitter */}
-                  <button
+                  <button type="button"
                     className={`${styles.oauths_} ${styles.twtr_oauth}`}
                     onClick={handleTwitterLogin}
                   >
@@ -165,6 +171,7 @@ const LoginScreen = () => {
                     onChange={formik.handleChange("email")}
                     onFocus={handleEmailFocus}
                     onBlur={handleEmailBlur}
+                    autoComplete="off"
                     spellCheck="false"
                     name="email"
                     placeholder="Email"
@@ -197,6 +204,7 @@ const LoginScreen = () => {
                     onFocus={handlePasswordFocus}
                     onBlur={handlePasswordBlur}
                     autoCorrect="false"
+                    spellCheck="false"
                     placeholder="Password"
                     name="password"
                     className={`${styles.data_content_pass} ${styles._00x00_pwd}`}
