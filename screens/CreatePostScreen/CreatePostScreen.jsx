@@ -11,36 +11,33 @@ import Cookies from "js-cookie";
 import { useRouter } from "next/router";
 import Routes from "@/utils/routes";
 
-
 const CreatePostScreen = () => {
   const [showPostSettings, setShowPostSettings] = useState(false);
   const dispatch = useDispatch();
   const token = Cookies.get("token");
-  const router=useRouter()
+  const router = useRouter();
 
-  const {reccentPost}=useSelector(state=>state?.post?.createPost)
+  const { reccentPost } = useSelector((state) => state?.post?.createPost);
 
   const fileInputRef = useRef();
 
   const handleButtonClick = () => {
     fileInputRef.current.click();
   };
-// console.log(reccentPost);
-//   useEffect(() => {
-//   if (reccentPost.success) {
-//     //  router.push(Routes.HOME);
-//         console.log("push to home from create-post");
-//   }
-//   }, [reccentPost])
-  
+  // console.log(reccentPost);
+  //   useEffect(() => {
+  //   if (reccentPost.success) {
+  //     //  router.push(Routes.HOME);
+  //         console.log("push to home from create-post");
+  //   }
+  //   }, [reccentPost])
 
   // ----- video uploader starts here -----
-  const [video, setVideo] = useState([]);
+  const [video, setVideo] = useState(null);
   // console.log(video);
   const VideoInputRef = useRef();
 
   const handleVideoChange = (event) => {
-    
     const selectedFiles = event.target.files;
     console.log(selectedFiles);
 
@@ -58,35 +55,31 @@ const CreatePostScreen = () => {
 
   // ------------ Function handling post submit -------------
   const [images, setImages] = useState([]);
-  
 
   const formik = useFormik({
-    
-    initialValues: { title: "", desc: "", images: [] },
+    initialValues: { title: "", desc: "", images: [],video:null },
     onSubmit: async (values) => {
-
       const formData = new FormData();
 
       formData.append("title", values.title);
       formData.append("desc", values.desc);
-      formData.append("video", video);
-
+      formData.append("video", values.video);
 
       for (let i = 0; i < values.images.length; i++) {
         formData.append("image", values.images[i]);
       }
-     
+
       dispatch(createPostAction(formData));
       console.log(values);
       values.title = "";
       values.desc = "";
       values.images = [];
       setImages([]);
-      setVideo([]);
+      setVideo(null);
       fileInputRef.current.value = "";
       VideoInputRef.current.value = "";
       // router.push(Routes.HOME);
-    }
+    },
   });
 
   return (
@@ -197,7 +190,6 @@ const CreatePostScreen = () => {
               name="image"
               style={{ display: "none" }}
               onChange={(event) => {
-
                 formik.setFieldValue("images", Array.from(event.target.files));
                 const newImages = [];
                 const files = event.target.files;
@@ -210,9 +202,7 @@ const CreatePostScreen = () => {
                       return;
                     }
                     newImages.push(file);
-
                   }
-
                 }
 
                 setImages([...images, ...newImages]);
@@ -253,7 +243,10 @@ const CreatePostScreen = () => {
               style={{ display: "none" }}
               multiple
               name="video"
-              onChange={handleVideoChange}
+              onChange={(event) => {
+                formik.setFieldValue("video", event.target.files[0]);
+                handleVideoChange(event);
+              }}
             />
 
             <div className={styles._sxvg_div} style={{ width: "min-content" }}>
@@ -411,7 +404,7 @@ const CreatePostScreen = () => {
               <button
                 className={styles.data_vh_post}
                 type="submit"
-                disabled={(formik.values.title == "" && formik.values.desc == "" && formik.values.images == "" && video == "")||(formik.values.title != "" && formik.values.desc == "" && formik.values.images == "" && video == "")}
+                disabled={(formik.values.title == "" && formik.values.desc == "" && formik.values.images.length==0 && formik.video == null) || (formik.values.title != "" && formik.values.desc == "" && formik.values.images.length==0 && formik.video == null)}
               >
                 Post
               </button>

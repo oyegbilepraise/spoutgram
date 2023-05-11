@@ -15,13 +15,14 @@ const dispatch=useDispatch()
    const { loading, apiError, posts } = useSelector(
     (state) => state?.post?.allPosts
   );
-
+ const {user} = useSelector((state) => state?.auth?.getUser);
 
   useEffect(() => {
       dispatch(getAllPostsAction(token));
   }, []);
 
-  console.table(posts);
+  console.log(posts);
+  console.log(user);
 
   return (
     <div>
@@ -54,7 +55,7 @@ const dispatch=useDispatch()
               }
               
               <div className={styles._00ftr_pst}>
-                <span className={styles._00mn_span} onClick={()=>dispatch(likePostAction({postId:post._id}))}>
+                <span className={`${styles._00mn_span}`} onClick={()=>dispatch(likePostAction({postId:post._id}))}>
                   <span>
                 <AiOutlineLike size={20} className={`${styles.red} ${styles.x_icn_ftr} ${styles.redheart} ${styles.post__heart}`}/>
                     {/* <svg
@@ -71,8 +72,8 @@ const dispatch=useDispatch()
                   </span>
                   <span className={styles._00mn_spn_cnt}>{post.likes.length}</span>
                 </span>
-                
-                <span className={styles._00mn_span} onClick={()=>dispatch(dislikePostAction({postId:post._id}))}>
+                {/* ${post.dislikes.includes(user.data._id)? 'text-primarty':''} */}
+                <span className={`${styles._00mn_span}`} onClick={()=>dispatch(dislikePostAction({postId:post._id}))}>
                   <span>
                 <AiOutlineDislike size={20} className={`${styles.blue} ${styles.x_icn_ftr}`}/>
                     {/* <svg
