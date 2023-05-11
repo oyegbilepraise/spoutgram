@@ -57,7 +57,7 @@ const CreatePostScreen = () => {
 
   const formik = useFormik({
     
-    initialValues: { title: "", desc: "", images: [] },
+    initialValues: { title: "", desc: "", images: [],video:null },
     onSubmit: async (values) => {
       const formData = new FormData();
 
@@ -243,7 +243,11 @@ const CreatePostScreen = () => {
               style={{ display: "none" }}
               multiple
               name="video"
-              onChange={handleVideoChange}
+              onChange={(event) => {
+                formik.setFieldValue("video",event.target.files);
+              handleVideoChange(event)
+            
+              }}
             />
 
             <div className={styles._sxvg_div} style={{ width: "min-content" }}>
@@ -401,7 +405,7 @@ const CreatePostScreen = () => {
               <button
                 className={styles.data_vh_post}
                 type="submit"
-                disabled={(formik.values.title == "" && formik.values.desc == "" && formik.values.images == "" && video == "")||(formik.values.title != "" && formik.values.desc == "" && formik.values.images == "" && video == "")}
+                disabled={(formik.values.title == "" && formik.values.desc == "" && formik.values.images.length ==0 && formik.video == null)||(formik.values.title != "" && formik.values.desc == "" && formik.values.images.length ==0 && formik.video == null)}
               >
                 Post
               </button>
