@@ -86,7 +86,7 @@
     position: relative;
     border-top: none;
     border-bottom: none;
-    /* margin: auto; */
+    /* margin: auto; */ 
 }
 ._000rightbar {
     /* border: 1px solid green; */
@@ -95,6 +95,7 @@
 }
 .___main_nav {
     border-bottom: var(--border-all);
+    border-bottom: var(--transparent);
     padding-top: 13px; padding-bottom: 13px; padding-left: 18px;
     position: sticky;
     top: -2px;
@@ -444,9 +445,9 @@
             user-select: none;
 }
 .n_m_text {
-    font-family: var(--global-medium);
+    font-family: var(--global-regular);
     /* font-weight: 400; */
-    font-size: 14px;
+    font-size: 15px;
     color: #c1c1c1;
     margin-top: 0px;
     margin-bottom: 0px; 
@@ -460,7 +461,7 @@
     /* change this back to orginal position after launch */
   
     
-    padding-bottom: 13px; padding-top: 0px;
+    padding-bottom: 8px; padding-top: 0px;
     margin: auto;
     position: relative;
     padding-right: 10px; padding-left: 10px;
@@ -674,8 +675,8 @@
     padding-left: 20px;
 }
 ._000data__img__div {
-    background-color: white;
-    height: 100px; width: 100px;
+    background-color: gray;
+    height: 140px; width: 140px;
     border-radius: 50%;
     position: relative;
     /* margin-top: -90px; */
@@ -689,6 +690,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
     top: 50%;
+    border-radius: 50%;
 }
 .user_data_name {
     font-family: var(--global-bold);
@@ -707,19 +709,26 @@
     letter-spacing: 0.2px;
 }
 .xoxtrn {
-    margin-right: 15px;
+    margin-right: 20px;
     font-family: var(--global-bold);
     font-size: 14.5px;
     color: rgb(78, 78, 78);
     letter-spacing: 0.2px;
+    display: block;
+    /* border: 1px solid black; */
+    text-align: center;
 }
 .xyxxn {
     font-family: var(--global-regular);
     color: rgb(137, 137, 137);
+    display: block;
 }
 ._all00xcuunt {
-    display: block;
-    margin-bottom: 10px;
+    display: flex;
+    /* border: 1px solid green; */
+    margin-bottom: 22px;
+    text-align: center;
+    /* justify-content: space-evenly; */
 }
 .user_data_about {
     font-family: var(--global-regular);
@@ -1143,25 +1152,26 @@
 }
 .absolute__me__now {
     /* border: 1px solid black; */
-    display: block;
-    /* position: absolute; */
-    top: 100px;
+    display: flex;
+    /* justify-content: space-between; */
+    position: absolute;
+    top: 0px;
     right: 15px;
 }
 .follow__user {
     border: var(--transparent);
     background-color: var(--transparent-brand-color);
     color: var(--brand-color);
-    width: max-content;
+    /* width: 50%; */
     padding-top: 7px; padding-bottom: 7px;
     padding-left: 20px; padding-right: 20px;
-    border-radius: 11px;
+    border-radius: 1000px;
     font-family: var(--global-medium);
     font-size: 15px;
     letter-spacing: 0.2px;
     cursor: pointer;
     /* margin-left: 12px; */
-    margin-right: 15px;
+    /* margin-right: 15px; */
 }
 
 /* messages */
@@ -1383,12 +1393,12 @@
 }
 .the__starting__point {
     display: block;
-    padding-top: 40px;
+    padding-top: 10px;
     padding-left: 25px;
 }
 .the__starting__point {
     /* border: 1px solid green; */
-    width: 80%;
+    width: 100%;
     margin: auto;
     top: 0px;
     margin-top: 0px;
@@ -1419,12 +1429,14 @@
 .sxuiip > div:nth-child(2) {
     /* border: 1px solid black; */
     /* width: 90%; */
-    width: 80%;
+    /* width: 80%; */
 }
 .dxcWAsd {
-    padding-left: 25px;
+    padding-left: 28px;
+    /* border: 1px solid blue; */
+    margin-top: 40px;
 }
-.span__xyz {
+.span__xyz, .xyx__more__Profile {
     /* border: 1px solid black; */
     position: absolute;
     top: 52px;
@@ -1437,10 +1449,16 @@
     background-color: rgba(163, 163, 163, 0.22);
     cursor: pointer;
 }
+.xyx__more__Profile {
+    position: relative;
+    top: 0; right: 0;
+    margin-top: 23px;
+    margin-left: 7px;
+}
 .yuv_usr {
     font-family: var(--global-bold);
-    font-size: 18.5px;
-    padding-top: 10px;
+    font-size: 19.5px;
+    padding-top: 0px;
     color: rgba(78, 78, 78);
     letter-spacing: 0.2px;
 }
@@ -1449,26 +1467,30 @@
     background-color: var(--transparent-brand-color);
     color: var(--brand-color);
     width: max-content;
-    padding-top: 6px; padding-bottom: 6px;
+    padding-top: 7px; padding-bottom: 7px;
+    text-align: center;
     padding-left: 20px; padding-right: 20px;
-    border-radius: 8px;
-    font-family: var(--global-medium);
-    font-size: 13.5px;
+    border-radius: 1000px;
+    font-family: var(--global-bold);
+    font-size: 15.2px;
     letter-spacing: 0.2px;
     cursor: pointer;
-    margin-right: 12px;
+    margin-right: 4px; margin-left: 4px;
 }
 .fu_xyz {
     color: white;
     background-color: var(--brand-color);
+    margin-top: 20px;
+    width: 70%;
+    cursor: pointer;
 }
 .block__for__profile__only {
     display: block;
 }
 .another__class {
-    width: 80%;
+    width: 100%;
     margin: auto;
-    margin-top: 40px;
+    margin-top: 55px;
     /* border-bottom: var(--transparent); */
 }
 .user_data_about {
@@ -1477,7 +1499,7 @@
     margin-bottom: 10px;
     margin-top: 10px;
     font-size: 15px;
-    width: 75%;
+    width: 85%;
     color: rgb(62, 62, 62);
 }
 .parnt__cnt_wyyyt {
@@ -1655,6 +1677,9 @@ input[type="text"].disbld__inp__post {
     font-family: var(--global-bold);
     transition: 0.6s all;
     color: black;
+}
+.spoutgram_verified {
+    width: 14px; height: 14px; margin-left: 6px;
 }
 .flex__me_too {
     display: flex;

@@ -39,7 +39,6 @@ const CreatePostScreen = () => {
 
   const handleVideoChange = (event) => {
     const selectedFiles = event.target.files;
-    console.log(selectedFiles);
 
     if (selectedFiles.length > 1) {
       alert("Please select only one video file.");
@@ -57,7 +56,8 @@ const CreatePostScreen = () => {
   const [images, setImages] = useState([]);
 
   const formik = useFormik({
-    initialValues: { title: "", desc: "", images: [],video:null },
+    
+    initialValues: { title: "", desc: "", images: [] },
     onSubmit: async (values) => {
       const formData = new FormData();
 
@@ -65,23 +65,23 @@ const CreatePostScreen = () => {
       formData.append("desc", values.desc);
       formData.append("video", values.video);
 
+
       for (let i = 0; i < values.images.length; i++) {
         formData.append("image", values.images[i]);
       }
 
       dispatch(createPostAction(formData));
-      console.log(values);
+
       values.title = "";
       values.desc = "";
-      values.images = [];
+      values.image = [];
       setImages([]);
-      setVideo(null);
+      setVideo([]);
       fileInputRef.current.value = "";
       VideoInputRef.current.value = "";
       // router.push(Routes.HOME);
-    },
+    }
   });
-
   return (
     <HomeLayout>
       {/* div.timeline -> middle */}
@@ -186,10 +186,10 @@ const CreatePostScreen = () => {
               type="file"
               multiple
               ref={fileInputRef}
-              accept=".jpg"
               name="image"
               style={{ display: "none" }}
               onChange={(event) => {
+
                 formik.setFieldValue("images", Array.from(event.target.files));
                 const newImages = [];
                 const files = event.target.files;
@@ -197,7 +197,7 @@ const CreatePostScreen = () => {
                 for (let i = 0; i < files.length; i++) {
                   const file = files[i];
                   if (file.type.startsWith("image/")) {
-                    if (formik.values.images.length >= 4) {
+                    if (images.length >= 4) {
                       alert("You can only upload up to 4 images.");
                       return;
                     }
@@ -243,10 +243,7 @@ const CreatePostScreen = () => {
               style={{ display: "none" }}
               multiple
               name="video"
-              onChange={(event) => {
-                formik.setFieldValue("video", event.target.files[0]);
-                handleVideoChange(event);
-              }}
+              onChange={handleVideoChange}
             />
 
             <div className={styles._sxvg_div} style={{ width: "min-content" }}>
@@ -404,7 +401,7 @@ const CreatePostScreen = () => {
               <button
                 className={styles.data_vh_post}
                 type="submit"
-                disabled={(formik.values.title == "" && formik.values.desc == "" && formik.values.images.length==0 && formik.video == null) || (formik.values.title != "" && formik.values.desc == "" && formik.values.images.length==0 && formik.video == null)}
+                disabled={(formik.values.title == "" && formik.values.desc == "" && formik.values.images == "" && video == "")||(formik.values.title != "" && formik.values.desc == "" && formik.values.images == "" && video == "")}
               >
                 Post
               </button>

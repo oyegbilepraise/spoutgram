@@ -27,6 +27,7 @@
     "react-avatar-edit": "^1.2.0",
     "react-dom": "18.2.0",
     "react-icons": "^4.8.0",
+    "react-dropdown-select": "^4.9.3",
     "react-multi-carousel": "^2.8.3",
     "react-redux": "^8.0.5",
     "react-select": "^5.7.2",
@@ -36,3 +37,4 @@
     "yup": "^1.0.2"
   }
 }
+

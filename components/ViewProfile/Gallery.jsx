@@ -60,7 +60,7 @@ const Gallery = () => {
           {activeGallery === "all" && (
             <div className={`${styles.all__grid__js} ${styles.all_grid}`}>
               {/* all-grid */}
-              <div style={{ height: 400, position: "relative" }}>
+              <div style={{ height: 200, position: "relative" }}>
                 <h6 className={styles.npy__xyz}>No media files yet.</h6>
               </div>
             </div>
@@ -69,7 +69,7 @@ const Gallery = () => {
           {activeGallery === "photo" && (
             <div className={`${styles.photo__grid__js} ${styles.photos_grid}`}>
               {/* photos-grid */}
-              <div style={{ height: 400, position: "relative" }}>
+              <div style={{ height: 200, position: "relative" }}>
                 <h6 className={styles.npy__xyz}>No photos yet.</h6>
               </div>
             </div>
@@ -78,7 +78,7 @@ const Gallery = () => {
           {activeGallery === "video" && (
             <div className={`${styles.vid__grid__js} ${styles.videos_grid}`}>
               {/* videos-grid */}
-              <div style={{ height: 400, position: "relative" }}>
+              <div style={{ height: 200, position: "relative" }}>
                 <h6 className={styles.npy__xyz}>No videos yet.</h6>
               </div>
             </div>

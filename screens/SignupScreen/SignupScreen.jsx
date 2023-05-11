@@ -21,9 +21,7 @@ import Link from "next/link";
 import styles from "@/layout/AuthLayout/AuthLayout.module.css";
 import Routes from "@/utils/routes";
 import Cookies from "js-cookie";
-import axios from "axios";
-import { from } from "form-data";
-import { baseUrl, baseUrlTest } from "../../redux/baseUrl";
+import { baseUrl } from "../../redux/baseUrl";
 import { useSession, signIn, signOut } from "next-auth/react"
 
 const signupValidationSchema = Yup.object().shape({
@@ -45,7 +43,7 @@ const SignUpScreen = () => {
   const codeSent = useSelector((state) => state?.auth?.verifyUserEmail);
   const { data, status } = useSession()
 
-  console.log({ data, status });
+  // console.log({ data, status });
 
 
   const handleGoogleLogin = async () => {
@@ -89,7 +87,7 @@ const SignUpScreen = () => {
       router.push(Routes.VERIFY);
     }
   }, [dispatch, storedData?.registered?.success]);
-  const [password, setPassword] = useState("");
+  // const [password, setPassword] = useState("");
   const [visible, setVisible] = useState(false);
   const [visibleOne, setVisibleOne] = useState(false);
   const [showEmailError, setShowEmailError] = useState(false);
@@ -128,7 +126,7 @@ const SignUpScreen = () => {
               <div className={styles._xpnds_oauths_div}>
                 <div>
                   {/* continue with google */}
-                  <button
+                  <button type="button"
                     className={`${styles.oauths_} ${styles.ggl_oauth}`}
                     onClick={() => signIn()}
                   >
@@ -139,7 +137,7 @@ const SignUpScreen = () => {
 
                 <div>
                   {/* continue with twitter */}
-                  <button
+                  <button type="button"
                     className={`${styles.oauths_} ${styles.twtr_oauth}`}
                     onClick={() => signOut()}
                   >
@@ -184,6 +182,7 @@ const SignUpScreen = () => {
                     onBlur={handleEmailBlur}
                     name="email"
                     placeholder="Email"
+                    autoComplete="off"
                     className={styles.data_content_pass}
                   />
                   {/* error svg */}
@@ -213,6 +212,7 @@ const SignUpScreen = () => {
                     onFocus={handlePasswordFocus}
                     onBlur={handlePasswordBlur}
                     name="password"
+                    spellCheck="false"
                     placeholder="Password"
                     className={`${styles.data_content_pass} ${styles._00x00_pwd}`}
                   />
@@ -251,6 +251,7 @@ const SignUpScreen = () => {
                     onFocus={handleCPasswordFocus}
                     onBlur={handleCPasswordBlur}
                     name="confirmPassword"
+                    spellCheck="false"
                     placeholder="Confirm Password"
                     className={`${styles.data_content_pass} ${styles._00x00_pwd}`}
                   />

@@ -1,12 +1,12 @@
-import React from 'react'
-import { MainProfileScreen } from '@/screens'
-import Head from 'next/head'
+import React from "react";
+import { MainProfileScreen } from "@/screens";
+import Head from "next/head";
 
-const Profile = () => {
-  return ( 
+const MainProfile = () => {
+  return (
     <>
-     <Head>
-     <title>*Profile name* / @*username*</title>
+      <Head>
+      <title>*Profile name* / @*username*</title>
         <>
           <meta charset="UTF-8"></meta>
           <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
@@ -50,9 +50,9 @@ const Profile = () => {
         </>
         <link rel="icon" href="/apple-touch-icon.png" type="image/png" />
       </Head>
-      <MainProfileScreen/>
-    </>
-  )
-}
+      <MainProfileScreen />
+    </> 
+  );
+};
 
-export default Profile
+export default MainProfile;

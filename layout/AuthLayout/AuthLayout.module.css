@@ -157,7 +157,7 @@ input[type="text"].data_content_inpcode:not(:focus):not(:placeholder-shown) {
   padding-top: 3px;
   color: #01A8EA;
   cursor: pointer;
-  letter-spacing: 0.2px;
+  letter-spacing: 0.1px;
 }
 .invalid_svg {
   width: 12px; height: 12px; margin-right: 4px;
@@ -423,7 +423,8 @@ input[type="text"].data_content_inpcode:not(:focus):not(:placeholder-shown) {
   border-radius: 50%;
   position: relative;
   padding: 5px;
-  margin-top: 50px;
+  /* margin-top: 50px; */
+  margin-bottom: 25px;
 }
 .image__wrapper__xx {
   border: 2px solid rgb(235, 235, 235);
@@ -493,10 +494,10 @@ input[type="text"].data_content_inpcode:not(:focus):not(:placeholder-shown) {
   width: 100vw;
   height: 100vh;
   background-color: white;
-  z-index: 100;
+  z-index: 1000;
 }
 ._loader_img {
-  width: 210px;
+  width: 190px;
 }
 .react__loader__child__div {
   position: absolute;
@@ -631,7 +632,7 @@ input[type="text"].data_content_inpcode:not(:focus):not(:placeholder-shown) {
   border: 1px solid black;
   display: block;
   padding-top: 10px; padding-bottom: 10px;
-  border-radius: 5px;
+  border-radius: 1000px;
   border: 1px solid var(--brand-color);
   background-color: #01a8ea33;
   text-align: center;
