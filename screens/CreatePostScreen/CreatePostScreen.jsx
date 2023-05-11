@@ -10,6 +10,7 @@ import { useFormik } from "formik";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
 import Routes from "@/utils/routes";
+import {MdPermMedia} from 'react-icons/md'
 
 const CreatePostScreen = () => {
   const [showPostSettings, setShowPostSettings] = useState(false);
@@ -33,7 +34,7 @@ const CreatePostScreen = () => {
   //   }, [reccentPost])
 
   // ----- video uploader starts here -----
-  const [video, setVideo] = useState(null);
+  // const [video, setVideo] = useState(null);
   // console.log(video);
   const VideoInputRef = useRef();
 
@@ -53,30 +54,33 @@ const CreatePostScreen = () => {
   };
 
   // ------------ Function handling post submit -------------
-  const [images, setImages] = useState([]);
+  const [media, setMedia] = useState([]);
 
   const formik = useFormik({
     
-    initialValues: { title: "", desc: "", images: [],video:null },
+    initialValues: { title: "", desc: "", media: []},
     onSubmit: async (values) => {
       const formData = new FormData();
 
       formData.append("title", values.title);
       formData.append("desc", values.desc);
-      formData.append("video", values.video);
 
 
-      for (let i = 0; i < values.images.length; i++) {
-        formData.append("image", values.images[i]);
+      for (let i = 0; i < values.media.length; i++) {
+      if (values.media[i].type.startsWith("image/")) {
+        formData.append("image", values.media[i]);
+                    }
+      else if (values.media[i].type.startsWith("video/")) {
+        formData.append("video", values.media[i]);
+                    }
       }
 
       dispatch(createPostAction(formData));
-
+      console.log(values);
       values.title = "";
       values.desc = "";
-      values.image = [];
-      setImages([]);
-      setVideo([]);
+      values.media = [];
+      setMedia([]);
       fileInputRef.current.value = "";
       VideoInputRef.current.value = "";
       // router.push(Routes.HOME);
@@ -138,7 +142,7 @@ const CreatePostScreen = () => {
           {/* image/video */}
           <div className={styles.media__preview} style={{ display: "" }}>
             {/*image parent container */}
-            <ImagePost images={images} />
+            <ImagePost media={media} />
             {/*video parent container */}
             <VideoUploader video={video} />
           </div>
@@ -146,7 +150,8 @@ const CreatePostScreen = () => {
           {/* image/video */}
           <div className={`${styles.img} ${styles.vid} ${styles.__09xfgc}`}>
             <div className={styles._sxvg_div} onClick={handleButtonClick}>
-              <svg
+            <MdPermMedia className={`${styles.post_icon_data} text-info`}/>
+              {/* <svg
                 className={styles.post_icon_data}
                 width={18}
                 height={18}
@@ -179,38 +184,31 @@ const CreatePostScreen = () => {
                   d="M9.26306 9.80415C9.65941 9.37179 10.341 9.37181 10.7374 9.80418L15.5 15H4.5L9.26306 9.80415Z"
                   fill="#01A8EA"
                 />
-              </svg>
+              </svg> */}
               <h6 className={styles.tooltip}>Image</h6>
             </div>
             <input
               type="file"
               multiple
               ref={fileInputRef}
-              name="image"
+              name="media"
               style={{ display: "none" }}
               onChange={(event) => {
 
-                formik.setFieldValue("images", Array.from(event.target.files));
-                const newImages = [];
+                formik.setFieldValue("media", Array.from(event.target.files));
+                const newMedia = [];
                 const files = event.target.files;
 
                 for (let i = 0; i < files.length; i++) {
                   const file = files[i];
-                  if (file.type.startsWith("image/")) {
-                    if (images.length >= 4) {
-                      alert("You can only upload up to 4 images.");
-                      return;
-                    }
-                    newImages.push(file);
-                  }
+                    newMedia.push(file);
                 }
-
-                setImages([...images, ...newImages]);
+                setMedia([...media, ...newMedia]);
               }}
             />
 
             {/* video uploader */}
-            <div className={styles._sxvg_div} onClick={handleVideoClick}>
+            {/* <div className={styles._sxvg_div} onClick={handleVideoClick}>
               <svg
                 className={styles.post_icon_data}
                 width={18}
@@ -235,8 +233,8 @@ const CreatePostScreen = () => {
                 />
               </svg>
               <h6 className={styles.tooltip}>Video</h6>
-            </div>
-            <input
+            </div> */}
+            {/* <input
               type="file"
               accept=".mp4"
               ref={VideoInputRef}
@@ -248,7 +246,7 @@ const CreatePostScreen = () => {
               handleVideoChange(event)
             
               }}
-            />
+            /> */}
 
             <div className={styles._sxvg_div} style={{ width: "min-content" }}>
               <div style={{ position: "relative", width: "min-content" }}>
@@ -405,7 +403,7 @@ const CreatePostScreen = () => {
               <button
                 className={styles.data_vh_post}
                 type="submit"
-                disabled={(formik.values.title == "" && formik.values.desc == "" && formik.values.images.length ==0 && formik.video == null)||(formik.values.title != "" && formik.values.desc == "" && formik.values.images.length ==0 && formik.video == null)}
+                disabled={(formik.values.title == "" && formik.values.desc == "" && formik.values.media.length ==0)||(formik.values.title != "" && formik.values.desc == "" && formik.values.media.length ==0)}
               >
                 Post
               </button>
