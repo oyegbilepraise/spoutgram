@@ -235,7 +235,7 @@ const LoginScreen = () => {
 
                   <span className={styles._0013_span}>
                     <span style={{ float: "right" }}>
-                      <Link href="/forgot-password">Forgot Password?</Link>
+                      <Link href="/forgot-password">Having trouble signing in?</Link>
                     </span>
                   </span>
                 </div>
