@@ -27,7 +27,7 @@ const ProfileScreen = () => {
 
   return (
     <ProfileLayout>
-      <>Hi</>
+      <ProfileOverview />
     </ProfileLayout>
   );
 };

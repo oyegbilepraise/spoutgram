@@ -4,6 +4,7 @@ import people1 from '../../images/people-1.jpeg'
 import Image from "next/image";
 import PostedAt from "../PostedAt/postedAt";
 import { useDispatch, useSelector } from "react-redux";
+import { followUser } from "@/redux/slices/postSlice/postSlice";
 
 const ProfileImage = ({post}) => {
   const { user, apiError } = useSelector((state) => state?.auth?.getUser);

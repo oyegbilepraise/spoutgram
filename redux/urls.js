@@ -7,7 +7,7 @@ export const URL = {
   verifyEmail: "/auth/verify-email",
   forgotPassword: "/auth/generate-forgotpassword-token",
   changePassword: "/auth/reset-password",
-  
+
   // Users
   createProfile: "/users/create-profile",
   verifyUsername: "/users/verify-username",
@@ -15,7 +15,7 @@ export const URL = {
   // Posts
   createPost: "/posts/create",
   getPosts: "/posts/all-posts",
-  likePost: "/posts/post/like"
+  likePost: "/posts/post/like",
   // Category
 
   // Comment
@@ -23,4 +23,7 @@ export const URL = {
   // Link
 
   // Profile.
+
+  // Follow 
+  follow: '/users/user/follow'
 };
