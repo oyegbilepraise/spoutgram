@@ -66,6 +66,30 @@ export const followUser = createAsyncThunk(
   }
 );
 
+export const dislikePostAction= createAsyncThunk(
+'post/dislike', 
+async (postId,{rejectWithValue})=>{
+const token = Cookies.get("token");
+try {
+  const res=await patchRequest({url:`${baseUrl}${URL.dislikePost}`,data:postId,token})
+  return res.data
+} catch (error) {
+  return rejectWithValue(error);
+}
+})
+
+// export const repostAction= createAsyncThunk(
+// 'post/repost', 
+// async (postId,{rejectWithValue})=>{
+// const token = Cookies.get("token");
+// try {
+//   const res=await patchRequest({url:`${baseUrl}${URL.likePost}`,data:postId,token})
+//   return res.data
+// } catch (error) {
+//   return rejectWithValue(error);
+// }
+// })
+
 const postSlice = createSlice({
   name: "post",
   initialState: {
@@ -83,7 +107,12 @@ const postSlice = createSlice({
       loading: false,
       apiError: null,
       reccentPost: {},
-    },
+      },
+    dislikedPost: { 
+      loading: false,
+      apiError: null,
+      reccentPost: {},
+      },
   },
   reducers: {},
   extraReducers: (builder) => {
@@ -117,22 +146,38 @@ const postSlice = createSlice({
       state.allPosts.apiError = action?.payload;
     });
 
-    //likePost
-    builder.addCase(likePostAction.pending, (state) => {
-      state.likedPost.loading = true;
-      state.likedPost.reccentPost = {};
-      state.likedPost.apiError = null;
-    })
-    builder.addCase(likePostAction.fulfilled, (state, action) => {
-      console.log(state, action);
-      state.createPost.loading = false
-      state.createPost.reccentPost = action?.payload
-    })
-    builder.addCase(likePostAction.rejected, (state, action) => {
-      state.createPost.loading = false
-      state.createPost.apiError = action?.payload
-    })
-  },
+//likePost
+builder.addCase(likePostAction.pending,(state)=>{
+state.likedPost.loading=true;
+state.likedPost.reccentPost={};
+state.likedPost.apiError=null;
+})
+builder.addCase(likePostAction.fulfilled,(state,action)=>{
+console.log(state,action);
+state.likedPost.loading=false
+state.likedPost.reccentPost=action?.payload
+})
+builder.addCase(likePostAction.rejected,(state,action)=>{
+state.likedPost.loading=false
+state.likedPost.apiError=action?.payload
+});
+
+//dislikePost
+builder.addCase(dislikePostAction.pending,(state)=>{
+state.dislikedPost.loading=true;
+state.dislikedPost.reccentPost={};
+state.dislikedPost.apiError=null;
+})
+builder.addCase(dislikePostAction.fulfilled,(state,action)=>{
+console.log(state,action);
+state.dislikedPost.loading=false
+state.dislikedPost.reccentPost=action?.payload
+})
+builder.addCase(dislikePostAction.rejected,(state,action)=>{
+state.dislikedPost.loading=false
+state.dislikedPost.apiError=action?.payload
+});
+      },
 });
 
 export default postSlice.reducer;
