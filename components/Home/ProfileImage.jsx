@@ -3,9 +3,21 @@ import img from '../../images/default-photo.svg'
 import people1 from '../../images/people-1.jpeg'
 import Image from "next/image";
 import PostedAt from "../PostedAt/postedAt";
+import { useDispatch, useSelector } from "react-redux";
 
 const ProfileImage = ({post}) => {
-// console.log(post)
+  const { user, apiError } = useSelector((state) => state?.auth?.getUser);
+  const dispatch = useDispatch();
+
+  const isPostOwner = post?.profile?._id === user?.data?.profile?.id
+
+  const handleFollow = async () => {
+    try {
+      dispatch(followUser(user?.data?.profile?.id))
+    } catch (error) {
+      console.log({ error });
+    }
+  }
   return (
     <div style={{ position: "relative" }}>
       <div className={styles.hover_main_image}>
@@ -143,13 +155,15 @@ const ProfileImage = ({post}) => {
             </span>
           </div>
           <div className={styles.button__for__hover__div}>
-            <div style={{ paddingRight: 5 }}>
-              <button
-                className={`${styles.fllw_hvr_btn} ${styles.follow__hvr}`}
-              >
-                Follow
-              </button>
-            </div>
+          {!isPostOwner && (
+              <div style={{ paddingRight: 5 }}>
+                <button
+                  className={`${styles.fllw_hvr_btn} ${styles.follow__hvr}`} onClick={handleFollow}
+                >
+                  Follow
+                </button>
+              </div>
+            )}
             <div style={{ paddingLeft: 5 }}>
               <button className={`${styles.fllw_hvr_btn} ${styles.msg__hvr}`}>
                 Message
