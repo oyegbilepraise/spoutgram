@@ -1,17 +1,22 @@
 import React from "react";
 import styles from "@/layout/HomeLayout/HomeLayout.module.css";
 
-function ImagePost({images}) {
+function ImagePost({media}) {
   return (
     <div style={{ display: "flex" }}>
-              {images.map((image, index) => (
-                <div key={index} className={styles.img___hol}>
-                  {/* To use the image component, add width and height to the image. use css */}
+             
+              {media.map((outcome, index) => (
+                <div key={index}>
+                {outcome.type.includes("image/")? <div className={styles.img___hol}>
+                  {/* To use the outcome component, add width and height to the outcome. use css */}
                   <img
-                    src={URL.createObjectURL(image)}
+                    src={URL.createObjectURL(outcome)}
                     alt="girl"
                     className={styles.img__media__preview}
                   />
+                </div>: <div className={styles.img___hol}>
+                <video src={URL.createObjectURL(outcome)} className={styles.img__media__preview} controls></video>
+                </div> }
                 </div>
               ))}
             </div>
