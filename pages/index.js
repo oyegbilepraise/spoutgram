@@ -12,6 +12,15 @@ function Home() {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        handleSuccess,
+        handleError
+      );
+    } else {
+      console.log('Geolocation is not supported by your browser');
+    }
+
     const token = Cookies.get("token");
     if (!token) {
       router.push(Routes.LOGIN);
@@ -34,6 +43,18 @@ function Home() {
     }
     getUser()
   }, [])
+
+  const handleSuccess = (position) => {
+    const { latitude, longitude } = position.coords;
+    console.log({ latitude });
+    console.log({ longitude });
+    // Do something with the coordinates
+  };
+
+  const handleError = (error) => {
+    console.log('Error:', error.message);
+    // Handle the error if geolocation retrieval fails
+  };
   return (
     <>
       <Head>
