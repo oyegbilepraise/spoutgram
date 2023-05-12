@@ -145,7 +145,7 @@ const LeftSidebar = () => {
         )}
 
         <span>
-          <Link href="/profile">
+          <Link href={`${user?.data?.username}`}>
             <div className={styles.__user__data__hold}>
               <span className={styles.user__initial}>AV</span>
             </div>
