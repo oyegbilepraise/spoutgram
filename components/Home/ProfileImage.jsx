@@ -24,7 +24,7 @@ const ProfileImage = ({ post }) => {
     <div style={{ position: "relative" }}>
       <div className={styles.hover_main_image}>
         <Image
-          src={post.user.profilePhoto == '' ? img : post.user.profilePhoto}
+          src={post?.user?.profilePhoto == '' ? img : post?.user?.profilePhoto}
           alt="profile-img"
           className={styles.data_content_pimg}
           width="22"
@@ -36,23 +36,23 @@ const ProfileImage = ({ post }) => {
           <div className={styles.flex_h_div}>
             <div>
               {/* {{#if this.owner_avatar_link}} */}
-              <Image src={post.user.profilePhoto == '' ? img : post.user.profilePhoto} alt="img" width="22" height="22" className={styles.image_h_c} />
+              <Image src={post?.user?.profilePhoto == '' ? img : post?.user?.profilePhoto} alt="img" width="22" height="22" className={styles.image_h_c} />
             </div>
             <div>
               <span className={`${styles.postt_name} ${styles._0022_nm_usr}`}>
-                {post.user.name}
+                {post?.user?.name}
               </span>
-              <span className={styles.postt_uname_hover}>@{post.user.username}</span>
+              <span className={styles.postt_uname_hover}>@{post?.user?.username}</span>
             </div>
             {/* {{!  }} */}
           </div>
           <div>
             <span className={styles.xmoric}>
               <span className={`${styles.xoxtrn} ${styles.hovr__f}`}>
-                {post.user.followers.length} <span className={styles.xyxxn}>{post.user.followers.length < 2 ? "Follower" : "Followers"}</span>
+                {post?.user?.followers.length} <span className={styles.xyxxn}>{post?.user?.followers.length < 2 ? "Follower" : "Followers"}</span>
               </span>
               <span className={`${styles.xoxtrn} ${styles.hovr__f}`}>
-                {post.user.following.length} <span className={styles.xyxxn}>Following</span>
+                {post?.user?.following.length} <span className={styles.xyxxn}>Following</span>
               </span>
             </span>
           </div>
@@ -180,14 +180,14 @@ const ProfileImage = ({ post }) => {
       <div>
         <div>
           <span className={styles._0022_nm_usr}>
-            {post.user.name}
-            <span>@{post.user.username}</span>
+            {post?.user?.name}
+            <span>@{post?.user?.username}</span>
           </span>
         </div>
         <div>
           <span className={styles._000_dt_data}>
             { }
-            <PostedAt time={post.createdAt} />
+            <PostedAt time={post?.createdAt} />
           </span>
         </div>
       </div>

@@ -194,6 +194,7 @@ const authSlice = createSlice({
   },
   reducers: {
     logout: (state) => {
+      Cookies.remove('token')
       state.getUser.user = {};
       state.loginUser.user = {}
     }
