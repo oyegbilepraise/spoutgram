@@ -12,14 +12,11 @@ const ProtectedRoute = ({ children }) => {
   const { user, apiError } = useSelector((state) => state?.auth?.getUser);
   const isAuthenticated = Cookies.get("token");
 
-  console.log({ user });
-
   useEffect(() => {
     //only make the call when there is a token and when dispatch is mounted
     if (isAuthenticated) {
       if (dispatch && dispatch !== null && dispatch !== undefined) {
         dispatch(getUserAction(isAuthenticated));
-        console.log("dispatched get User Action");
       }
     }
   }, [dispatch, isAuthenticated]);
@@ -33,7 +30,6 @@ const ProtectedRoute = ({ children }) => {
           router.pathname.includes(Routes.LOGIN) ||
           router.pathname.includes(Routes.SIGNUP)
         ) {
-          console.log("stay on login or signup from protected route");
           return;
         }
         // make forgot password and confirm change password unaccessible if user is logged in(redirect to home)
@@ -41,7 +37,6 @@ const ProtectedRoute = ({ children }) => {
           return;
           // push to login
         } else router.push(Routes.LOGIN);
-        console.log("push to login from protected route not token");
         return;
 
       // Handle api error

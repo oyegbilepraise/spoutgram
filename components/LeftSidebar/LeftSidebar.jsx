@@ -22,14 +22,9 @@ const LeftSidebar = () => {
   const [showMore, setShowMore] = useState(false);
   const [showLogout, setShowLogout] = useState(false);
   const dispatch = useDispatch();
-  // const [user, setUser] = useState('');
 
   const { user, apiError } = useSelector((state) => state?.auth?.getUser);
-  // setUserDetails(user)
-  // console.log({ user });
-
-  // const details = useSelector((state) => state)
-  // console.log({ details });
+  console.log({ user });
 
   const router = useRouter();
   // Define a function to determine if a link is active
@@ -158,7 +153,7 @@ const LeftSidebar = () => {
           </Link>
         </span>
         <span className={`${styles.span_data_sidebar} ${styles.norms__ava}`}>
-          {user?.data?.profile?.name}
+          {user?.data?.name}
           <span className={styles.normass__zz}> {user?.data?.email} </span>
         </span>
 
