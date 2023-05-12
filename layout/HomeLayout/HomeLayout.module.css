@@ -81,7 +81,7 @@
 }
 ._000middlebar {
     border: var(--border-all);
-    width: 600px;
+    width: 550px;
     padding-bottom: 120px;
     position: relative;
     border-top: none;

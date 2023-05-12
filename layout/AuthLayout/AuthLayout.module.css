@@ -148,7 +148,7 @@ input[type="text"].data_content_inpcode:not(:focus):not(:placeholder-shown) {
   background-color: var(--brand-color);
   /* background-color: #ff4976; */
   background-color: #655dbb;
-  /* background-color: #fb1a47; */
+  background-color: #3572ce;
   font-family: var(--global-medium);
   color: white;
   display: block;

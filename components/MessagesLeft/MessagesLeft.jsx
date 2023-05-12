@@ -5,12 +5,12 @@ import styles from '@/layout/HomeLayout/HomeLayout.module.css'
 const MessagesLeft = () => {
     return  (
         <>
-            <div className="left__mssg__div">
+            <div className={styles.left__mssg__div}>
                 {/* if no messages */}
                 <div className="nbyd meesg_byd" style={{ display: "none" }}>
                     <div>
                     <svg
-                        className="nbyd__svg"
+                        className={styles.nbyd__svg}
                         width={18}
                         height={18}
                         viewBox="0 0 18 18"
@@ -42,18 +42,18 @@ const MessagesLeft = () => {
                         />
                     </svg>
                     <div>
-                        <span className="nby_txt">No messages yet.</span>
+                        <span className={styles.nby_txt}>No messages yet.</span>
                     </div>
                     </div>
                 </div>
-                <div className="hold__conversations__container">
+                <div className={styles.hold__conversations__container}>
                     {/*  */}
                     <nav>
                     <div>
-                        <span className="prfon_back_img">
+                        <span className={styles.prfon_back_img}>
                         <img
                             src="../app__assets/images/default/default-photo.svg"
-                            className="img__cht__prfl"
+                            className={styles.img__cht__prfl}
                         />
                         </span>
                         <span className="not-home-nav-text messg_nv_txt_hdr">
@@ -61,13 +61,13 @@ const MessagesLeft = () => {
                         </span>
                     </div>
                     </nav>
-                    <div className="messages__main__chatbox">
+                    <div className={styles.messages__main__chatbox}>
                     {/*  */}
-                    <div className="users__chat__metadata">
+                    <div className={styles.users__chat__metadata}>
                         <div>
                         <img
                             src="../app__assets/images/default/default-photo.svg"
-                            className="profile__chat__usdata"
+                            className={styles.profile__chat__usdata}
                         />
                         </div>
                         <div>
@@ -75,9 +75,9 @@ const MessagesLeft = () => {
                             Ikenna Gabriel
                             <span>@username</span>
                         </span>
-                        <span className="joid__msnx">
+                        <span className={styles.joid__msnx}>
                             <svg
-                            className="xnprlf__icn"
+                            className={styles.xnprlf__icn}
                             width={20}
                             height={19}
                             viewBox="0 0 20 19"
@@ -152,55 +152,55 @@ const MessagesLeft = () => {
                                 stroke="#808080"
                             />
                             </svg>
-                            <span className="pfl__data">Joined January 2004</span>
+                            <span className={styles.pfl__data}>Joined January 2004</span>
                         </span>
                         </div>
                     </div>
-                    <span className="response__holder">
-                        <span className="response">Hi, How are you doing?</span>
-                        <span className="response__timestamp">11:20am</span>
+                    <span className={styles.response__holder}>
+                        <span className={styles.response}>Hi, How are you doing?</span>
+                        <span className={styles.response__timestamp}>11:20am</span>
                     </span>
-                    <span className="reply__holder">
-                        <span className="replycontainer">
+                    <span className={styles.reply__holder}>
+                        <span className={styles.replycontainer}>
                         <span>
-                            <span className="reply">I am good, whatsup?</span>
-                            <span className="reply__timestamp">11:20am</span>
+                            <span className={styles.reply}>I am good, whatsup?</span>
+                            <span className={styles.reply__timestamp}>11:20am</span>
                         </span>
                         </span>
                     </span>
-                    <span className="reply__holder">
-                        <span className="replycontainer">
+                    <span className={styles.reply__holder}>
+                        <span className={styles.replycontainer}>
                         <span>
-                            <span className="reply">
+                            <span className={styles.reply}>
                             I am fine. How do you see Spoutgram, it's lit, innit?
                             </span>
-                            <span className="reply__timestamp">11:20am</span>
+                            <span className={styles.reply__timestamp}>11:20am</span>
                         </span>
                         </span>
                     </span>
-                    <span className="response__holder">
-                        <span className="response">
+                    <span className={styles.response__holder}>
+                        <span className={styles.response}>
                         Like ....
                         <br />
                         <br />I love it!!!
                         </span>
-                        <span className="response__timestamp">11:20am</span>
+                        <span className={styles.response__timestamp}>11:20am</span>
                     </span>
-                    <span className="response__holder">
-                        <span className="response">
+                    <span className={styles.response__holder}>
+                        <span className={styles.response}>
                         Like ....
                         <br />
                         <br />I lit stuff!!!
                         </span>
-                        <span className="response__timestamp">11:20am</span>
+                        <span className={styles.response__timestamp}>11:20am</span>
                     </span>
                     {/*  */}
                     </div>
                     {/* message footer */}
-                    <footer className="footer__for__messgs">
+                    <footer className={styles.footer__for__messgs}>
                     <div>
                         <textarea
-                        className="message_chat_box"
+                        className={styles.message_chat_box}
                         placeholder="Send a message"
                         defaultValue={""}
                         />
