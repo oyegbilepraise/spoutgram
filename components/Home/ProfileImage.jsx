@@ -14,7 +14,7 @@ const ProfileImage = ({ post }) => {
 
   const handleFollow = async () => {
     try {
-      dispatch(followUser(user?.data?.profile?.id))
+      dispatch(followUser(post?.user?._id));
     } catch (error) {
       console.log({ error });
     }
