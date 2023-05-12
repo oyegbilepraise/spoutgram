@@ -21,33 +21,31 @@ function Home() {
       console.log('Geolocation is not supported by your browser');
     }
 
-    const token = Cookies.get("token");
-    if (!token) {
-      router.push(Routes.LOGIN);
-    }
-    const getUser = async () => {
-      try {
-        const url = `${baseUrl}/auth/welcome`
-        const { data } = await axios.get(url, { headers: { Authorization: `Bearer ${token}` } })
-        localStorage.setItem("authToken", JSON.stringify(data.data));
-        setUser(data.data);
-        if (data.data.profile === null) {
-          router.push(Routes.CREATE_PROFILE)
-        }
-      } catch (e) {
-        if (!e?.response?.data.status) {
-          Cookies.remove("token");
-          router.push(Routes.LOGIN)
-        }
-      }
-    }
-    getUser()
+    // const token = Cookies.get("token");
+    // if (!token) {
+    //   router.push(Routes.LOGIN);
+    // }
+    // const getUser = async () => {
+    //   try {
+    //     const url = `${baseUrl}/auth/welcome`
+    //     const { data } = await axios.get(url, { headers: { Authorization: `Bearer ${token}` } })
+    //     localStorage.setItem("authToken", JSON.stringify(data.data));
+    //     setUser(data.data);
+    //     if (data.data.profile === null) {
+    //       router.push(Routes.CREATE_PROFILE)
+    //     }
+    //   } catch (e) {
+    //     if (!e?.response?.data.status) {
+    //       Cookies.remove("token");
+    //       router.push(Routes.LOGIN)
+    //     }
+    //   }
+    // }
+    // getUser()
   }, [])
 
   const handleSuccess = (position) => {
     const { latitude, longitude } = position.coords;
-    console.log({ latitude });
-    console.log({ longitude });
     // Do something with the coordinates
   };
 
