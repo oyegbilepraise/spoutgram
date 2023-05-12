@@ -12,6 +12,8 @@ const ProtectedRoute = ({ children }) => {
   const { user, apiError } = useSelector((state) => state?.auth?.getUser);
   const isAuthenticated = Cookies.get("token");
 
+  console.log({ user });
+
   useEffect(() => {
     //only make the call when there is a token and when dispatch is mounted
     if (isAuthenticated) {

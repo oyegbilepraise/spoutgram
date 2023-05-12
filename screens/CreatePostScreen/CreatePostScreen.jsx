@@ -7,21 +7,15 @@ import ImagePost from "./ImagePost";
 import { useDispatch, useSelector } from "react-redux";
 import { createPostAction } from "@/redux/slices/postSlice/postSlice";
 import { useFormik } from "formik";
-import Cookies from "js-cookie";
-import { useRouter } from "next/router";
-import Routes from "@/utils/routes";
-import {MdPermMedia} from 'react-icons/md'
+import { MdPermMedia } from 'react-icons/md'
 
 const CreatePostScreen = () => {
   const [showPostSettings, setShowPostSettings] = useState(false);
   const dispatch = useDispatch();
-  const token = Cookies.get("token");
-  const router = useRouter();
+  const fileInputRef = useRef();
+  const VideoInputRef = useRef();
 
   const { reccentPost } = useSelector((state) => state?.post?.createPost);
-
-  const fileInputRef = useRef();
-
   const handleButtonClick = () => {
     fileInputRef.current.click();
   };
@@ -36,7 +30,6 @@ const CreatePostScreen = () => {
   // ----- video uploader starts here -----
   // const [video, setVideo] = useState(null);
   // console.log(video);
-  const VideoInputRef = useRef();
 
   const handleVideoChange = (event) => {
     const selectedFiles = event.target.files;
@@ -57,33 +50,27 @@ const CreatePostScreen = () => {
   const [media, setMedia] = useState([]);
 
   const formik = useFormik({
-    
-    initialValues: { title: "", desc: "", media: []},
+    initialValues: { title: "", desc: "", media: [] },
     onSubmit: async (values) => {
       const formData = new FormData();
-
       formData.append("title", values.title);
       formData.append("desc", values.desc);
-
-
       for (let i = 0; i < values.media.length; i++) {
-      if (values.media[i].type.startsWith("image/")) {
-        formData.append("image", values.media[i]);
-                    }
-      else if (values.media[i].type.startsWith("video/")) {
-        formData.append("video", values.media[i]);
-                    }
+        if (values.media[i].type.startsWith("image/")) {
+          formData.append("image", values.media[i]);
+        }
+        else if (values.media[i].type.startsWith("video/")) {
+          formData.append("video", values.media[i]);
+        }
       }
-
       dispatch(createPostAction(formData));
-      console.log(values);
       values.title = "";
       values.desc = "";
       values.media = [];
       setMedia([]);
       fileInputRef.current.value = "";
       VideoInputRef.current.value = "";
-      // router.push(Routes.HOME);
+      router.push(Routes.HOME);
     }
   });
   return (
@@ -144,47 +131,13 @@ const CreatePostScreen = () => {
             {/*image parent container */}
             <ImagePost media={media} />
             {/*video parent container */}
-            <VideoUploader video={video} />
+            {/* <VideoUploader video={video} /> */}
           </div>
 
           {/* image/video */}
           <div className={`${styles.img} ${styles.vid} ${styles.__09xfgc}`}>
             <div className={styles._sxvg_div} onClick={handleButtonClick}>
-            <MdPermMedia className={`${styles.post_icon_data} text-info`}/>
-              {/* <svg
-                className={styles.post_icon_data}
-                width={18}
-                height={18}
-                viewBox="0 0 18 18"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <circle
-                  cx={13}
-                  cy={5}
-                  r="1.2"
-                  stroke="#01A8EA"
-                  fill="#01A8EA"
-                  strokeWidth="1.6"
-                />
-                <rect
-                  x="0.8"
-                  y="0.8"
-                  width="16.4"
-                  height="16.4"
-                  rx="3.2"
-                  stroke="#01A8EA"
-                  strokeWidth="1.6"
-                />
-                <path
-                  d="M4.69661 12.0373C5.10088 11.5153 5.89107 11.5214 6.2872 12.0496L8.5 15H2.40186L4.69661 12.0373Z"
-                  fill="#01A8EA"
-                />
-                <path
-                  d="M9.26306 9.80415C9.65941 9.37179 10.341 9.37181 10.7374 9.80418L15.5 15H4.5L9.26306 9.80415Z"
-                  fill="#01A8EA"
-                />
-              </svg> */}
+              <MdPermMedia className={`${styles.post_icon_data} text-info`} />
               <h6 className={styles.tooltip}>Image</h6>
             </div>
             <input
@@ -201,53 +154,11 @@ const CreatePostScreen = () => {
 
                 for (let i = 0; i < files.length; i++) {
                   const file = files[i];
-                    newMedia.push(file);
+                  newMedia.push(file);
                 }
                 setMedia([...media, ...newMedia]);
               }}
             />
-
-            {/* video uploader */}
-            {/* <div className={styles._sxvg_div} onClick={handleVideoClick}>
-              <svg
-                className={styles.post_icon_data}
-                width={18}
-                height={18}
-                viewBox="0 0 18 18"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <rect
-                  x="0.8"
-                  y="0.8"
-                  width="16.4"
-                  height="16.4"
-                  rx="3.2"
-                  stroke="#01A8EA"
-                  strokeWidth="1.6"
-                />
-                <path
-                  stroke="#01A8EA"
-                  d="M12.1 9.1732L7.6 11.7713C7.46667 11.8483 7.3 11.752 7.3 11.5981L7.3 6.40192C7.3 6.24796 7.46667 6.15174 7.6 6.22872L12.1 8.82679C12.2333 8.90378 12.2333 9.09623 12.1 9.1732Z"
-                  strokeWidth="1.6"
-                />
-              </svg>
-              <h6 className={styles.tooltip}>Video</h6>
-            </div> */}
-            {/* <input
-              type="file"
-              accept=".mp4"
-              ref={VideoInputRef}
-              style={{ display: "none" }}
-              multiple
-              name="video"
-              onChange={(event) => {
-                formik.setFieldValue("video",event.target.files);
-              handleVideoChange(event)
-            
-              }}
-            /> */}
-
             <div className={styles._sxvg_div} style={{ width: "min-content" }}>
               <div style={{ position: "relative", width: "min-content" }}>
                 <svg
@@ -320,7 +231,7 @@ const CreatePostScreen = () => {
               {showPostSettings && (
                 <div
                   className={styles.options__postsettns}
-                  // style={{ display: "none" }}
+                // style={{ display: "none" }}
                 >
                   <div>
                     <div>
@@ -403,7 +314,7 @@ const CreatePostScreen = () => {
               <button
                 className={styles.data_vh_post}
                 type="submit"
-                disabled={(formik.values.title == "" && formik.values.desc == "" && formik.values.media.length ==0)||(formik.values.title != "" && formik.values.desc == "" && formik.values.media.length ==0)}
+                disabled={(formik.values.title == "" && formik.values.desc == "" && formik.values.media.length == 0) || (formik.values.title != "" && formik.values.desc == "" && formik.values.media.length == 0)}
               >
                 Post
               </button>

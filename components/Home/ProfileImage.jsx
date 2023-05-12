@@ -6,11 +6,12 @@ import PostedAt from "../PostedAt/postedAt";
 import { useDispatch, useSelector } from "react-redux";
 import { followUser } from "@/redux/slices/postSlice/postSlice";
 
-const ProfileImage = ({post}) => {
+const ProfileImage = ({ post }) => {
   const { user, apiError } = useSelector((state) => state?.auth?.getUser);
   const dispatch = useDispatch();
+  console.log({ post });
 
-  const isPostOwner = post?.profile?._id === user?.data?.profile?.id
+  const isPostOwner = post?.user?._id === user?.data?.profile?.id
 
   const handleFollow = async () => {
     try {
@@ -23,7 +24,7 @@ const ProfileImage = ({post}) => {
     <div style={{ position: "relative" }}>
       <div className={styles.hover_main_image}>
         <Image
-          src={post.profile.profilePhoto==''?img:post.profile.profilePhoto}
+          src={post?.user?.profilePhoto == '' ? img : post?.user?.profilePhoto}
           alt="profile-img"
           className={styles.data_content_pimg}
           width="22"
@@ -35,23 +36,23 @@ const ProfileImage = ({post}) => {
           <div className={styles.flex_h_div}>
             <div>
               {/* {{#if this.owner_avatar_link}} */}
-              <Image src={post.profile.profilePhoto==''?img:post.profile.profilePhoto} alt="img" width="22" height="22" className={styles.image_h_c} />
+              <Image src={post?.user?.profilePhoto == '' ? img : post?.user?.profilePhoto} alt="img" width="22" height="22" className={styles.image_h_c} />
             </div>
             <div>
               <span className={`${styles.postt_name} ${styles._0022_nm_usr}`}>
-                {post.profile.name}
+                {post?.user?.name}
               </span>
-              <span className={styles.postt_uname_hover}>@{post.profile.username}</span>
+              <span className={styles.postt_uname_hover}>@{post?.user?.username}</span>
             </div>
             {/* {{!  }} */}
           </div>
           <div>
             <span className={styles.xmoric}>
               <span className={`${styles.xoxtrn} ${styles.hovr__f}`}>
-                {post.user.followers.length} <span className={styles.xyxxn}>{post.user.followers.length<2?"Follower":"Followers"}</span>
+                {post?.user?.followers.length} <span className={styles.xyxxn}>{post?.user?.followers.length < 2 ? "Follower" : "Followers"}</span>
               </span>
               <span className={`${styles.xoxtrn} ${styles.hovr__f}`}>
-                {post.user.following.length} <span className={styles.xyxxn}>Following</span>
+                {post?.user?.following.length} <span className={styles.xyxxn}>Following</span>
               </span>
             </span>
           </div>
@@ -156,7 +157,7 @@ const ProfileImage = ({post}) => {
             </span>
           </div>
           <div className={styles.button__for__hover__div}>
-          {!isPostOwner && (
+            {!isPostOwner && (
               <div style={{ paddingRight: 5 }}>
                 <button
                   className={`${styles.fllw_hvr_btn} ${styles.follow__hvr}`} onClick={handleFollow}
@@ -173,24 +174,24 @@ const ProfileImage = ({post}) => {
           </div>
         </div>
         {/* hovercard */}
-        
+
       </div>
-     
+
       <div>
         <div>
           <span className={styles._0022_nm_usr}>
-           {post.profile.name}
-            <span>@{post.profile.username}</span>
+            {post?.user?.name}
+            <span>@{post?.user?.username}</span>
           </span>
         </div>
         <div>
           <span className={styles._000_dt_data}>
-            {}
-            <PostedAt time={post.createdAt}/> 
+            { }
+            <PostedAt time={post?.createdAt} />
           </span>
         </div>
       </div>
-     
+
       <div style={{ position: "absolute", right: 0, top: "-3px" }}>
         <svg
           width={15}
