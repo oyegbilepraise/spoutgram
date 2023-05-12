@@ -9,7 +9,6 @@ import { followUser } from "@/redux/slices/postSlice/postSlice";
 const ProfileImage = ({ post }) => {
   const { user, apiError } = useSelector((state) => state?.auth?.getUser);
   const dispatch = useDispatch();
-  console.log({ post: post.user, user: user.data });
 
   const isPostOwner = post?.user?._id === user?.data?._id
 
