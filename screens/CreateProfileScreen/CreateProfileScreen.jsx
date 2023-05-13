@@ -253,6 +253,26 @@ const CreateProfileScreen = () => {
 
 
 
+
+  //this is the api code to get the user's location...
+  useEffect(() => {
+    const fetchLocation = async () => {
+      try {
+        const response = await axios.get('https://api.ipstack.com/check?access_key=[I_will_add_my_api_keys_here_praise_thanks]');
+        //this is free, but I want to go for the paid plan so I will update it here.
+        const { country_name, city, latitude, longitude } = response.data;
+        const locationData = { country: country_name, city, latitude, longitude };
+        Cookies.set('userLocation', JSON.stringify(locationData));
+        console.log('Location data stored:', locationData);
+      } catch (error) {
+        console.error('Failed to fetch location:', error);
+      }
+    };
+    fetchLocation();
+  }, []);
+
+
+
   return (
     <AuthLayout>
       <main className={styles.__main} role="main">

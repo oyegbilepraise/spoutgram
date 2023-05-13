@@ -79,7 +79,7 @@ input:autofill {
 }
 button:disabled, 
 button[disabled]{
-  background-color: #86ddff;
+  background-color: #a7cafd;
   color: #ffffff;
   cursor: default;
   transition: 0.6s all;

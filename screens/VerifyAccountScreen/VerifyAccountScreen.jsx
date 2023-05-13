@@ -11,7 +11,7 @@ import {
   EnvelopeSvg,
   ErrorSvg,
   ResendLdSvg,
-  CautionSvg,
+  CautionSvg, BtnloadSvg,
 } from "../../components";
 import Link from "next/link";
 import * as Yup from "yup";
@@ -72,9 +72,6 @@ const VerifyAccountScreen = () => {
         <form onSubmit={formik.handleSubmit}>
           <div className={styles._xparnts}>
             <div className={styles._xparnts_cvr}>
-              <span className={styles.data_pwd_lock}>
-                <EnvelopeSvg />
-              </span>
               <span className={styles.vdf_data}>Verify your account</span>
 
               <span className={styles._000xsry}>
@@ -84,7 +81,8 @@ const VerifyAccountScreen = () => {
 
               {/* show this notify if the code was resent  */}
               {verifyUserEmail.codeSent && (
-                <div style={{ paddingTop: "5px" }}>
+                <div className={styles.byyy__err}>
+                <div style={{ paddingTop: "0px" }}>
                   <span className={styles.error__msg__xyx}>
                     <svg
                       className={styles.error__inval}
@@ -100,10 +98,12 @@ const VerifyAccountScreen = () => {
                     </span>
                   </span>
                 </div>
+                </div>
               )}
 
               {/* show this error if the code is invalid  */}
               {verifyCode.appError && (
+                <div className={styles.byyy__err}>
                 <div style={{ paddingTop: "5px" }}>
                   <span className={styles.error__msg__xyx}>
                     <CautionSvg />
@@ -112,7 +112,30 @@ const VerifyAccountScreen = () => {
                     </span>
                   </span>
                 </div>
+                </div>
               )}
+
+              {/* VERIFICATION CODE RESENT SUCCESSFUL  */}
+              {/* {verifyCode.appError && ( */}
+                {/* <div className={styles.byyy__err}>
+                <div style={{ paddingTop: "5px" }}>
+                  <span className={styles.error__msg__xyx}>
+                    <svg
+                      className={styles.error__inval}
+                      width={17}
+                      height={17}
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      >
+                      <path d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM11.0026 16L18.0737 8.92893L16.6595 7.51472L11.0026 13.1716L8.17421 10.3431L6.75999 11.7574L11.0026 16Z"></path>
+                    </svg>
+                    <span className={styles.error__txt__xyx}>
+                      Verification code resent!
+                    </span>
+                  </span>
+                </div>
+                </div> */}
+              {/* )} */}
 
               <div className={styles.xpnd_inpts} style={{ paddingTop: "14px" }}>
                 <div style={{ position: "relative" }}>
@@ -130,6 +153,8 @@ const VerifyAccountScreen = () => {
                     pattern="[0-9]{1,6}"
                     className={`${styles.data_content_pass} ${styles.data_content_inpcode}`}
                   />
+
+{/* <BtnloadSvg /> */} <ResendLdSvg />
 
                   {/* error svg */}
                   {formik.touched.code && formik.errors.code ? (
@@ -154,10 +179,11 @@ const VerifyAccountScreen = () => {
               <div>
 
               {loading ? (
+                //loading btn
                   <button
                   className={`${styles.pass_data_bd} ${styles.new__change__btn}`}
                     type="submit"
-                    style={{ position: "relative" }}
+                    style={{ position: "relative", color: "transparent", transition: "0.1s all" }} 
                     disabled
                   >
                     <>
@@ -166,19 +192,11 @@ const VerifyAccountScreen = () => {
                     Verify
                   </button>
                 ) : (
-                  <button className={`${styles.pass_data_bd} ${styles.new__change__btn}`} type="submit">
+                  //main button
+                  <button className={`${styles.pass_data_bd} ${styles.new__change__btn}`} type="submit"  disabled={!formik.isValid || !formik.dirty}>
                     Verify
                   </button>
                 )}
-
-{/* {loading && <p>creating profile ...</p>} */}
-
-                {/* <button
-                  className={`${styles.pass_data_bd} ${styles.new__change__btn}`}
-                  type="submit"
-                > 
-                  Verify
-                </button> */}
               </div>
               <div>
                 <span class={styles.sracde}>
@@ -205,27 +223,28 @@ const VerifyAccountScreen = () => {
                 )}
 
                 {verifyCode?.user?.success && (
-                  <span className={styles._00rsnd}>
-                    code verified
-                    <svg
-                      className={styles.yxxz}
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="#01A8EA"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <polyline points="20 6 9 17 4 12"></polyline>
-                    </svg>
-                  </span>
+                  <div className={styles.byyy__err}>
+                  <div style={{ paddingTop: "0px" }}>
+                    <span className={styles.error__msg__xyx}>
+                      <svg
+                        className={styles.error__inval}
+                        width={17}
+                        height={17}
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                      >
+                        <path d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM11.0026 16L18.0737 8.92893L16.6595 7.51472L11.0026 13.1716L8.17421 10.3431L6.75999 11.7574L11.0026 16Z"></path>
+                      </svg>
+                      <span className={styles.error__txt__xyx}>
+                        Verification Successful!
+                      </span>
+                    </span>
+                  </div>
+                  </div>
                 )}
               </div>
               <span className={styles.ouplskk}>
-                <Link href="/signup">Back to Sign up</Link>
+                {/* <Link href="/signup">Back to Sign up</Link> */}
               </span>
             </div>
           </div>
