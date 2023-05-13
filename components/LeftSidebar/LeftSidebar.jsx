@@ -24,7 +24,6 @@ const LeftSidebar = () => {
   const dispatch = useDispatch();
 
   const { user, apiError } = useSelector((state) => state?.auth?.getUser);
-  console.log({ user });
 
   const router = useRouter();
   // Define a function to determine if a link is active
