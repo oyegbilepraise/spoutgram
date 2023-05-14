@@ -15,11 +15,13 @@ export const URL = {
   // Posts
 createPost:"/posts/create",
 getPosts:"/posts/all-posts",
+getSinglePost:"/posts/post/",
 likePost:"/posts/post/like",
 dislikePost:"/posts/post/unlike",
   // Category
 
   // Comment
+createComment:"/comments/create",
 
   // Link
 

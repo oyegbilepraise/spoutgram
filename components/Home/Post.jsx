@@ -8,6 +8,7 @@ import { dislikePostAction, getAllPostsAction, likePostAction } from "@/redux/sl
 import Cookies from "js-cookie";
 import { AiOutlineLike, AiOutlineDislike } from 'react-icons/ai'
 import { BiEnvelope, BiRepost } from 'react-icons/bi'
+import Link from "next/link";
 
 const Post = () => {
   const dispatch = useDispatch()
@@ -88,6 +89,7 @@ const Post = () => {
                     <span className={styles._00mn_spn_cnt}>{post.dislikes.length}</span>
                   </span>
                   <span className={styles._00mn_span}>
+                   <Link href={`/post/${post._id}`}>
                     <span>
                       <BiEnvelope size={20} className={`${styles.green} ${styles.x_icn_ftr} ${styles.repostme}`} />
                       {/* <svg
@@ -102,6 +104,7 @@ const Post = () => {
                       <path d="M8 20v1.932a.5.5 0 0 1-.82.385l-4.12-3.433A.5.5 0 0 1 3.382 18H18a2 2 0 0 0 2-2V8h2v8a4 4 0 0 1-4 4H8zm8-16V2.068a.5.5 0 0 1 .82-.385l4.12 3.433a.5.5 0 0 1-.321.884H6a2 2 0 0 0-2 2v8H2V8a4 4 0 0 1 4-4h10z" />
                     </svg> */}
                     </span>
+                   </Link>
                     <span className={styles._00mn_spn_cnt}>{post.repost.length}</span>
                   </span>
                   <span className={styles._00mn_span}>
