@@ -1,11 +1,9 @@
 import { HomeLayout } from "@/layout";
 import Image from "next/image";
 import img from "../../images/default-photo.svg";
-import imgOne from "../../images/me.jpeg";
 import styles from "@/layout/HomeLayout/HomeLayout.module.css";
 import Post from "@/components/Home/Post";
 import { useEffect, useState } from "react";
-
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import Cookies from "js-cookie";
@@ -13,7 +11,6 @@ import { getAllPostsAction } from "@/redux/slices/postSlice/postSlice";
 
 const HomeScreen = (props) => {
   const { user } = props
-  const [showPostSettings, setShowPostSettings] = useState(false); 
 
   const dispatch = useDispatch()
   const token = Cookies.get("token");
