@@ -2,7 +2,6 @@ import styles from "@/layout/HomeLayout/HomeLayout.module.css";
 import ProfileImage from "./ProfileImage";
 import HomeVideo from "./HomeVideo";
 import ImageCarousels from "./ImageCarousels";
-import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { dislikePostAction, getAllPostsAction, likePostAction } from "@/redux/slices/postSlice/postSlice";
 import Cookies from "js-cookie";
