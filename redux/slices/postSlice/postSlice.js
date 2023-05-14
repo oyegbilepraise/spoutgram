@@ -153,7 +153,6 @@ const postSlice = createSlice({
       state.likedPost.apiError = null;
     })
     builder.addCase(likePostAction.fulfilled, (state, action) => {
-      console.log(state, action);
       state.likedPost.loading = false
       state.likedPost.reccentPost = action?.payload
     })
