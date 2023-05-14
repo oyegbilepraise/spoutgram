@@ -121,56 +121,31 @@ const SignUpScreen = () => {
         <form onSubmit={formik.handleSubmit}>
           <div className={styles._xparnts}>
             <div className={styles._xparnts_cvr}>
-              <span className={styles.vdf_data}>Sign up for Spoutgram</span>
-
-              <div className={styles._xpnds_oauths_div}>
-                <div>
-                  {/* continue with google */}
-                  <button type="button"
-                    className={`${styles.oauths_} ${styles.ggl_oauth}`}
-                    onClick={() => signIn()}
-                  >
-                    <GoogleSvg />
-                    Continue With Google
-                  </button>
-                </div>
-
-                <div>
-                  {/* continue with twitter */}
-                  <button type="button"
-                    className={`${styles.oauths_} ${styles.twtr_oauth}`}
-                    onClick={() => signOut()}
-                  >
-                    <TwitterSvg />
-                    Continue With Twitter
-                  </button>
-                </div>
-              </div>
-
-              <div className={styles._oxr}>
-                <div></div>
-                <span className={styles.or}>OR</span>
-              </div>
+              <span className={styles.vdf_data}>Sign up</span>
 
               {/* this is the error msg from the API : User already registered. Please login. */}
               {storedData?.appError && (
+                <div className={styles.byyy__err}>
                 <span className={styles.error__msg__xyx}>
                   <CautionSvg />
                   <span className={styles.error__txt__xyx}>
                     {storedData?.appError}
                   </span>
                 </span>
+                </div>
               )}
               {storedData?.register?.message && (
+                <div className={styles.byyy__err}>
                 <span className={styles.error__msg__xyx}>
                   <CautionSvg />
                   <span className={styles.error__txt__xyx}>
                     {storedData?.register?.message}
                   </span>
                 </span>
+                </div>
               )}
 
-              <div className={styles.xpnd_inpts} style={{ paddingTop: "14px" }}>
+              <div className={styles.xpnd_inpts} style={{ paddingTop: "0px" }}>
                 <div style={{ position: "relative" }}>
                   {/* email input */}
                   <input
@@ -287,7 +262,7 @@ const SignUpScreen = () => {
                   <button
                     className={styles.pass_data_bd}
                     type="submit"
-                    style={{ position: "relative" }}
+                    style={{ position: "relative", color: "transparent", transition: "0.1s all" }} 
                     disabled
                   >
                     <>
@@ -296,7 +271,7 @@ const SignUpScreen = () => {
                     Sign up
                   </button>
                 ) : (
-                  <button className={styles.pass_data_bd} type="submit">
+                  <button className={styles.pass_data_bd} type="submit" disabled={!formik.isValid || !formik.dirty}>
                     Sign up
                   </button>
                 )}
@@ -307,16 +282,46 @@ const SignUpScreen = () => {
                 <a
                   href="/terms-of-service"
                   target="_blank"
-                  style={{ color: "#54cfff" }}
+                  style={{ color: "#4d87de" }}
                 >
                   Terms of Use
                 </a>{" "}
                 &{" "}
-                <Link href="/cookie-policy" style={{ color: "#54cfff" }}>
+                <Link href="/cookie-policy" style={{ color: "#4d87de" }}>
                   Cookie Policy
                 </Link>
                 .
               </span>
+
+              <div className={styles._oxr}>
+                <div></div>
+                <span className={styles.or}>or continue with</span>
+              </div>
+
+              <div className={styles._xpnds_oauths_div}>
+                <div>
+                  {/* continue with google */}
+                  <button type="button"
+                    className={`${styles.oauths_} ${styles.ggl_oauth}`}
+                    onClick={() => signIn()}
+                  >
+                    <GoogleSvg />
+                    Google
+                  </button>
+                </div>
+
+                <div>
+                  {/* continue with twitter */}
+                  <button type="button"
+                    className={`${styles.oauths_} ${styles.twtr_oauth}`}
+                    onClick={() => signOut()}
+                  >
+                    <TwitterSvg />
+                    Twitter
+                  </button>
+                </div>
+              </div>
+
               <span className={styles.ouplskk}>
                 <Link href="/login">Sign in to Spoutgram</Link>
               </span>

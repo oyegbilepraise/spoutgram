@@ -1,4 +1,6 @@
 import styles from "@/layout/HomeLayout/HomeLayout.module.css";
+import imgOne from "../../images/me.jpeg";
+import Image from "next/image";
 
 const Social = () => {
   return (
@@ -7,8 +9,92 @@ const Social = () => {
       data-tag="social-notification"
       className={styles.npd_body_content}
     >
+
+      {/* follow */}
+      <div className={`${styles.npd_toast} ${styles.npd_f_notif}`}>
+        <div className={styles.hold_them}>
+          <div>
+            <Image src={imgOne} className={styles.npd_toast_png} />
+          </div>
+          <div className={`${styles.float_nicn} ${styles.fncn}`}>
+            {/* <img
+              src="/images/utility icon/followed.svg"
+              className={styles.npd_notf_icnxxx}
+            /> */}
+          </div>
+        </div>
+        <div>
+          <div>
+            <h6 className={styles.notf_title}>
+              You have a new follower!
+            </h6>
+          </div>
+          <div>
+            <a href="">@username</a> now follows you.
+          </div>
+        </div>
+      </div>
+
+      {/* liked */}
+      <div className={`${styles.npd_toast} ${styles.active_notification}`}>
+        <div className={styles.hold_them}>
+          <div>
+            <Image
+              src={imgOne}
+              className={styles.npd_toast_png}
+            />
+          </div>
+          <div className={styles.float_nicn}>
+            {/* <img src="/images/utility icon/favorite.svg" className={styles.notf_title} /> */}
+          </div>
+        </div>
+        <div>
+          <div>
+            <h6 className={styles.notf_title}>
+              <span>Username</span>&nbsp;Liked your post!
+            </h6>
+          </div>
+          <div>
+            <h6 className={styles.notf_contnt}>
+              "This is the way it is going to work from now trust me, we are going
+              to make this work for real"
+            </h6>
+          </div>
+        </div>
+      </div>
+
+      {/* repost */}
+      <div className={styles.npd_toast}>
+        <div className={styles.hold_them}>
+          <div>
+            <Image
+              src={imgOne}
+              className={styles.npd_toast_png}
+            />
+          </div>
+          <div className={styles.float_nicn}>
+            {/* <img src="/images/utility icon/repost.svg" className={styles.npd_notf_icn} /> */}
+          </div>
+        </div>
+        <div>
+          <div>
+            <h6 className={styles.notf_title}>
+              <span>Username</span>&nbsp;Reposted your post!
+            </h6>
+          </div>
+          <div>
+            <h6 className={styles.notf_contnt}>
+              "This is the way it is going to work from now trust me, we are going to
+              make this work for real"
+            </h6>
+          </div>
+        </div>
+      </div>
+
+
+
       {/* no social notification */}
-      <div className={styles.nbyd}>
+      <div className={styles.nbyd} style={{display:"none"}}>
         <div>
           <svg
             className={styles.nbyd__svg}

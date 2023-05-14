@@ -3,18 +3,25 @@ import Image from 'next/image'
 import img from '../../images/default-photo.svg'
 import ProfileOverview from "@/components/ViewProfile/ProfileOverview";
 import Gallery from "@/components/ViewProfile/Gallery";
-import Post from "@/components/ViewProfile/Post";
 import PodCast from "@/components/ViewProfile/PodCast";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import styles from '@/layout/HomeLayout/HomeLayout.module.css'
+import { baseUrl } from '@/redux/baseUrl';
+import { useSelector } from 'react-redux';
+import axios from 'axios';
+import Cookies from 'js-cookie';
+import Post from '@/components/Home/Post';
 
 const MainProfileScreen = () => {
-
   const router = useRouter();
   const [currentTab, setCurrentTab] = useState("/");
   const { userId } = router.query;
+  const { user, apiError } = useSelector((state) => state?.auth?.getUser);
+  const [post, setPost] = useState();
+  const [loading, setLoading] = useState(true)
+
 
   //   get the current tab
   useEffect(() => {
@@ -26,6 +33,28 @@ const MainProfileScreen = () => {
     }
   }, [router.query.tab]);
 
+  useEffect(() => {
+    getUsersPost()
+    // first
+
+    // return () => {
+    //   second
+    // }
+  }, [])
+
+
+  const getUsersPost = async () => {
+    console.log({ user });
+    const token = Cookies.get('token')
+    try {
+      const { data } = await axios.get(`${baseUrl}/users/posts`, { headers: { Authorization: 'Bearer ' + token } })
+      setPost(data.data)
+      setLoading(false)
+    } catch (error) {
+      console.log({ error });
+    }
+  }
+
   return (
     <HomeLayout>
       {/* div.timeline -> middle */}
@@ -36,17 +65,11 @@ const MainProfileScreen = () => {
             <span class={styles.icon_back}>
               <svg class={styles._00_history__back} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgb(90, 90, 90)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H6M12 5l-7 7 7 7" /></svg>
             </span>
-            {/* <span class={styles.not_home_nav_text}>Bookmarks</span>
-                    <span class={styles.data_count_bookm}>
-                        0 post
-                    </span> */}
             <span style={{ color: "transparent" }}>hidden</span>
           </div>
         </nav>
 
         <ProfileOverview />
-
-
         {/* Tabs  */}
         <div
           className={`${styles.column_nav_menu_profile} ${styles.profile_nav__forPrf} ${styles.another__class}`}
@@ -92,11 +115,11 @@ const MainProfileScreen = () => {
         </div>
 
         {/* post container */}
-        {currentTab === "/" && <Post />}
+        {currentTab === "/" && <Post posts={post} loading={loading} />}
         {/* post container */}
         {/* gallery container */}
         {/* Media */}
-        {currentTab === "gallery" && <Gallery />}
+        {currentTab === "gallery" && <Gallery posts={post} loading={loading} />}
         {/* Media */}
         {/* gallery container */}
         {/* podcast */}
