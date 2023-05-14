@@ -3,35 +3,23 @@ import styles from '@/layout/HomeLayout/HomeLayout.module.css'
 import imgOne from "../../images/me.jpeg";
 import Image from "next/image";
 import { useState } from "react";
-import ProfileImage from "../../components/Home/ProfileImage";
-import HomeVideo from "../../components/Home/HomeVideo";
-import ImageCarousels from "../../components/Home/ImageCarousels.js";
 
 const PostStatusScreen = () => {
-
   const [isOpen, setIsOpen] = useState(false);
-
   const openModal = () => {
     setIsOpen(true);
   };
-
   const closeModal = () => {
     setIsOpen(false);
   };
-
-
   // Function to handle image upload
   const [image, setImage] = useState(null);
-
-
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
     const reader = new FileReader();
-
     reader.onload = (e) => {
       setImage(e.target.result);
     };
-
     if (file) {
       reader.readAsDataURL(file);
     }
@@ -46,14 +34,13 @@ const PostStatusScreen = () => {
     <HomeLayout>
       {/* div.timeline -> middle */}
       <div class={`${styles.timeline} ${styles._000middlebar}`}>
-        <nav style={{paddingLeft: "0px"}} className={styles.___main_nav}>
-          <div> 
-            <span style={{paddingLeft: "18px"}} class={styles.icon_back}>
-              <svg style={{marginLeft: "18px"}} class={styles._00_history__back} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgb(90, 90, 90)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H6M12 5l-7 7 7 7"/></svg>
+        <nav style={{ paddingLeft: "0px" }} className={styles.___main_nav}>
+          <div>
+            <span style={{ paddingLeft: "18px" }} class={styles.icon_back}>
+              <svg style={{ marginLeft: "18px" }} class={styles._00_history__back} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgb(90, 90, 90)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H6M12 5l-7 7 7 7" /></svg>
             </span>
-            <span 
-            // style={{textAlign: "center", width: "max-content",marginTop: "0px", margin: "auto", paddingLeft: "0px", paddingTop: "0px", border: "1px solid black", display: "block"}} 
-            class={styles.not_home_nav_text}>Post</span>
+            <span
+              class={styles.not_home_nav_text}>Post</span>
             <span>
               {/*  */}
             </span>
@@ -61,7 +48,7 @@ const PostStatusScreen = () => {
         </nav>
 
         {/* post preview */}
-        <div  className={`${styles.div} ${styles.data_content}`}>
+        <div className={`${styles.div} ${styles.data_content}`}>
 
           <div style={{ position: "relative" }}>
             <div className={styles.hover_main_image}>
@@ -72,13 +59,13 @@ const PostStatusScreen = () => {
                 width="22"
                 height="22"
               />
-              
+
             </div>
-          
+
             <div>
               <div>
                 <span className={`${styles._0022_nm_usr} ${styles._0022_nm_usr__pp}`}>
-                Penuel John
+                  Penuel John
                   <span>@penuel__king</span>
                 </span>
               </div>
@@ -88,7 +75,7 @@ const PostStatusScreen = () => {
                 </span>
               </div>
             </div>
-          
+
             <div style={{ position: "absolute", right: 0, top: "-3px" }}>
               <svg
                 width={15}
@@ -128,7 +115,7 @@ const PostStatusScreen = () => {
 
           <div
             className={`${styles.data_content_all} ${styles._00dca} ${styles.data_no_content}`}
-            >
+          >
             <div>
               <span className={`${styles._ttl_top} ${styles._ttl_top__pp}`}>This is the way</span>
             </div>
@@ -136,7 +123,7 @@ const PostStatusScreen = () => {
             <div>
               <span className={`${styles._ttl_contxt} ${styles._ttl_contxt__pp}`}>This is the description</span>
             </div>
-            
+
             <div className={styles._00ftr_pst}>
               <span className={styles._00mn_span}>
                 <span>
@@ -241,7 +228,7 @@ const PostStatusScreen = () => {
                 className={styles.disbld__inp__post}
                 placeholder="Reply to this post"
               />
-              <button style={{textAlign: "center", paddingLeft: "0px", paddingRight: "0px", width: "70px"}} className={styles.inp__create__btn} disabled>
+              <button style={{ textAlign: "center", paddingLeft: "0px", paddingRight: "0px", width: "70px" }} className={styles.inp__create__btn} disabled>
                 Post
               </button>
             </div>
@@ -255,27 +242,27 @@ const PostStatusScreen = () => {
           {/*  */}
           <div>
             <div className={styles.hover_main_image}>
-              <Image src={imgOne} className={styles.image_h_c}/>
+              <Image src={imgOne} className={styles.image_h_c} />
             </div>
             <div>
               <div>
                 <span className={styles._0022_nm_usr}>
-                Penuel John
+                  Penuel John
                   <span>@penuel__king</span>
-                  <span style={{display: "inline", marginLeft: "12px", fontSize: "14px"}} className={styles._000_dt_data}>17h</span>
+                  <span style={{ display: "inline", marginLeft: "12px", fontSize: "14px" }} className={styles._000_dt_data}>17h</span>
                 </span>
               </div>
               <div>
-                <span className={styles._000_dt_data}>Replying <span style={{color: "var(--brand-color)"}}>@penuel__king</span></span>
+                <span className={styles._000_dt_data}>Replying <span style={{ color: "var(--brand-color)" }}>@penuel__king</span></span>
               </div>
             </div>
           </div>
           <div>
             <span className={styles._ttl_contxt}>why are you acting weird, this is a very dumb take...lmao.
-            <br /><br />That's my 2 cents.</span>
+              <br /><br />That's my 2 cents.</span>
           </div>
           <div className={styles._00ftr_pst}>
-            <span className={styles._00mn_span} onClick={()=>dispatch(likePostAction({postId:post._id}))}>
+            <span className={styles._00mn_span} onClick={() => dispatch(likePostAction({ postId: post._id }))}>
               <span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -366,46 +353,46 @@ const PostStatusScreen = () => {
 
         {/* comment modal */}
         {isOpen && (
-        <form>
-          <div className={styles.xxyymdl__asssl}>
-            <div className={styles.comment__xxuxxuyy}>
-              <div>
-                <span style={{fontFamily: "var(--global-regular)", fontSize: "15px", marginBottom: "13px", display: "block"}}>Replying to <span style={{color: "var(--brand-color)"}}>@penuel__king</span></span>
-              </div>
-              <div style={{display: "flex"}}>
+          <form>
+            <div className={styles.xxyymdl__asssl}>
+              <div className={styles.comment__xxuxxuyy}>
                 <div>
-                  <Image src={imgOne} alt="image_profile_img" className={styles.impg__cpr__nal} />
+                  <span style={{ fontFamily: "var(--global-regular)", fontSize: "15px", marginBottom: "13px", display: "block" }}>Replying to <span style={{ color: "var(--brand-color)" }}>@penuel__king</span></span>
                 </div>
-                <div>
-                  <textarea name="" id="" cols="30" rows="10" placeholder="Compose your reply" className={styles.post__reply__m}></textarea>
-                </div>
-              </div>
-              <div>
-                {image && (
+                <div style={{ display: "flex" }}>
                   <div>
-                    <img src={image} alt="profile_image" style={{height: "200px", width: "100%", border: "1px solid gray", objectFit: "cover", borderRadius: "8px"}} />
-                    <button onClick={handleImageRemove}>Remove image</button>
+                    <Image src={imgOne} alt="image_profile_img" className={styles.impg__cpr__nal} />
                   </div>
-                )}
-              </div>
-              <div>
-                <button className={styles.replit__vbrn} style={{marginRight: "10px"}} type="submit">Post</button>
-                <button className={styles.replit__vbrn} style={{marginRight: "10px"}} onClick={closeModal}  type="button">Close</button>
-                <button className={styles.replit__vbrn} onClick={() => document.getElementById('fileInput').click()} type="button">Upload Pic/gif</button>
-                <input
-                  type="file"
-                  id="fileInput"
-                  accept="image/jpg, image/jpeg, image/png"
-                  onChange={handleImageUpload}
-                  style={{ display: 'none' }}
-                />
+                  <div>
+                    <textarea name="" id="" cols="30" rows="10" placeholder="Compose your reply" className={styles.post__reply__m}></textarea>
+                  </div>
+                </div>
+                <div>
+                  {image && (
+                    <div>
+                      <img src={image} alt="profile_image" style={{ height: "200px", width: "100%", border: "1px solid gray", objectFit: "cover", borderRadius: "8px" }} />
+                      <button onClick={handleImageRemove}>Remove image</button>
+                    </div>
+                  )}
+                </div>
+                <div>
+                  <button className={styles.replit__vbrn} style={{ marginRight: "10px" }} type="submit">Post</button>
+                  <button className={styles.replit__vbrn} style={{ marginRight: "10px" }} onClick={closeModal} type="button">Close</button>
+                  <button className={styles.replit__vbrn} onClick={() => document.getElementById('fileInput').click()} type="button">Upload Pic/gif</button>
+                  <input
+                    type="file"
+                    id="fileInput"
+                    accept="image/jpg, image/jpeg, image/png"
+                    onChange={handleImageUpload}
+                    style={{ display: 'none' }}
+                  />
+                </div>
               </div>
             </div>
-          </div>
-        </form>
+          </form>
         )}
         {/* comment modal */}
-       </div>
+      </div>
     </HomeLayout>
   )
 }

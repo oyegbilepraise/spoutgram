@@ -20,9 +20,9 @@ export default function App({ Component, pageProps }) {
       <Preloader />
       <SessionProvider session={pageProps.session}>
         <Provider store={store}>
-          {/* <ProtectedRoute> */}
+          <ProtectedRoute>
             <Component {...pageProps} />
-          {/* </ProtectedRoute> */}
+          </ProtectedRoute>
         </Provider>
       </SessionProvider>
     </>
