@@ -9,17 +9,8 @@ import Cookies from "js-cookie";
 import { AiOutlineLike, AiOutlineDislike } from 'react-icons/ai'
 import { BiEnvelope, BiRepost } from 'react-icons/bi'
 
-const Post = () => {
+const Post = ({ posts, loading }) => {
   const dispatch = useDispatch()
-  const token = Cookies.get("token");
-  const { loading, apiError, posts } = useSelector(
-    (state) => state?.post?.allPosts
-  );
-
-  useEffect(() => {
-    dispatch(getAllPostsAction(token));
-  }, []);
-
   return (
     <div>
       {loading ? <div style={{ height: "78vh" }} className="d-flex justify-content-center align-items-center">
@@ -95,7 +86,8 @@ const Post = () => {
               </div>
             </div>
           );
-        })}</div>
+        })}
+        </div>
       }
     </div>
   );

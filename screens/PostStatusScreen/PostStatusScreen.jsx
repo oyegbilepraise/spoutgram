@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useState } from "react";
 import ProfileImage from "../../components/Home/ProfileImage";
 import HomeVideo from "../../components/Home/HomeVideo";
-import ImageCarousels from "../../components/Home/ImageCarousels";
+import ImageCarousels from "../../components/Home/ImageCarousels.js";
 
 const PostStatusScreen = () => {
 

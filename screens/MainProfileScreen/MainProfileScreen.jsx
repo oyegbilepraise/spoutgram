@@ -3,7 +3,6 @@ import Image from 'next/image'
 import img from '../../images/default-photo.svg'
 import ProfileOverview from "@/components/ViewProfile/ProfileOverview";
 import Gallery from "@/components/ViewProfile/Gallery";
-import Post from "@/components/ViewProfile/Post";
 import PodCast from "@/components/ViewProfile/PodCast";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -13,13 +12,16 @@ import { baseUrl } from '@/redux/baseUrl';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import Post from '@/components/Home/Post';
 
 const MainProfileScreen = () => {
   const router = useRouter();
   const [currentTab, setCurrentTab] = useState("/");
   const { userId } = router.query;
   const { user, apiError } = useSelector((state) => state?.auth?.getUser);
-  const [post, setPost] = useState()
+  const [post, setPost] = useState();
+  const [loading, setLoading] = useState(true)
+
 
   //   get the current tab
   useEffect(() => {
@@ -42,13 +44,12 @@ const MainProfileScreen = () => {
 
 
   const getUsersPost = async () => {
+    console.log({ user });
     const token = Cookies.get('token')
     try {
-      const { data } = await axios.get(`${baseUrl}/posts/post/${user?.data?._id}`, { headers: { Authorization: 'Bearer ' + token } })
-
-      // setPost(res.data)
-
-      console.log(data);
+      const { data } = await axios.get(`${baseUrl}/users/posts`, { headers: { Authorization: 'Bearer ' + token } })
+      setPost(data.data)
+      setLoading(false)
     } catch (error) {
       console.log({ error });
     }
@@ -114,11 +115,11 @@ const MainProfileScreen = () => {
         </div>
 
         {/* post container */}
-        {currentTab === "/" && <Post />}
+        {currentTab === "/" && <Post posts={post} loading={loading} />}
         {/* post container */}
         {/* gallery container */}
         {/* Media */}
-        {currentTab === "gallery" && <Gallery />}
+        {currentTab === "gallery" && <Gallery posts={post} loading={loading} />}
         {/* Media */}
         {/* gallery container */}
         {/* podcast */}
