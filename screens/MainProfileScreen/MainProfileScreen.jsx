@@ -9,10 +9,12 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import styles from '@/layout/HomeLayout/HomeLayout.module.css'
 import { baseUrl } from '@/redux/baseUrl';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import Post from '@/components/Home/Post';
+import Routes from '@/utils/routes';
+import { logout } from '@/redux/slices/authSlice/authSlice';
 
 const MainProfileScreen = () => {
   const router = useRouter();
@@ -21,6 +23,7 @@ const MainProfileScreen = () => {
   const { user, apiError } = useSelector((state) => state?.auth?.getUser);
   const [post, setPost] = useState();
   const [loading, setLoading] = useState(true)
+  const dispatch = useDispatch()
 
 
   //   get the current tab
@@ -51,6 +54,9 @@ const MainProfileScreen = () => {
       setPost(data.data)
       setLoading(false)
     } catch (error) {
+      if (!error?.response?.data.status) {
+        dispatch(logout())
+      }
       console.log({ error });
     }
   }
