@@ -18,7 +18,7 @@ import { useFormik } from "formik";
 import { AuthLayout } from "@/layout";
 import { useEffect, useState } from "react";
 import * as Yup from "yup";
-import Link from "next/link"; 
+import Link from "next/link";
 import styles from "@/layout/AuthLayout/AuthLayout.module.css";
 import Routes from "@/utils/routes";
 import { baseUrl, baseUrlTest } from "@/redux/baseUrl";
@@ -67,13 +67,12 @@ const LoginScreen = () => {
     },
     validationSchema: loginFormSchema,
   });
-  
+
 
   useEffect(() => {
     if (user.token) {
-      console.log({user});
+      console.log({ user });
       if (
-        //if the acount is not verified, generate token and re route to verify
         user.isAccountVerified === false &&
         router.pathname !== Routes.VERIFY
       ) {
@@ -82,7 +81,6 @@ const LoginScreen = () => {
         console.log("push to verify from login");
         return;
       } else if (
-        // if there is no profile and user is verified, re route to profile
         !user.profile &&
         user.isAccountVerified &&
         router.pathname !== Routes.CREATE_PROFILE
@@ -92,7 +90,6 @@ const LoginScreen = () => {
         return;
       } else if (user.isAccountVerified && user.profile) {
         console.log({ user });
-        // if you are verified and have a profile go to home
         router.push(Routes.HOME);
         console.log("push to home from login");
         return;
@@ -128,7 +125,7 @@ const LoginScreen = () => {
           <div className={styles._xparnts}>
             <div className={styles._xparnts_cvr}>
               <span className={styles.vdf_data}>Sign in</span>
-              
+
               {appError && (
                 <div className={styles.byyy__err}>
                   <span className={styles.error__msg__xyx}>
@@ -221,7 +218,7 @@ const LoginScreen = () => {
                   <button
                     className={styles.pass_data_bd}
                     type="submit"
-                    style={{ position: "relative", color: "transparent", transition: "0.1s all" }} 
+                    style={{ position: "relative", color: "transparent", transition: "0.1s all" }}
                     disabled
                   >
                     <>
