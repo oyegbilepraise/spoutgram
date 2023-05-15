@@ -25,7 +25,7 @@ function ImageCarousels({ postImage }) {
   return (
     <>
       <div className="grid-container">
-        {postImage.map((pic, id) => (
+        {postImage && postImage.map((pic, id) => (
           <div className="grid-item">
             <Image
               src={pic !== null && pic}

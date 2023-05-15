@@ -3,8 +3,6 @@ import styles from "@/layout/HomeLayout/HomeLayout.module.css";
 import imgOne from "../../images/me.jpeg";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import ProfileImage from "../../components/Home/ProfileImage";
-import HomeVideo from "../../components/Home/HomeVideo";
 import ImageCarousels from "../../components/Home/ImageCarousels";
 import { useFormik } from "formik";
 import { useRouter } from "next/router";
@@ -39,7 +37,7 @@ const {loading,individualPost}=useSelector(state=>state?.post?.singlePost)
   }, []);
 
   useEffect(() => {
-    console.log(individualPost?.data?.user?.profilePhoto);
+    console.log(individualPost?.data);
   }, [loading==false]);
 
   // Function to handle image upload
@@ -109,7 +107,6 @@ const {loading,individualPost}=useSelector(state=>state?.post?.singlePost)
               </svg>
             </span>
             <span
-              // style={{textAlign: "center", width: "max-content",marginTop: "0px", margin: "auto", paddingLeft: "0px", paddingTop: "0px", border: "1px solid black", display: "block"}}
               class={styles.not_home_nav_text}
             >
               Post
@@ -199,7 +196,7 @@ const {loading,individualPost}=useSelector(state=>state?.post?.singlePost)
                 {individualPost?.data?.desc}
               </span>
             </div>
-
+{individualPost?.data?.postImage.length > 0 && <ImageCarousels postImage={individualPost?.data?.postImage} />}
             {/* this should be at the bottom of the post always, text, image, video, audio should always come above */}
             <span style={{display: "block", marginLeft: "0px", paddingTop: "7px", paddingBottom: "0px", fontSize: "14px"}} className={styles._000_dt_data}>10:30 AM - <span>May 14th 2023</span></span>
             {/* this should be at the bottom of the post always, text, image, video, audio should always come above */}

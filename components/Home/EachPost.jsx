@@ -6,23 +6,30 @@ import { useDispatch } from "react-redux";
 import { dislikePostAction, likePostAction } from "@/redux/slices/postSlice/postSlice";
 import { AiOutlineLike, AiOutlineDislike } from 'react-icons/ai'
 import { BiEnvelope, BiRepost } from 'react-icons/bi'
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import Link from "next/link";
 
 const EachPost = ({ post }) => {
     const dispatch = useDispatch()
     const [likes, setLikes] = useState(post.likes);
     const [disLikes, setDisLikes] = useState(post.dislikes);
-    const handleLike = async (id) => {
+    
+useEffect(() => {
+console.log(post);
+}, [])
+
+
+    const handleLike = (id) => {
         try {
-            const res = await dispatch(likePostAction({ postId: id }))
+            const res = dispatch(likePostAction({ postId: id }))
             setLikes(res.payload.data.likes)
         } catch (error) {
             console.log({ error });
         }
     }
-    const handleDislike = async (id) => {
+    const handleDislike = (id) => {
         try {
-            const res = await dispatch(dislikePostAction({ postId: id }))
+            const res = dispatch(dislikePostAction({ postId: id }))
             setDisLikes(res.payload.data.dislikes)
         } catch (error) {
             console.log({ error });
@@ -43,8 +50,8 @@ const EachPost = ({ post }) => {
                         <span className={styles._ttl_contxt}>{post.desc}</span>
                     </div>
                     {/* John, this is the ImageCarousels */}
-                    {post.postImage.length !== 0 && <ImageCarousels postImage={post.postImage} />}
-                    {post.postVideo.length !== 0 &&
+                    {post.postImage.length > 0 && <ImageCarousels postImage={post.postImage} />}
+                    {post.postVideo.length > 0 &&
                         <div className={styles.div__for__vid}>
                             {/* John, this is the video */}
                             <HomeVideo postVideo={post.postVideo} />
@@ -66,12 +73,15 @@ const EachPost = ({ post }) => {
                             </span>
                             <span className={styles._00mn_spn_cnt}>{disLikes.length}</span>
                         </span>
-                        <span className={styles._00mn_span}>
+                         <span className={styles._00mn_span}>
+                        <Link href={`/post/${post._id}`}>
                             <span>
                                 <BiEnvelope size={20} className={`${styles.green} ${styles.x_icn_ftr} ${styles.repostme}`} />
                             </span>
+                        </Link>
                             <span className={styles._00mn_spn_cnt}>{post.repost.length}</span>
                         </span>
+                       
                         <span className={styles._00mn_span}>
                             <span>
                                 <BiRepost size={20} className={styles.x_icn_ftr} />
