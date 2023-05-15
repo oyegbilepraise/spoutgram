@@ -141,6 +141,10 @@ export const getUserAction = createAsyncThunk(
       });
       return res.data;
     } catch (err) {
+      if (!err?.response?.data.status) {
+        Cookies.remove("token");
+        router.push(Routes.LOGIN)
+      }
       return rejectWithValue(err?.response?.data?.message);
     }
   }
@@ -189,10 +193,8 @@ const authSlice = createSlice({
     },
   },
   reducers: {
-    // logout(state) {
-    //   state.getUser.user = {}
-    // }
     logout: (state) => {
+      Cookies.remove('token')
       state.getUser.user = {};
       state.loginUser.user = {}
     }

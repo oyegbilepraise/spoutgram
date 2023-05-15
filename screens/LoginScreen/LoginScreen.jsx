@@ -18,7 +18,7 @@ import { useFormik } from "formik";
 import { AuthLayout } from "@/layout";
 import { useEffect, useState } from "react";
 import * as Yup from "yup";
-import Link from "next/link"; 
+import Link from "next/link";
 import styles from "@/layout/AuthLayout/AuthLayout.module.css";
 import Routes from "@/utils/routes";
 import { baseUrl, baseUrlTest } from "@/redux/baseUrl";
@@ -67,13 +67,12 @@ const LoginScreen = () => {
     },
     validationSchema: loginFormSchema,
   });
-  
+
 
   useEffect(() => {
     if (user.token) {
-      console.log({user});
+      console.log({ user });
       if (
-        //if the acount is not verified, generate token and re route to verify
         user.isAccountVerified === false &&
         router.pathname !== Routes.VERIFY
       ) {
@@ -82,7 +81,6 @@ const LoginScreen = () => {
         console.log("push to verify from login");
         return;
       } else if (
-        // if there is no profile and user is verified, re route to profile
         !user.profile &&
         user.isAccountVerified &&
         router.pathname !== Routes.CREATE_PROFILE
@@ -92,7 +90,6 @@ const LoginScreen = () => {
         return;
       } else if (user.isAccountVerified && user.profile) {
         console.log({ user });
-        // if you are verified and have a profile go to home
         router.push(Routes.HOME);
         console.log("push to home from login");
         return;
@@ -127,43 +124,18 @@ const LoginScreen = () => {
         <form onSubmit={formik.handleSubmit}>
           <div className={styles._xparnts}>
             <div className={styles._xparnts_cvr}>
-              <span className={styles.vdf_data}>Sign in to Spoutgram</span>
-              <div className={styles._xpnds_oauths_div}>
-                <div>
-                  {/* continue with google */}
-                  <button type="button"
-                    className={`${styles.oauths_} ${styles.ggl_oauth}`}
-                    onClick={handleGoogleLogin}
-                  >
-                    <GoogleSvg />
-                    Continue with Google
-                  </button>
-                </div>
-
-                <div>
-                  {/* continue with twitter */}
-                  <button type="button"
-                    className={`${styles.oauths_} ${styles.twtr_oauth}`}
-                    onClick={handleTwitterLogin}
-                  >
-                    <TwitterSvg />
-                    Continue with Twitter
-                  </button>
-                </div>
-              </div>
-
-              <div className={styles._oxr}>
-                <span className={styles.or}>OR</span>
-              </div>
+              <span className={styles.vdf_data}>Sign in</span>
 
               {appError && (
-                <span className={styles.error__msg__xyx}>
-                  <CautionSvg />
-                  <span className={styles.error__txt__xyx}>{appError}</span>
-                </span>
+                <div className={styles.byyy__err}>
+                  <span className={styles.error__msg__xyx}>
+                    <CautionSvg />
+                    <span className={styles.error__txt__xyx}>{appError}</span>
+                  </span>
+                </div>
               )}
 
-              <div className={styles.xpnd_inpts} style={{ paddingTop: "14px" }}>
+              <div className={styles.xpnd_inpts} style={{ paddingTop: "0px" }}>
                 <div style={{ position: "relative" }}>
                   <input
                     type="text"
@@ -235,7 +207,7 @@ const LoginScreen = () => {
 
                   <span className={styles._0013_span}>
                     <span style={{ float: "right" }}>
-                      <Link href="/forgot-password">Forgot Password?</Link>
+                      <Link href="/forgot-password">Can't sign in?</Link>
                     </span>
                   </span>
                 </div>
@@ -246,7 +218,7 @@ const LoginScreen = () => {
                   <button
                     className={styles.pass_data_bd}
                     type="submit"
-                    style={{ position: "relative" }}
+                    style={{ position: "relative", color: "transparent", transition: "0.1s all" }}
                     disabled
                   >
                     <>
@@ -255,10 +227,38 @@ const LoginScreen = () => {
                     Sign in
                   </button>
                 ) : (
-                  <button className={styles.pass_data_bd} type="submit">
+                  <button className={styles.pass_data_bd} type="submit" disabled={!formik.isValid || !formik.dirty}>
                     Sign in
                   </button>
                 )}
+              </div>
+
+              <div className={styles._oxr}>
+                <span className={styles.or}>or continue with</span>
+              </div>
+
+              <div className={styles._xpnds_oauths_div}>
+                <div>
+                  {/* continue with google */}
+                  <button type="button"
+                    className={`${styles.oauths_} ${styles.ggl_oauth}`}
+                    onClick={handleGoogleLogin}
+                  >
+                    <GoogleSvg />
+                    Google
+                  </button>
+                </div>
+
+                <div>
+                  {/* continue with twitter */}
+                  <button type="button"
+                    className={`${styles.oauths_} ${styles.twtr_oauth}`}
+                    onClick={handleTwitterLogin}
+                  >
+                    <TwitterSvg />
+                    Twitter
+                  </button>
+                </div>
               </div>
 
               <span className={styles.ouplskk}>

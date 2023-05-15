@@ -76,10 +76,18 @@ const Preloader = () => {
               gradientTransform="translate(0 30)"
               gradientUnits="userSpaceOnUse"
             >
-              <stop offset={0} stopColor="#0070d7" />
+              {/* this is the spoutgram ex-gradient */}
+              {/* <stop offset={0} stopColor="#0070d7" />
               <stop offset=".38" stopColor="#00aae1" />
               <stop offset=".8" stopColor="#00e7eb" />
-              <stop offset={1} stopColor="#00fff0" />
+              <stop offset={1} stopColor="#00fff0" /> */}
+
+              {/* this is the testing/new */}
+              <stop offset={0} stopColor="#655dbb" />
+              <stop offset=".38" stopColor="#655dbb" />
+              <stop offset=".8" stopColor="#655dbb" />
+              <stop offset={1} stopColor="#655dbb" />
+
             </linearGradient>
           </defs>
           <path

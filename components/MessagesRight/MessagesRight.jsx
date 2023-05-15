@@ -5,11 +5,11 @@ import styles from '@/layout/HomeLayout/HomeLayout.module.css'
 const MessagesRight = () => {
     return  (
         <>
-            <div className="right__mssg__div">
+            <div className={styles.right__mssg__div}>
                 {/*  */}
                 <nav>
                     <div>
-                    <span className="icon_back">
+                    <span className={styles.icon_back}>
                         <svg
                         className="_00_history__back"
                         xmlns="http://www.w3.org/2000/svg"
@@ -30,19 +30,19 @@ const MessagesRight = () => {
                 </nav>
                 {/*  */}
                 {/* if no conversation */}
-                <div className="no__messg__div" style={{ display: "none" }}>
-                    <span className="nby_txt">No conversations.</span>
+                <div className={styles.no__messg__div} style={{ display: "none" }}>
+                    <span className={styles.nby_txt}>No conversations.</span>
                 </div>
                 {/* if no conversation */}
                 {/* messages conversation container */}
-                <div className="messages__convcnt">
+                <div className={styles.messages__convcnt}>
                     {/*  */}
-                    <div className="message__toast">
+                    <div className={styles.message__toast}>
                     {/*  */}
                     <div>
                         <img
                         src="../app__assets/images/default/default-photo.svg"
-                        className="msshtst"
+                        className={styles.msshtst}
                         />
                     </div>
                     <div>
@@ -53,8 +53,8 @@ const MessagesRight = () => {
                         </span>
                     </div>
                     <div>
-                        <span className="msg__new__notif" />
-                        <span className="msg__sent__timer">9s</span>
+                        <span className={styles.msg__new__notif} />
+                        <span className={styles.msg__sent__timer}>9s</span>
                     </div>
                     </div>
                     {/*  */}

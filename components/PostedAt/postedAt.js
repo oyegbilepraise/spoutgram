@@ -24,11 +24,14 @@ const PostedAt = ({time}) => {
 
   let timeAge = moment.utc(time).local().startOf('seconds').fromNow() =="a few seconds ago" ?"now" :moment.utc(time).local().startOf('seconds').fromNow()
 
+  // let timeAgeee = moment(time, 'dd MMM DD HH:mm:ss ZZ YYYY', 'en');
+
+  // console.log("timeAgeee: ", timeAgeee);
   return (
     <div>
     {/* {isAMinute?<ReactTimeAgo timeStyle='twitter' date={time} locale="en-US" />:'just now'} */}
-   {/* <ReactTimeAgo timeStyle='twitter' date={time} locale="en-US" /> */}
-   {timeAge}
+   <ReactTimeAgo timeStyle='round-time' date={time} locale="en-US" />
+   {/* {timeAge} */}
     </div>
   )
 }
