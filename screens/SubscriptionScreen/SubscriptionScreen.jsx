@@ -26,7 +26,7 @@ const SubscriptionScreen = () => {
           <div className={styles.hold_them}>
             <div>
               <Image
-                src={imgOne}
+                src={img}
                 className={styles.npd_toast_png}
               />
             </div>

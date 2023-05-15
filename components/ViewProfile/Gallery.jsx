@@ -2,11 +2,15 @@ import styles from "@/layout/HomeLayout/HomeLayout.module.css";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import ImageCarousels from "../Home/ImageCarousels";
 
-const Gallery = () => {
+const Gallery = ({ posts, loading }) => {
   const router = useRouter();
   const { userId } = router.query;
   const [activeGallery, setActiveGallery] = useState("all");
+
+  const mergedImagesArray = posts?.map(obj => obj.postImage)
+    .reduce((mergedArray, imagesArray) => mergedArray.concat(imagesArray), []);
 
   useEffect(() => {
     const { tab, gallery_type } = router.query;
@@ -25,18 +29,16 @@ const Gallery = () => {
         >
           <div>
             <h6
-              className={`${styles.all__tab} ${styles.csh_h6} ${
-                activeGallery === "all" && styles.active_csh
-              }`}
+              className={`${styles.all__tab} ${styles.csh_h6} ${activeGallery === "all" && styles.active_csh
+                }`}
             >
               <Link href={`/${userId}?tab=gallery&&gallery_type=all`}>All</Link>
             </h6>
           </div>
           <div>
             <h6
-              className={`${styles.all__tab} ${styles.csh_h6} ${
-                activeGallery === "photo" && styles.active_csh
-              }`}
+              className={`${styles.all__tab} ${styles.csh_h6} ${activeGallery === "photo" && styles.active_csh
+                }`}
             >
               <Link href={`/${userId}?tab=gallery&&gallery_type=photo`}>
                 Photo
@@ -45,9 +47,8 @@ const Gallery = () => {
           </div>
           <div>
             <h6
-              className={`${styles.all__tab} ${styles.csh_h6} ${
-                activeGallery === "video" && styles.active_csh
-              }`}
+              className={`${styles.all__tab} ${styles.csh_h6} ${activeGallery === "video" && styles.active_csh
+                }`}
             >
               <Link href={`/${userId}?tab=gallery&&gallery_type=video`}>
                 Video
@@ -61,8 +62,12 @@ const Gallery = () => {
             <div className={`${styles.all__grid__js} ${styles.all_grid}`}>
               {/* all-grid */}
               <div style={{ height: 200, position: "relative" }}>
-                <h6 className={styles.npy__xyz}>No media files yet.</h6>
-              </div>
+              {
+                  mergedImagesArray ? (
+                    <ImageCarousels postImage={mergedImagesArray} />
+                  ) : <h6 className={styles.npy__xyz}>No photos yet.</h6>
+
+                }              </div>
             </div>
           )}
 
@@ -70,7 +75,12 @@ const Gallery = () => {
             <div className={`${styles.photo__grid__js} ${styles.photos_grid}`}>
               {/* photos-grid */}
               <div style={{ height: 200, position: "relative" }}>
-                <h6 className={styles.npy__xyz}>No photos yet.</h6>
+                {
+                  mergedImagesArray ? (
+                    <ImageCarousels postImage={mergedImagesArray} />
+                  ) : <h6 className={styles.npy__xyz}>No photos yet.</h6>
+
+                }
               </div>
             </div>
           )}

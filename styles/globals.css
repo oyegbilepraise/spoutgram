@@ -102,3 +102,16 @@ div {
 button:focus, a:focus {
   outline: 2px solid var(--transparent);
 }
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 equal-width columns */
+  gap: 10px; /* Gap between grid items */
+}
+
+.grid-item {
+  position: relative;
+  /* Styles for grid items */
+  /* background-color: #ccc; */
+  /* padding: 10px; */
+}

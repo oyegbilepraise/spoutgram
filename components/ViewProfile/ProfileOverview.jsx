@@ -8,7 +8,7 @@ const ProfileOverview = () => {
   const [showSubscribe, setShowSubscribe] = useState(false);
   const [showMore, setShowMore] = useState(false);
   const { user, apiError } = useSelector((state) => state?.auth?.getUser);
-  
+
   // remove and set overflow
   useEffect(() => {
     if (showSubscribe) {
@@ -27,12 +27,6 @@ const ProfileOverview = () => {
           </div>
           <div>
             <div className={styles.dxcWAsd}>
-              {/* <span className={`${styles.user_data_name} ${styles.yuv_usr}`}>
-                Penuel John 
-              </span>
-              <div>
-                <span className={styles.user_data_unique}>@penueljohn</span>
-              </div> */}
               <span className={styles._all00xcuunt}>
                 <span className={styles.xoxtrn}>
                   {user?.data?.followers?.length}
@@ -49,13 +43,11 @@ const ProfileOverview = () => {
               </span>
               <div>
                 <span className={styles.absolute__me__now} style={{ display: "none" }}>
-                  {/* {/* <button className="follow__user">Edit Profile</button> * /} */}
                   <button className={`${styles.follow__user}`}>
                     Follow
                   </button>
                   <button
                     className={`${styles.follow__user}`}
-                  // style={{ display: "none" }}
                   >
                     Message
                   </button>
@@ -71,15 +63,12 @@ const ProfileOverview = () => {
           </div>
         </div>
         <div style={{ position: "relative" }}>
-          {/*  */}
           <span className={styles.absolute__me__now}>
-            {/* {/* <button className="follow__user">Edit Profile</button> * /} */}
             <button className={`${styles.follow__user}`}>
               Follow
             </button>
             <button
               className={`${styles.follow__user}`}
-            // style={{ display: "none" }}
             >
               Message
             </button>
@@ -181,18 +170,6 @@ const ProfileOverview = () => {
               left: "50%",
               transform: "translate(-50%, -50%)",
             }} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#8e8e8e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6" /></svg>
-            {/* <svg width={15} height={4} viewBox="0 0 18 4" fill="none" xmlns="http://www.w3.org/2000/svg"
-              style={{
-                position: "absolute",
-                top: "50%",
-                left: "50%",
-                transform: "translate(-50%, -50%)",
-              }}
-              >
-              <circle cx={2} cy={2} r="1.2" fill="#8e8e8e" stroke="#8e8e8e" strokeWidth="1.6" />
-              <circle cx={9} cy={2} r="1.2" fill="#8e8e8e" stroke="#8e8e8e" strokeWidth="1.6" />
-              <circle cx={16} cy={2}  r="1.2" fill="#8e8e8e" stroke="#8e8e8e" strokeWidth="1.6" />
-            </svg> */}
           </div>
         </div>
 
@@ -212,19 +189,6 @@ const ProfileOverview = () => {
           style={{ position: "relative", height: "32px", width: "32px" }}
           onClick={() => setShowMore((prev) => !prev)}
         >
-          {/* <svg width={15} height={4} viewBox="0 0 18 4" fill="none" xmlns="http://www.w3.org/2000/svg"
-            style={{
-              position: "absolute",
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%, -50%)",
-            }}
-            >
-            <circle cx={2} cy={2} r="1.2" fill="#8e8e8e" stroke="#8e8e8e" strokeWidth="1.6" />
-            <circle cx={9} cy={2} r="1.2" fill="#8e8e8e" stroke="#8e8e8e" strokeWidth="1.6" />
-            <circle cx={16} cy={2}  r="1.2" fill="#8e8e8e" stroke="#8e8e8e" strokeWidth="1.6" />
-          </svg> */}
-
           <svg
             style={{
               position: "absolute",
