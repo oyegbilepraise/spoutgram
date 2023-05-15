@@ -3,7 +3,8 @@ import { baseUrl } from "../../baseUrl";
 import { URL } from "../../urls";
 import Cookies from "js-cookie";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-
+import { logout } from "../authSlice/authSlice";
+import { useDispatch } from "react-redux";
 
 export const createPostAction = createAsyncThunk(
   "posts/create",
@@ -76,7 +77,26 @@ export const dislikePostAction = createAsyncThunk(
     } catch (error) {
       return rejectWithValue(error);
     }
-  })
+  }
+)
+
+export const getAllBoomarks = createAsyncThunk(
+  'post/bookmarks',
+  async (postId, { rejectWithValue }) => {
+    const token = Cookies.get("token");
+    try {
+      const res = await getRequest({ url: `${baseUrl}${URL.boomarks}`, token })
+      console.log(res);
+      return res.data
+    } catch (error) {
+      if (!error?.response?.data.status) {
+        // Cookies.remove("token");
+        // router.push(Routes.LOGIN)
+      }
+      return rejectWithValue(error);
+    }
+  }
+)
 
 // export const repostAction= createAsyncThunk(
 // 'post/repost', 

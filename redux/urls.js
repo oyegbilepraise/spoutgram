@@ -26,7 +26,10 @@ dislikePost:"/posts/post/unlike",
   // Profile.
 
   // Follow 
-  follow: '/users/user/follow'
+  follow: '/users/user/follow',
+
+  // Boomarks
+  boomarks: '/posts/bookmarks',
 };
 
 
