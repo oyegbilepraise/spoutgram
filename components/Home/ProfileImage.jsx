@@ -42,7 +42,7 @@ const ProfileImage = ({ post }) => {
                 {post?.user?.name}
               </span>
               <span className={styles.postt_uname_hover}>@{post?.user?.username}</span>
-            </div>
+            </div> 
             {/* {{!  }} */}
           </div>
           <div>
