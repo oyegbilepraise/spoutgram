@@ -2,12 +2,18 @@ import { HomeLayout } from '@/layout'
 import styles from '@/layout/HomeLayout/HomeLayout.module.css'
 import imgOne from "../../images/me.jpeg";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ProfileImage from "../../components/Home/ProfileImage";
 import HomeVideo from "../../components/Home/HomeVideo";
+import { useDispatch, useSelector } from "react-redux";
+import { getCommentsAction } from "@/redux/slices/commentSlice/commentSlice";
 import ImageCarousels from "../../components/Home/ImageCarousels";
+import { useRouter } from 'next/router';
 
 const CommentStatusScreen = () => {
+const router=useRouter();
+const dispatch = useDispatch();
+const [postId, setPostId] = useState(null)
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -19,6 +25,17 @@ const CommentStatusScreen = () => {
     setIsOpen(false);
   };
 
+
+ useEffect(() => {
+    console.log(router.query.postId);
+    if (router.query.postId) {
+      localStorage.setItem("postId", router.query.postId);
+      dispatch(getCommentsAction(router.query.postId));
+    } else {
+    setPostId(localStorage.getItem("postId"));
+      dispatch(getCommentsAction(postId));
+    }
+  }, []);
 
   // Function to handle image upload
   const [image, setImage] = useState(null);

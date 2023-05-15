@@ -22,6 +22,7 @@ dislikePost:"/posts/post/unlike",
 
   // Comment
 createComment:"/comments/create",
+getParticularPostComments:"/comments/",
 
   // Link
 

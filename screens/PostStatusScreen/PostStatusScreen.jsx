@@ -16,6 +16,7 @@ const PostStatusScreen = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
+  const [postId, setPostId] = useState(null)
 const {loading,individualPost}=useSelector(state=>state?.post?.singlePost)
   const openModal = () => {
     setIsOpen(true);
@@ -30,14 +31,15 @@ const {loading,individualPost}=useSelector(state=>state?.post?.singlePost)
       localStorage.setItem("postId", router.query.postId);
       dispatch(getSinglePostAction(router.query.postId));
     } else {
-      const postId = localStorage.getItem("postId");
+    setPostId(localStorage.getItem("postId"));
       dispatch(getSinglePostAction(postId));
     }
     // console.log(individualPost);
   }, []);
 
   useEffect(() => {
-    console.log(individualPost?.data);
+    // console.log(individualPost?.data?._d);
+    console.log(postId);
   }, [loading==false]);
 
   // Function to handle image upload
@@ -46,6 +48,7 @@ const {loading,individualPost}=useSelector(state=>state?.post?.singlePost)
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
     const reader = new FileReader();
+    // console.log(file);
     reader.onload = (e) => {
       setImage(e.target.result);
       formik.values.image = e.target.result;
@@ -75,7 +78,7 @@ const {loading,individualPost}=useSelector(state=>state?.post?.singlePost)
       console.log(values);
       formData.append("text", values.text);
       formData.append("image", values.image);
-      formData.append("post", individualPost?.data?._d);
+      formData.append("post", router.query.postId?router.query.postId:postId);
       dispatch(createCommentAction(formData));
       values.text = "";
       values.image = "";
@@ -316,8 +319,7 @@ const {loading,individualPost}=useSelector(state=>state?.post?.singlePost)
 
 
         {/* comments */}
-        <div className={styles.div}>
-          {/*  */}
+        {/* <div className={styles.div}>
           <div>
             <div className={styles.hover_main_image}>
               <Image src={imgOne} className={styles.image_h_c} />
@@ -446,7 +448,7 @@ const {loading,individualPost}=useSelector(state=>state?.post?.singlePost)
               <span className={styles._00mn_spn_cnt}>1.1k</span>
             </span>
           </div>
-        </div>
+        </div> */}
         {/* comments */}
 
         {/* comment modal */}
@@ -465,7 +467,7 @@ const {loading,individualPost}=useSelector(state=>state?.post?.singlePost)
                   >
                     Replying to{" "}
                     <span style={{ color: "var(--brand-color)" }}>
-                      @penuel__king
+                      @{individualPost?.data?.user?.username}
                     </span>
                   </span>
                 </div>
