@@ -2419,3 +2419,31 @@ input[type="text"].data_content_pass, input[type="password"].data_content_pass {
     margin-left: 0px; padding-left: 0px;
     font-family: var(--global-medium);
 }
+
+.emojis__container__parent {
+    width: 250px;
+    height: 170px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    position: absolute;
+    top: -180px;
+    border-radius: 14px;
+    background-color: white;
+    padding: 9px;
+}
+input[type="search"].search__emojis {
+    /* border: 1px solid black; */
+    width: 100%;
+    height: 35px;
+    border-radius: 1000px;
+    padding-left: 12px; padding-right: 5px;
+    margin-bottom: 7px;
+    background-color: rgb(240, 240, 240);
+    outline: none;
+    caret-color: #00ACEE;
+    font-family: var(--global-regular);
+    font-size: 14px;
+    color: #494949;
+}
+input[type="search"].search__emojis::placeholder {
+    color: #8e8e8e;
+}
