@@ -7,13 +7,20 @@ import { baseUrl } from "../redux/baseUrl"
 import Cookies from "js-cookie";
 import Routes from "@/utils/routes";
 import { useRouter } from "next/router";
-import {SocketContext} from '../redux/context/socket.js';
-function Home() {
 
+import {SocketContext} from '../redux/context/socket.js';
+
+ 
+
+
+function Home() {
   const socket = useContext(SocketContext);
   const router = useRouter();
   const [user, setUser] = useState(null);
 
+  socket.on("USER_ONLINE", (data)=>{
+    console.log("USER_ONLINE", data);
+  })
   useEffect(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -24,7 +31,7 @@ function Home() {
       console.log('Geolocation is not supported by your browser');
     }
 
-    socket.emit("USER_ONLINE", "645e311fba7dc336192a6577")
+    
 
     // const token = Cookies.get("token");
     // if (!token) {
