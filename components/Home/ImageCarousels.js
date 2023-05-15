@@ -24,7 +24,6 @@ function ImageCarousels({ postImage }) {
   };
   return (
     <>
-      {/* <div className="grid-container"> */}
       <div className={`grid ${postImage.length > 4 ? 'four-columns' : 'two-columns'}`}>
         {postImage.map((pic, id) => (
           <div className="grid-item">

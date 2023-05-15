@@ -1,19 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
 import { dislikePostAction, getAllPostsAction, likePostAction } from "@/redux/slices/postSlice/postSlice";
-import Cookies from "js-cookie";
+import { InView } from 'react-intersection-observer';
 import EachPost from "./EachPost";
 
 const Post = ({ posts, loading }) => {
   const dispatch = useDispatch()
-
-  const handleLike = async (id) => {
-    try {
-      const res = await dispatch(likePostAction({ postId: id }))
-      console.log(res);
-    } catch (error) {
-      console.log({ error });
-    }
-  }
 
   return (
     <div>
@@ -22,7 +13,14 @@ const Post = ({ posts, loading }) => {
           <span className="visually-hidden">Loading...</span>
         </div>
       </div> :
-        <div> {posts.map((post, id) => <EachPost post={post} key={id} />)}
+        <div>
+          {posts.map((post, id) => {
+            return (<InView as="div" threshold='0.5' onChange={(inView, entry) => console.log({inView, id})}>
+              <EachPost post={post} key={id} />
+            </InView>
+            )
+          }
+          )}
         </div>
       }
     </div>

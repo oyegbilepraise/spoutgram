@@ -106,16 +106,11 @@ button:focus, a:focus {
 .grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr); /* Default: 2 columns */
-  grid-gap: 10px; /* Adjust the gap between grid items */
+  grid-gap: 1px; /* Adjust the gap between grid items */
 
   /* Additional grid properties if needed */
 }
 
 .four-columns {
   grid-template-columns: repeat(4, 1fr); /* 4 columns if array length > 4 */
-}
-
-/* Define styles for the grid items */
-.grid-item {
-  /* Add your desired styles for each grid item */
 }
