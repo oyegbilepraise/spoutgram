@@ -1,6 +1,7 @@
 import "../styles/normalize.css";
 import "../styles/globals.css";
 import Preloader from "@/components/Preloader/Preloader";
+import TopLoader from "@/components/TopLoader/TopLoader"
 import { SessionProvider } from "next-auth/react"
 
 // Redux.
@@ -25,6 +26,7 @@ export default function App({ Component, pageProps }) {
   return (
     <>
       <Preloader />
+      <TopLoader />
       <SessionProvider session={pageProps.session}>
         <Provider store={store}>
           <ProtectedRoute>

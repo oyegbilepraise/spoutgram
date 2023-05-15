@@ -8,6 +8,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { createPostAction } from "@/redux/slices/postSlice/postSlice";
 import { useFormik } from "formik";
 import { MdPermMedia } from 'react-icons/md'
+import {
+  BtnloadSvg,
+} from "../../components";
 
 const CreatePostScreen = () => {
   const [showPostSettings, setShowPostSettings] = useState(false);
@@ -154,7 +157,16 @@ const CreatePostScreen = () => {
                 onBlur={formik.handleBlur}
               />
             </div>
+            {/* this is the successful and error popup */}
+            <div>
+              <span className={styles.post__msg__pp}>
+                Post created successfully!
+              </span>
+            </div>
+            {/* this is the successful and error popup */}
           </div>
+
+
           {/* image/video */}
           <div className={styles.media__preview} style={{border: "transparent"}}>
             {/*image parent container */}
@@ -379,6 +391,20 @@ const CreatePostScreen = () => {
               >
                 Post
               </button>
+
+              {/* this is the loading button. remove the display: none in the styles below */}
+                <button
+                  className={styles.data_vh_post}
+                  type="submit"
+                  style={{color: "transparent", transition: "0.1s all", display: "none" }} 
+                  disabled>
+                  <>
+                        <BtnloadSvg />
+                      </>
+                  Post
+                </button>
+              {/* this is the loading button. remove the display: none in the styles below */}
+
             </div>
           </div>
         </form>

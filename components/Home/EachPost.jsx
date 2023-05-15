@@ -53,8 +53,7 @@ const EachPost = ({ post }) => {
 
                     <div className={styles._00ftr_pst}>
                         <span className={`${styles._00mn_span}`}
-                            onClick={() => handleLike(post._id)}
-                        >
+                            onClick={() => handleLike(post._id)} >
                             <span>
                                 <AiOutlineLike size={20} className={`${styles.red} ${styles.x_icn_ftr} ${styles.redheart} ${styles.post__heart}`} />
                             </span>
