@@ -1,6 +1,6 @@
 import { HomeLayout } from '@/layout'
 import Image from 'next/image'
-import img from '../../images/default-photo.svg'
+import imgOne from "../../images/me.jpeg";
 
 import styles from '@/layout/HomeLayout/HomeLayout.module.css'
 
@@ -46,6 +46,9 @@ const SubscriptionScreen = () => {
               </h6>
             </div>
           </div>
+
+          <button 
+          style={{position: "absolute", background: "#00acee", padding: "5px", borderRadius: "10px", width: "150px", color: "white", fontFamily: "var(--global-medium)", right: "15px", fontSize: "14px"}}>SUBSCRIBED</button>
         </div>
 
         {/* <!-- no subscriptions --> */}

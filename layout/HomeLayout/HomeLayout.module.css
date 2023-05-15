@@ -2339,3 +2339,83 @@ input[type="text"].data_content_pass, input[type="password"].data_content_pass {
 .active_notification {
     background-color: rgb(0, 172, 238, 0.2);
 }
+
+
+/* settings */
+.settings__whole__xx {
+    border-left: var(--border-all); border-right: var(--border-all); 
+    display: flex;
+}
+.settings___left__hng {
+    border-right: var(--border-all);
+    width: 45%;
+}
+.settings___right__hng {
+    border: var(--transparent);
+    width: 55%;
+    position: relative;
+}
+.settings__parent {
+    width: 100%;
+    box-sizing: border-box;
+    padding-right: 15px; padding-left: 15px;
+    padding-top: 5px;
+}
+.subpw__t_div > h6 {
+    font-family: var(--global-medium);
+    /* font-weight: 600; */
+    font-size: 21px;
+    margin-top: 0px; margin-bottom: 0px;
+    letter-spacing: 0.2px;
+    margin-left: 13px;
+}
+.subpw__ > p {
+    font-family: var(--global-regular);
+    font-weight: 400;
+    font-size: 13px;
+    margin-top: 5px; margin-bottom: 30px;
+    color: gray;
+    letter-spacing: 0.2px;
+    margin-left: 13px;
+}
+.ckdpoH___v {
+    /* border: 1px solid black; */
+    margin-top: 15px;
+    padding-top: 13px; padding-bottom: 13px;
+    padding-left: 15px; border-radius: 8px;
+    cursor: pointer; 
+    /* background-color: rgb(0, 0, 0, 0.02); */
+    transition: 0.6s all;
+    position: relative;
+}
+.ckdpoH___v:hover {
+    background-color: #00abee23;
+    transition: 0.6s all;
+}
+.ckdpoH___v:hover .ckdpoH_h6 {
+    color: #00acee;
+    transition: 0.6s all;
+}
+.ckdpoH___v:hover .svg___chev {
+    fill: #00acee;
+    transition: 0.6s all;
+}
+.ckdpoH___v > h6 {
+    font-family: var(--global-regular);
+    /* font-weight: 400; */
+    font-size: 15px;
+    margin: 0px;
+    transition: 0.6s all;
+    color: rgb(100, 100, 100);
+    letter-spacing: 0.2px;
+}
+.svg___chev {
+    fill: gray;
+    transition: 0.6s all;
+    margin-top: 0px;
+    width: 20px; height: 20px;
+}
+.settings_nav_text {
+    margin-left: 0px; padding-left: 0px;
+    font-family: var(--global-medium);
+}

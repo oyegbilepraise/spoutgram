@@ -7,7 +7,7 @@ import ProfileImage from "../../components/Home/ProfileImage";
 import HomeVideo from "../../components/Home/HomeVideo";
 import ImageCarousels from "../../components/Home/ImageCarousels";
 
-const PostStatusScreen = () => {
+const CommentStatusScreen = () => {
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -53,14 +53,14 @@ const PostStatusScreen = () => {
             </span>
             <span 
             // style={{textAlign: "center", width: "max-content",marginTop: "0px", margin: "auto", paddingLeft: "0px", paddingTop: "0px", border: "1px solid black", display: "block"}} 
-            class={styles.not_home_nav_text}>Post</span>
+            class={styles.not_home_nav_text}>Comment</span>
             <span>
               {/*  */}
             </span>
           </div>
         </nav>
 
-        {/* post preview */}
+        {/* comment preview */}
         <div  className={`${styles.div} ${styles.data_content}`}>
 
           <div style={{ position: "relative" }}>
@@ -80,12 +80,11 @@ const PostStatusScreen = () => {
                 <span className={`${styles._0022_nm_usr} ${styles._0022_nm_usr__pp}`}>
                 Penuel John
                   <span>@penuel__king</span>
+                  <span style={{display: "inline", marginLeft: "12px", fontSize: ""}} className={styles._000_dt_data}>17h</span>
                 </span>
               </div>
               <div>
-                <span className={styles._000_dt_data}>
-                  17h
-                </span>
+                <span className={styles._000_dt_data} style={{fontSize: "16px"}}>Replying <span style={{color: "var(--brand-color)"}}>@penuel__king</span></span>
               </div>
             </div>
           
@@ -136,11 +135,12 @@ const PostStatusScreen = () => {
             <div>
               <span className={`${styles._ttl_contxt} ${styles._ttl_contxt__pp}`}>This is the description</span>
             </div>
+            
 
             {/* this should be at the bottom of the post always, text, image, video, audio should always come above */}
             <span style={{display: "block", marginLeft: "0px", paddingTop: "7px", paddingBottom: "0px", fontSize: "14px"}} className={styles._000_dt_data}>10:30 AM - <span>May 14th 2023</span></span>
             {/* this should be at the bottom of the post always, text, image, video, audio should always come above */}
-            
+
             <div className={styles._00ftr_pst}>
               <span className={styles._00mn_span}>
                 <span>
@@ -229,7 +229,7 @@ const PostStatusScreen = () => {
             </div>
           </div>
         </div>
-        {/* post preview */}
+        {/* comment preview */}
 
 
         {/* comment box */}
@@ -243,7 +243,7 @@ const PostStatusScreen = () => {
                 type="text"
                 onClick={openModal}
                 className={styles.disbld__inp__post}
-                placeholder="Reply to this post"
+                placeholder="Reply to this comment"
               />
               <button style={{textAlign: "center", paddingLeft: "0px", paddingRight: "0px", width: "70px"}} className={styles.inp__create__btn} disabled>
                 Post
@@ -414,4 +414,4 @@ const PostStatusScreen = () => {
   )
 }
 
-export default PostStatusScreen
+export default CommentStatusScreen
