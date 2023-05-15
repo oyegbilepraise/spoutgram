@@ -19,10 +19,9 @@ TimeAgo.addLocale(ru)
 
 export default function App({ Component, pageProps }) {
 
-  //  useEffect(()=>{
-  //   socket.emit("connection")
-  //  },[])
-
+   useEffect(()=>{
+    socket.emit("connection")
+   },[])
   return (
     <>
       <Preloader />
