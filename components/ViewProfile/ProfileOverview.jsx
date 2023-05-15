@@ -9,8 +9,6 @@ const ProfileOverview = () => {
   const [showMore, setShowMore] = useState(false);
   const { user, apiError } = useSelector((state) => state?.auth?.getUser);
 
-  console.log({ user: user?.data });
-
   // remove and set overflow
   useEffect(() => {
     if (showSubscribe) {
@@ -29,12 +27,6 @@ const ProfileOverview = () => {
           </div>
           <div>
             <div className={styles.dxcWAsd}>
-              {/* <span className={`${styles.user_data_name} ${styles.yuv_usr}`}>
-                Penuel John 
-              </span>
-              <div>
-                <span className={styles.user_data_unique}>@penueljohn</span>
-              </div> */}
               <span className={styles._all00xcuunt}>
                 <span className={styles.xoxtrn}>
                   {user?.data?.followers?.length}
@@ -51,13 +43,11 @@ const ProfileOverview = () => {
               </span>
               <div>
                 <span className={styles.absolute__me__now} style={{ display: "none" }}>
-                  {/* {/* <button className="follow__user">Edit Profile</button> * /} */}
                   <button className={`${styles.follow__user}`}>
                     Follow
                   </button>
                   <button
                     className={`${styles.follow__user}`}
-                  // style={{ display: "none" }}
                   >
                     Message
                   </button>
@@ -73,15 +63,12 @@ const ProfileOverview = () => {
           </div>
         </div>
         <div style={{ position: "relative" }}>
-          {/*  */}
           <span className={styles.absolute__me__now}>
-            {/* {/* <button className="follow__user">Edit Profile</button> * /} */}
             <button className={`${styles.follow__user}`}>
               Follow
             </button>
             <button
               className={`${styles.follow__user}`}
-            // style={{ display: "none" }}
             >
               Message
             </button>
@@ -94,7 +81,7 @@ const ProfileOverview = () => {
           </span>
           <div>
             <span className={`${styles.user_data_name} ${styles.yuv_usr}`}>
-              {user?.data?.profile?.name}
+              {user?.data?.name}
               <svg class={styles.spoutgram_verified} label="spoutgram-verified" value="verified" width="338" height="338" viewBox="0 0 338 338" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M314.761 169L337.357 99.2754L272.08 65.9196L238.724 0.642578L169 23.2385L99.2755 0.642578L65.9197 65.9196L0.6427 99.2754L23.2386 169L0.6427 238.724L65.9197 272.08L99.2755 337.357L169 314.761L238.724 337.357L272.08 272.08L337.357 238.724L314.761 169ZM152.143 243.315L89.735 180.908L113.55 157.092L152.143 195.684L241.235 106.592L265.05 130.408L152.143 243.315Z" fill="url(#paint0_linear_310_3)" />
                 <defs>
@@ -106,7 +93,7 @@ const ProfileOverview = () => {
               </svg>
             </span>
             <div>
-              <span className={styles.user_data_unique}>@{user?.data?.profile?.username}</span>
+              <span className={styles.user_data_unique}>@{user?.data?.username}</span>
             </div>
           </div>
           <div>
@@ -183,18 +170,6 @@ const ProfileOverview = () => {
               left: "50%",
               transform: "translate(-50%, -50%)",
             }} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#8e8e8e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6" /></svg>
-            {/* <svg width={15} height={4} viewBox="0 0 18 4" fill="none" xmlns="http://www.w3.org/2000/svg"
-              style={{
-                position: "absolute",
-                top: "50%",
-                left: "50%",
-                transform: "translate(-50%, -50%)",
-              }}
-              >
-              <circle cx={2} cy={2} r="1.2" fill="#8e8e8e" stroke="#8e8e8e" strokeWidth="1.6" />
-              <circle cx={9} cy={2} r="1.2" fill="#8e8e8e" stroke="#8e8e8e" strokeWidth="1.6" />
-              <circle cx={16} cy={2}  r="1.2" fill="#8e8e8e" stroke="#8e8e8e" strokeWidth="1.6" />
-            </svg> */}
           </div>
         </div>
 
@@ -214,19 +189,6 @@ const ProfileOverview = () => {
           style={{ position: "relative", height: "32px", width: "32px" }}
           onClick={() => setShowMore((prev) => !prev)}
         >
-          {/* <svg width={15} height={4} viewBox="0 0 18 4" fill="none" xmlns="http://www.w3.org/2000/svg"
-            style={{
-              position: "absolute",
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%, -50%)",
-            }}
-            >
-            <circle cx={2} cy={2} r="1.2" fill="#8e8e8e" stroke="#8e8e8e" strokeWidth="1.6" />
-            <circle cx={9} cy={2} r="1.2" fill="#8e8e8e" stroke="#8e8e8e" strokeWidth="1.6" />
-            <circle cx={16} cy={2}  r="1.2" fill="#8e8e8e" stroke="#8e8e8e" strokeWidth="1.6" />
-          </svg> */}
-
           <svg
             style={{
               position: "absolute",

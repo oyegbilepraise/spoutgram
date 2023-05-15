@@ -1,6 +1,6 @@
 import { HomeLayout } from '@/layout'
 import Image from 'next/image'
-import img from '../../images/default-photo.svg'
+import imgOne from "../../images/me.jpeg";
 
 import styles from '@/layout/HomeLayout/HomeLayout.module.css'
 
@@ -21,8 +21,38 @@ const SubscriptionScreen = () => {
             </div>
         </nav>
 
+        {/* Subscribed */}
+        <div className={`${styles.npd_toast}`}>
+          <div className={styles.hold_them}>
+            <div>
+              <Image
+                src={img}
+                className={styles.npd_toast_png}
+              />
+            </div>
+            <div className={styles.float_nicn}>
+              {/* <img src="/images/utility icon/favorite.svg" className={styles.notf_title} /> */}
+            </div>
+          </div>
+          <div>
+            <div>
+              <h6 className={styles.notf_title}>
+                Penuel John
+              </h6>
+            </div>
+            <div>
+              <h6 className={styles.notf_contnt}>
+                @penuel_john
+              </h6>
+            </div>
+          </div>
+
+          <button 
+          style={{position: "absolute", background: "#00acee", padding: "5px", borderRadius: "10px", width: "150px", color: "white", fontFamily: "var(--global-medium)", right: "15px", fontSize: "14px"}}>SUBSCRIBED</button>
+        </div>
+
         {/* <!-- no subscriptions --> */}
-        <div class={styles.nbyd}>
+        <div class={styles.nbyd} style={{display: "none"}}>
           <div>
               <div>
                   <svg class={styles.nbyd__svg} width="22" height="21" viewBox="0 0 22 21" fill="none" xmlns="http://www.w3.org/2000/svg">

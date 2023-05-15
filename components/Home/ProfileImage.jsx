@@ -9,13 +9,12 @@ import { followUser } from "@/redux/slices/postSlice/postSlice";
 const ProfileImage = ({ post }) => {
   const { user, apiError } = useSelector((state) => state?.auth?.getUser);
   const dispatch = useDispatch();
-  console.log({ post: post.user, user: user.data });
 
   const isPostOwner = post?.user?._id === user?.data?._id
 
   const handleFollow = async () => {
     try {
-      dispatch(followUser(user?.data?.profile?.id))
+      dispatch(followUser(post?.user?._id));
     } catch (error) {
       console.log({ error });
     }

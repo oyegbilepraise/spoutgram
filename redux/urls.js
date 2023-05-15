@@ -30,3 +30,5 @@ createComment:"/comments/create",
   // Follow 
   follow: '/users/user/follow'
 };
+
+

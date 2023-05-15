@@ -77,11 +77,11 @@
     margin-top: 0px;
     height: 100%;
     overflow: auto;
-    /* padding-top: 20px; */
+    /* padding-top: 20px; */ 
 }
 ._000middlebar {
     border: var(--border-all);
-    width: 550px;
+    width: 590px;
     padding-bottom: 120px;
     position: relative;
     border-top: none;
@@ -2245,4 +2245,177 @@ input[type="text"].data_content_pass, input[type="password"].data_content_pass {
     padding-top: 5px; padding-bottom: 5px;
     width: 110px;
     cursor: pointer;
+}
+
+.npd_toast {
+    border-bottom: 1px solid rgb(225, 225, 225);
+    /* border-left: 1px solid rgb(225, 225, 225); border-right: 1px solid rgb(225, 225, 225); */
+    width: 100%;
+    max-width: 580px;
+    margin: auto;
+    /* border-radius: 6px; */
+    display: flex;
+    box-sizing: border-box;
+    padding: 5px;
+    padding-top: 25px; padding-bottom: 25px;
+    /* margin-bottom: 12px; */
+    cursor: pointer;
+    transition: 0.6s all;
+    -webkit-touch-callout: none; 
+    -webkit-user-select: none;
+    -khtml-user-select: none; 
+    -moz-user-select: none; 
+    -ms-user-select: none;
+    user-select: none;
+}
+.npd_toast:hover {
+    background-color: rgb(252, 252, 252);
+    transition: 0.6s all;
+}
+.npd_toast_png {
+    height: 42px; width: 42px; border-radius: 50%; object-fit: cover; box-sizing: content-box;
+}
+.npd_notf_icn {
+    height: 20px; width: 20px; box-sizing: content-box;
+}
+.npd_notf_icnxxx {
+    height: 28px; width: 28px;
+}
+.npd_f_notif {
+    width: 580px;
+}
+.hold_them {
+    width: max-content;
+    position: relative;
+    height: 45px;
+    margin-right: 10px;
+}
+.active_notification {
+    background-color: rgb(0, 172, 238, 0.2);
+}
+.float_nicn {
+    position: absolute;
+    bottom: -2px;
+    right: -5px;
+}
+.fncn {
+    right: -9px;
+}
+.notf_title {
+    margin-top: 0px;
+    margin-bottom: 4px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    color: rgb(0, 0, 0);
+}
+.notf_contnt {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    color: rgb(68, 68, 68);
+}
+.npd_toast_png {
+    height: 42px; width: 42px; border-radius: 50%; object-fit: cover; box-sizing: content-box;
+}
+.fncn {
+    right: -9px;
+}
+.fback {
+    background-color: #00acee;
+    color: white;
+    width: 100px;
+    text-align: center;
+    border-radius: 1000px;
+    cursor: pointer;
+}
+.active_notification {
+    background-color: rgb(0, 172, 238, 0.2);
+}
+
+
+/* settings */
+.settings__whole__xx {
+    border-left: var(--border-all); border-right: var(--border-all); 
+    display: flex;
+}
+.settings___left__hng {
+    border-right: var(--border-all);
+    width: 45%;
+}
+.settings___right__hng {
+    border: var(--transparent);
+    width: 55%;
+    position: relative;
+}
+.settings__parent {
+    width: 100%;
+    box-sizing: border-box;
+    padding-right: 15px; padding-left: 15px;
+    padding-top: 5px;
+}
+.subpw__t_div > h6 {
+    font-family: var(--global-medium);
+    /* font-weight: 600; */
+    font-size: 21px;
+    margin-top: 0px; margin-bottom: 0px;
+    letter-spacing: 0.2px;
+    margin-left: 13px;
+}
+.subpw__ > p {
+    font-family: var(--global-regular);
+    font-weight: 400;
+    font-size: 13px;
+    margin-top: 5px; margin-bottom: 30px;
+    color: gray;
+    letter-spacing: 0.2px;
+    margin-left: 13px;
+}
+.ckdpoH___v {
+    /* border: 1px solid black; */
+    margin-top: 15px;
+    padding-top: 13px; padding-bottom: 13px;
+    padding-left: 15px; border-radius: 8px;
+    cursor: pointer; 
+    /* background-color: rgb(0, 0, 0, 0.02); */
+    transition: 0.6s all;
+    position: relative;
+}
+.ckdpoH___v:hover {
+    background-color: #00abee23;
+    transition: 0.6s all;
+}
+.ckdpoH___v:hover .ckdpoH_h6 {
+    color: #00acee;
+    transition: 0.6s all;
+}
+.ckdpoH___v:hover .svg___chev {
+    fill: #00acee;
+    transition: 0.6s all;
+}
+.ckdpoH___v > h6 {
+    font-family: var(--global-regular);
+    /* font-weight: 400; */
+    font-size: 15px;
+    margin: 0px;
+    transition: 0.6s all;
+    color: rgb(100, 100, 100);
+    letter-spacing: 0.2px;
+}
+.svg___chev {
+    fill: gray;
+    transition: 0.6s all;
+    margin-top: 0px;
+    width: 20px; height: 20px;
+}
+.settings_nav_text {
+    margin-left: 0px; padding-left: 0px;
+    font-family: var(--global-medium);
 }

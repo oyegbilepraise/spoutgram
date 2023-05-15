@@ -79,21 +79,13 @@ const ChangePasswordScreen = () => {
         <form onSubmit={formik.handleSubmit}>
           <div className={styles._xparnts}>
             <div className={styles._xparnts_cvr}>
-              <span className={styles.data_pwd_lock}>
-                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path
-                    fillRule="evenodd"
-                    clipRule="evenodd"
-                    d="M7.504 10.508V7.882c0-1.512.317-2.392 1.023-3.098.706-.707 1.586-1.024 3.097-1.024h.76c1.51 0 2.39.317 3.097 1.024.705.706 1.023 1.586 1.023 3.098v2.626h.374a1.566 1.566 0 0 1 1.5 1.625v6.5a1.566 1.566 0 0 1-1.5 1.625h-9.75a1.566 1.566 0 0 1-1.5-1.625v-6.5a1.566 1.566 0 0 1 1.5-1.625h.376zm1.5 0h6V7.882c0-.961-.202-1.522-.651-1.971-.45-.45-1.01-.652-1.971-.652h-.756c-.961 0-1.521.202-1.97.652-.45.45-.652 1.01-.652 1.971v2.626zm7.875 8.182a.066.066 0 0 1-.053.068H7.18a.066.066 0 0 1-.053-.068l.001-.028v-6.558l-.001-.029a.066.066 0 0 1 .053-.067h9.646a.066.066 0 0 1 .053.067v6.615z"
-                  ></path>
-                </svg>
-              </span>
               <span className={styles.vdf_data}>Reset Password</span>
 
               <span className={styles._000xsry}>
                 Enter password, and confirm it.
               </span>
 
+              {/* //this is the one with that issue... */}
               {storeData?.message && (
                 <div style={{ paddingTop: "5px" }}>
                   <span className={styles.error__msg__xyx}>
@@ -208,7 +200,7 @@ const ChangePasswordScreen = () => {
                   <button
                     className={`${styles.pass_data_bd} ${styles.new__change__btn}`}
                     type="submit"
-                    style={{ position: "relative" }}
+                    style={{ position: "relative", color: "transparent", transition: "0.1s all" }}
                     disabled
                   >
                     <>
@@ -219,13 +211,12 @@ const ChangePasswordScreen = () => {
                 ) : (
                   <button
                     className={`${styles.pass_data_bd} ${styles.new__change__btn}`}
-                    type="submit"
+                    type="submit" disabled={!formik.isValid || !formik.dirty}
                   >
                     Reset
                   </button>
                 )}
-
-                {/* <button className={styles.pass_data_bd}>Reset Password</button> */}
+                
               </div>
               <span className={styles.ouplskk}>
                 <Link href="/login">Back to Sign in</Link>

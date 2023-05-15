@@ -1,4 +1,6 @@
 import styles from "@/layout/HomeLayout/HomeLayout.module.css";
+import imgOne from "../../images/me.jpeg";
+import Image from "next/image";
 
 const Payment = () => {
   return (
@@ -6,9 +8,67 @@ const Payment = () => {
       id="columnTwo"
       data-tag="payment-notification"
       className={styles.npd_body_content}
-    >
+      >
+
+      {/* payment - successful */}
+      <div className={`${styles.npd_toast} ${styles.active_notification}`}>
+        <div className={styles.hold_them}>
+          <div>
+            <Image
+              src={imgOne}
+              className={styles.npd_toast_png}
+            />
+          </div>
+          <div className={styles.float_nicn}>
+            {/* <img src="/images/utility icon/favorite.svg" className={styles.notf_title} /> */}
+          </div>
+        </div>
+        <div>
+          <div>
+            <h6 className={styles.notf_title}>
+              Your payment was successful
+            </h6>
+          </div>
+          <div>
+            <h6 className={styles.notf_contnt}>
+              You got charged <span>$5</span> for your purchase.
+            </h6>
+          </div>
+        </div>
+      </div>
+
+
+
+      {/* payment - successful */}
+      <div className={`${styles.npd_toast}`}>
+        <div className={styles.hold_them}>
+          <div>
+            <Image
+              src={imgOne}
+              className={styles.npd_toast_png}
+            />
+          </div>
+          <div className={styles.float_nicn}>
+            {/* <img src="/images/utility icon/favorite.svg" className={styles.notf_title} /> */}
+          </div>
+        </div>
+        <div>
+          <div>
+            <h6 className={styles.notf_title}>
+              Your payment was declined
+            </h6>
+          </div>
+          <div>
+            <h6 className={styles.notf_contnt}>
+              you card declined, and payment was unsuccessful.
+            </h6>
+          </div>
+        </div>
+      </div>
+
+
       {/* no payment notifications */}
-      <div className={styles.nbyd}>
+      <div className={styles.nbyd} style={{display: "none"}}>
         <div>
           <div>
             <svg
