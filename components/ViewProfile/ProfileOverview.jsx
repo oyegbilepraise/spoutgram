@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 const ProfileOverview = () => {
   const [showSubscribe, setShowSubscribe] = useState(false);
   const [showMore, setShowMore] = useState(false);
+  const [showVideo, setShowVideo] = useState(false);
   const { user, apiError } = useSelector((state) => state?.auth?.getUser);
 
   // remove and set overflow
@@ -37,20 +38,16 @@ const ProfileOverview = () => {
                   <span className={styles.xyxxn}>following</span>
                 </span>
                 <span className={styles.xoxtrn}>
-                  0
-                  <span className={styles.xyxxn}>members</span>
+                  0<span className={styles.xyxxn}>members</span>
                 </span>
               </span>
               <div>
-                <span className={styles.absolute__me__now} style={{ display: "none" }}>
-                  <button className={`${styles.follow__user}`}>
-                    Follow
-                  </button>
-                  <button
-                    className={`${styles.follow__user}`}
-                  >
-                    Message
-                  </button>
+                <span
+                  className={styles.absolute__me__now}
+                  style={{ display: "none" }}
+                >
+                  <button className={`${styles.follow__user}`}>Follow</button>
+                  <button className={`${styles.follow__user}`}>Message</button>
                   <button
                     className={`${styles.follow__user}`}
                     style={{ display: "none" }}
@@ -64,14 +61,8 @@ const ProfileOverview = () => {
         </div>
         <div style={{ position: "relative" }}>
           <span className={styles.absolute__me__now}>
-            <button className={`${styles.follow__user}`}>
-              Follow
-            </button>
-            <button
-              className={`${styles.follow__user}`}
-            >
-              Message
-            </button>
+            <button className={`${styles.follow__user}`}>Follow</button>
+            <button className={`${styles.follow__user}`}>Message</button>
             <button
               className={`${styles.follow__user}`}
               style={{ display: "none" }}
@@ -82,10 +73,29 @@ const ProfileOverview = () => {
           <div>
             <span className={`${styles.user_data_name} ${styles.yuv_usr}`}>
               {user?.data?.name}
-              <svg class={styles.spoutgram_verified} label="spoutgram-verified" value="verified" width="338" height="338" viewBox="0 0 338 338" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M314.761 169L337.357 99.2754L272.08 65.9196L238.724 0.642578L169 23.2385L99.2755 0.642578L65.9197 65.9196L0.6427 99.2754L23.2386 169L0.6427 238.724L65.9197 272.08L99.2755 337.357L169 314.761L238.724 337.357L272.08 272.08L337.357 238.724L314.761 169ZM152.143 243.315L89.735 180.908L113.55 157.092L152.143 195.684L241.235 106.592L265.05 130.408L152.143 243.315Z" fill="url(#paint0_linear_310_3)" />
+              <svg
+                class={styles.spoutgram_verified}
+                label="spoutgram-verified"
+                value="verified"
+                width="338"
+                height="338"
+                viewBox="0 0 338 338"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M314.761 169L337.357 99.2754L272.08 65.9196L238.724 0.642578L169 23.2385L99.2755 0.642578L65.9197 65.9196L0.6427 99.2754L23.2386 169L0.6427 238.724L65.9197 272.08L99.2755 337.357L169 314.761L238.724 337.357L272.08 272.08L337.357 238.724L314.761 169ZM152.143 243.315L89.735 180.908L113.55 157.092L152.143 195.684L241.235 106.592L265.05 130.408L152.143 243.315Z"
+                  fill="url(#paint0_linear_310_3)"
+                />
                 <defs>
-                  <linearGradient id="paint0_linear_310_3" x1="241" y1="4" x2="99.5" y2="346.5" gradientUnits="userSpaceOnUse">
+                  <linearGradient
+                    id="paint0_linear_310_3"
+                    x1="241"
+                    y1="4"
+                    x2="99.5"
+                    y2="346.5"
+                    gradientUnits="userSpaceOnUse"
+                  >
                     <stop stop-color="#00FFF0" />
                     <stop offset="1" stop-color="#0070D7" />
                   </linearGradient>
@@ -93,14 +103,16 @@ const ProfileOverview = () => {
               </svg>
             </span>
             <div>
-              <span className={styles.user_data_unique}>@{user?.data?.username}</span>
+              <span className={styles.user_data_unique}>
+                @{user?.data?.username}
+              </span>
             </div>
           </div>
           <div>
             <span className={styles.user_data_about}>
-              For most startups, better shape translates into two things: to have
-              a better product with more users, and to have more options for
-              raising money.
+              For most startups, better shape translates into two things: to
+              have a better product with more users, and to have more options
+              for raising money.
             </span>
             <span className={styles.span__data__prfl}>
               <svg
@@ -160,23 +172,45 @@ const ProfileOverview = () => {
           <button
             // style={{ display: "none" }}
             onClick={() => setShowSubscribe((prev) => !prev)}
-            className={`${styles.follow__user} ${styles.fu_xyz}`}>
+            className={`${styles.follow__user} ${styles.fu_xyz}`}
+          >
             Subscribe
           </button>
-          <div className={styles.xyx__more__Profile} style={{ position: "relative", height: "32px", width: "32px" }}>
-            <svg style={{
-              position: "absolute",
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%, -50%)",
-            }} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#8e8e8e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6" /></svg>
+          <div
+            onClick={() => setShowVideo((prev) => !prev)}
+            className={styles.xyx__more__Profile}
+            style={{ position: "relative", height: "32px", width: "32px" }}
+          >
+            <svg
+              style={{
+                position: "absolute",
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+              }}
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#8e8e8e"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M6 9l6 6 6-6" />
+            </svg>
           </div>
         </div>
 
         {/*  */}
         <span style={{ display: "none", marginTop: "10px" }}>
-          <span className={styles.span__pv__p}><span className={styles.span__pv}>12K</span> Post</span>
-          <span className={styles.span__pv__p}><span className={styles.span__pv}>1.0K</span> Post views</span>
+          <span className={styles.span__pv__p}>
+            <span className={styles.span__pv}>12K</span> Post
+          </span>
+          <span className={styles.span__pv__p}>
+            <span className={styles.span__pv}>1.0K</span> Post views
+          </span>
         </span>
         {/*  */}
       </div>
@@ -196,7 +230,20 @@ const ProfileOverview = () => {
               left: "50%",
               transform: "translate(-50%, -50%)",
             }}
-            xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8e8e8e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="#8e8e8e"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
         </div>
 
         {/* am sorry I edited your code here you'll need to adjust the styling again, I was having issue that's why I edited it  */}
@@ -302,8 +349,27 @@ const ProfileOverview = () => {
           </div>
         </div>
       )}
+      {/* subscribe modal ends*/}
 
-      {/* subscribe modal */}
+      {/* Video modal starts*/}
+
+      {showVideo && (
+        <div className={styles.subscription__modal}>
+          <div className={styles.subscription__modal__container}>
+             <div className={styles.subcanmdl__div}>
+              <h6
+                className={styles.cancel__submdl}
+                onClick={() => setShowVideo((prev) => !prev)}
+              >
+                CANCEL
+              </h6>
+            </div>
+              <video width="350" height="350" controls src="/podcast__tester.mp4" type="video/mp4"/>
+          </div>
+        </div>
+      )}
+
+      {/* Video modal ends*/}
     </div>
   );
 };

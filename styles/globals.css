@@ -103,15 +103,14 @@ button:focus, a:focus {
   outline: 2px solid var(--transparent);
 }
 
-.grid-container {
+.grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr); /* 4 equal-width columns */
-  gap: 10px; /* Gap between grid items */
+  grid-template-columns: repeat(2, 1fr); /* Default: 2 columns */
+  grid-gap: 1px; /* Adjust the gap between grid items */
+
+  /* Additional grid properties if needed */
 }
 
-.grid-item {
-  position: relative;
-  /* Styles for grid items */
-  /* background-color: #ccc; */
-  /* padding: 10px; */
+.four-columns {
+  grid-template-columns: repeat(4, 1fr); /* 4 columns if array length > 4 */
 }
