@@ -6,20 +6,39 @@ import { useDispatch } from "react-redux";
 import { dislikePostAction, likePostAction } from "@/redux/slices/postSlice/postSlice";
 import { AiOutlineLike, AiOutlineDislike } from 'react-icons/ai'
 import { BiEnvelope, BiRepost } from 'react-icons/bi'
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { SocketContext } from '../../redux/context/socket.js';
 
 const EachPost = ({ post }) => {
+    const [postId, setPostId] = useState(post._id)
+
+    const socket = useContext(SocketContext);
+
     const dispatch = useDispatch()
     const [likes, setLikes] = useState(post.likes);
     const [disLikes, setDisLikes] = useState(post.dislikes);
-    const handleLike = async (id) => {
+
+    const handleLike = async () => {
         try {
-            const res = await dispatch(likePostAction({ postId: id }))
+            // socket.emit("LIKE_POST", postId)
+            const res = await dispatch(likePostAction({ postId }))
             setLikes(res.payload.data.likes)
+
+
+
         } catch (error) {
             console.log({ error });
         }
     }
+
+    useEffect(() => {
+
+        socket.on(postId, (data) => {
+
+            console.log("SocketRes: ", data);
+        })
+    }, [socket])
+
     const handleDislike = async (id) => {
         try {
             const res = await dispatch(dislikePostAction({ postId: id }))
@@ -53,7 +72,7 @@ const EachPost = ({ post }) => {
 
                     <div className={styles._00ftr_pst}>
                         <span className={`${styles._00mn_span}`}
-                            onClick={() => handleLike(post._id)}
+                            onClick={handleLike}
                         >
                             <span>
                                 <AiOutlineLike size={20} className={`${styles.red} ${styles.x_icn_ftr} ${styles.redheart} ${styles.post__heart}`} />

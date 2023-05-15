@@ -8,19 +8,12 @@ import Cookies from "js-cookie";
 import Routes from "@/utils/routes";
 import { useRouter } from "next/router";
 
-import {SocketContext} from '../redux/context/socket.js';
-
- 
-
-
 function Home() {
-  const socket = useContext(SocketContext);
+
   const router = useRouter();
   const [user, setUser] = useState(null);
 
-  socket.on("USER_ONLINE", (data)=>{
-    console.log("USER_ONLINE", data);
-  })
+ 
   useEffect(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
