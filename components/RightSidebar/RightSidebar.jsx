@@ -265,6 +265,47 @@ const RightSidebar = () => {
         },
       ],
     }, 
+    {
+      id: 4,
+      items: [
+        {
+          id: 1,
+          name: "Rema",
+          username: "@badguy",
+          btn: "Follow",
+        },
+        {
+          id: 2,
+          name: "Doja",
+          username: "@cat",
+          btn: "Follow",
+        },
+        {
+          id: 3,
+          name: "Drake",
+          username: "@yourmama",
+          btn: "Follow",
+        },
+        {
+          id: 4,
+          name: "James",
+          username: "@brown",
+          btn: "Follow",
+        },
+        {
+          id: 5,
+          name: "James",
+          username: "@brown",
+          btn: "Follow",
+        },
+        {
+          id: 6,
+          name: "James",
+          username: "@brown",
+          btn: "Follow",
+        },
+      ],
+    }, 
   ];
 
   // show search modal toggle
