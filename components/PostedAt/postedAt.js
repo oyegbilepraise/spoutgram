@@ -29,9 +29,8 @@ const PostedAt = ({time}) => {
   // console.log("timeAgeee: ", timeAgeee);
   return (
     <div>
-    {/* {isAMinute?<ReactTimeAgo timeStyle='twitter' date={time} locale="en-US" />:'just now'} */}
-   <ReactTimeAgo timeStyle='round-time' date={time} locale="en-US" />
-   {/* {timeAge} */}
+   {/* <ReactTimeAgo timeStyle='round-time' date={time} locale="en-US" /> */}
+   {timeAge}
     </div>
   )
 }

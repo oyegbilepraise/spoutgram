@@ -42,22 +42,24 @@ const ProfileImage = ({ post }) => {
                 {post?.user?.name}
               </span>
               <span className={styles.postt_uname_hover}>@{post?.user?.username}</span>
-            </div>
+            </div> 
             {/* {{!  }} */}
           </div>
           <div>
-            <span className={styles.xmoric}>
-              <span className={`${styles.xoxtrn} ${styles.hovr__f}`}>
-                {post?.user?.followers.length} <span className={styles.xyxxn}>{post?.user?.followers.length < 2 ? "Follower" : "Followers"}</span>
+            <span className={styles.xmoric} 
+            style={{display: "flex", width: "max-content", marginTop: "11px"}}
+            >
+              <span className={`${styles.xoxtrn} ${styles.hovr__f}`} style={{display: "flex"}}>
+                {post?.user?.followers.length}&nbsp;<span className={styles.xyxxn}>{post?.user?.followers.length < 2 ? "Follower" : "Followers"}</span>
               </span>
-              <span className={`${styles.xoxtrn} ${styles.hovr__f}`}>
-                {post?.user?.following.length} <span className={styles.xyxxn}>Following</span>
+              <span className={`${styles.xoxtrn} ${styles.hovr__f}`} style={{display: "flex"}}>
+                {post?.user?.following.length}&nbsp;<span className={styles.xyxxn}>Following</span>
               </span>
             </span>
           </div>
           <div>
-            <span className={`${styles.user_data_about} ${styles.hovr__bio}`}>
-              For most startups, better shape translates into two things: to
+            <span className={`${styles.user_data_about} ${styles.hovr__bio}`} style={{width: "100%"}}>
+              For most startups, better shape tran slates into two things: to
               have a better product with more users, and to have more options
               for raising money.
             </span>
@@ -185,7 +187,6 @@ const ProfileImage = ({ post }) => {
         </div>
         <div>
           <span className={styles._000_dt_data}>
-            { }
             <PostedAt time={post?.createdAt} />
           </span>
         </div>
