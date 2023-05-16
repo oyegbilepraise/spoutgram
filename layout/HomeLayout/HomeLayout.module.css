@@ -2419,3 +2419,72 @@ input[type="text"].data_content_pass, input[type="password"].data_content_pass {
     margin-left: 0px; padding-left: 0px;
     font-family: var(--global-medium);
 }
+
+.emojis__container__parent {
+    width: 250px;
+    height: 170px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    position: absolute;
+    top: -180px;
+    border-radius: 14px;
+    background-color: white;
+    padding: 9px;
+}
+input[type="search"].search__emojis {
+    /* border: 1px solid black; */
+    width: 100%;
+    height: 35px;
+    border-radius: 1000px;
+    padding-left: 12px; padding-right: 5px;
+    margin-bottom: 7px;
+    background-color: rgb(240, 240, 240);
+    outline: none;
+    caret-color: #00ACEE;
+    font-family: var(--global-regular);
+    font-size: 14px;
+    color: #494949;
+}
+input[type="search"].search__emojis::placeholder {
+    color: #8e8e8e;
+}
+
+/* top loader */
+.tploader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background-color: #feda77;
+    z-index: 9999;
+}
+  
+.loader_line {
+    height: 100%;
+    background: linear-gradient(to right, #feda77, #f58529, #dd2a7b, #3e2c41);
+    animation: loaderAnimation 2s linear infinite;
+}
+
+@keyframes loaderAnimation {
+    0% {
+        width: 0;
+    }
+    100% {
+        width: 100%;
+    }
+}
+
+.post__msg__pp {
+    /* border: 1px solid red; */
+    padding: 10px;
+    width: 220px;
+    border-radius: 9px;
+    color: white;
+    background-color: var(--brand-color);
+    font-family: var(--global-medium);
+    position: absolute;
+    display: block;
+    top: 90px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+} 

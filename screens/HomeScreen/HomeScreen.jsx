@@ -72,7 +72,7 @@ const HomeScreen = (props) => {
         </div>
         {/* compose post */}
         {/* post */}
-        <Post count={3} posts={posts} loading={loading} />
+        <Post posts={posts} loading={loading} />
         {/* post */}
       </div>
     </HomeLayout>
