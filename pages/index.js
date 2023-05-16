@@ -1,8 +1,6 @@
-import ProtectedRoute from "@/components/ProtectedRoutes/ProtectedRoute";
 import { HomeScreen } from "@/screens";
 import Head from "next/head";
-import { useState, useEffect, useContext } from "react";
-import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 function Home() {
   useEffect(() => {
