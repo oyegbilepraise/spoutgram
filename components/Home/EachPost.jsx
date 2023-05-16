@@ -11,38 +11,29 @@ import { SocketContext } from '../../redux/context/socket.js';
 
 const EachPost = ({ post }) => {
     const [postId, setPostId] = useState(post._id)
-
     const socket = useContext(SocketContext);
-
     const dispatch = useDispatch()
-    const [likes, setLikes] = useState(post.likes);
-    const [disLikes, setDisLikes] = useState(post.dislikes);
+    const [likes, setLikes] = useState(post.likes.length);
+    const [disLikes, setDisLikes] = useState(post.dislikes.length);
 
     const handleLike = async () => {
         try {
-            // socket.emit("LIKE_POST", postId)
             const res = await dispatch(likePostAction({ postId }))
-            setLikes(res.payload.data.likes)
-
-
-
+            setLikes(res.payload.data.likes.length)
         } catch (error) {
             console.log({ error });
         }
     }
-
     useEffect(() => {
-
         socket.on(postId, (data) => {
-
+            console.log({ postId, data, post });
             console.log("SocketRes: ", data);
         })
     }, [socket])
-
     const handleDislike = async (id) => {
         try {
             const res = await dispatch(dislikePostAction({ postId: id }))
-            setDisLikes(res.payload.data.dislikes)
+            setDisLikes(res.payload.data.dislikes.length)
         } catch (error) {
             console.log({ error });
         }
@@ -93,7 +84,13 @@ const EachPost = ({ post }) => {
                                 </svg>
 
                             </span>
-                            <span className={styles._00mn_spn_cnt}>{likes.length}</span>
+                            <span className={styles._00mn_spn_cnt}>{likes}</span>
+                        </span>
+                        <span className={`${styles._00mn_span}`} onClick={() => handleDislike(post._id)}>
+                            <span>
+                                <AiOutlineDislike size={20} className={`${styles.blue} ${styles.x_icn_ftr}`} />
+                            </span>
+                            <span className={styles._00mn_spn_cnt}>{disLikes}</span>
                         </span>
                         <span className={styles._00mn_span}>
                             <span>
