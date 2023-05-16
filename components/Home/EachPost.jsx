@@ -26,8 +26,9 @@ const EachPost = ({ post }) => {
     }
     useEffect(() => {
         socket.on(postId, (data) => {
-            console.log({ postId, data, post });
-            console.log("SocketRes: ", data);
+            console.log(data);
+            setLikes(data.data.count)
+            // console.log({ postId, data, post });
         })
     }, [socket])
     const handleDislike = async (id) => {
