@@ -66,22 +66,25 @@ const commentSlice = createSlice({
       state.createComment.loading = false;
       state.createComment.reccentPost = action?.payload;
     });
-    builder.addCase(createCommentAction.rejected, (state) => {
+    builder.addCase(createCommentAction.rejected, (state,action) => {
       state.createComment.loading = false;
       state.createComment.apiError = action?.payload;
     });
 
     //Create Post
      builder.addCase(getCommentsAction.pending, (state) => {
+     console.log(state)
       state.getComments.loading = true;
       state.getComments.comments = {};
       state.getComments.apiError = null;
     });
     builder.addCase(getCommentsAction.fulfilled, (state, action) => {
+    console.log(state,action)
       state.getComments.loading = false;
       state.getComments.comments = action?.payload;
     });
     builder.addCase(getCommentsAction.rejected, (state, action) => {
+    console.log(state,action)
       state.getComments.loading = false;
       state.getComments.apiError = action?.payload;
     });

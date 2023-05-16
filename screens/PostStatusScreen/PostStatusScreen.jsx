@@ -11,6 +11,7 @@ import { createCommentAction } from "@/redux/slices/commentSlice/commentSlice";
 import { getSinglePostAction } from "@/redux/slices/postSlice/postSlice";
 import img from '../../images/default-photo.svg'
 import PostedAt from "@/components/PostedAt/postedAt";
+import Routes from "@/utils/routes";
 
 const PostStatusScreen = () => {
   const router = useRouter();
@@ -18,6 +19,7 @@ const PostStatusScreen = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [postId, setPostId] = useState(null)
 const {loading,individualPost}=useSelector(state=>state?.post?.singlePost)
+const { user, apiError } = useSelector((state) => state?.auth?.getUser);
   const openModal = () => {
     setIsOpen(true);
   };
@@ -31,15 +33,15 @@ const {loading,individualPost}=useSelector(state=>state?.post?.singlePost)
       localStorage.setItem("postId", router.query.postId);
       dispatch(getSinglePostAction(router.query.postId));
     } else {
-    setPostId(localStorage.getItem("postId"));
-      dispatch(getSinglePostAction(postId));
+     const id=localStorage.getItem("postId");
+    setPostId(id);
+      dispatch(getSinglePostAction(id));
     }
-    // console.log(individualPost);
   }, []);
 
   useEffect(() => {
     // console.log(individualPost?.data?._d);
-    console.log(postId);
+    console.log(individualPost);
   }, [loading==false]);
 
   // Function to handle image upload
@@ -47,27 +49,23 @@ const {loading,individualPost}=useSelector(state=>state?.post?.singlePost)
 
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
-    const reader = new FileReader();
+      setImage(file);
+      formik.values.image = file;
+    // const reader = new FileReader();
     // console.log(file);
-    reader.onload = (e) => {
-      setImage(e.target.result);
-      formik.values.image = e.target.result;
-    };
-    if (file) {
-      reader.readAsDataURL(file);
-    }
+    // reader.onload = (e) => {
+    //   setImage(e.target.result);
+    //   formik.values.image = e.target.result;
+    // };
+    // if (file) {
+    //   reader.readAsDataURL(file);
+    // }
   };
 
   // Function to handle image removal
   const handleImageRemove = () => {
     setImage(null);
     formik.values.image = null;
-  };
-
-  // Function for writing comment
-  const textChange = (event) => {
-    console.log(event.target.value);
-    formik.values.text = event.target.value;
   };
 
   // Function for sending comments
@@ -83,6 +81,7 @@ const {loading,individualPost}=useSelector(state=>state?.post?.singlePost)
       values.text = "";
       values.image = "";
       setImage(null);
+      router.push(Routes.HOME);
     },
   });
 
@@ -143,7 +142,7 @@ const {loading,individualPost}=useSelector(state=>state?.post?.singlePost)
                 </span>
               </div>
               <div>
-                <span className={styles._000_dt_data}><PostedAt time={individualPost?.data?.createdAt} /></span>
+                {/* <span className={styles._000_dt_data}><PostedAt time={individualPost?.data?.createdAt} /></span> */}
               </div>
             </div>
 
@@ -298,7 +297,7 @@ const {loading,individualPost}=useSelector(state=>state?.post?.singlePost)
         <div className={styles.whats_yyy}>
           <div className={styles.parnt__cnt_wyyyt}>
             <div className={styles.inipic_xyz}>
-              <Image alt="img" className={styles.img__winipc} src={imgOne} />
+              <Image alt="img" className={styles.img__winipc} src={user?.data?.profilePhoto==""?img:user?.data?.profilePhoto} />
             </div>
             <div className={styles.ini__inp}>
               <input
@@ -474,7 +473,7 @@ const {loading,individualPost}=useSelector(state=>state?.post?.singlePost)
                 <div style={{ display: "flex" }}>
                   <div>
                     <Image
-                      src={imgOne}
+                      src={user?.data?.profilePhoto==""?img:user?.data?.profilePhoto}
                       alt="image_profile_img"
                       className={styles.impg__cpr__nal}
                     />
@@ -497,7 +496,7 @@ const {loading,individualPost}=useSelector(state=>state?.post?.singlePost)
                   {image && (
                     <div>
                       <img
-                        src={image}
+                        src={URL.createObjectURL(image)}
                         alt="profile_image"
                         style={{
                           height: "200px",
