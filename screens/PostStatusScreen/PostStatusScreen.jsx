@@ -1,24 +1,57 @@
-import { HomeLayout } from '@/layout'
-import styles from '@/layout/HomeLayout/HomeLayout.module.css'
+import { HomeLayout } from "@/layout";
+import styles from "@/layout/HomeLayout/HomeLayout.module.css";
 import imgOne from "../../images/me.jpeg";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import ImageCarousels from "../../components/Home/ImageCarousels";
+import { useFormik } from "formik";
+import { useRouter } from "next/router";
+import { useDispatch, useSelector } from "react-redux";
+import { createCommentAction } from "@/redux/slices/commentSlice/commentSlice";
+import { getSinglePostAction } from "@/redux/slices/postSlice/postSlice";
+import img from '../../images/default-photo.svg'
+import PostedAt from "@/components/PostedAt/postedAt";
 
 const PostStatusScreen = () => {
+  const router = useRouter();
+  const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
+  const [postId, setPostId] = useState(null)
+const {loading,individualPost}=useSelector(state=>state?.post?.singlePost)
   const openModal = () => {
     setIsOpen(true);
   };
   const closeModal = () => {
     setIsOpen(false);
   };
+
+  useEffect(() => {
+    console.log(router.query.postId);
+    if (router.query.postId) {
+      localStorage.setItem("postId", router.query.postId);
+      dispatch(getSinglePostAction(router.query.postId));
+    } else {
+    setPostId(localStorage.getItem("postId"));
+      dispatch(getSinglePostAction(postId));
+    }
+    // console.log(individualPost);
+  }, []);
+
+  useEffect(() => {
+    // console.log(individualPost?.data?._d);
+    console.log(postId);
+  }, [loading==false]);
+
   // Function to handle image upload
   const [image, setImage] = useState(null);
+
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
     const reader = new FileReader();
+    // console.log(file);
     reader.onload = (e) => {
       setImage(e.target.result);
+      formik.values.image = e.target.result;
     };
     if (file) {
       reader.readAsDataURL(file);
@@ -28,7 +61,30 @@ const PostStatusScreen = () => {
   // Function to handle image removal
   const handleImageRemove = () => {
     setImage(null);
+    formik.values.image = null;
   };
+
+  // Function for writing comment
+  const textChange = (event) => {
+    console.log(event.target.value);
+    formik.values.text = event.target.value;
+  };
+
+  // Function for sending comments
+  const formik = useFormik({
+    initialValues: { text: "", image: null },
+    onSubmit: (values) => {
+      const formData = new FormData();
+      console.log(values);
+      formData.append("text", values.text);
+      formData.append("image", values.image);
+      formData.append("post", router.query.postId?router.query.postId:postId);
+      dispatch(createCommentAction(formData));
+      values.text = "";
+      values.image = "";
+      setImage(null);
+    },
+  });
 
   return (
     <HomeLayout>
@@ -37,42 +93,57 @@ const PostStatusScreen = () => {
         <nav style={{ paddingLeft: "0px" }} className={styles.___main_nav}>
           <div>
             <span style={{ paddingLeft: "18px" }} class={styles.icon_back}>
-              <svg style={{ marginLeft: "18px" }} class={styles._00_history__back} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgb(90, 90, 90)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H6M12 5l-7 7 7 7" /></svg>
+              <svg
+                style={{ marginLeft: "18px" }}
+                class={styles._00_history__back}
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="rgb(90, 90, 90)"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M19 12H6M12 5l-7 7 7 7" />
+              </svg>
             </span>
             <span
-              class={styles.not_home_nav_text}>Post</span>
-            <span>
-              {/*  */}
+              class={styles.not_home_nav_text}
+            >
+              Post
             </span>
+            <span>{/*  */}</span>
           </div>
         </nav>
 
+      {loading? "Loading...":  
+        <div>
         {/* post preview */}
-        <div className={`${styles.div} ${styles.data_content}`}>
-
+      <div className={`${styles.div} ${styles.data_content}`}>
           <div style={{ position: "relative" }}>
             <div className={styles.hover_main_image}>
               <Image
-                src={imgOne}
+                src={individualPost?.data?.user?.profilePhoto ==''? img : individualPost?.data?.user?.profilePhoto }
                 alt="profile-img"
                 className={styles.data_content_pimg}
                 width="22"
                 height="22"
               />
-
             </div>
 
             <div>
               <div>
-                <span className={`${styles._0022_nm_usr} ${styles._0022_nm_usr__pp}`}>
-                  Penuel John
-                  <span>@penuel__king</span>
+                <span
+                  className={`${styles._0022_nm_usr} ${styles._0022_nm_usr__pp}`}
+                >
+                  {individualPost?.data?.user?.name}
+                  <span>@{individualPost?.data?.user?.username}</span>
                 </span>
               </div>
               <div>
-                <span className={styles._000_dt_data}>
-                  17h
-                </span>
+                <span className={styles._000_dt_data}><PostedAt time={individualPost?.data?.createdAt} /></span>
               </div>
             </div>
 
@@ -112,18 +183,23 @@ const PostStatusScreen = () => {
             </div>
           </div>
 
-
           <div
             className={`${styles.data_content_all} ${styles._00dca} ${styles.data_no_content}`}
           >
             <div>
-              <span className={`${styles._ttl_top} ${styles._ttl_top__pp}`}>This is the way</span>
+              <span className={`${styles._ttl_top} ${styles._ttl_top__pp}`}>
+                {individualPost?.data?.title}
+              </span>
             </div>
 
             <div>
-              <span className={`${styles._ttl_contxt} ${styles._ttl_contxt__pp}`}>This is the description</span>
+              <span
+                className={`${styles._ttl_contxt} ${styles._ttl_contxt__pp}`}
+              >
+                {individualPost?.data?.desc}
+              </span>
             </div>
-
+{individualPost?.data?.postImage.length > 0 && <ImageCarousels postImage={individualPost?.data?.postImage} />}
             {/* this should be at the bottom of the post always, text, image, video, audio should always come above */}
             <span style={{display: "block", marginLeft: "0px", paddingTop: "7px", paddingBottom: "0px", fontSize: "14px"}} className={styles._000_dt_data}>10:30 AM - <span>May 14th 2023</span></span>
             {/* this should be at the bottom of the post always, text, image, video, audio should always come above */}
@@ -143,7 +219,7 @@ const PostStatusScreen = () => {
                     <path d="M16.5 3C19.538 3 22 5.5 22 9c0 7-7.5 11-10 12.5C9.5 20 2 16 2 9c0-3.5 2.5-6 5.5-6C9.36 3 11 4 12 5c1-1 2.64-2 4.5-2zm-3.566 15.604c.881-.556 1.676-1.109 2.42-1.701C18.335 14.533 20 11.943 20 9c0-2.36-1.537-4-3.5-4-1.076 0-2.24.57-3.086 1.414L12 7.828l-1.414-1.414C9.74 5.57 8.576 5 7.5 5 5.56 5 4 6.656 4 9c0 2.944 1.666 5.533 4.645 7.903.745.592 1.54 1.145 2.421 1.7.299.189.595.37.934.572.339-.202.635-.383.934-.571z" />
                   </svg>
                 </span>
-                <span className={styles._00mn_spn_cnt}>900</span>
+                <span className={styles._00mn_spn_cnt}>{individualPost?.data?.likes.length}</span>
               </span>
               <span className={styles._00mn_span}>
                 <span>
@@ -217,8 +293,7 @@ const PostStatusScreen = () => {
           </div>
         </div>
         {/* post preview */}
-
-
+        
         {/* comment box */}
         <div className={styles.whats_yyy}>
           <div className={styles.parnt__cnt_wyyyt}>
@@ -239,11 +314,12 @@ const PostStatusScreen = () => {
           </div>
         </div>
         {/* comment box */}
+        </div>
+        }
 
 
         {/* comments */}
-        <div className={styles.div}>
-          {/*  */}
+        {/* <div className={styles.div}>
           <div>
             <div className={styles.hover_main_image}>
               <Image src={imgOne} className={styles.image_h_c} />
@@ -253,20 +329,41 @@ const PostStatusScreen = () => {
                 <span className={styles._0022_nm_usr}>
                   Penuel John
                   <span>@penuel__king</span>
-                  <span style={{ display: "inline", marginLeft: "12px", fontSize: "14px" }} className={styles._000_dt_data}>17h</span>
+                  <span
+                    style={{
+                      display: "inline",
+                      marginLeft: "12px",
+                      fontSize: "14px",
+                    }}
+                    className={styles._000_dt_data}
+                  >
+                    17h
+                  </span>
                 </span>
               </div>
               <div>
-                <span className={styles._000_dt_data}>Replying <span style={{ color: "var(--brand-color)" }}>@penuel__king</span></span>
+                <span className={styles._000_dt_data}>
+                  Replying{" "}
+                  <span style={{ color: "var(--brand-color)" }}>
+                    @penuel__king
+                  </span>
+                </span>
               </div>
             </div>
           </div>
           <div>
-            <span className={styles._ttl_contxt}>why are you acting weird, this is a very dumb take...lmao.
-              <br /><br />That's my 2 cents.</span>
+            <span className={styles._ttl_contxt}>
+              why are you acting weird, this is a very dumb take...lmao.
+              <br />
+              <br />
+              That's my 2 cents.
+            </span>
           </div>
           <div className={styles._00ftr_pst}>
-            <span className={styles._00mn_span} onClick={() => dispatch(likePostAction({ postId: post._id }))}>
+            <span
+              className={styles._00mn_span}
+              onClick={() => dispatch(likePostAction({ postId: post._id }))}
+            >
               <span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -351,44 +448,98 @@ const PostStatusScreen = () => {
               <span className={styles._00mn_spn_cnt}>1.1k</span>
             </span>
           </div>
-        </div>
+        </div> */}
         {/* comments */}
-
 
         {/* comment modal */}
         {isOpen && (
-          <form>
+          <form onSubmit={formik.handleSubmit}>
             <div className={styles.xxyymdl__asssl}>
               <div className={styles.comment__xxuxxuyy}>
                 <div>
-                  <span style={{ fontFamily: "var(--global-regular)", fontSize: "15px", marginBottom: "13px", display: "block" }}>Replying to <span style={{ color: "var(--brand-color)" }}>@penuel__king</span></span>
+                  <span
+                    style={{
+                      fontFamily: "var(--global-regular)",
+                      fontSize: "15px",
+                      marginBottom: "13px",
+                      display: "block",
+                    }}
+                  >
+                    Replying to{" "}
+                    <span style={{ color: "var(--brand-color)" }}>
+                      @{individualPost?.data?.user?.username}
+                    </span>
+                  </span>
                 </div>
                 <div style={{ display: "flex" }}>
                   <div>
-                    <Image src={imgOne} alt="image_profile_img" className={styles.impg__cpr__nal} />
+                    <Image
+                      src={imgOne}
+                      alt="image_profile_img"
+                      className={styles.impg__cpr__nal}
+                    />
                   </div>
                   <div>
-                    <textarea name="" id="" cols="30" rows="10" placeholder="Compose your reply" className={styles.post__reply__m}></textarea>
+                    <textarea
+                      name="text"
+                      id=""
+                      onChange={formik.handleChange}
+                      value={formik.values.text}
+                      onBlur={formik.handleBlur}
+                      cols="30"
+                      rows="10"
+                      placeholder="Compose your reply"
+                      className={styles.post__reply__m}
+                    ></textarea>
                   </div>
                 </div>
                 <div>
                   {image && (
                     <div>
-                      <img src={image} alt="profile_image" style={{ height: "200px", width: "100%", border: "1px solid gray", objectFit: "cover", borderRadius: "8px" }} />
+                      <img
+                        src={image}
+                        alt="profile_image"
+                        style={{
+                          height: "200px",
+                          width: "100%",
+                          border: "1px solid gray",
+                          objectFit: "cover",
+                          borderRadius: "8px",
+                        }}
+                      />
                       <button onClick={handleImageRemove}>Remove image</button>
                     </div>
                   )}
                 </div>
                 <div>
-                  <button className={styles.replit__vbrn} style={{ marginRight: "10px" }} type="submit">Post</button>
-                  <button className={styles.replit__vbrn} style={{ marginRight: "10px" }} onClick={closeModal} type="button">Close</button>
-                  <button className={styles.replit__vbrn} onClick={() => document.getElementById('fileInput').click()} type="button">Upload Pic/gif</button>
+                  <button
+                    className={styles.replit__vbrn}
+                    style={{ marginRight: "10px" }}
+                    type="submit"
+                  >
+                    Post
+                  </button>
+                  <button
+                    className={styles.replit__vbrn}
+                    style={{ marginRight: "10px" }}
+                    onClick={closeModal}
+                    type="button"
+                  >
+                    Close
+                  </button>
+                  <button
+                    className={styles.replit__vbrn}
+                    onClick={() => document.getElementById("fileInput").click()}
+                    type="button"
+                  >
+                    Upload Pic/gif
+                  </button>
                   <input
                     type="file"
                     id="fileInput"
                     accept="image/jpg, image/jpeg, image/png"
                     onChange={handleImageUpload}
-                    style={{ display: 'none' }}
+                    style={{ display: "none" }}
                   />
                 </div>
               </div>
@@ -398,7 +549,7 @@ const PostStatusScreen = () => {
         {/* comment modal */}
       </div>
     </HomeLayout>
-  )
-}
+  );
+};
 
-export default PostStatusScreen
+export default PostStatusScreen;

@@ -38,6 +38,21 @@ export const getAllPostsAction = createAsyncThunk(
     }
   }
 );
+export const getSinglePostAction = createAsyncThunk(
+  "post/single-post",
+  async (postId, { rejectWithValue }) => {
+  const token = Cookies.get("token");
+    try {
+      const res = await getRequest({
+        url: `${baseUrl}${URL.getSinglePost}${postId}`,
+        token: token,
+      });
+      return res.data;
+    } catch (err) {
+      return rejectWithValue(err?.response?.data?.message);
+    }
+  }
+);
 
 export const likePostAction = createAsyncThunk(
   'post/like',
@@ -123,6 +138,11 @@ const postSlice = createSlice({
       apiError: null,
       posts: [],
     },
+    singlePost: {
+      loading: false,
+      apiError: null,
+      individualPost: {},
+    },
     likedPost: {
       loading: false,
       apiError: null,
@@ -166,20 +186,37 @@ const postSlice = createSlice({
       state.allPosts.apiError = action?.payload;
     });
 
-    //likePost
-    builder.addCase(likePostAction.pending, (state) => {
-      state.likedPost.loading = true;
-      state.likedPost.reccentPost = {};
-      state.likedPost.apiError = null;
-    })
-    builder.addCase(likePostAction.fulfilled, (state, action) => {
-      state.likedPost.loading = false
-      state.likedPost.reccentPost = action?.payload
-    })
-    builder.addCase(likePostAction.rejected, (state, action) => {
-      state.likedPost.loading = false
-      state.likedPost.apiError = action?.payload
-    });
+//singlePost
+builder.addCase(getSinglePostAction.pending,(state)=>{
+state.singlePost.loading=true;
+state.singlePost.individualPost={};
+state.singlePost.apiError=null;
+})
+builder.addCase(getSinglePostAction.fulfilled,(state,action)=>{
+console.log(state,action);
+state.singlePost.loading=false
+state.singlePost.individualPost=action?.payload
+})
+builder.addCase(getSinglePostAction.rejected,(state,action)=>{
+state.singlePost.loading=false
+state.singlePost.apiError=action?.payload
+});
+
+//likePost
+builder.addCase(likePostAction.pending,(state)=>{
+state.likedPost.loading=true;
+state.likedPost.reccentPost={};
+state.likedPost.apiError=null;
+})
+builder.addCase(likePostAction.fulfilled,(state,action)=>{
+console.log(state,action);
+state.likedPost.loading=false
+state.likedPost.reccentPost=action?.payload
+})
+builder.addCase(likePostAction.rejected,(state,action)=>{
+state.likedPost.loading=false
+state.likedPost.apiError=action?.payload
+});
 
     //dislikePost
     builder.addCase(dislikePostAction.pending, (state) => {
