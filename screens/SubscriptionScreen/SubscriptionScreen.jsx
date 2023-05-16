@@ -1,6 +1,6 @@
 import { HomeLayout } from '@/layout'
 import Image from 'next/image'
-import imgOne from "../../images/me.jpeg";
+import img from "../../images/me.jpeg";
 
 import styles from '@/layout/HomeLayout/HomeLayout.module.css'
 
