@@ -1,11 +1,11 @@
 import React, { useContext, useEffect } from "react";
 import { MessagesScreen } from "@/screens";
 import Head from "next/head";
-import {SocketContext} from '../redux/context/socket.js';
+// import {SocketContext} from '../redux/context/socket.js';
 
 const Messages = () => {
 
-  const socket = useContext(SocketContext);
+  // const socket = useContext(SocketContext);
 
  
   return (
