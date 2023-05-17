@@ -13,32 +13,34 @@ const EachPost = ({ post }) => {
   const [postId, setPostId] = useState(post._id)
   const socket = useContext(SocketContext);
   const dispatch = useDispatch()
-  const [likes, setLikes] = useState(post.likes.length);
-  const [disLikes, setDisLikes] = useState(post.dislikes.length);
+  const [likes, setLikes] = useState(post.likes);
+  const [disLikes, setDisLikes] = useState(post.dislikes);
+  const [bookmarks, setBookmarks] = useState(post.bookmarks);
   const { user, apiError } = useSelector((state) => state?.auth?.getUser);
+
 
   const isLiked = post.likes.includes(user?.data?._id)
   const isBookmarked = post.bookmarks.includes(user?.data?._id)
 
-  console.log({isLiked});
-
   const handleLike = async () => {
     try {
       const res = await dispatch(likePostAction({ postId }))
-      setLikes(res.payload.data.likes.length)
+      console.log(res.payload.data);
+      setLikes(res.payload.data.likes)
     } catch (error) {
       console.log({ error });
     }
   }
   useEffect(() => {
     socket.on(postId, (data) => {
+      console.log(data.data);
       setLikes(data.data.count)
     })
   }, [socket])
   const handleDislike = async (id) => {
     try {
       const res = await dispatch(dislikePostAction({ postId: id }))
-      setDisLikes(res.payload.data.dislikes.length)
+      setDisLikes(res.payload.data.dislikes)
     } catch (error) {
       console.log({ error });
     }
@@ -57,14 +59,15 @@ const EachPost = ({ post }) => {
           <div>
             <span className={styles._ttl_contxt}>{post.desc}</span>
           </div>
-          {/* John, this is the ImageCarousels */}
-          {post.postImage.length !== 0 && <ImageCarousels postImage={post.postImage} />}
-          {post.postVideo.length !== 0 &&
+          {
+            post.postImage.length !== 0 &&
+            <ImageCarousels postImage={post.postImage} />
+          }
+          {/* {post.postVideo.length !== 0 &&
             <div className={styles.div__for__vid}>
-              {/* John, this is the video */}
               <HomeVideo postVideo={post.postVideo} />
             </div>
-          }
+          } */}
 
           <div className={styles._00ftr_pst}>
             <span className={`${styles._00mn_span}`}
@@ -85,16 +88,14 @@ const EachPost = ({ post }) => {
                     <path d="M16.5 3C19.538 3 22 5.5 22 9c0 7-7.5 11-10 12.5C9.5 20 2 16 2 9c0-3.5 2.5-6 5.5-6C9.36 3 11 4 12 5c1-1 2.64-2 4.5-2z" />
                   </svg>
                 }
-                {/* this is the normal heart */}
-                {/* this is the red heart */}
               </span>
-              <span className={styles._00mn_spn_cnt}>{likes}</span>
+              <span className={styles._00mn_spn_cnt}>{likes.length}</span>
             </span>
             <span className={`${styles._00mn_span}`} onClick={() => handleDislike(post._id)}>
               <span>
                 <AiOutlineDislike size={20} className={`${styles.blue} ${styles.x_icn_ftr}`} />
               </span>
-              <span className={styles._00mn_spn_cnt}>{disLikes}</span>
+              <span className={styles._00mn_spn_cnt}>{disLikes.length}</span>
             </span>
             <span className={styles._00mn_span}>
               <span>
@@ -114,18 +115,13 @@ const EachPost = ({ post }) => {
             </span>
             <span className={styles._00mn_span}>
               <span>
-                {/* this is the normal bookmark /> */}
-                <svg className={`${styles.blue} ${styles.x_icn_ftr}`} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                {isBookmarked ? <svg className={`${styles.blue} ${styles.x_icn_ftr}`} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                   <path d="M5 2H19C19.5523 2 20 2.44772 20 3V22.1433C20 22.4194 19.7761 22.6434 19.5 22.6434C19.4061 22.6434 19.314 22.6168 19.2344 22.5669L12 18.0313L4.76559 22.5669C4.53163 22.7136 4.22306 22.6429 4.07637 22.4089C4.02647 22.3293 4 22.2373 4 22.1433V3C4 2.44772 4.44772 2 5 2ZM18 4H6V19.4324L12 15.6707L18 19.4324V4Z" />
-                </svg>
-
-                {/* this is the blue bookmark */}
-                <svg className={`${styles.blue} ${styles.x_icn_ftr}`} xmlns="http://www.w3.org/2000/svg" style={{ fill: "#00acee" }} viewBox="0 0 24 24">
+                </svg> : <svg className={`${styles.blue} ${styles.x_icn_ftr}`} xmlns="http://www.w3.org/2000/svg" style={{ fill: "#00acee" }} viewBox="0 0 24 24">
                   <path d="M5 2H19C19.5523 2 20 2.44772 20 3V22.1433C20 22.4194 19.7761 22.6434 19.5 22.6434C19.4061 22.6434 19.314 22.6168 19.2344 22.5669L12 18.0313L4.76559 22.5669C4.53163 22.7136 4.22306 22.6429 4.07637 22.4089C4.02647 22.3293 4 22.2373 4 22.1433V3C4 2.44772 4.44772 2 5 2Z" />
-                </svg>
-
+                </svg>}
               </span>
-              <span className={styles._00mn_spn_cnt}>{post.bookmarks.length}</span>
+              <span className={styles._00mn_spn_cnt}>{bookmarks.length}</span>
             </span>
             <span className={styles._00mn_span}>
               <span>

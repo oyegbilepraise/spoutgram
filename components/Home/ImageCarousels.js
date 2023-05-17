@@ -1,8 +1,6 @@
 import React from "react";
-import styles from "@/layout/HomeLayout/HomeLayout.module.css";
 import Image from "next/image";
-import Carousel from "react-multi-carousel";
-import people2 from "../../images/people-2.jpeg";
+import HomeVideo from "./HomeVideo";
 
 function ImageCarousels({ postImage }) {
   const responsive = {
@@ -26,58 +24,25 @@ function ImageCarousels({ postImage }) {
     <>
       <div className={`grid ${postImage.length > 4 ? 'four-columns' : 'two-columns'}`}>
         {postImage.map((pic, id) => (
-          <div className="grid-item">
-            <Image
-              src={pic !== null && pic}
-              alt="picgrid"
-              className={''}
-              width={200}
-              height={200}
-              priority
-              key={id}
-            />
-          </div>
+          pic.endsWith('.jpg') ?
+            <div className="grid-item">
+              <Image
+                src={pic !== null && pic}
+                alt="picgrid"
+                className={''}
+                width={200}
+                height={200}
+                priority
+                key={id}
+              />
+            </div>
+            : 
+            <video src={pic} key={id} />
+            // <HomeVideo videoUrl={pic} key={id} />
+
         ))}
       </div>
     </>
-    // <div className={`${styles.data_content_img} ${styles.grid_101}`}>
-    //   {postImage.length === 1 ? (
-    //     <Image
-    //       src={postImage[0]}
-    //       alt="picgrid"
-    //       className={styles._00img_data}
-    //       width={1000}
-    //       height={1000}
-    //       priority
-    //     />
-    //   ) : (
-    //     <Carousel
-    //       swipeable={true}
-    //       draggable={true}
-    //       arrows={true}
-    //       showDots={true}
-    //       className=""
-    //       responsive={responsive}
-    //       ssr={true}
-    //       keyBoardControl={true}
-    //       customTransition="all .5"
-    //       transitionDuration={500}
-    //       dotListClass="custom-dot-list-style"
-    //     >
-    //       {postImage.map((pic,id) => (
-    //         <Image
-    //           src={pic!==null&&pic}
-    //           alt="picgrid"
-    //           className={styles._00img_data}
-    //           width={1000}
-    //           height={1000}
-    //           priority
-    //           key={id}
-    //         />
-    //       ))}
-    //     </Carousel>
-    //   )}
-    // </div>
   );
 }
 
