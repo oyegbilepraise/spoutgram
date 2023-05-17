@@ -13,7 +13,8 @@ import EmojiPicker from "emoji-picker-react";
 import { createRef } from "react";
 
 const CreatePostScreen = () => {
-const inputRef=createRef()
+const inputTitle=createRef()
+const inputDesc=createRef()
   const [cursorPosition, setcursorPosition] = useState("")
   const [showPostSettings, setShowPostSettings] = useState(false);
   const dispatch = useDispatch();
@@ -107,27 +108,33 @@ const inputRef=createRef()
   }
 
       const handleEmojiClick=({emoji})=>{
-  const ref=inputRef.current;
+  if (inputDesc.current.name=="desc") {
+  const ref=inputDesc.current;
   ref.focus()
-  if (inputRef.current.name=="desc") {
   const start=formik.values.desc.substring(0,ref.selectionStart)
   const end=formik.values.desc.substring(ref.selectionStart)
   let message= start + emoji + end
   formik.values.desc=message
-  console.log(inputRef.current.name);
+  console.log(inputDesc.current.name);
   setcursorPosition(start.length+emoji.length)  
-  }else if (inputRef.current.name=="title") {
+  }else if (inputTitle.current.name=="title") {
+  const ref=inputTitle.current;
+  ref.focus()
   const start=formik.values.title.substring(0,ref.selectionStart)
   const end=formik.values.title.substring(ref.selectionStart)
   let message= start + emoji + end
   formik.values.title=message
-  console.log(inputRef.current.name);
+  console.log(inputTitle.current.name);
   setcursorPosition(start.length+emoji.length)   
   }
   }
 
    useEffect(() => {
-    inputRef.current.selectionEnd=cursorPosition
+     if (inputDesc.current.name=="desc") {
+    inputDesc.current.selectionEnd=cursorPosition
+  }else if (inputTitle.current.name=="title") {  
+    inputTitle.current.selectionEnd=cursorPosition
+  }
   }, [cursorPosition])
 
 
@@ -168,7 +175,7 @@ const inputRef=createRef()
                 className={`${styles.post__data__content} ${styles.title__content}`}
                 placeholder="Post Title"
                 name="title"
-                ref={inputRef}
+                ref={inputTitle}
                 value={formik.values.title}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
@@ -179,7 +186,7 @@ const inputRef=createRef()
                 className={styles.post__data__content}
                 placeholder="Start Post"
                 name="desc"
-                ref={inputRef}
+                ref={inputDesc}
                 value={formik.values.desc}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
