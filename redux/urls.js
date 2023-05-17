@@ -33,6 +33,9 @@ getParticularPostComments:"/comments/",
 
   // Boomarks
   boomarks: '/posts/bookmarks',
+
+  // Views
+  views: '/posts/view_post/'
 };
 
 
