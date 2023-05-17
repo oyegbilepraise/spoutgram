@@ -68,13 +68,13 @@ function HomeVideo({ videoUrl }) {
       <video
         src={videoUrl}
         ref={videoRef}
-        onTimeUpdate={handleTimeUpdate}
-        onLoadedMetadata={handleLoadedMetadata}
+        // onTimeUpdate={handleTimeUpdate}
+        // onLoadedMetadata={handleLoadedMetadata}
         muted={muted}
         onClick={togglePlay}
         className={styles.vide0__baby}
       />
-      <div>
+      {/* <div>
         <button
           style={{ display: buttonVisible ? "block" : "none" }}
           onClick={togglePlay}
@@ -149,7 +149,7 @@ function HomeVideo({ videoUrl }) {
           <button onClick={() => handlePlaybackRateChange(1.5)}>1.5x</button>
           <button onClick={() => handlePlaybackRateChange(2)}>2x</button>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }

@@ -37,7 +37,8 @@ function ImageCarousels({ postImage }) {
               />
             </div>
             : 
-            <HomeVideo videoUrl={pic} key={id} />
+            <video src={pic} key={id} />
+            // <HomeVideo videoUrl={pic} key={id} />
 
         ))}
       </div>
