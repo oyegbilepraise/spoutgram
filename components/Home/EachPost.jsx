@@ -17,6 +17,7 @@ const EachPost = ({ post }) => {
   const [disLikes, setDisLikes] = useState(post.dislikes);
   const { user, apiError } = useSelector((state) => state?.auth?.getUser);
 
+
   const isLiked = post.likes.includes(user?.data?._id)
   const isBookmarked = post.bookmarks.includes(user?.data?._id)
 
@@ -24,7 +25,7 @@ const EachPost = ({ post }) => {
     try {
       const res = await dispatch(likePostAction({ postId }))
       console.log(res.payload.data);
-      setLikes(res.payload.data.likes.length)
+      setLikes(res.payload.data.likes)
     } catch (error) {
       console.log({ error });
     }
@@ -38,7 +39,7 @@ const EachPost = ({ post }) => {
   const handleDislike = async (id) => {
     try {
       const res = await dispatch(dislikePostAction({ postId: id }))
-      setDisLikes(res.payload.data.dislikes.length)
+      setDisLikes(res.payload.data.dislikes)
     } catch (error) {
       console.log({ error });
     }
@@ -57,14 +58,15 @@ const EachPost = ({ post }) => {
           <div>
             <span className={styles._ttl_contxt}>{post.desc}</span>
           </div>
-          {/* John, this is the ImageCarousels */}
-          {post.postImage.length !== 0 && <ImageCarousels postImage={post.postImage} />}
-          {post.postVideo.length !== 0 &&
+          {
+            post.postImage.length !== 0 &&
+            <ImageCarousels postImage={post.postImage} />
+          }
+          {/* {post.postVideo.length !== 0 &&
             <div className={styles.div__for__vid}>
-              {/* John, this is the video */}
               <HomeVideo postVideo={post.postVideo} />
             </div>
-          }
+          } */}
 
           <div className={styles._00ftr_pst}>
             <span className={`${styles._00mn_span}`}
