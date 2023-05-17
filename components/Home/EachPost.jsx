@@ -13,18 +13,17 @@ const EachPost = ({ post }) => {
   const [postId, setPostId] = useState(post._id)
   const socket = useContext(SocketContext);
   const dispatch = useDispatch()
-  const [likes, setLikes] = useState(post.likes.length);
-  const [disLikes, setDisLikes] = useState(post.dislikes.length);
+  const [likes, setLikes] = useState(post.likes);
+  const [disLikes, setDisLikes] = useState(post.dislikes);
   const { user, apiError } = useSelector((state) => state?.auth?.getUser);
 
   const isLiked = post.likes.includes(user?.data?._id)
   const isBookmarked = post.bookmarks.includes(user?.data?._id)
 
-  console.log({isLiked});
-
   const handleLike = async () => {
     try {
       const res = await dispatch(likePostAction({ postId }))
+      console.log(res.payload.data);
       setLikes(res.payload.data.likes.length)
     } catch (error) {
       console.log({ error });
@@ -32,6 +31,7 @@ const EachPost = ({ post }) => {
   }
   useEffect(() => {
     socket.on(postId, (data) => {
+      console.log(data.data);
       setLikes(data.data.count)
     })
   }, [socket])
@@ -88,13 +88,13 @@ const EachPost = ({ post }) => {
                 {/* this is the normal heart */}
                 {/* this is the red heart */}
               </span>
-              <span className={styles._00mn_spn_cnt}>{likes}</span>
+              <span className={styles._00mn_spn_cnt}>{likes.length}</span>
             </span>
             <span className={`${styles._00mn_span}`} onClick={() => handleDislike(post._id)}>
               <span>
                 <AiOutlineDislike size={20} className={`${styles.blue} ${styles.x_icn_ftr}`} />
               </span>
-              <span className={styles._00mn_spn_cnt}>{disLikes}</span>
+              <span className={styles._00mn_spn_cnt}>{disLikes.length}</span>
             </span>
             <span className={styles._00mn_span}>
               <span>
