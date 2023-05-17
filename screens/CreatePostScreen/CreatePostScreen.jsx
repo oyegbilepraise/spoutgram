@@ -11,6 +11,8 @@ import { MdPermMedia } from 'react-icons/md'
 import {
   BtnloadSvg,
 } from "../../components";
+import { useRouter } from "next/router";
+
 
 const CreatePostScreen = () => {
   const [showPostSettings, setShowPostSettings] = useState(false);
@@ -104,6 +106,10 @@ const CreatePostScreen = () => {
     toggleEmoji();
   }
 
+  const router = useRouter();
+  const handleGoBack = () => {
+    router.back(); // Go back to the previous page or route
+  };
 
   return (
     <HomeLayout>
@@ -111,7 +117,7 @@ const CreatePostScreen = () => {
       <div class={`${styles.timeline} ${styles._000middlebar}`}>
         <nav className={styles.___main_nav}>
           <div>
-            <span class={styles.icon_back}>
+            <span class={styles.icon_back} onClick={handleGoBack}>
               <svg
                 class={styles._00_history__back}
                 xmlns="http://www.w3.org/2000/svg"

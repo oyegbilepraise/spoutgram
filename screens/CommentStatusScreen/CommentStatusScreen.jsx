@@ -11,7 +11,7 @@ import ImageCarousels from "../../components/Home/ImageCarousels";
 import { useRouter } from 'next/router';
 
 const CommentStatusScreen = () => {
-const router=useRouter();
+const router = useRouter();
 const dispatch = useDispatch();
 const [postId, setPostId] = useState(null)
 
@@ -59,13 +59,17 @@ const [postId, setPostId] = useState(null)
     setImage(null);
   };
 
+  const handleGoBack = () => {
+    router.back(); // Go back to the previous page or route
+  };
+
   return (
     <HomeLayout>
       {/* div.timeline -> middle */}
       <div class={`${styles.timeline} ${styles._000middlebar}`}>
         <nav style={{paddingLeft: "0px"}} className={styles.___main_nav}>
           <div> 
-            <span style={{paddingLeft: "18px"}} class={styles.icon_back}>
+            <span style={{paddingLeft: "18px"}} class={styles.icon_back} onClick={handleGoBack}>
               <svg style={{marginLeft: "18px"}} class={styles._00_history__back} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgb(90, 90, 90)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H6M12 5l-7 7 7 7"/></svg>
             </span>
             <span 

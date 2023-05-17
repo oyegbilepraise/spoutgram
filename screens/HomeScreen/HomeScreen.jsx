@@ -1,6 +1,6 @@
 import { HomeLayout } from "@/layout";
 import Image from "next/image";
-import img from "../../images/default-photo.svg";
+import img from '../../images/default.jpeg' 
 import styles from "@/layout/HomeLayout/HomeLayout.module.css";
 import Post from "@/components/Home/Post";
 import { useEffect, useState } from "react";
@@ -25,21 +25,23 @@ const HomeScreen = (props) => {
   return (
     <HomeLayout>
       <div className={`${styles.timeline} ${styles._000middlebar}`}>
-        <nav className={styles.___main_nav}>
+        <nav className={styles.___main_nav} style={{borderBottom: "transparent"}}>
           <span>Home</span>
         </nav>
 
         <div className={styles.whats_yyy}>
           <div className={styles.parnt__cnt_wyyyt}>
             <div className={styles.inipic_xyz}>
-              <Image alt="img" className={styles.img__winipc} src={img} />
+              <Link href={`${user?.data?.username}`}>
+                <Image alt="img" className={styles.img__winipc} src={img} />
+              </Link>
             </div>
             <div className={styles.ini__inp}>
               <Link href="/createpost">
                 <input
                   type="text"
                   className={styles.disbld__inp__post}
-                  placeholder="What's in the Spotlight?"
+                  placeholder="Compose a new post"
                   disabled
                 />
               </Link>

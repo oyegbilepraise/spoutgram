@@ -1,6 +1,7 @@
 import './RightSidebar.module.css'
 import React, { useState } from "react";
-import img from "../../images/default-photo.svg";
+// import img from "../../images/default-photo.svg";
+import img from '../../images/default.jpeg' 
 import Image from "next/image";
 import styles from "@/layout/HomeLayout/HomeLayout.module.css";
 import Carousel from "react-multi-carousel";
@@ -20,38 +21,49 @@ const ButtonGroup = ({ next, previous, goToSlide, ...rest }) => {
     >
       {" "}
       <button
-        className={currentSlide === 0 ? "disable" : ""}
+        // className={currentSlide === 0 ? "disable" : ""}
+        className={styles.buttons__prv__slide}
         onClick={() => previous()}
         style={{ cursor: "pointer" }}
+        // {currentSlide === 0 ? "disable" : ""}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          width={21}
-          height={21}
+          width={19}
+          height={19}
           viewBox="0 0 24 24"
           fill="none"
-          stroke="var(--brand-color)"
+          stroke="#8e8e8e"
           strokeWidth={2}
           strokeLinecap="round"
           strokeLinejoin="round"
+          style={{
+            position: "absolute",
+            top: "50%", left: "50%", transform: "translate(-50%, -50%)"
+          }}
         >
           <path d="M15 18l-6-6 6-6" />
         </svg>
       </button>
       <button
+      className={styles.buttons__prv__slide}
         onClick={() => next()}
-        style={{ marginLeft: "5px", cursor: "pointer" }}
+        style={{ marginLeft: "11px", cursor: "pointer" }}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          width={21}
-          height={21}
+          width={19}
+          height={19}
           viewBox="0 0 24 24"
           fill="none"
-          stroke="var(--brand-color)"
+          stroke="#8e8e8e"
           strokeWidth={2}
           strokeLinecap="round"
           strokeLinejoin="round"
+          style={{
+            position: "absolute",
+            top: "50%", left: "50%", transform: "translate(-50%, -50%)"
+          }}
         >
           <path d="M9 18l6-6-6-6" />
         </svg>
@@ -349,7 +361,7 @@ const RightSidebar = () => {
 
         {/* suggestions */}
         <div className={styles.sgstn}>
-          <span>Suggested Follows</span>
+          <span>Follow Suggestions</span>
           <Carousel
             swipeable={true}
             draggable={true}
