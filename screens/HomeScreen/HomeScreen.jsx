@@ -13,6 +13,7 @@ const HomeScreen = (props) => {
   const { user } = props
 
   const dispatch = useDispatch()
+  
   const token = Cookies.get("token");
   const { loading, apiError, posts } = useSelector(
     (state) => state?.post?.allPosts
