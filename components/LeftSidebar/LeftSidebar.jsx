@@ -48,7 +48,7 @@ const LeftSidebar = () => {
       console.log({ error });
     }
   };
-
+ 
   return (
     <div
       className={`${styles.sidebar} ${styles.onebar} ${styles.no_bar} ${styles._000leftbar}`}
@@ -71,12 +71,12 @@ const LeftSidebar = () => {
       {/* Home */}
 
       {/* Podcasts */}
-      <Link href="/podcasts" className={styles.Link}>
+      {/* <Link href="/podcasts" className={styles.Link}>
         <div className={isActive("/podcasts")}>
           <PodcastSvg />
           <span className={styles.span_data_sidebar}>Podcasts</span>
         </div>
-      </Link>
+      </Link> */}
       {/* Podcasts */}
 
       {/* Notifications */}

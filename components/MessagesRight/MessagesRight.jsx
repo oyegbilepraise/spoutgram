@@ -1,16 +1,23 @@
 import imgOne from "../../images/me.jpeg";
 import default_img from "../../images/onlyf.jpg"
 import Image from 'next/image'
+import { useRouter } from "next/router";
 import styles from '@/layout/HomeLayout/HomeLayout.module.css'
 
 const MessagesRight = () => {
+
+    const router = useRouter();
+    const handleGoBack = () => {
+        router.back(); // Go back to the previous page or route
+    };
+
     return  (
         <>
             <div className={styles.right__mssg__div}>
                 {/*  */}
                 <nav className={styles.___main_nav} style={{borderBottom: "transparent", paddingTop: "14.2px", paddingBottom: "14.2px"}}>
                     <div>
-                    <span className={styles.icon_back}>
+                    <span className={styles.icon_back} onClick={handleGoBack}>
                         <svg
                         className={styles._00_history__back}
                         xmlns="http://www.w3.org/2000/svg"
