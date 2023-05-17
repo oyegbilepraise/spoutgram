@@ -1,46 +1,102 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "@/layout/HomeLayout/HomeLayout.module.css";
 import Image from "next/image";
 import Carousel from "react-multi-carousel";
-import people2 from "../../images/people-2.jpeg";
+import "react-multi-carousel/lib/styles.css";
 
 function ImageCarousels({ postImage }) {
-  const responsive = {
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const openModal = (image) => {
+    setSelectedImage(image);
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setSelectedImage(null);
+    setModalOpen(false);
+  };
+
+ const responsive = {
     desktop: {
       breakpoint: { max: 3000, min: 1024 },
       items: 1,
-      slidesToSlide: 1, // optional, default to 1.
+      slidesToSlide: 1,
     },
     tablet: {
       breakpoint: { max: 1024, min: 464 },
       items: 1,
-      slidesToSlide: 1, // optional, default to 1.
+      slidesToSlide: 1,
     },
     mobile: {
       breakpoint: { max: 464, min: 0 },
       items: 1,
-      slidesToSlide: 1, // optional, default to 1.
+      slidesToSlide: 1,
     },
   };
+
+  const imagesToShow = selectedImage
+    ? [selectedImage, ...postImage.filter((image) => image !== selectedImage)]
+    : postImage;
+
   return (
     <>
-      <div className={`grid ${postImage.length > 4 ? 'four-columns' : 'two-columns'}`}>
+      <div
+        className={`grid ${
+          postImage.length > 4 ? "four-columns" : "two-columns"
+        }`}
+      >
         {postImage.map((pic, id) => (
-          <div className="grid-item">
+          <div className="grid-item" key={id} onClick={() => openModal(pic)}>
             <Image
               src={pic !== null && pic}
               alt="picgrid"
-              className={''}
+              className={""}
               width={200}
               height={200}
               priority
-              key={id}
             />
           </div>
         ))}
       </div>
+
+      {modalOpen && (
+        <div>
+          <div>
+            <span onClick={closeModal}>
+              &times;
+            </span>
+            <div>
+              <Carousel
+                responsive={responsive}
+                arrows={true}
+                infinite={true}
+                showDots={false}
+                keyBoardControl={true}
+                customTransition="transform 300ms ease-in-out"
+                transitionDuration={300}
+              >
+                {imagesToShow.map((pic, id) => (
+                  <div key={id} className={styles.carouselItem}>
+                    <Image
+                      src={pic !== null && pic}
+                      alt="picgrid"
+                      className={styles.carouselImage}
+                      width={500}
+                      height={500}
+                      priority
+                    />
+                  </div>
+                ))}
+              </Carousel>
+            </div>
+          </div>
+        </div>
+      )}
     </>
-    // <div className={`${styles.data_content_img} ${styles.grid_101}`}>
+
+        // <div className={`${styles.data_content_img} ${styles.grid_101}`}>
     //   {postImage.length === 1 ? (
     //     <Image
     //       src={postImage[0]}
