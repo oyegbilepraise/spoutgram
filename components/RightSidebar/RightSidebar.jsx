@@ -10,14 +10,7 @@ import Cookies from "js-cookie";
 import { getSuggestedUsers } from '@/redux/slices/messageSlice/messageSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
-
-// read documentation to style and also inspect element. https://www.npmjs.com/package/react-multi-carousel
-
-// custom arrows. add arrows in place of the buttons
 const ButtonGroup = ({ next, previous, goToSlide, ...rest }) => {
-
-
-
   const {
     carouselState: { currentSlide },
   } = rest;
@@ -374,7 +367,7 @@ const RightSidebar = () => {
 
         {/* suggestions */}
         <div className={styles.sgstn}>
-          
+
           <span>Suggested Follows</span>
           {info ?
             <Carousel
