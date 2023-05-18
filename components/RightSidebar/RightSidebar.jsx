@@ -158,227 +158,27 @@ const RightSidebar = () => {
   };
 
   let info = suggested.data
+  let data = []
+  const itemsPerPage = 6;
 
-  // let paginate = info.slice((3 - 1) * page_size, page_number * page_size)
-//  const  page_size=2
-//  const page_number=3
-//  let group
-//  if (info) {
-//   group =  info.slice((page_number - 1) * page_size, page_number * page_size);
-  
-//  }
+  if (info) {
 
-// console.log(group);
+    let total = Math.round(info.length / 6)
+    console.log(total);
+    for (let index = 1; index <= total; index++) {
+      let format = displayPage(index);
+      data.push({ id: index, items: format })
+    }
 
+  }
 
-// You can try this code snippet
+  function displayPage(page) {
+    let startIndex = (page - 1) * itemsPerPage;
+    let endIndex = startIndex + itemsPerPage;
+    let pageItems = info.slice(startIndex, endIndex);
+    return pageItems
+  }
 
-let items = [
-{id: 1, name: "Item 1"},
-{id: 2, name: "Item 2"},
-{id: 3, name: "Item 3"},
-{id: 4, name: "Item 4"},
-{id: 5, name: "Item 5"},
-{id: 6, name: "Item 6"},
-{id: 7, name: "Item 7"},
-{id: 8, name: "Item 8"},
-{id: 9, name: "Item 9"},
-{id: 10, name: "Item 10"},
-
-];
-let total =Math.round(items.length/6)
-let infodata = []
-const itemsPerPage = 6;
-let currentPage = 1;
-
-function displayPage(page) {
-let startIndex = (page - 1) * itemsPerPage;
-let endIndex = startIndex + itemsPerPage;
-let pageItems = items.slice(startIndex, endIndex);
-
-// console.log(pageItems);
-
-return pageItems
-}
-
-for (let index = 1; index <= total; index++) {
-  const element = items[index];
-
-  let format =  displayPage(index);
-  
-  infodata.push({id:index,items:format})
-  
-}
-
-console.log(infodata);
-
-
-  const data = [
-    {
-      id: 1,
-      items: [
-        {
-          id: 1,
-          name: "Preshpie",
-          username: "@pie",
-          btn: "Follow",
-        },
-        {
-          id: 2,
-          name: "John",
-          username: "@penuel",
-          btn: "Follow",
-        },
-        {
-          id: 3,
-          name: "Tomiwa",
-          username: "@tom",
-          btn: "Follow",
-        },
-        {
-          id: 4,
-          name: "Dipo",
-          username: "@dipox",
-          btn: "Follow",
-        },
-        {
-          id: 5,
-          name: "Dipo",
-          username: "@dipox",
-          btn: "Follow",
-        },
-        {
-          id: 6,
-          name: "Dipo",
-          username: "@dipox",
-          btn: "Follow",
-        },
-      ],
-    },
-    {
-      id: 2,
-      items: [
-        {
-          id: 1,
-          name: "Dada",
-          username: "@pie",
-          btn: "Follow",
-        },
-        {
-          id: 2,
-          name: "YORA",
-          username: "@penuel",
-          btn: "Follow",
-        },
-        {
-          id: 3,
-          name: "dami",
-          username: "@tom",
-          btn: "Follow",
-        },
-        {
-          id: 4,
-          name: "Yemi",
-          username: "@dipox",
-          btn: "Follow",
-        },
-        {
-          id: 5,
-          name: "Yemi",
-          username: "@dipox",
-          btn: "Follow",
-        },
-        {
-          id: 6,
-          name: "Yemi",
-          username: "@dipox",
-          btn: "Follow",
-        },
-      ],
-    },
-    {
-      id: 3,
-      items: [
-        {
-          id: 1,
-          name: "Rema",
-          username: "@badguy",
-          btn: "Follow",
-        },
-        {
-          id: 2,
-          name: "Doja",
-          username: "@cat",
-          btn: "Follow",
-        },
-        {
-          id: 3,
-          name: "Drake",
-          username: "@yourmama",
-          btn: "Follow",
-        },
-        {
-          id: 4,
-          name: "James",
-          username: "@brown",
-          btn: "Follow",
-        },
-        {
-          id: 5,
-          name: "James",
-          username: "@brown",
-          btn: "Follow",
-        },
-        {
-          id: 6,
-          name: "James",
-          username: "@brown",
-          btn: "Follow",
-        },
-      ],
-    },
-    {
-      id: 4,
-      items: [
-        {
-          id: 1,
-          name: "Rema",
-          username: "@badguy",
-          btn: "Follow",
-        },
-        {
-          id: 2,
-          name: "Doja",
-          username: "@cat",
-          btn: "Follow",
-        },
-        {
-          id: 3,
-          name: "Drake",
-          username: "@yourmama",
-          btn: "Follow",
-        },
-        {
-          id: 4,
-          name: "James",
-          username: "@brown",
-          btn: "Follow",
-        },
-        {
-          id: 5,
-          name: "James",
-          username: "@brown",
-          btn: "Follow",
-        },
-        {
-          id: 6,
-          name: "James",
-          username: "@brown",
-          btn: "Follow",
-        },
-      ],
-    },
-  ];
 
   // show search modal toggle
   const [showSearch, setShowSearch] = useState(false);
@@ -423,7 +223,7 @@ console.log(infodata);
         <div className={styles.sgstn}>
 
           <span>Suggested Follows</span>
-          {info ?
+          {data ?
             <Carousel
               swipeable={true}
               draggable={true}
@@ -442,26 +242,32 @@ console.log(infodata);
               dotListClass="custom-dot-list-style"
               itemClass="carousel-item-padding-40-px"
             >
-              {info.map((user, index) => {
+              {data.map(({ id, items }) => {
                 return (
-                  <div key={index}>
+                  <div key={id}>
                     <div>
-                      <div>
-                        <Image
-                          src={img}
-                          alt="img"
-                          className={styles.xqsstn_bn}
-                        />
-                      </div>
-                      <div>
-                        <span className={styles.yynmsq}>{user.name}</span>
-                        <span className={styles.yyusbsq}>@{user.username}</span>
-                      </div>
-                      <div>
-                        <button className={styles.flwx_xyq_fllw}>
-                          Follow
-                        </button>
-                      </div>
+                      {items.map(({ name, id, username, btn }) => {
+                        return (
+                          <div key={id} className={styles.sgstn_tst}>
+                            <div>
+                              <Image
+                                src={img}
+                                alt="img"
+                                className={styles.xqsstn_bn}
+                              />
+                            </div>
+                            <div>
+                              <span className={styles.yynmsq}>{name}</span>
+                              <span className={styles.yyusbsq}>{username}</span>
+                            </div>
+                            <div>
+                              <button className={styles.flwx_xyq_fllw}>
+                                {btn}
+                              </button>
+                            </div>
+                          </div>
+                        );
+                      })}
                     </div>
                   </div>
                 );
