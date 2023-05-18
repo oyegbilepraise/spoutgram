@@ -123,22 +123,15 @@ const CustomDot = ({ onClick, ...rest }) => {
 };
 
 const RightSidebar = () => {
-
   const dispatch = useDispatch()
-
   const token = Cookies.get("token");
   const { loading, apiError, suggested } = useSelector(
     (state) => state?.message?.suggestedUsers
   );
-
-
   useEffect(() => {
     dispatch(getSuggestedUsers(token));
   }, []);
-
   console.log(suggested);
-
-
   const responsive = {
     desktop: {
       breakpoint: { max: 3000, min: 1024 },
@@ -156,7 +149,6 @@ const RightSidebar = () => {
       slidesToSlide: 1, // optional, default to 1.
     },
   };
-
   let info = suggested.data
 
   const data = [
@@ -325,7 +317,6 @@ const RightSidebar = () => {
       ],
     },
   ];
-
   // show search modal toggle
   const [showSearch, setShowSearch] = useState(false);
   const handleSearch = () => {
@@ -367,7 +358,6 @@ const RightSidebar = () => {
 
         {/* suggestions */}
         <div className={styles.sgstn}>
-
           <span>Suggested Follows</span>
           {info ?
             <Carousel
@@ -412,7 +402,6 @@ const RightSidebar = () => {
                   </div>
                 );
               })}
-
             </Carousel>
 
             : "No user"}
