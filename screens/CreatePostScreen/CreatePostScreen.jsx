@@ -218,7 +218,7 @@ const inputDesc=createRef()
           <div className={`${styles.img} ${styles.vid} ${styles.__09xfgc}`}>
             <div className={styles._sxvg_div} onClick={handleButtonClick}>
               <MdPermMedia className={`${styles.post_icon_data} text-info`} />
-              <h6 className={styles.tooltip}>Image</h6>
+              <h6 className={styles.tooltip}>Media</h6>
             </div>
             <input
               type="file"

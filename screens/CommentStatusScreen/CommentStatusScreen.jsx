@@ -14,6 +14,7 @@ import defaultImg from "../../images/default-photo.svg";
 import { useFormik } from "formik";
 import { getSinglePostAction } from "@/redux/slices/postSlice/postSlice";
 import Routes from "@/utils/routes";
+import Link from "next/link";
 
 const CommentStatusScreen = () => {
   const router = useRouter();
@@ -120,13 +121,12 @@ const CommentStatusScreen = () => {
                 <path d="M19 12H6M12 5l-7 7 7 7" />
               </svg>
             </span>
-            <span
+         {!loading &&    <span
               // style={{textAlign: "center", width: "max-content",marginTop: "0px", margin: "auto", paddingLeft: "0px", paddingTop: "0px", border: "1px solid black", display: "block"}}
               class={styles.not_home_nav_text}
             >
-              Comments
-            </span>
-            <span>{/*  */}</span>
+            {comments?.data?.length < 1? "No Comment": <span>{comments?.data?.length > 1? `${comments?.data?.length} Comments`:`${comments?.data?.length} Comment`}</span> }
+            </span>}
           </div>
         </nav>
         {loading ? (
@@ -241,21 +241,6 @@ const CommentStatusScreen = () => {
                           </span>
                         </div>
 
-                        {/* this should be at the bottom of the post always, text, image, video, audio should always come above */}
-                        <span
-                          style={{
-                            display: "block",
-                            marginLeft: "0px",
-                            paddingTop: "7px",
-                            paddingBottom: "0px",
-                            fontSize: "14px",
-                          }}
-                          className={styles._000_dt_data}
-                        >
-                          10:30 AM - <span>May 14th 2023</span>
-                        </span>
-                        {/* this should be at the bottom of the post always, text, image, video, audio should always come above */}
-
                         <div className={styles._00ftr_pst}>
                           <span className={styles._00mn_span}>
                             <span>
@@ -274,6 +259,7 @@ const CommentStatusScreen = () => {
                             <span className={styles._00mn_spn_cnt}>900</span>
                           </span>
                           <span className={styles._00mn_span}>
+                          <Link href={`reply/${comment?._id}`}>
                             <span>
                               <svg
                                 id="comment"
@@ -287,6 +273,7 @@ const CommentStatusScreen = () => {
                                 <path d="M10 3h4a8 8 0 1 1 0 16v3.5c-5-2-12-5-12-11.5a8 8 0 0 1 8-8zm2 14h2a6 6 0 1 0 0-12h-4a6 6 0 0 0-6 6c0 3.61 2.462 5.966 8 8.48V17z" />
                               </svg>
                             </span>
+                          </Link>
                             <span className={styles._00mn_spn_cnt}>10.1k</span>
                           </span>
                           <span className={styles._00mn_span}>

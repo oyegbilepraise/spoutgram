@@ -22,6 +22,23 @@ export const createCommentAction = createAsyncThunk(
     }
   }
 );
+export const replyCommentAction = createAsyncThunk(
+  "comments/reply",
+  async (payload, { rejectWithValue }) => {
+
+    const token = Cookies.get("token");
+    try {
+      const res = await postRequestWithImage({
+        url: `${baseUrl}${URL.replyComment}`,
+        token: token,
+        data: payload,
+      });
+      return res.data;
+    } catch (err) {
+      return rejectWithValue(err?.response?.data?.message);
+    }
+  }
+);
 export const getCommentsAction = createAsyncThunk(
   "comment/get-comments",
  async (postId, { rejectWithValue }) => {
@@ -29,6 +46,22 @@ export const getCommentsAction = createAsyncThunk(
     try {
       const res = await getRequest({
         url: `${baseUrl}${URL.getParticularPostComments}${postId}`,
+        token: token,
+      });
+      return res.data;
+    } catch (err) {
+      return rejectWithValue(err?.response?.data?.message);
+    }
+  }
+);
+
+export const getSingleCommentAction = createAsyncThunk(
+  "comments/single-comment",
+  async (commentId, { rejectWithValue }) => {
+  const token = Cookies.get("token");
+    try {
+      const res = await getRequest({
+        url: `${baseUrl}${URL.getOneComment}${commentId}`,
         token: token,
       });
       return res.data;
@@ -53,6 +86,16 @@ const commentSlice = createSlice({
       apiError: null,
       comments: [],
     },
+    singleComment: {
+      loading: false,
+      apiError: null,
+      individualComment: {},
+    },
+    replyComment: {
+      loading: false,
+      apiError: null,
+      reccentPost: {},
+    },
   },
   reducers: {},
   extraReducers: (builder) => {
@@ -71,11 +114,11 @@ const commentSlice = createSlice({
       state.createComment.apiError = action?.payload;
     });
 
-    //Create Post
+    //get Comments
      builder.addCase(getCommentsAction.pending, (state) => {
      console.log(state)
       state.getComments.loading = true;
-      state.getComments.comments = {};
+      state.getComments.comments = [];
       state.getComments.apiError = null;
     });
     builder.addCase(getCommentsAction.fulfilled, (state, action) => {
@@ -89,6 +132,39 @@ const commentSlice = createSlice({
       state.getComments.apiError = action?.payload;
     });
 
+    //singleComment
+builder.addCase(getSingleCommentAction.pending,(state)=>{
+state.singleComment.loading=true;
+state.singleComment.individualComment={};
+state.singleComment.apiError=null;
+})
+builder.addCase(getSingleCommentAction.fulfilled,(state,action)=>{
+console.log(state,action);
+state.singleComment.loading=false
+state.singleComment.individualComment=action?.payload
+})
+builder.addCase(getSingleCommentAction.rejected,(state,action)=>{
+state.singleComment.loading=false
+state.singleComment.apiError=action?.payload
+});
+
+    //reply comment
+    builder.addCase(replyCommentAction.pending, (state) => {
+console.log(state);
+      state.replyComment.loading = true;
+      state.replyComment.reccentPost = {};
+      state.replyComment.apiError = null;
+    });
+    builder.addCase(replyCommentAction.fulfilled, (state,action) => {
+console.log(state,action);
+      state.replyComment.loading = false;
+      state.replyComment.reccentPost = action?.payload;
+    });
+    builder.addCase(replyCommentAction.rejected, (state,action) => {
+console.log(state,action);
+      state.replyComment.loading = false;
+      state.replyComment.apiError = action?.payload;
+    });
       },
 });
 

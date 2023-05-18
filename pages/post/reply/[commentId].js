@@ -1,12 +1,12 @@
 import React from "react";
-import { CommentStatusScreen } from "@/screens";
+import { ReplyCommentScreen } from "@/screens";
 import Head from "next/head";
 
-const CommentStatus = () => {
+const ReplyComment = () => {
   return (
     <>
       <Head>
-        <title>@*username* / Comment</title>
+        <title>@*username* / Reply</title>
         <>
           <meta charSet="UTF-8" />
           <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
@@ -29,9 +29,9 @@ const CommentStatus = () => {
         </>
         <link rel="icon" href="/apple-touch-icon.png" type="image/png" />
       </Head>
-      <CommentStatusScreen />
+      <ReplyCommentScreen />
     </>
   );
 };
 
-export default CommentStatus;
+export default ReplyComment;
