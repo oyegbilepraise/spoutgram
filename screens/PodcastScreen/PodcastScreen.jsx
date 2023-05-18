@@ -3,7 +3,7 @@ import styles from '@/layout/HomeLayout/HomeLayout.module.css'
 import Image from "next/image";
 import img from "../../images/default-photo.svg";
 import Link from "next/link";
-import ProfileImage from '@/components/Home/ProfileImage'
+import ProfileImage from '@/components/Home/ProfileImage';
 
 const PodcastScreen = () => {
   return (
@@ -62,7 +62,7 @@ const PodcastScreen = () => {
         {/*  */}
         <div className={`${styles.div} ${styles.data_content}`}>
           {/* profile image */}
-          <ProfileImage />
+          {/* <ProfileImage /> */}
 
           {/* Post Body  */}
           <div className={`${styles.data_content_all} ${styles._00dca} ${styles.data_no_content}`} >

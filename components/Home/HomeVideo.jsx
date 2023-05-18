@@ -13,54 +13,54 @@ function HomeVideo({ videoUrl }) {
   const progressBarRef = useRef();
   const volumeBarRef = useRef();
   // ------ custom video starts here ------
-  const togglePlay = () => {
-    setPlaying(!playing);
-    if (playing) {
-      videoRef.current.pause();
-      setButtonVisible(true);
-    } else {
-      videoRef.current.play();
-      setButtonVisible(false);
-    }
-  };
+  // const togglePlay = () => {
+  //   setPlaying(!playing);
+  //   if (playing) {
+  //     videoRef.current.pause();
+  //     setButtonVisible(true);
+  //   } else {
+  //     videoRef.current.play();
+  //     setButtonVisible(false);
+  //   }
+  // };
 
-  const handleTimeUpdate = () => {
-    setCurrentTime(videoRef.current.currentTime);
-    progressBarRef.current.value = videoRef.current.currentTime;
-  };
+  // const handleTimeUpdate = () => {
+  //   setCurrentTime(videoRef.current.currentTime);
+  //   progressBarRef.current.value = videoRef.current.currentTime;
+  // };
 
-  const handleLoadedMetadata = () => {
-    setDuration(videoRef.current.duration);
-    progressBarRef.current.max = videoRef.current.duration;
-  };
+  // const handleLoadedMetadata = () => {
+  //   setDuration(videoRef.current.duration);
+  //   progressBarRef.current.max = videoRef.current.duration;
+  // };
 
-  const handleProgressChange = () => {
-    videoRef.current.currentTime = progressBarRef.current.value;
-  };
+  // const handleProgressChange = () => {
+  //   videoRef.current.currentTime = progressBarRef.current.value;
+  // };
 
-  const handleVolumeChange = () => {
-    const newVolume = volumeBarRef.current.value;
-    videoRef.current.volume = newVolume;
-    setVolume(newVolume);
-    setMuted(false);
-  };
+  // const handleVolumeChange = () => {
+  //   const newVolume = volumeBarRef.current.value;
+  //   videoRef.current.volume = newVolume;
+  //   setVolume(newVolume);
+  //   setMuted(false);
+  // };
 
-  const toggleMute = () => {
-    const newMuted = !muted;
-    videoRef.current.volume = newMuted ? 0 : volume;
-    setMuted(newMuted);
-  };
+  // const toggleMute = () => {
+  //   const newMuted = !muted;
+  //   videoRef.current.volume = newMuted ? 0 : volume;
+  //   setMuted(newMuted);
+  // };
 
-  const formatTime = (time) => {
-    const minutes = Math.floor(time / 60);
-    const seconds = Math.floor(time % 60);
-    return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
-  };
+  // const formatTime = (time) => {
+  //   const minutes = Math.floor(time / 60);
+  //   const seconds = Math.floor(time % 60);
+  //   return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+  // };
 
-  const handlePlaybackRateChange = (rate) => {
-    setPlaybackRate(rate);
-    videoRef.current.playbackRate = rate;
-  };
+  // const handlePlaybackRateChange = (rate) => {
+  //   setPlaybackRate(rate);
+  //   videoRef.current.playbackRate = rate;
+  // };
 
   // --------- custom video stops here --------
   return (
@@ -71,7 +71,7 @@ function HomeVideo({ videoUrl }) {
         // onTimeUpdate={handleTimeUpdate}
         // onLoadedMetadata={handleLoadedMetadata}
         muted={muted}
-        onClick={togglePlay}
+        // onClick={togglePlay}
         className={styles.vide0__baby}
       />
       {/* <div>
