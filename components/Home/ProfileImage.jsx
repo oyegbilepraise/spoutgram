@@ -1,6 +1,5 @@
 import styles from "@/layout/HomeLayout/HomeLayout.module.css";
 import img from '../../images/default-photo.svg'
-import people1 from '../../images/people-1.jpeg'
 import Image from "next/image";
 import PostedAt from "../PostedAt/postedAt";
 import { useDispatch, useSelector } from "react-redux";
