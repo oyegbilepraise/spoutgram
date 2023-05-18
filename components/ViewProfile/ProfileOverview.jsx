@@ -1,6 +1,6 @@
 import styles from "@/layout/HomeLayout/HomeLayout.module.css";
 import Image from "next/image";
-import img from "../../images/me.jpeg";
+import img from "../../images/default.jpeg";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
@@ -38,7 +38,7 @@ const ProfileOverview = () => {
                   <span className={styles.xyxxn}>following</span>
                 </span>
                 <span className={styles.xoxtrn}>
-                  0<span className={styles.xyxxn}>members</span>
+                  0<span className={styles.xyxxn}>subscribers</span>
                 </span>
               </span>
               <div>
@@ -63,12 +63,7 @@ const ProfileOverview = () => {
           <span className={styles.absolute__me__now}>
             <button className={`${styles.follow__user}`}>Follow</button>
             <button className={`${styles.follow__user}`}>Message</button>
-            <button
-              className={`${styles.follow__user}`}
-              style={{ display: "none" }}
-            >
-              Edit Profile
-            </button>
+            <button className={`${styles.follow__user}`} style={{ display: "" }} > Edit Profile </button>
           </span>
           <div>
             <span className={`${styles.user_data_name} ${styles.yuv_usr}`}>
@@ -168,9 +163,8 @@ const ProfileOverview = () => {
           {/*  */}
         </div>
 
-        <div style={{ display: "flex", position: "relative" }}>
+        <div style={{ display: "flex", position: "relative", display: "none" }}>
           <button
-            // style={{ display: "none" }}
             onClick={() => setShowSubscribe((prev) => !prev)}
             className={`${styles.follow__user} ${styles.fu_xyz}`}
           >
@@ -217,10 +211,10 @@ const ProfileOverview = () => {
 
       {/* more__button */}
 
-      <div className={styles.span__xyz}>
+      <div className={styles.span__xyz} style={{display: "none"}}>
         <div
           className="xyx__more__Profile"
-          style={{ position: "relative", height: "32px", width: "32px" }}
+          style={{ position: "relative", height: "32px", width: "32px", display: "none" }}
           onClick={() => setShowMore((prev) => !prev)}
         >
           <svg
@@ -352,7 +346,6 @@ const ProfileOverview = () => {
       {/* subscribe modal ends*/}
 
       {/* Video modal starts*/}
-
       {showVideo && (
         <div className={styles.subscription__modal}>
           <div className={styles.subscription__modal__container}>
@@ -368,8 +361,58 @@ const ProfileOverview = () => {
           </div>
         </div>
       )}
-
       {/* Video modal ends*/}
+
+      {/* edit profile modal */}
+      <div className={styles.editprofile__modal__xx}>
+        <div className={styles.editprofile__child__xx}>
+          <div className={styles.editprofile__hdr}>
+            <span>Edit Profile</span>
+          </div>
+          <div style={{padding: "17px"}}>
+            <div style={{textAlign: "center", paddingBottom: "12px", paddingTop: "5px"}}>
+              <Image src={img} className={styles.img__edit__img}/>
+            </div>
+            <div>
+              <div>
+                <input type="text" placeholder="Name" className={styles.data_content_pass} />
+              </div>
+              <div>
+                <input type="text" placeholder="Username" className={styles.data_content_pass} />
+              </div>
+              <div>
+                <input type="text" placeholder="Location" className={styles.data_content_pass} />
+              </div>
+              <div>
+                <input type="text" placeholder="Website or bio link" className={styles.data_content_pass} /> 
+              </div>
+              <div>
+                <textarea placeholder="Your bio" className={styles.prfole_edit_bio}/>
+              </div>
+              <div style={{marginTop: "-10px"}}>
+              <span className={styles.span_post_option}>
+                        Hide Subscribers count
+                        <span>
+                          <input
+                            type="checkbox"
+                            name="allow_tipsb"
+                            id="switcha"
+                          />
+                          <label
+                            htmlFor="switcha"
+                            className={styles.label__tips}
+                          >
+                            Toggle
+                          </label>
+                        </span>
+                      </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {/* edit profile modal */}
+
     </div>
   );
 };
