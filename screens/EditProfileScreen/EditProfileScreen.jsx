@@ -1,7 +1,7 @@
 import { HomeLayout } from '@/layout'
 import styles from '@/layout/HomeLayout/HomeLayout.module.css'
-import Image from "next/image";
-import img from "../../images/default-photo.svg";
+import Image from "next/image"
+import img from '../../images/default.jpeg' 
 import { useSelector } from 'react-redux';
 import { useFormik } from 'formik';
 import { useRouter } from "next/router";
@@ -34,7 +34,7 @@ const EditProfileScreen = () => {
 
 
   return (
-    <HomeLayout>
+    <HomeLayout> 
       {/* div.timeline -> middle */}
       <div class={`${styles.timeline} ${styles._000middlebar}`}>
         <form onSubmit={formik.handleSubmit}>
@@ -53,32 +53,29 @@ const EditProfileScreen = () => {
             <div className={styles.edit__pc__flex}>
               <div>
                 <div>
-                  <Image src={user?.data?.profilePhoto ?? img} className={styles.edit__profile__img} />
-                </div>
-              </div>
-              <div>
-                <div>
-                  <input className={styles.data_content_pass} type="text" placeholder="Name" value={formik.values.name} />
-                </div>
-                <div>
-                  <input className={styles.data_content_pass} type="text" placeholder="Username" value={formik.values.username} />
+                  {/* this was your former src (src={user?.data?.profilePhoto ?? img}) */}
+                  <Image src={img} className={styles.edit__profile__img} />
                 </div>
               </div>
             </div>
-            <div className={styles.edit__pc__block}>
+            <div>
+              <div>
+                <input className={styles.data_content_pass} type="text" placeholder="Name" value={formik.values.name} />
+              </div>
+              <div>
+                <input className={styles.data_content_pass} type="text" placeholder="Username" value={formik.values.username} />
+              </div>
+            </div>
+            {/* this className (className={styles.edit__pc__block}) was here before. */}
+            <div>
               <div>
                 <textarea name="" id="" className={styles.data_content_pass_bio} placeholder="Bio"></textarea>
               </div>
               <div>
-                <input className={styles.data_content_pass} type="text" placeholder="Location" value={"Miami, USA"} />
+                <input className={styles.data_content_pass} type="text" placeholder="Location"/>
               </div>
               <div>
-                <select name="" id="">
-                  <option value="">Creator</option>
-                </select>
-              </div>
-              <div>
-                <input className={styles.data_content_pass} type="text" placeholder="Bio Link" value={"https://yourlinks/avary"} />
+                <input className={styles.data_content_pass} type="text" placeholder="Bio Link"/>
               </div>
             </div>
           </div>
