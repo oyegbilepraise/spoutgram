@@ -41,6 +41,9 @@ function ImageCarousels({ postImage }) {
     ? [selectedImage, ...postImage.filter((image) => image !== selectedImage)]
     : postImage;
 
+    const isSingleImage = postImage.length === 1;
+
+
   return (
     <>
       <div
@@ -69,39 +72,51 @@ function ImageCarousels({ postImage }) {
       </div>
 
       {modalOpen && (
-        <div className={styles.modal}>
-          <div className={styles.modalContent}>
-            <span className={styles.close} onClick={closeModal}>
+        <div>
+          <div>
+            <span onClick={closeModal}>
               &times;
             </span>
-            <div className={styles.carouselContainer}>
-              <Carousel
-                responsive={responsive}
-                arrows={true}
-                infinite={true}
-                showDots={false}
-                keyBoardControl={true}
-                customTransition="transform 300ms ease-in-out"
-                transitionDuration={300}
-              >
-                {imagesToShow.map((pic, id) => (
-                  <div key={id} className={styles.carouselItem}>
-                    {pic.endsWith(".jpg") ? (
-                      <Image
-                        src={pic !== null && pic}
-                        alt="picgrid"
-                        className={styles.carouselImage}
-                        width={500}
-                        height={500}
-                        priority
-                      />
-                    ) : (
-                      <HomeVideo videoUrl={pic} />
-                    )}
-                  </div>
-                ))}
-              </Carousel>
-            </div>
+            {isSingleImage ? (
+              <div>
+                <Image
+                  src={selectedImage}
+                  alt="picgrid"
+                  className={styles.carouselImage}
+                  width={500}
+                  height={500}
+                  priority
+                />
+              </div>
+            ) : (
+              <div>
+                <Carousel
+                  responsive={responsive}
+                  arrows={true}
+                  showDots={false}
+                  keyBoardControl={true}
+                  customTransition="transform 300ms ease-in-out"
+                  transitionDuration={300}
+                >
+                  {imagesToShow.map((pic, id) => (
+                    <div key={id} className={styles.carouselItem}>
+                      {pic.endsWith(".jpg") ? (
+                        <Image
+                          src={pic !== null && pic}
+                          alt="picgrid"
+                          className={styles.carouselImage}
+                          width={500}
+                          height={500}
+                          priority
+                        />
+                      ) : (
+                        <HomeVideo videoUrl={pic} />
+                      )}
+                    </div>
+                  ))}
+                </Carousel>
+              </div>
+            )}
           </div>
         </div>
       )}
