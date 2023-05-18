@@ -1,16 +1,15 @@
 import { MessagesLayout } from '@/layout'
 import { MessagesLeft, MessagesRight } from '@/components'
-import Image from 'next/image'
-import img from '../../images/default-photo.svg'
-import banner from '../../images/banner.jpg'
-
-import styles from '@/layout/HomeLayout/HomeLayout.module.css'
+import { useSelector } from 'react-redux';
 
 const MessagesScreen = () => {
+    const { user, apiError } = useSelector((state) => state?.auth?.getUser);
+
+    console.log({ user });
     return (
         <MessagesLayout>
-            <MessagesRight/>
-            <MessagesLeft/>
+            <MessagesRight />
+            <MessagesLeft />
         </MessagesLayout>
     )
 }
