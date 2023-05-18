@@ -11,11 +11,9 @@ const BookmarkScreen = () => {
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(true)
     const [bookmarks, setBookmarks] = useState()
-
     useEffect(() => {
         getBoomarks()
     }, [])
-
     const getBoomarks = async () => {
         try {
             const res = await dispatch(getAllBoomarks())
@@ -27,7 +25,6 @@ const BookmarkScreen = () => {
             console.log('error');
         }
     }
-
     return (
         <HomeLayout>
             <div>
@@ -42,12 +39,10 @@ const BookmarkScreen = () => {
                         </span>
                     </div>
                 </nav>
-                {/* div.timeline -> middle */}
                 <div class={`${styles.timeline} ${styles._000middlebar}`}>
                     {loading ? (
                         <div>
                             loading...
-                            {/* <Loader /> */}
                         </div>
 
                     ) : (
@@ -55,8 +50,7 @@ const BookmarkScreen = () => {
                             <Post posts={bookmarks} loading={loading} />
                         </div>
                     )}
-                    {/* <!-- no bookmarks yet div --> */}
-                    {bookmarks && bookmarks.length > 0 && (
+                    {bookmarks && bookmarks.length < 0 && (
                         <div class={styles.nbyd}>
                             <div>
                                 <svg class={styles.nbyd__svg} width="14" height="18" viewBox="0 0 14 18" fill="none" xmlns="http://www.w3.org/2000/svg">
