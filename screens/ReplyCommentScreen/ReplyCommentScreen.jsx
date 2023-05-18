@@ -7,18 +7,19 @@ import ImageCarousels from "../../components/Home/ImageCarousels";
 import { useFormik } from "formik";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
-import { createCommentAction } from "@/redux/slices/commentSlice/commentSlice";
+import { createCommentAction, getSingleCommentAction, replyCommentAction } from "@/redux/slices/commentSlice/commentSlice";
 import { getSinglePostAction } from "@/redux/slices/postSlice/postSlice";
 import img from '../../images/default-photo.svg'
 import PostedAt from "@/components/PostedAt/postedAt";
 import Routes from "@/utils/routes";
 
-const PostStatusScreen = () => {
+const ReplyCommentScreen = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
-  const [postId, setPostId] = useState(null)
-const {loading,individualPost}=useSelector(state=>state?.post?.singlePost)
+  const [commentId, setCommentId] = useState(null)
+const {loading,individualComment}=useSelector(state=>state?.comment?.singleComment)
+const {individualPost}=useSelector(state=>state?.post?.singlePost)
 const { user, apiError } = useSelector((state) => state?.auth?.getUser);
   const openModal = () => {
     setIsOpen(true);
@@ -28,20 +29,20 @@ const { user, apiError } = useSelector((state) => state?.auth?.getUser);
   };
 
   useEffect(() => {
-    console.log(router.query.postId);
-    if (router.query.postId) {
-      localStorage.setItem("postId", router.query.postId);
-      dispatch(getSinglePostAction(router.query.postId));
+    console.log(router.query.commentId);
+    if (router.query.commentId) {
+      localStorage.setItem("commentId", router.query.commentId);
+      dispatch(getSingleCommentAction(router.query.commentId));
     } else {
-     const id=localStorage.getItem("postId");
-    setPostId(id);
-      dispatch(getSinglePostAction(id));
+     const id=localStorage.getItem("commentId");
+    setCommentId(id);
+      dispatch(getSingleCommentAction(id));
     }
   }, []);
 
   useEffect(() => {
-    // console.log(individualPost?.data?._d);
-    console.log(individualPost);
+    // console.log(individualComment?.data?._d);
+    console.log(individualComment);
   }, [loading==false]);
 
   // Function to handle image upload
@@ -51,15 +52,6 @@ const { user, apiError } = useSelector((state) => state?.auth?.getUser);
     const file = event.target.files[0];
       setImage(file);
       formik.values.image = file;
-    // const reader = new FileReader();
-    // console.log(file);
-    // reader.onload = (e) => {
-    //   setImage(e.target.result);
-    //   formik.values.image = e.target.result;
-    // };
-    // if (file) {
-    //   reader.readAsDataURL(file);
-    // }
   };
 
   // Function to handle image removal
@@ -76,8 +68,8 @@ const { user, apiError } = useSelector((state) => state?.auth?.getUser);
       console.log(values);
       formData.append("text", values.text);
       formData.append("image", values.image);
-      formData.append("post", router.query.postId?router.query.postId:postId);
-      dispatch(createCommentAction(formData));
+      formData.append("comment", router.query.commentId?router.query.commentId:commentId);
+      dispatch(replyCommentAction(formData));
       values.text = "";
       values.image = "";
       setImage(null);
@@ -85,17 +77,13 @@ const { user, apiError } = useSelector((state) => state?.auth?.getUser);
     },
   });
 
-  const handleGoBack = () => {
-    router.back(); // Go back to the previous page or route
-  };
-
   return (
     <HomeLayout>
       {/* div.timeline -> middle */}
       <div class={`${styles.timeline} ${styles._000middlebar}`}>
         <nav style={{ paddingLeft: "0px" }} className={styles.___main_nav}>
           <div>
-            <span style={{ paddingLeft: "18px" }} class={styles.icon_back} onClick={handleGoBack}>
+            <span style={{ paddingLeft: "18px" }} class={styles.icon_back}>
               <svg
                 style={{ marginLeft: "18px" }}
                 class={styles._00_history__back}
@@ -115,7 +103,7 @@ const { user, apiError } = useSelector((state) => state?.auth?.getUser);
             <span
               class={styles.not_home_nav_text}
             >
-              Post
+             Reply this comment
             </span>
             <span>{/*  */}</span>
           </div>
@@ -128,7 +116,7 @@ const { user, apiError } = useSelector((state) => state?.auth?.getUser);
           <div style={{ position: "relative" }}>
             <div className={styles.hover_main_image}>
               <Image
-                src={individualPost?.data?.user?.profilePhoto ==''? img : individualPost?.data?.user?.profilePhoto }
+                src={individualComment?.data?.user?.profilePhoto ==''? img : individualComment?.data?.user?.profilePhoto }
                 alt="profile-img"
                 className={styles.data_content_pimg}
                 width="22"
@@ -141,13 +129,24 @@ const { user, apiError } = useSelector((state) => state?.auth?.getUser);
                 <span
                   className={`${styles._0022_nm_usr} ${styles._0022_nm_usr__pp}`}
                 >
-                  {individualPost?.data?.user?.name}
-                  <span>@{individualPost?.data?.user?.username}</span>
+                  {individualComment?.data?.user?.name}
+                  <span>@{individualComment?.data?.user?.username}</span>
                 </span>
               </div>
               <div>
-                {/* <span className={styles._000_dt_data}><PostedAt time={individualPost?.data?.createdAt} /></span> */}
+                <span className={styles._000_dt_data}><PostedAt time={individualComment?.data?.createdAt} /></span>
               </div>
+               <div>
+                            <span
+                              className={styles._000_dt_data}
+                              style={{ fontSize: "16px" }}
+                            >
+                              Replying{" "}
+                              <span style={{ color: "var(--brand-color)" }}>
+                                @{individualPost?.data?.user?.username}
+                              </span>
+                            </span>
+                          </div>
             </div>
 
             <div style={{ position: "absolute", right: 0, top: "-3px" }}>
@@ -191,7 +190,7 @@ const { user, apiError } = useSelector((state) => state?.auth?.getUser);
           >
             <div>
               <span className={`${styles._ttl_top} ${styles._ttl_top__pp}`}>
-                {individualPost?.data?.title}
+                {individualComment?.data?.title}
               </span>
             </div>
 
@@ -199,13 +198,10 @@ const { user, apiError } = useSelector((state) => state?.auth?.getUser);
               <span
                 className={`${styles._ttl_contxt} ${styles._ttl_contxt__pp}`}
               >
-                {individualPost?.data?.desc}
+                {individualComment?.data?.text}
               </span>
             </div>
-{individualPost?.data?.postImage.length > 0 && <ImageCarousels postImage={individualPost?.data?.postImage} />}
-            {/* this should be at the bottom of the post always, text, image, video, audio should always come above */}
-            {/* <span style={{display: "block", marginLeft: "0px", paddingTop: "7px", paddingBottom: "0px", fontSize: "14px"}} className={styles._000_dt_data}>10:30 AM - <span>May 14th 2023</span></span> */}
-            {/* this should be at the bottom of the post always, text, image, video, audio should always come above */}
+{individualComment?.data?.images.length > 0 && <ImageCarousels images={individualComment?.data?.images} />}
             
             <div className={styles._00ftr_pst}>
               <span className={styles._00mn_span}>
@@ -222,7 +218,7 @@ const { user, apiError } = useSelector((state) => state?.auth?.getUser);
                     <path d="M16.5 3C19.538 3 22 5.5 22 9c0 7-7.5 11-10 12.5C9.5 20 2 16 2 9c0-3.5 2.5-6 5.5-6C9.36 3 11 4 12 5c1-1 2.64-2 4.5-2zm-3.566 15.604c.881-.556 1.676-1.109 2.42-1.701C18.335 14.533 20 11.943 20 9c0-2.36-1.537-4-3.5-4-1.076 0-2.24.57-3.086 1.414L12 7.828l-1.414-1.414C9.74 5.57 8.576 5 7.5 5 5.56 5 4 6.656 4 9c0 2.944 1.666 5.533 4.645 7.903.745.592 1.54 1.145 2.421 1.7.299.189.595.37.934.572.339-.202.635-.383.934-.571z" />
                   </svg>
                 </span>
-                <span className={styles._00mn_spn_cnt}>{individualPost?.data?.likes.length}</span>
+                {/* <span className={styles._00mn_spn_cnt}>{individualComment?.data?.likes.length}</span> */}
               </span>
               <span className={styles._00mn_span}>
                 <span>
@@ -308,7 +304,7 @@ const { user, apiError } = useSelector((state) => state?.auth?.getUser);
                 type="text"
                 onClick={openModal}
                 className={styles.disbld__inp__post}
-                placeholder="Reply to this post"
+                placeholder="Reply to this comment"
               />
               <button style={{ textAlign: "center", paddingLeft: "0px", paddingRight: "0px", width: "70px" }} className={styles.inp__create__btn} disabled>
                 Post
@@ -365,7 +361,7 @@ const { user, apiError } = useSelector((state) => state?.auth?.getUser);
           <div className={styles._00ftr_pst}>
             <span
               className={styles._00mn_span}
-              onClick={() => dispatch(likePostAction({ postId: post._id }))}
+              onClick={() => dispatch(likePostAction({ commentId: post._id }))}
             >
               <span>
                 <svg
@@ -470,7 +466,7 @@ const { user, apiError } = useSelector((state) => state?.auth?.getUser);
                   >
                     Replying to{" "}
                     <span style={{ color: "var(--brand-color)" }}>
-                      @{individualPost?.data?.user?.username}
+                      @{individualComment?.data?.user?.username}
                     </span>
                   </span>
                 </div>
@@ -555,4 +551,4 @@ const { user, apiError } = useSelector((state) => state?.auth?.getUser);
   );
 };
 
-export default PostStatusScreen;
+export default ReplyCommentScreen;

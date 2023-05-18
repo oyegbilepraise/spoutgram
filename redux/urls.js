@@ -23,6 +23,8 @@ dislikePost:"/posts/post/unlike",
   // Comment
 createComment:"/comments/create",
 getParticularPostComments:"/comments/",
+replyComment:"/comments/reply",
+getOneComment:"/comments/comment/",
 
   // Link
 

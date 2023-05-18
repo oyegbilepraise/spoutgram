@@ -151,7 +151,7 @@ const EachPost = ({ post }) => {
       </InView>
 
     </>
-  )
-}
+  );
+};
 
 export default EachPost;
