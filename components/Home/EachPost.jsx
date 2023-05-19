@@ -17,6 +17,7 @@ const EachPost = ({ post }) => {
   const [likes, setLikes] = useState(post.likes);
   const [disLikes, setDisLikes] = useState(post.dislikes);
   const [bookmarks, setBookmarks] = useState(post.bookmarks);
+  const [more, setMore] = useState(false)
   const [_views, set_Views] = useState(post.view);
   const { user, apiError } = useSelector((state) => state?.auth?.getUser);
 
@@ -60,6 +61,11 @@ const EachPost = ({ post }) => {
       console.log({ error });
     }
   }
+
+  // const full = (event) => {
+  //   event.stopPropagation(); // Prevent event propagation to the parent container
+  //   setMore(!more)
+  // };
   return (
     <>
       <InView as="div" triggerOnce="true" threshold='0.5' onChange={(inView, entry) => handlePostView(inView, post, entry)}>
@@ -69,15 +75,17 @@ const EachPost = ({ post }) => {
             className={`${styles.data_content_all} ${styles._00dca} ${styles.data_no_content}`}
           >
           {/* <Link href={`@${post?.user?.username}/postComments/${post._id}`}> */}
-          <Link href={`post/${post._id}`}>
+          <Link href={`postComments/${post._id}`}>
+          <div>
+          
             <div>
               <span className={styles._ttl_top}>{post.title}</span>
             </div>
 
             <div>
-              <span className={styles._ttl_contxt}>{post.desc}</span>
+              <span className={styles._ttl_contxt}>{post?.desc?.length>300? <span>{more? post?.desc : `${post?.desc?.substring(0,300)}...`} <button style={{color:'grey'}} onClick={()=>setMore(!more)}>{more?"see less":"see more"}</button></span> : post?.desc}</span>
             </div>
-          </Link>
+          </div>
           {/* John, this is the ImageCarousels */}
           {post.postImage.length !== 0 && (
             <ImageCarousels postImage={post.postImage} />
@@ -88,6 +96,7 @@ const EachPost = ({ post }) => {
               <HomeVideo postVideo={post.postVideo} />
             </div>)
           }
+          </Link>
           {/* comment route */}
 {/* {`@${post?.user?.username}/comment/${post._id}`} */}
           <div className={styles._00ftr_pst}>
@@ -110,14 +119,27 @@ const EachPost = ({ post }) => {
                     </svg>
                   }
                 </span>
-                <span className={styles._00mn_spn_cnt}>{likes.length}</span>
+                <span className={styles._00mn_spn_cnt}>{likes.length> 0 && likes.length}</span>
               </span>
-              <span className={`${styles._00mn_span}`} onClick={() => handleDislike(post._id)}>
-                <span>
-                  <AiOutlineDislike size={20} className={`${styles.blue} ${styles.x_icn_ftr}`} />
-                </span>
-                <span className={styles._00mn_spn_cnt}>{disLikes.length}</span>
-              </span>
+               <span className={styles._00mn_span}>
+                          {/* <Link href={`reply/${comment?._id}`}> */}
+                          <Link href={`comment/${post._id}`}>
+                            <span>
+                              <svg
+                                id="comment"
+                                className={`${styles.blue} ${styles.x_icn_ftr}`}
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 24 24"
+                                width={24}
+                                height={24}
+                              >
+                                <path fill="none" d="M0 0h24v24H0z" />
+                                <path d="M10 3h4a8 8 0 1 1 0 16v3.5c-5-2-12-5-12-11.5a8 8 0 0 1 8-8zm2 14h2a6 6 0 1 0 0-12h-4a6 6 0 0 0-6 6c0 3.61 2.462 5.966 8 8.48V17z" />
+                              </svg>
+                            </span>
+                          </Link>
+                            <span className={styles._00mn_spn_cnt}>{post?.comment > 0 && post?.comment}</span>
+                          </span>
               <span className={styles._00mn_span}>
                 <span>
                   {/* this is the normal repost icon /> */}

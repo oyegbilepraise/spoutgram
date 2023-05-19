@@ -18,6 +18,7 @@ const PostStatusScreen = () => {
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
   const [postId, setPostId] = useState(null)
+  const [more, setMore] = useState(false)
 const {loading,individualPost}=useSelector(state=>state?.post?.singlePost)
 const { user, apiError } = useSelector((state) => state?.auth?.getUser);
   const openModal = () => {
@@ -191,12 +192,9 @@ const { user, apiError } = useSelector((state) => state?.auth?.getUser);
               </span>
             </div>
 
-            <div>
-              <span
-                className={`${styles._ttl_contxt} ${styles._ttl_contxt__pp}`}
-              >
-                {individualPost?.data?.desc}
-              </span>
+            
+                <div>
+              <span className={`${styles._ttl_contxt} ${styles._ttl_contxt__pp}`}>{individualPost?.data?.desc?.length>300? <span>{more? individualPost?.data?.desc : `${individualPost?.data?.desc?.substring(0,300)}...`} <button style={{color:'grey'}} onClick={e=>setMore(!more)}>{more?"see less":"see more"}</button></span> : individualPost?.data?.desc}</span>
             </div>
 {individualPost?.data?.postImage.length > 0 && <ImageCarousels postImage={individualPost?.data?.postImage} />}
             {/* this should be at the bottom of the post always, text, image, video, audio should always come above */}
