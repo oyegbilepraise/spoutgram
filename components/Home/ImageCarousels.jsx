@@ -19,6 +19,12 @@ function ImageCarousels({ postImage }) {
     setModalOpen(false);
   };
 
+    const imagesToShow = selectedImage
+    ? [selectedImage, ...postImage.filter((image) => image !== selectedImage)]
+    : postImage;
+
+    const isSingleImage = postImage.length === 1;
+
   const responsive = {
     desktop: {
       breakpoint: { max: 3000, min: 1024 },
@@ -52,6 +58,7 @@ function ImageCarousels({ postImage }) {
               height={200}
               priority
               key={id}
+              onClick={() => openModal(pic)}
             />
   </div>
   )
@@ -60,7 +67,9 @@ function ImageCarousels({ postImage }) {
   <div>
    <video controls width={200}
               height={200} priority
-              key={id} >
+              key={id} 
+              onClick={() => openModal(pic)}
+              >
         <source src={pic !== null && pic} type="video/mp4" />
       </video>
   </div>
