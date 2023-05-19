@@ -2169,6 +2169,7 @@ input[type="text"].data_content_pass, input[type="password"].data_content_pass, 
     height: 100px;
     resize: none;
     padding-top: 12px;
+    line-height: 22px;
 }
 .data_content_pass_bio {
     height: 105px;
@@ -2737,6 +2738,31 @@ input[type="search"].search__emojis::placeholder {
 .img__edit__img {
     width: 110px; height: 110px;
     border-radius: 50%; object-fit: cover;
-    filter: brightness(60%);
+    filter: brightness(40%);
+    cursor: pointer;
 }
 /* edit profile modal */
+.awayy__uuu___vvvv {
+    /* border: 1px solid black; */
+    width: max-content; height: max-content;
+    position: relative;
+    margin: auto;
+}
+.svg__edit__upld__yyy {
+    position: absolute;
+    top: 70%; left: 50%;
+    transform: translate(-50%, -50%);
+}
+.span___rmv__edt__pp {
+    position: absolute;
+    bottom: 19px;
+    right: 76px;
+    font-family: var(--global-medium);
+    color: var(--brand-color);
+    font-size: 14px;
+    letter-spacing: 0.1px;
+}
+.span___rmv__edt__pp:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}

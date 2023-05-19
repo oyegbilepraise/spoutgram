@@ -3,6 +3,7 @@ import Image from "next/image";
 import img from "../../images/default.jpeg";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { PageSpinner } from "../../components";
 
 const ProfileOverview = () => {
   const [showSubscribe, setShowSubscribe] = useState(false);
@@ -18,6 +19,41 @@ const ProfileOverview = () => {
       document.body.classList.remove("no-scroll");
     }
   }, [showSubscribe]);
+
+
+  const [image, setImage] = useState(null);
+  const [isLoading, setLoading] = useState(false);
+
+  // Function to handle image upload
+  const handleImageUpload = (event) => {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+
+    reader.onloadstart = () => {
+      setLoading(true);
+    };
+  
+    reader.onload = (e) => {
+      setTimeout(() => {
+        setLoading(false);
+        setImage(e.target.result);
+      }, 2500); // Delay of 2 seconds (2000 milliseconds)
+    };  
+
+    if (file) {
+      reader.readAsDataURL(file);
+    }
+  };
+
+  // Function to handle image removal
+  const handleImageRemove = () => {
+    setLoading(true);
+
+    setTimeout(() => {
+      setLoading(false);
+      setImage(null);
+    }, 2500); // Delay of 2 seconds (2000 milliseconds)
+  };
 
   return (
     <div className={styles.the__starting__point}>
@@ -367,11 +403,56 @@ const ProfileOverview = () => {
       <div className={styles.editprofile__modal__xx}>
         <div className={styles.editprofile__child__xx}>
           <div className={styles.editprofile__hdr}>
+            <span style={{paddingLeft: "18px"}} class={styles.icon_back}>
+              <svg style={{marginLeft: "8px", top: "4px"}} class={styles._00_history__back} fill="rgb(120, 120, 120)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10.8284 12.0007L15.7782 16.9504L14.364 18.3646L8 12.0007L14.364 5.63672L15.7782 7.05093L10.8284 12.0007Z"></path></svg>
+              {/* <svg style={{marginLeft: "18px"}} class={styles._00_history__back} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgb(90, 90, 90)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H6M12 5l-7 7 7 7"/></svg> */}
+            </span>
             <span>Edit Profile</span>
+
+            {/* this is the save/submit button to save edited profile information */}
+            <button>
+              Save
+            </button>
           </div>
           <div style={{padding: "17px"}}>
-            <div style={{textAlign: "center", paddingBottom: "12px", paddingTop: "5px"}}>
-              <Image src={img} className={styles.img__edit__img}/>
+            <div style={{textAlign: "center", paddingBottom: "12px", paddingTop: "5px", position: "relative"}}>
+            {!image && (
+              <div className={styles.awayy__uuu___vvvv} onClick={() => document.getElementById('fileInput').click()}>
+                <Image src={img} className={styles.img__edit__img} alt="pic"/>
+                {isLoading ? (
+                  <div style={{position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)"}}>
+                    < PageSpinner />
+                  </div>
+                ) : (<svg fill="rgb(235, 235, 235)" className={styles.svg__edit__upld__yyy} style={{width: "22px", height: "22px"}} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.82843 5L7.82843 7H4V19H20V7H16.1716L14.1716 5H9.82843ZM9 3H15L17 5H21C21.5523 5 22 5.44772 22 6V20C22 20.5523 21.5523 21 21 21H3C2.44772 21 2 20.5523 2 20V6C2 5.44772 2.44772 5 3 5H7L9 3ZM12 18C8.96243 18 6.5 15.5376 6.5 12.5C6.5 9.46243 8.96243 7 12 7C15.0376 7 17.5 9.46243 17.5 12.5C17.5 15.5376 15.0376 18 12 18ZM12 16C13.933 16 15.5 14.433 15.5 12.5C15.5 10.567 13.933 9 12 9C10.067 9 8.5 10.567 8.5 12.5C8.5 14.433 10.067 16 12 16Z"></path></svg>)}
+                <input
+                  type="file"
+                  id="fileInput"
+                  accept="image/jpg, image/jpeg, image/png"
+                  onChange={handleImageUpload}
+                  style={{ display: 'none' }}
+                />
+              </div>
+            )}
+            {image && (
+              <>
+              <div className={styles.awayy__uuu___vvvv} onClick={() => document.getElementById('fileInput').click()}>
+                <img src={image} className={styles.img__edit__img} alt="pic" priority/>
+                {isLoading ? (
+                  <div style={{position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)"}}>
+                    < PageSpinner />
+                  </div>
+                ) : ( <svg fill="rgb(235, 235, 235)" className={styles.svg__edit__upld__yyy} style={{width: "22px", height: "22px"}} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.82843 5L7.82843 7H4V19H20V7H16.1716L14.1716 5H9.82843ZM9 3H15L17 5H21C21.5523 5 22 5.44772 22 6V20C22 20.5523 21.5523 21 21 21H3C2.44772 21 2 20.5523 2 20V6C2 5.44772 2.44772 5 3 5H7L9 3ZM12 18C8.96243 18 6.5 15.5376 6.5 12.5C6.5 9.46243 8.96243 7 12 7C15.0376 7 17.5 9.46243 17.5 12.5C17.5 15.5376 15.0376 18 12 18ZM12 16C13.933 16 15.5 14.433 15.5 12.5C15.5 10.567 13.933 9 12 9C10.067 9 8.5 10.567 8.5 12.5C8.5 14.433 10.067 16 12 16Z"></path></svg> )}
+                <input
+                  type="file"
+                  id="fileInput"
+                  accept="image/jpg, image/jpeg, image/png"
+                  onChange={handleImageUpload}
+                  style={{ display: 'none' }}
+                />
+              </div>
+              <span className={styles.span___rmv__edt__pp} onClick={handleImageRemove}>Remove Photo</span>
+              </>
+            )}  
             </div>
             <div>
               <div>
@@ -390,22 +471,22 @@ const ProfileOverview = () => {
                 <textarea placeholder="Your bio" className={styles.prfole_edit_bio}/>
               </div>
               <div style={{marginTop: "-10px"}}>
-              <span className={styles.span_post_option}>
-                        Hide Subscribers count
-                        <span>
-                          <input
-                            type="checkbox"
-                            name="allow_tipsb"
-                            id="switcha"
-                          />
-                          <label
-                            htmlFor="switcha"
-                            className={styles.label__tips}
-                          >
-                            Toggle
-                          </label>
-                        </span>
-                      </span>
+                <span className={styles.span_post_option}>
+                  Hide Subscribers count
+                  <span>
+                    <input
+                      type="checkbox"
+                      name="allow_tipsb"
+                      id="switcha"
+                    />
+                    <label
+                      htmlFor="switcha"
+                      className={styles.label__tips}
+                    >
+                      Toggle
+                    </label>
+                  </span>
+                </span>
               </div>
             </div>
           </div>

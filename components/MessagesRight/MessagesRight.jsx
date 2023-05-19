@@ -67,47 +67,6 @@ const MessagesRight = () => {
                     </div>
                     {/* messages toast */}
 
-                    {/* messages toast */}
-                    <div className={styles.message__toast}>
-                        <div>
-                            <Image
-                            src={default_img}
-                            className={styles.msshtst}
-                            />
-                        </div>
-                        <div>
-                            <span className={styles.msg__name__yyy}>18+ Onlyfans girl</span>
-                            <span className={styles.msg__contxte__yyy}>
-                            I am the hottest 18+ onlyfans, check out my profile now for a discount.
-                            </span>
-                        </div>
-                        <div>
-                            <span className={styles.msg__new__notif} />
-                            <span className={styles.msg__sent__timer}>9s</span>
-                        </div>
-                    </div>
-                    {/* messages toast */}
-
-                    {/* messages toast */}
-                    <div className={`${styles.message__toast} ${styles.active__chat__msg}`}>
-                        <div>
-                            <Image
-                            src={imgOne}
-                            className={styles.msshtst}
-                            />
-                        </div>
-                        <div>
-                            <span className={styles.msg__name__yyy}>Pink Girl</span>
-                            <span className={styles.msg__contxte__yyy}>
-                            Hi John.
-                            </span>
-                        </div>
-                        <div>
-                            <span className={styles.msg__sent__timer}>9s</span>
-                        </div>
-                    </div>
-                    {/* messages toast */}
-
                 </div>
                 {/* messages conversation container */}
 
