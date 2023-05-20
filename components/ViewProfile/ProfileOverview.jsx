@@ -4,6 +4,7 @@ import img from "../../images/default.jpeg";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { PageSpinner } from "../../components";
+import { useRouter } from "next/router";
 
 const ProfileOverview = () => {
   const [showSubscribe, setShowSubscribe] = useState(false);
@@ -55,6 +56,20 @@ const ProfileOverview = () => {
     }, 2500); // Delay of 2 seconds (2000 milliseconds)
   };
 
+  const [isEditModalOpen, setEditModalOpen] = useState(false);
+
+  const handleEditProfile = () => {
+    setEditModalOpen(true);
+    // Optionally, you can also update the URL to reflect the edit profile modal state
+    window.history.pushState(null, '', '/john/settings/profile');
+  };
+
+  const handleCloseModal = () => {
+    setEditModalOpen(false);
+    // Optionally, you can also update the URL to remove the edit profile modal state
+    window.history.pushState(null, '', '/john');
+  };
+
   return (
     <div className={styles.the__starting__point}>
       <div>
@@ -99,7 +114,7 @@ const ProfileOverview = () => {
           <span className={styles.absolute__me__now}>
             <button className={`${styles.follow__user}`}>Follow</button>
             <button className={`${styles.follow__user}`}>Message</button>
-            <button className={`${styles.follow__user}`} style={{ display: "" }} > Edit Profile </button>
+            <button className={`${styles.follow__user}`} onClick={handleEditProfile} style={{ display: "" }} > Edit Profile </button>
           </span>
           <div>
             <span className={`${styles.user_data_name} ${styles.yuv_usr}`}>
@@ -400,17 +415,18 @@ const ProfileOverview = () => {
       {/* Video modal ends*/}
 
       {/* edit profile modal */}
+      {isEditModalOpen && (
       <div className={styles.editprofile__modal__xx}>
         <div className={styles.editprofile__child__xx}>
           <div className={styles.editprofile__hdr}>
-            <span style={{paddingLeft: "18px"}} class={styles.icon_back}>
-              <svg style={{marginLeft: "8px", top: "4px"}} class={styles._00_history__back} fill="rgb(120, 120, 120)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10.8284 12.0007L15.7782 16.9504L14.364 18.3646L8 12.0007L14.364 5.63672L15.7782 7.05093L10.8284 12.0007Z"></path></svg>
+            <span style={{paddingLeft: "18px"}} class={styles.icon_back} onClick={handleCloseModal}>
+              <svg style={{marginLeft: "8px", top: "5px"}} class={styles._00_history__back} fill="rgb(120, 120, 120)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10.8284 12.0007L15.7782 16.9504L14.364 18.3646L8 12.0007L14.364 5.63672L15.7782 7.05093L10.8284 12.0007Z"></path></svg>
               {/* <svg style={{marginLeft: "18px"}} class={styles._00_history__back} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgb(90, 90, 90)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H6M12 5l-7 7 7 7"/></svg> */}
             </span>
             <span>Edit Profile</span>
 
             {/* this is the save/submit button to save edited profile information */}
-            <button>
+            <button className={styles.btn__edit__save}>
               Save
             </button>
           </div>
@@ -492,6 +508,7 @@ const ProfileOverview = () => {
           </div>
         </div>
       </div>
+      )}
       {/* edit profile modal */}
 
     </div>

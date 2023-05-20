@@ -2766,3 +2766,16 @@ input[type="search"].search__emojis::placeholder {
     cursor: pointer;
     text-decoration: underline;
 }
+.btn__edit__save {
+    position: absolute;
+    background-color: #3c3c3c;
+    padding: 5px;
+    padding-left: 17px; padding-right: 17px;
+    color: rgb(245, 245, 245);
+    right: 8px;
+    font-family: var(--global-medium);
+    font-size: 14px;
+    border-radius: 1000px;
+    cursor: pointer;
+    top: 9px;
+}
