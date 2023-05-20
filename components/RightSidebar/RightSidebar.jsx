@@ -247,7 +247,7 @@ const RightSidebar = () => {
                 return (
                   <div key={id}>
                     <div>
-                      {items.map(({ name, id, username, btn }) => {
+                      {items.map(({ name, id, username }) => {
                         return (
                           <div key={id} className={styles.sgstn_tst}>
                             <div>
@@ -263,7 +263,7 @@ const RightSidebar = () => {
                             </div>
                             <div>
                               <button className={styles.flwx_xyq_fllw}>
-                                {btn}
+                                Follow
                               </button>
                             </div>
                           </div>
