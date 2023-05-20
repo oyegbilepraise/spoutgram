@@ -252,7 +252,7 @@ const RightSidebar = () => {
                             </div>
                             <div>
                               <button className={styles.flwx_xyq_fllw}>
-                                Follow
+                                follow
                               </button>
                             </div>
                           </div>
