@@ -6,25 +6,24 @@ import { useEffect, useState } from "react";
 import ProfileImage from "../../components/Home/ProfileImage";
 import HomeVideo from "../../components/Home/HomeVideo";
 import { useDispatch, useSelector } from "react-redux";
-import { createCommentAction, getCommentsAction } from "@/redux/slices/commentSlice/commentSlice";
+import { getRepliesAction, getSingleCommentAction } from "@/redux/slices/commentSlice/commentSlice";
 import ImageCarousels from "../../components/Home/ImageCarousels";
 import { useRouter } from "next/router";
 import PostedAt from "@/components/PostedAt/postedAt";
 import defaultImg from "../../images/default-photo.svg";
 import { useFormik } from "formik";
-import { getSinglePostAction } from "@/redux/slices/postSlice/postSlice";
 import Routes from "@/utils/routes";
 import Link from "next/link";
 
-const CommentStatusScreen = () => {
+const RepliesScreen = () => {
   const router = useRouter();
   const dispatch = useDispatch();
-  const [postId, setPostId] = useState(null);
-  const { loading, comments } = useSelector(
-    (state) => state?.comment?.getComments
+  const [commentId, setCommentId] = useState(null)
+  const { loading, replies } = useSelector(
+    (state) => state?.comment?.getReplies
   );
   const { user, apiError } = useSelector((state) => state?.auth?.getUser);
-  const {individualPost}=useSelector(state=>state?.post?.singlePost)
+  const {individualComment}=useSelector(state=>state?.comment?.singleComment)
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -39,19 +38,19 @@ const CommentStatusScreen = () => {
   useEffect(() => {
     console.log(router.query.postId);
     if (router.query.postId) {
-      localStorage.setItem("postId", router.query.postId);
-      dispatch(getCommentsAction(router.query.postId));
-      dispatch(getSinglePostAction(router.query.postId));
+      localStorage.setItem("commentId", router.query.commentId);
+      dispatch(getRepliesAction(router.query.postId));
+      dispatch(getSingleCommentAction(router.query.postId));
     } else {
-      const id = localStorage.getItem("postId");
-      setPostId(localStorage.getItem("postId"));
-      dispatch(getCommentsAction(id));
-      dispatch(getSinglePostAction(id));
+      const id = localStorage.getItem("commentId");
+      setCommentId(localStorage.getItem("commentId"));
+      dispatch(getRepliesAction(id));
+      dispatch(getSingleCommentAction(id));
     }
   }, []);
 
   useEffect(() => {
-    console.log(comments);
+    console.log(replies);
   }, [loading == false]);
 
   // Function to handle image upload
@@ -61,15 +60,6 @@ const CommentStatusScreen = () => {
     const file = event.target.files[0];
     setImage(file);
     formik.values.image = file;
-    // const reader = new FileReader();
-    // console.log(file);
-    // reader.onload = (e) => {
-    //   setImage(e.target.result);
-    //   formik.values.image = e.target.result;
-    // };
-    // if (file) {
-    //   reader.readAsDataURL(file);
-    // }
   };
 
   // Function to handle image removal
@@ -78,7 +68,7 @@ const CommentStatusScreen = () => {
     formik.values.image = null;
   };
 
-  // Function for sending comments
+  // Function for sending reply
   const formik = useFormik({
     initialValues: { text: "", image: null },
     onSubmit: (values) => {
@@ -90,7 +80,7 @@ const CommentStatusScreen = () => {
         "post",
         router.query.postId ? router.query.postId : postId
       );
-      dispatch(createCommentAction(formData));
+    //   dispatch(createCommentAction(formData));
       values.text = "";
       values.image = "";
       setImage(null);
@@ -125,7 +115,7 @@ const CommentStatusScreen = () => {
               // style={{textAlign: "center", width: "max-content",marginTop: "0px", margin: "auto", paddingLeft: "0px", paddingTop: "0px", border: "1px solid black", display: "block"}}
               class={styles.not_home_nav_text}
             >
-            {comments?.data?.length < 1? "No Comment": <span>{comments?.data?.length > 1? `${comments?.data?.length} Comments`:`${comments?.data?.length} Comment`}</span> }
+            {replies?.data?.length < 1? "No Reply": <span>{replies?.data?.length > 1? `${replies?.data?.length} Replies`:`${replies?.data?.length} Reply`}</span> }
             </span>}
           </div>
         </nav>
@@ -134,20 +124,20 @@ const CommentStatusScreen = () => {
         ) : (
           <div>
             {/* comment preview */}
-            {comments?.data?.length < 1 ? (
-              <h4>Be the first person to comment</h4>
+            {replies?.data?.length < 1 ? (
+              <h4>Be the first person to reply this comment</h4>
             ) : (
               <div>
-                {comments?.data?.map((comment, id) => {
+                {replies?.data?.map((reply, id) => {
                   return (
                     <div className={`${styles.div} ${styles.data_content}`}>
                       <div style={{ position: "relative" }}>
                         <div className={styles.hover_main_image}>
                           <Image
                             src={
-                              comment?.user?.profilePhoto == ""
+                              reply?.user?.profilePhoto == ""
                                 ? defaultImg
-                                : comment?.user?.profilePhoto
+                                : reply?.user?.profilePhoto
                             }
                             alt="profile-img"
                             className={styles.data_content_pimg}
@@ -161,8 +151,8 @@ const CommentStatusScreen = () => {
                             <span
                               className={`${styles._0022_nm_usr} ${styles._0022_nm_usr__pp}`}
                             >
-                              {comment?.user?.name}
-                              <span>@{comment?.user?.username}</span>
+                              {reply?.user?.name}
+                              <span>@{reply?.user?.username}</span>
                               <span
                                 style={{
                                   display: "inline",
@@ -171,7 +161,7 @@ const CommentStatusScreen = () => {
                                 }}
                                 className={styles._000_dt_data}
                               >
-                                <PostedAt time={comment?.createdAt} />
+                                <PostedAt time={reply?.createdAt} />
                               </span>
                             </span>
                           </div>
@@ -182,7 +172,7 @@ const CommentStatusScreen = () => {
                             >
                               Replying{" "}
                               <span style={{ color: "var(--brand-color)" }}>
-                                @{individualPost?.data?.user?.username}
+                                @{individualComment?.data?.user?.username}
                               </span>
                             </span>
                           </div>
@@ -234,13 +224,11 @@ const CommentStatusScreen = () => {
                         className={`${styles.data_content_all} ${styles._00dca} ${styles.data_no_content}`}
                       >
                         <div>
-                         <Link href={`replies/${comment?._id}`}>
                           <span
                             className={`${styles._ttl_contxt} ${styles._ttl_contxt__pp}`}
                           >
-                            {comment?.text}
+                            {reply?.text}
                           </span>
-                         </Link>
                         </div>
 
                         <div className={styles._00ftr_pst}>
@@ -261,7 +249,7 @@ const CommentStatusScreen = () => {
                             <span className={styles._00mn_spn_cnt}>900</span>
                           </span>
                           <span className={styles._00mn_span}>
-                          <Link href={`reply/${comment?._id}`}>
+                          {/* <Link href={`reply/${reply?._id}`}> */}
                             <span>
                               <svg
                                 id="comment"
@@ -275,8 +263,8 @@ const CommentStatusScreen = () => {
                                 <path d="M10 3h4a8 8 0 1 1 0 16v3.5c-5-2-12-5-12-11.5a8 8 0 0 1 8-8zm2 14h2a6 6 0 1 0 0-12h-4a6 6 0 0 0-6 6c0 3.61 2.462 5.966 8 8.48V17z" />
                               </svg>
                             </span>
-                          </Link>
-                            <span className={styles._00mn_spn_cnt}>{comment?.reply}</span>
+                          {/* </Link> */}
+                            <span className={styles._00mn_spn_cnt}>10.1k</span>
                           </span>
                           <span className={styles._00mn_span}>
                             <span>
@@ -376,10 +364,6 @@ const CommentStatusScreen = () => {
               </div>
             </div>
             {/* comment box */}
-
-            {/* comments */}
-
-            {/* comments */}
           </div>
         )}
 
@@ -399,7 +383,7 @@ const CommentStatusScreen = () => {
                   >
                     Replying to{" "}
                     <span style={{ color: "var(--brand-color)" }}>
-                      @{individualPost?.data?.user?.username}
+                      @{individualComment?.data?.user?.username}
                     </span>
                   </span>
                 </div>
@@ -489,4 +473,4 @@ const CommentStatusScreen = () => {
   );
 };
 
-export default CommentStatusScreen;
+export default RepliesScreen;

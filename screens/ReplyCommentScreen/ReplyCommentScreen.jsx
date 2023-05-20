@@ -60,7 +60,7 @@ const { user, apiError } = useSelector((state) => state?.auth?.getUser);
     formik.values.image = null;
   };
 
-  // Function for sending comments
+  // Function for sending reply
   const formik = useFormik({
     initialValues: { text: "", image: null },
     onSubmit: (values) => {
@@ -134,7 +134,7 @@ const { user, apiError } = useSelector((state) => state?.auth?.getUser);
                 </span>
               </div>
               <div>
-                <span className={styles._000_dt_data}><PostedAt time={individualComment?.data?.createdAt} /></span>
+                {/* <span className={styles._000_dt_data}><PostedAt time={individualComment?.data?.createdAt} /></span> */}
               </div>
                <div>
                             <span
@@ -234,7 +234,7 @@ const { user, apiError } = useSelector((state) => state?.auth?.getUser);
                     <path d="M10 3h4a8 8 0 1 1 0 16v3.5c-5-2-12-5-12-11.5a8 8 0 0 1 8-8zm2 14h2a6 6 0 1 0 0-12h-4a6 6 0 0 0-6 6c0 3.61 2.462 5.966 8 8.48V17z" />
                   </svg>
                 </span>
-                <span className={styles._00mn_spn_cnt}>10.1k</span>
+                <span className={styles._00mn_spn_cnt}>{individualComment?.data?.reply}</span>
               </span>
               <span className={styles._00mn_span}>
                 <span>
