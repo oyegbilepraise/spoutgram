@@ -22,11 +22,13 @@ export const getSuggestedUsers = createAsyncThunk(
 
 export const getMessagedFriends = createAsyncThunk(
   "message/friends",
-  async (token, { rejectWithValue }) => {
+  async (payload, { rejectWithValue }) => {
+    const token = Cookies.get('token')
     try {
-      const res = await getRequest({
+      const res = await postRequest({
         url: `${baseUrl}${URL.friends}`,
-        token
+        token,
+        data: payload
       });
       return res.data;
     } catch (err) {

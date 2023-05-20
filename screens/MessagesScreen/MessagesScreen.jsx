@@ -28,7 +28,7 @@ const MessagesScreen = () => {
 
     const getFreinds = async () => {
         try {
-            const res = await dispatch(getMessagedFriends(token))
+            const res = await dispatch(getMessagedFriends({lastId: ''}))
             setMessages(res.payload.data)
             setLoading(false)
         } catch (error) {

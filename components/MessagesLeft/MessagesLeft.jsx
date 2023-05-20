@@ -4,19 +4,19 @@ import Image from 'next/image'
 import styles from '@/layout/HomeLayout/HomeLayout.module.css'
 import { TypeLoader } from "../../components";
 import { useState, useRef, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { sendMessage } from "@/redux/slices/messageSlice/messageSlice";
 import { useFormik } from "formik";
 
 const MessagesLeft = ({ eachMessage }) => {
     const [message, setMessage] = useState(eachMessage);
+    const { user, apiError } = useSelector((state) => state?.auth?.getUser);
+    console.log(user);
     const dispatch = useDispatch();
     useEffect(() => {
         setMessage(eachMessage)
     }, [eachMessage])
-
     console.log({ message });
-
     const formik = useFormik({
         initialValues: { text: "", image: null },
         onSubmit: (values) => {
@@ -168,54 +168,47 @@ const MessagesLeft = ({ eachMessage }) => {
                                 </div>
                             </div>
                             <span className={styles.response__holder}>
-                                <span className={styles.response} style={{ color: "transparent" }}>
+                                {/* <span className={styles.response} style={{ color: "transparent" }}>
                                     <TypeLoader />
                                     Type
-                                </span>
-                                {message.messages.map((m, i) => {
-                                    return <span>
-                                        <span className={styles.response}>{m.message}</span>
-                                        {/* <Image src={imgOne} className={styles.response__pic} /> */}
-                                        {/* <span className={styles.response__timestamp}>11:20am&nbsp;-&nbsp;01 May 23 -&nbsp;<span style={{ color: "var(--brand-color)" }}>Delivered</span></span> */}
-                                    </span>
+                                </span> */}
+                                {message.messages.reverse().map((m, i) => {
+                                    return (
+                                        user?.data?._id !== m.from ? (
+                                            <span>
+                                                <span className={styles.response}>{m.message}</span>
+                                                {/* <Image src={imgOne} className={styles.response__pic} /> */}
+                                                <span className={styles.response__timestamp}>11:20am&nbsp;-&nbsp;01 May 23 -&nbsp;<span style={{ color: "var(--brand-color)" }}>Delivered</span>
+                                                </span>
+                                            </span>
+                                        ) : (
+                                            <span className={styles.replycontainer}>
+                                                <span>
+                                                    <span className={styles.reply}>{m.message}</span>
+                                                    {/* <Image src={imgOne} className={styles.reply__pic} /> */}
+                                                    <span className={styles.reply__timestamp}>11:20am&nbsp;-&nbsp;01 May 23 -&nbsp;<span style={{ color: "var(--brand-color)" }}>Seen</span></span>
+                                                </span>
+                                            </span>
+                                            // <div></div>
+                                        )
+                                        // <span>
+                                        //     <span className={styles.response}>{m.message}</span>
+                                        //     {/* <Image src={imgOne} className={styles.response__pic} /> */}
+                                        //     <span className={styles.response__timestamp}>11:20am&nbsp;-&nbsp;01 May 23 -&nbsp;<span style={{ color: "var(--brand-color)" }}>Delivered</span>
+                                        //     </span>
+                                        //     <span className={styles.replycontainer}>
+                                        //         <span>
+                                        //             <span className={styles.reply}>Hi</span>
+                                        //             {/* <Image src={imgOne} className={styles.reply__pic} /> */}
+                                        //             <span className={styles.reply__timestamp}>11:20am&nbsp;-&nbsp;01 May 23 -&nbsp;<span style={{ color: "var(--brand-color)" }}>Seen</span></span>
+                                        //         </span>
+                                        //     </span>
+                                        // </span>
+                                    )
                                 })}
                             </span>
-                            {/* <span className={styles.reply__holder}>
-                                <span className={styles.replycontainer}>
-                                    <span>
-                                        <span className={styles.reply}>Hi</span>
-                                        <span className={styles.reply}>I am good, whatsup?</span>
-                                        <Image src={imgOne} className={styles.reply__pic} />
-                                        <span className={styles.reply__timestamp}>11:20am&nbsp;-&nbsp;01 May 23 -&nbsp;<span style={{ color: "var(--brand-color)" }}>Seen</span></span>
-                                    </span>
-                                </span>
-                            </span>
                             <span className={styles.reply__holder}>
-                                <span className={styles.replycontainer}>
-                                    <span>
-                                        <span className={styles.reply}>
-                                            I am fine. How do you see Spoutgram, it's lit, innit?
-                                        </span>
-                                        <span className={styles.reply__timestamp}>11:21am&nbsp;-&nbsp;01 May 23 -&nbsp;<span style={{ color: "var(--brand-color)" }}>Delivered</span></span>
-                                    </span>
-                                </span>
                             </span>
-                            <span className={styles.response__holder}>
-                                <span className={styles.response}>
-                                    Like ....
-                                    <br />
-                                    <br />I love it!!!
-                                </span>
-                                <span className={styles.response__timestamp}>11:24am&nbsp;-&nbsp;01 May 23 -&nbsp;<span style={{ color: "var(--brand-color)" }}>Delivered</span></span>
-                            </span>
-                            <span className={styles.response__holder}>
-                                <span className={styles.response}>
-                                    Like ....
-                                    <br />
-                                    <br />I lit stuff!!!
-                                </span>
-                                <span className={styles.response__timestamp}>11:25am&nbsp;-&nbsp;01 May 23 -&nbsp;<span style={{ color: "var(--brand-color)" }}>Delivered</span></span>
-                            </span> */}
                             {/*  */}
                         </div>
                     </div>
