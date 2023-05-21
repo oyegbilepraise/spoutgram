@@ -1,5 +1,5 @@
 import { ProfileLayout } from "@/layout";
-import banner from "../../images/banner.jpg";
+// import banner from "../../images/banner.jpg";
 import styles from "@/layout/HomeLayout/HomeLayout.module.css";
 import Gallery from "@/components/ViewProfile/Gallery";
 import Post from "@/components/ViewProfile/Post";
