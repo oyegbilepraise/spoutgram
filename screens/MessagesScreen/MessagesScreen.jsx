@@ -19,9 +19,6 @@ const MessagesScreen = () => {
     }, [])
 
     const handleMessage = async (m) => {
-        setOpenMessage(false)
-        console.log({m});
-        setEachMessage('')
         setEachMessage(m)
         setOpenMessage(true)
     }

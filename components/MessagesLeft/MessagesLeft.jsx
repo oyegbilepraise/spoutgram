@@ -9,12 +9,12 @@ import { sendMessage } from "@/redux/slices/messageSlice/messageSlice";
 import { useFormik } from "formik";
 
 const MessagesLeft = ({ eachMessage }) => {
-    const [message, setMessage] = useState(eachMessage);
+    const [message, setMessage] = useState([...eachMessage.messages].reverse());
     const { user, apiError } = useSelector((state) => state?.auth?.getUser);
-    console.log(user);
+
     const dispatch = useDispatch();
     useEffect(() => {
-        setMessage(eachMessage)
+        setMessage([...eachMessage.messages].reverse())
     }, [eachMessage])
     console.log({ message });
     const formik = useFormik({
@@ -172,7 +172,7 @@ const MessagesLeft = ({ eachMessage }) => {
                                     <TypeLoader />
                                     Type
                                 </span> */}
-                                {message.messages.reverse().map((m, i) => {
+                                {message.map((m, i) => {
                                     return (
                                         user?.data?._id !== m.from ? (
                                             <span>
@@ -189,21 +189,8 @@ const MessagesLeft = ({ eachMessage }) => {
                                                     <span className={styles.reply__timestamp}>11:20am&nbsp;-&nbsp;01 May 23 -&nbsp;<span style={{ color: "var(--brand-color)" }}>Seen</span></span>
                                                 </span>
                                             </span>
-                                            // <div></div>
                                         )
-                                        // <span>
-                                        //     <span className={styles.response}>{m.message}</span>
-                                        //     {/* <Image src={imgOne} className={styles.response__pic} /> */}
-                                        //     <span className={styles.response__timestamp}>11:20am&nbsp;-&nbsp;01 May 23 -&nbsp;<span style={{ color: "var(--brand-color)" }}>Delivered</span>
-                                        //     </span>
-                                        //     <span className={styles.replycontainer}>
-                                        //         <span>
-                                        //             <span className={styles.reply}>Hi</span>
-                                        //             {/* <Image src={imgOne} className={styles.reply__pic} /> */}
-                                        //             <span className={styles.reply__timestamp}>11:20am&nbsp;-&nbsp;01 May 23 -&nbsp;<span style={{ color: "var(--brand-color)" }}>Seen</span></span>
-                                        //         </span>
-                                        //     </span>
-                                        // </span>
+
                                     )
                                 })}
                             </span>
