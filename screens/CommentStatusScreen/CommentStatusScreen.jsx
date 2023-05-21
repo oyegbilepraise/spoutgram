@@ -24,7 +24,7 @@ const CommentStatusScreen = () => {
     (state) => state?.comment?.getComments
   );
   const { user, apiError } = useSelector((state) => state?.auth?.getUser);
-  const {individualPost}=useSelector(state=>state?.post?.singlePost)
+  const { individualPost } = useSelector(state => state?.post?.singlePost)
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -37,7 +37,6 @@ const CommentStatusScreen = () => {
   };
 
   useEffect(() => {
-    console.log(router.query.postId);
     if (router.query.postId) {
       localStorage.setItem("postId", router.query.postId);
       dispatch(getCommentsAction(router.query.postId));
@@ -121,11 +120,11 @@ const CommentStatusScreen = () => {
                 <path d="M19 12H6M12 5l-7 7 7 7" />
               </svg>
             </span>
-         {!loading &&    <span
+            {!loading && <span
               // style={{textAlign: "center", width: "max-content",marginTop: "0px", margin: "auto", paddingLeft: "0px", paddingTop: "0px", border: "1px solid black", display: "block"}}
               class={styles.not_home_nav_text}
             >
-            {comments?.data?.length < 1? "No Comment": <span>{comments?.data?.length > 1? `${comments?.data?.length} Comments`:`${comments?.data?.length} Comment`}</span> }
+              {comments?.data?.length < 1 ? "No Comment" : <span>{comments?.data?.length > 1 ? `${comments?.data?.length} Comments` : `${comments?.data?.length} Comment`}</span>}
             </span>}
           </div>
         </nav>
@@ -417,11 +416,11 @@ const CommentStatusScreen = () => {
                   </div>
                   <div>
                     <textarea
-                     name="text"
+                      name="text"
                       id=""
                       cols="30"
                       rows="10"
-                        onChange={formik.handleChange}
+                      onChange={formik.handleChange}
                       value={formik.values.text}
                       onBlur={formik.handleBlur}
                       placeholder="Compose your reply"
@@ -471,7 +470,7 @@ const CommentStatusScreen = () => {
                     Upload Pic/gif
                   </button>
                   <input
-                   name="image"
+                    name="image"
                     type="file"
                     id="fileInput"
                     accept="image/jpg, image/jpeg, image/png"

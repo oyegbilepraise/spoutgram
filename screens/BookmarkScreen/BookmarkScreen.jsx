@@ -1,6 +1,4 @@
 import { HomeLayout } from '@/layout'
-import Image from 'next/image'
-import img from '../../images/default-photo.svg'
 import styles from '@/layout/HomeLayout/HomeLayout.module.css'
 import { useDispatch } from 'react-redux'
 import { getAllBoomarks } from '@/redux/slices/postSlice/postSlice'
@@ -17,12 +15,10 @@ const BookmarkScreen = () => {
     const getBoomarks = async () => {
         try {
             const res = await dispatch(getAllBoomarks())
-            console.log(res);
             setBookmarks(res.payload.data)
             setLoading(false);
         } catch (error) {
             console.log(error);
-            console.log('error');
         }
     }
     return (

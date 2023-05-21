@@ -4,8 +4,29 @@ import Image from 'next/image'
 import styles from '@/layout/HomeLayout/HomeLayout.module.css'
 import { TypeLoader } from "../../components";
 import { useState, useRef, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { sendMessage } from "@/redux/slices/messageSlice/messageSlice";
+import { useFormik } from "formik";
 
-const MessagesLeft = () => {
+const MessagesLeft = ({ eachMessage }) => {
+    const [message, setMessage] = useState([...eachMessage.messages].reverse());
+    const { user, apiError } = useSelector((state) => state?.auth?.getUser);
+    const dispatch = useDispatch();
+    useEffect(() => {
+        window.scrollTo(0, document.body.scrollHeight);
+        setMessage([...eachMessage.messages].reverse())
+    }, [eachMessage])
+
+    useEffect(() => {
+        window.scrollTo(0, document.body.scrollHeight);
+      }, []);
+      
+    const formik = useFormik({
+        initialValues: { text: "", image: null },
+        onSubmit: (values) => {
+            handleSendMessage(values)
+        },
+    });
     //emoji show and hide handler
     const [isEmojiOpen, setIsEmojiOpen] = useState(false);
     const emojiRef = useRef(null);
@@ -33,11 +54,9 @@ const MessagesLeft = () => {
     const handleImageUpload = (event) => {
         const file = event.target.files[0];
         const reader = new FileReader();
-
         reader.onload = (e) => {
             setImage(e.target.result);
         };
-
         if (file) {
             reader.readAsDataURL(file);
         }
@@ -46,11 +65,33 @@ const MessagesLeft = () => {
     const handleImageRemove = () => {
         setImage(null);
     };
+    const handleSendMessage = async (values) => {
+        console.log({ values });
+        try {
+            const formData = new FormData();
+            formData.append("message", values.text);
+            formData.append("status", false);
+            formData.append("to", message._id);
+            const res = await dispatch(sendMessage(formData));
+            if (res.payload) {
+                let newMessage = { ...message.messages, ...res.payload.data }
+                // setMessage(newMessage)
+                console.log(newMessage);
+            }
+            console.log(res);
+            // values.text = "";
+            // values.image = "";
+            // setImage(null);
+            // router.push(Routes.HOME);
+        } catch (error) {
+            console.log({ error });
+        }
+    }
     return (
         <>
             <div className={styles.left__mssg__div}>
                 {/* if no messages */}
-                <div className="nbyd meesg_byd" style={{ display: "none" }}>
+                {/* <div className="nbyd meesg_byd" style={{ display: "none" }}>
                     <div>
                         <svg
                             className={styles.nbyd__svg}
@@ -88,7 +129,7 @@ const MessagesLeft = () => {
                             <span className={styles.nby_txt}>No messages yet.</span>
                         </div>
                     </div>
-                </div>
+                </div> */}
                 <div className={styles.hold__conversations__container}>
                     {/*  */}
                     <nav className={styles.___main_nav}
@@ -97,6 +138,7 @@ const MessagesLeft = () => {
                         <div style={{ paddingTop: "0px" }}>
                             <span className={styles.prfon_back_img}>
                                 <Image
+                                    alt="..."
                                     src={imgOne}
                                     className={styles.img__cht__prfl}
                                 />
@@ -116,6 +158,7 @@ const MessagesLeft = () => {
                             <div className={styles.users__chat__metadata}>
                                 <div>
                                     <Image
+                                        alt="..."
                                         src={imgOne}
                                         className={styles.profile__chat__usdata}
                                     />
@@ -128,57 +171,40 @@ const MessagesLeft = () => {
                                 </div>
                             </div>
                             <span className={styles.response__holder}>
-                                <span className={styles.response} style={{ color: "transparent" }}>
+                                {/* <span className={styles.response} style={{ color: "transparent" }}>
                                     <TypeLoader />
                                     Type
-                                </span>
-                                <span className={styles.response}>Hi, How are you doing?</span>
-                                <span className={styles.response}>How is everything?</span>
-                                <Image src={imgOne} className={styles.response__pic} />
-                                <span className={styles.response__timestamp}>11:20am&nbsp;-&nbsp;01 May 23 -&nbsp;<span style={{ color: "var(--brand-color)" }}>Delivered</span></span>
+                                </span> */}
+                                {message.map((m, i) => {
+                                    return (
+                                        user?.data?._id !== m.from ? (
+                                            <span>
+                                                <span className={styles.response}>{m.message}</span>
+                                                {/* <Image src={imgOne} className={styles.response__pic} /> */}
+                                                <span className={styles.response__timestamp}>11:20am&nbsp;-&nbsp;01 May 23 -&nbsp;<span style={{ color: "var(--brand-color)" }}>Delivered</span>
+                                                </span>
+                                            </span>
+                                        ) : (
+                                            <span className={styles.replycontainer}>
+                                                <span>
+                                                    <span className={styles.reply}>{m.message}</span>
+                                                    {/* <Image src={imgOne} className={styles.reply__pic} /> */}
+                                                    <span className={styles.reply__timestamp}>11:20am&nbsp;-&nbsp;01 May 23 -&nbsp;<span style={{ color: "var(--brand-color)" }}>Seen</span></span>
+                                                </span>
+                                            </span>
+                                        )
+
+                                    )
+                                })}
                             </span>
                             <span className={styles.reply__holder}>
-                                <span className={styles.replycontainer}>
-                                    <span>
-                                        <span className={styles.reply}>Hi</span>
-                                        <span className={styles.reply}>I am good, whatsup?</span>
-                                        <Image src={imgOne} className={styles.reply__pic} />
-                                        <span className={styles.reply__timestamp}>11:20am&nbsp;-&nbsp;01 May 23 -&nbsp;<span style={{ color: "var(--brand-color)" }}>Seen</span></span>
-                                    </span>
-                                </span>
-                            </span>
-                            <span className={styles.reply__holder}>
-                                <span className={styles.replycontainer}>
-                                    <span>
-                                        <span className={styles.reply}>
-                                            I am fine. How do you see Spoutgram, it's lit, innit?
-                                        </span>
-                                        <span className={styles.reply__timestamp}>11:21am&nbsp;-&nbsp;01 May 23 -&nbsp;<span style={{ color: "var(--brand-color)" }}>Delivered</span></span>
-                                    </span>
-                                </span>
-                            </span>
-                            <span className={styles.response__holder}>
-                                <span className={styles.response}>
-                                    Like ....
-                                    <br />
-                                    <br />I love it!!!
-                                </span>
-                                <span className={styles.response__timestamp}>11:24am&nbsp;-&nbsp;01 May 23 -&nbsp;<span style={{ color: "var(--brand-color)" }}>Delivered</span></span>
-                            </span>
-                            <span className={styles.response__holder}>
-                                <span className={styles.response}>
-                                    Like ....
-                                    <br />
-                                    <br />I lit stuff!!!
-                                </span>
-                                <span className={styles.response__timestamp}>11:25am&nbsp;-&nbsp;01 May 23 -&nbsp;<span style={{ color: "var(--brand-color)" }}>Delivered</span></span>
                             </span>
                             {/*  */}
                         </div>
                     </div>
 
                     {/* message footer */}
-                    <form>
+                    <form onSubmit={formik.handleSubmit}>
                         {image && (
                             <div className={styles.xqina__xqina}>
                                 <div style={{ position: "relative" }}>
@@ -194,12 +220,14 @@ const MessagesLeft = () => {
                                 <textarea
                                     className={styles.message_chat_box}
                                     placeholder="Send a message"
-                                    defaultValue={""}
+                                    onChange={formik.handleChange}
+                                    value={formik.values.text}
+                                    name="text"
+                                    id=""
                                 />
                             </div>
                             <div style={{ display: "flex" }}>
                                 <div className={styles.circle__icn__msg} onMouseDown={handleButtonClickk}>
-
                                     {/* emoji container */}
                                     {isEmojiOpen && (
                                         <div className={styles.emoji__msg__ggy} ref={emojiRef}>
@@ -227,10 +255,9 @@ const MessagesLeft = () => {
                                         style={{ display: 'none' }}
                                     />
                                 </div>
-                                <div style={{ background: "transparent" }} className={styles.circle__icn__msg}>
-                                    {/* <svg className={styles.svg___circle__qqqq} style={{width: "20px", height: "20px", fill: "rgb(200, 200, 200)"}} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 11.1005L7 9.1005L12.5 14.6005L16 11.1005L19 14.1005V5H5V11.1005ZM5 13.9289V19H8.1005L11.0858 16.0147L7 11.9289L5 13.9289ZM10.9289 19H19V16.9289L16 13.9289L10.9289 19ZM4 3H20C20.5523 3 21 3.44772 21 4V20C21 20.5523 20.5523 21 20 21H4C3.44772 21 3 20.5523 3 20V4C3 3.44772 3.44772 3 4 3ZM15.5 10C14.6716 10 14 9.32843 14 8.5C14 7.67157 14.6716 7 15.5 7C16.3284 7 17 7.67157 17 8.5C17 9.32843 16.3284 10 15.5 10Z"></path></svg> */}
+                                <button style={{ background: "transparent" }} className={styles.circle__icn__msg}>
                                     <svg className={styles.svg___circle__qqqq} style={{ width: "27px", height: "27px", fill: "#00acee" }} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 13.0001H9V11.0001H3V1.8457C3 1.56956 3.22386 1.3457 3.5 1.3457C3.58425 1.3457 3.66714 1.36699 3.74096 1.4076L22.2034 11.562C22.4454 11.695 22.5337 11.9991 22.4006 12.241C22.3549 12.3241 22.2865 12.3925 22.2034 12.4382L3.74096 22.5925C3.499 22.7256 3.19497 22.6374 3.06189 22.3954C3.02129 22.3216 3 22.2387 3 22.1544V13.0001Z"></path></svg>
-                                </div>
+                                </button>
                             </div>
                         </footer>
                     </form>

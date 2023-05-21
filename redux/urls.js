@@ -42,6 +42,8 @@ getParticularCommentReplies:"/comments/all_reply/",
 
   //MESSAGES
   suggestedUsers:"/message/suggested",
+  friends: '/message/friends',
+  sendMessage: '/message/send_message'
 };
 
 

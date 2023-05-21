@@ -20,8 +20,6 @@ export const getRequest = async ({ url, token, params }) => {
 
 // POST REQUEST
 export const postRequest = async ({ url, token, data, formData, params }) => {
-
-  
   const requestResponse = await API({
     headers: {
       Authorization: "Bearer " + token,
@@ -37,10 +35,9 @@ export const postRequest = async ({ url, token, data, formData, params }) => {
 };
 
 //POST WITH IMAGE
-export const postRequestWithImage = async ({ url, token,data, formData, params }) => {
-
+export const postRequestWithImage = async ({ url, token, data, formData, params }) => {
   console.log("Date:", new Date());
-  
+
   const requestResponse = await API({
     headers: {
       Authorization: "Bearer " + token,
