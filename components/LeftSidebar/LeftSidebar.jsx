@@ -71,12 +71,12 @@ const LeftSidebar = () => {
       {/* Home */}
 
       {/* Podcasts */}
-      <Link href="/podcasts" className={styles.Link}>
+      {/* <Link href="/podcasts" className={styles.Link}>
         <div className={isActive("/podcasts")}>
           <PodcastSvg />
           <span className={styles.span_data_sidebar}>Podcasts</span>
         </div>
-      </Link>
+      </Link> */}
       {/* Podcasts */}
 
       {/* Notifications */}
