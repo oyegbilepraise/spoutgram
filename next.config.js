@@ -7,7 +7,7 @@ const nextConfig = {
   },
   eslint:{
     ignoreDuringBuilds: true,
-    ignoreDuringDevelopment: true,
+    // ignoreDuringDevelopment: true,
   }
 }
 
