@@ -11,19 +11,22 @@ import { useFormik } from "formik";
 const MessagesLeft = ({ eachMessage }) => {
     const [message, setMessage] = useState([...eachMessage.messages].reverse());
     const { user, apiError } = useSelector((state) => state?.auth?.getUser);
-
     const dispatch = useDispatch();
     useEffect(() => {
+        window.scrollTo(0, document.body.scrollHeight);
         setMessage([...eachMessage.messages].reverse())
     }, [eachMessage])
-    console.log({ message });
+
+    useEffect(() => {
+        window.scrollTo(0, document.body.scrollHeight);
+      }, []);
+      
     const formik = useFormik({
         initialValues: { text: "", image: null },
         onSubmit: (values) => {
             handleSendMessage(values)
         },
     });
-
     //emoji show and hide handler
     const [isEmojiOpen, setIsEmojiOpen] = useState(false);
     const emojiRef = useRef(null);
@@ -88,7 +91,7 @@ const MessagesLeft = ({ eachMessage }) => {
         <>
             <div className={styles.left__mssg__div}>
                 {/* if no messages */}
-                <div className="nbyd meesg_byd" style={{ display: "none" }}>
+                {/* <div className="nbyd meesg_byd" style={{ display: "none" }}>
                     <div>
                         <svg
                             className={styles.nbyd__svg}
@@ -126,7 +129,7 @@ const MessagesLeft = ({ eachMessage }) => {
                             <span className={styles.nby_txt}>No messages yet.</span>
                         </div>
                     </div>
-                </div>
+                </div> */}
                 <div className={styles.hold__conversations__container}>
                     {/*  */}
                     <nav className={styles.___main_nav}
