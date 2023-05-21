@@ -71,6 +71,22 @@ export const getSingleCommentAction = createAsyncThunk(
   }
 );
 
+export const getRepliesAction = createAsyncThunk(
+  "comment/get-replies",
+ async (postId, { rejectWithValue }) => {
+  const token = Cookies.get("token");
+    try {
+      const res = await getRequest({
+        url: `${baseUrl}${URL.getParticularCommentReplies}${postId}`,
+        token: token,
+      });
+      return res.data;
+    } catch (err) {
+      return rejectWithValue(err?.response?.data?.message);
+    }
+  }
+);
+
 
 
 const commentSlice = createSlice({
@@ -95,6 +111,11 @@ const commentSlice = createSlice({
       loading: false,
       apiError: null,
       reccentPost: {},
+    },
+     getReplies: {
+      loading: false,
+      apiError: null,
+      replies: [],
     },
   },
   reducers: {},
@@ -164,6 +185,24 @@ console.log(state,action);
 console.log(state,action);
       state.replyComment.loading = false;
       state.replyComment.apiError = action?.payload;
+    });
+
+       //get Replies
+     builder.addCase(getRepliesAction.pending, (state) => {
+     console.log(state)
+      state.getReplies.loading = true;
+      state.getReplies.replies = [];
+      state.getReplies.apiError = null;
+    });
+    builder.addCase(getRepliesAction.fulfilled, (state, action) => {
+    console.log(state,action)
+      state.getReplies.loading = false;
+      state.getReplies.replies = action?.payload;
+    });
+    builder.addCase(getRepliesAction.rejected, (state, action) => {
+    console.log(state,action)
+      state.getReplies.loading = false;
+      state.getReplies.apiError = action?.payload;
     });
       },
 });

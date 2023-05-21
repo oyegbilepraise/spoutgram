@@ -25,6 +25,7 @@ createComment:"/comments/create",
 getParticularPostComments:"/comments/",
 replyComment:"/comments/reply",
 getOneComment:"/comments/comment/",
+getParticularCommentReplies:"/comments/all_reply/",
 
   // Link
 
