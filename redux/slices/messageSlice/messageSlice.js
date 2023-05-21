@@ -1,4 +1,5 @@
 
+import Cookies from "js-cookie";
 import { getRequest, patchRequest, postRequest, postRequestWithImage } from "../../api";
 import { baseUrl } from "../../baseUrl";
 import { URL } from "../../urls";
@@ -18,6 +19,45 @@ export const getSuggestedUsers = createAsyncThunk(
     }
   }
 );
+
+export const getMessagedFriends = createAsyncThunk(
+  "message/friends",
+  async (payload, { rejectWithValue }) => {
+    const token = Cookies.get('token')
+    try {
+      const res = await postRequest({
+        url: `${baseUrl}${URL.friends}`,
+        token,
+        data: payload
+      });
+      return res.data;
+    } catch (err) {
+      console.log(err);
+      return rejectWithValue(err?.response?.data?.message);
+    }
+  }
+);
+
+export const sendMessage = createAsyncThunk(
+  "message/friends",
+  async (payload, { rejectWithValue }) => {
+    const token = Cookies.get('token')
+    try {
+      const res = await postRequestWithImage({
+        url: `${baseUrl}${URL.sendMessage}`,
+        token,
+        data: payload
+      });
+      return res.data;
+    } catch (err) {
+      console.log(err);
+      return rejectWithValue(err?.response?.data?.message);
+    }
+  }
+);
+
+
+
 const messageSlice = createSlice({
   name: "message",
   initialState: {
