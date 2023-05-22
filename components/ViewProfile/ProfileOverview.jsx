@@ -1,8 +1,10 @@
 import styles from "@/layout/HomeLayout/HomeLayout.module.css";
 import Image from "next/image";
-import img from "../../images/me.jpeg";
+import img from "../../images/default.jpeg";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { PageSpinner } from "../../components";
+import { useRouter } from "next/router";
 
 const ProfileOverview = () => {
   const [showSubscribe, setShowSubscribe] = useState(false);
@@ -18,6 +20,55 @@ const ProfileOverview = () => {
       document.body.classList.remove("no-scroll");
     }
   }, [showSubscribe]);
+
+
+  const [image, setImage] = useState(null);
+  const [isLoading, setLoading] = useState(false);
+
+  // Function to handle image upload
+  const handleImageUpload = (event) => {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+
+    reader.onloadstart = () => {
+      setLoading(true);
+    };
+  
+    reader.onload = (e) => {
+      setTimeout(() => {
+        setLoading(false);
+        setImage(e.target.result);
+      }, 2500); // Delay of 2 seconds (2000 milliseconds)
+    };  
+
+    if (file) {
+      reader.readAsDataURL(file);
+    }
+  };
+
+  // Function to handle image removal
+  const handleImageRemove = () => {
+    setLoading(true);
+
+    setTimeout(() => {
+      setLoading(false);
+      setImage(null);
+    }, 2500); // Delay of 2 seconds (2000 milliseconds)
+  };
+
+  const [isEditModalOpen, setEditModalOpen] = useState(false);
+
+  const handleEditProfile = () => {
+    setEditModalOpen(true);
+    // Optionally, you can also update the URL to reflect the edit profile modal state
+    window.history.pushState(null, '', '/john/settings/profile');
+  };
+
+  const handleCloseModal = () => {
+    setEditModalOpen(false);
+    // Optionally, you can also update the URL to remove the edit profile modal state
+    window.history.pushState(null, '', '/john');
+  };
 
   return (
     <div className={styles.the__starting__point}>
@@ -38,7 +89,7 @@ const ProfileOverview = () => {
                   <span className={styles.xyxxn}>following</span>
                 </span>
                 <span className={styles.xoxtrn}>
-                  0<span className={styles.xyxxn}>members</span>
+                  0<span className={styles.xyxxn}>subscribers</span>
                 </span>
               </span>
               <div>
@@ -63,12 +114,7 @@ const ProfileOverview = () => {
           <span className={styles.absolute__me__now}>
             <button className={`${styles.follow__user}`}>Follow</button>
             <button className={`${styles.follow__user}`}>Message</button>
-            <button
-              className={`${styles.follow__user}`}
-              style={{ display: "none" }}
-            >
-              Edit Profile
-            </button>
+            <button className={`${styles.follow__user}`} onClick={handleEditProfile} style={{ display: "" }} > Edit Profile </button>
           </span>
           <div>
             <span className={`${styles.user_data_name} ${styles.yuv_usr}`}>
@@ -168,9 +214,8 @@ const ProfileOverview = () => {
           {/*  */}
         </div>
 
-        <div style={{ display: "flex", position: "relative" }}>
+        <div style={{ display: "flex", position: "relative", display: "none" }}>
           <button
-            // style={{ display: "none" }}
             onClick={() => setShowSubscribe((prev) => !prev)}
             className={`${styles.follow__user} ${styles.fu_xyz}`}
           >
@@ -217,10 +262,10 @@ const ProfileOverview = () => {
 
       {/* more__button */}
 
-      <div className={styles.span__xyz}>
+      <div className={styles.span__xyz} style={{display: "none"}}>
         <div
           className="xyx__more__Profile"
-          style={{ position: "relative", height: "32px", width: "32px" }}
+          style={{ position: "relative", height: "32px", width: "32px", display: "none" }}
           onClick={() => setShowMore((prev) => !prev)}
         >
           <svg
@@ -352,7 +397,6 @@ const ProfileOverview = () => {
       {/* subscribe modal ends*/}
 
       {/* Video modal starts*/}
-
       {showVideo && (
         <div className={styles.subscription__modal}>
           <div className={styles.subscription__modal__container}>
@@ -368,8 +412,105 @@ const ProfileOverview = () => {
           </div>
         </div>
       )}
-
       {/* Video modal ends*/}
+
+      {/* edit profile modal */} 
+      {isEditModalOpen && (
+      <div className={styles.editprofile__modal__xx}>
+        <div className={styles.editprofile__child__xx}>
+          <div className={styles.editprofile__hdr}>
+            <span style={{paddingLeft: "18px"}} class={styles.icon_back} onClick={handleCloseModal}>
+              <svg style={{marginLeft: "8px", top: "5px"}} class={styles._00_history__back} fill="rgb(120, 120, 120)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10.8284 12.0007L15.7782 16.9504L14.364 18.3646L8 12.0007L14.364 5.63672L15.7782 7.05093L10.8284 12.0007Z"></path></svg>
+              {/* <svg style={{marginLeft: "18px"}} class={styles._00_history__back} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgb(90, 90, 90)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H6M12 5l-7 7 7 7"/></svg> */}
+            </span>
+            <span>Edit Profile</span>
+
+            {/* this is the save/submit button to save edited profile information */}
+            <button className={styles.btn__edit__save}>
+              Save
+            </button>
+          </div>
+          <div style={{padding: "17px"}}>
+            <div style={{textAlign: "center", paddingBottom: "12px", paddingTop: "5px", position: "relative"}}>
+            {!image && (
+              <div className={styles.awayy__uuu___vvvv} onClick={() => document.getElementById('fileInput').click()}>
+                <Image src={img} className={styles.img__edit__img} alt="pic"/>
+                {isLoading ? (
+                  <div style={{position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)"}}>
+                    < PageSpinner />
+                  </div>
+                ) : (<svg fill="rgb(235, 235, 235)" className={styles.svg__edit__upld__yyy} style={{width: "22px", height: "22px"}} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.82843 5L7.82843 7H4V19H20V7H16.1716L14.1716 5H9.82843ZM9 3H15L17 5H21C21.5523 5 22 5.44772 22 6V20C22 20.5523 21.5523 21 21 21H3C2.44772 21 2 20.5523 2 20V6C2 5.44772 2.44772 5 3 5H7L9 3ZM12 18C8.96243 18 6.5 15.5376 6.5 12.5C6.5 9.46243 8.96243 7 12 7C15.0376 7 17.5 9.46243 17.5 12.5C17.5 15.5376 15.0376 18 12 18ZM12 16C13.933 16 15.5 14.433 15.5 12.5C15.5 10.567 13.933 9 12 9C10.067 9 8.5 10.567 8.5 12.5C8.5 14.433 10.067 16 12 16Z"></path></svg>)}
+                <input
+                  type="file"
+                  id="fileInput"
+                  accept="image/jpg, image/jpeg, image/png"
+                  onChange={handleImageUpload}
+                  style={{ display: 'none' }}
+                />
+              </div>
+            )}
+            {image && (
+              <>
+              <div className={styles.awayy__uuu___vvvv} onClick={() => document.getElementById('fileInput').click()}>
+                <img src={image} className={styles.img__edit__img} alt="pic" priority/>
+                {isLoading ? (
+                  <div style={{position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)"}}>
+                    < PageSpinner />
+                  </div>
+                ) : ( <svg fill="rgb(235, 235, 235)" className={styles.svg__edit__upld__yyy} style={{width: "22px", height: "22px"}} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.82843 5L7.82843 7H4V19H20V7H16.1716L14.1716 5H9.82843ZM9 3H15L17 5H21C21.5523 5 22 5.44772 22 6V20C22 20.5523 21.5523 21 21 21H3C2.44772 21 2 20.5523 2 20V6C2 5.44772 2.44772 5 3 5H7L9 3ZM12 18C8.96243 18 6.5 15.5376 6.5 12.5C6.5 9.46243 8.96243 7 12 7C15.0376 7 17.5 9.46243 17.5 12.5C17.5 15.5376 15.0376 18 12 18ZM12 16C13.933 16 15.5 14.433 15.5 12.5C15.5 10.567 13.933 9 12 9C10.067 9 8.5 10.567 8.5 12.5C8.5 14.433 10.067 16 12 16Z"></path></svg> )}
+                <input
+                  type="file"
+                  id="fileInput"
+                  accept="image/jpg, image/jpeg, image/png"
+                  onChange={handleImageUpload}
+                  style={{ display: 'none' }}
+                />
+              </div>
+              <span className={styles.span___rmv__edt__pp} onClick={handleImageRemove}>Remove Photo</span>
+              </>
+            )}  
+            </div>
+            <div>
+              <div>
+                <input type="text" placeholder="Name" className={styles.data_content_pass} />
+              </div>
+              <div>
+                <input type="text" placeholder="Username" className={styles.data_content_pass} />
+              </div>
+              <div>
+                <input type="text" placeholder="Location" className={styles.data_content_pass} />
+              </div>
+              <div>
+                <input type="text" placeholder="Website or bio link" className={styles.data_content_pass} /> 
+              </div>
+              <div>
+                <textarea placeholder="Your bio" className={styles.prfole_edit_bio}/>
+              </div>
+              <div style={{marginTop: "-10px"}}>
+                <span className={styles.span_post_option}>
+                  Hide Subscribers count
+                  <span>
+                    <input
+                      type="checkbox"
+                      name="allow_tipsb"
+                      id="switcha"
+                    />
+                    <label
+                      htmlFor="switcha"
+                      className={styles.label__tips}
+                    >
+                      Toggle
+                    </label>
+                  </span>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      )}
+      {/* edit profile modal */}
+
     </div>
   );
 };
