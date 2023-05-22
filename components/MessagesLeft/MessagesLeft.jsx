@@ -3,12 +3,15 @@ import default_img from "../../images/onlyf.jpg"
 import Image from 'next/image'
 import styles from '@/layout/HomeLayout/HomeLayout.module.css'
 import { TypeLoader } from "../../components";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { sendMessage } from "@/redux/slices/messageSlice/messageSlice";
 import { useFormik } from "formik";
+import { SocketContext } from "../../redux/context/socket.js";
+
 
 const MessagesLeft = ({ eachMessage }) => {
+  const socket = useContext(SocketContext);
   const [message, setMessage] = useState([...eachMessage.messages].reverse());
   const { user, apiError } = useSelector((state) => state?.auth?.getUser);
   const dispatch = useDispatch();
@@ -19,6 +22,7 @@ const MessagesLeft = ({ eachMessage }) => {
 
   useEffect(() => {
     window.scrollTo(0, document.body.scrollHeight);
+    // socket.on( +user.data._id,{name: receiverusername  + senderusername})
   }, []);
 
   const formik = useFormik({
@@ -74,8 +78,8 @@ const MessagesLeft = ({ eachMessage }) => {
       formData.append("to", '645e311fba7dc336192a6577');
       const res = await dispatch(sendMessage(formData));
       if (res.payload) {
+        console.log(res.payload);
         setMessage(prevData => [...prevData, res.payload.data]);
-        console.log({ message });
         // let newMessage = [ ...message, ...res.payload.data ]
         // setMessage(newMessage)
         // console.log(newMessage);
