@@ -133,7 +133,7 @@ const LeftSidebar = () => {
 
       {/* Create__button */}
       <Link href="/">
-        <button className={styles.create__home__btn}>
+        <button className={styles.create__home__btn} style={{display: "none"}}>
           <span>Create</span>
         </button>
       </Link>

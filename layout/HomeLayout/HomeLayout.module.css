@@ -5,7 +5,7 @@
     min-height: 100vh;
     margin: auto;
     display: flex;
-    border: 1px solid black;
+    /* border: 1px solid black; */                       /*this one is important*/
     /* justify-content: space-between;
     align-items: flex-start; */
 }
@@ -71,7 +71,7 @@
   
   
 ._000leftbar {
-    border: 1px solid red;
+    /* border: 1px solid red; */                                     /*this one is important*/
     width: 230px;
     position: fixed;
     top: 0px;
@@ -90,7 +90,7 @@
     /* margin: auto; */ 
 }
 ._000rightbar {
-    border: 1px solid green;
+    /* border: 1px solid green; */                                 /*this one is important*/
     width: 350px;
     /* width: max-content; */
 }
@@ -151,7 +151,9 @@
     transition: 0.7s all;
 }
 .not_home_nav_text {
-    padding-left: 34px;
+    padding-left: 55px;
+    display: block;
+    padding-top: 2px;
 }
 .data_count_bookm {
     font-family: var(--global-regular) !important;
@@ -195,7 +197,7 @@
     padding-top: 5px;
 }
 .main_flex_components {
-    border: 1px solid blue;
+    /* border: 1px solid blue; */                         /*this one is important*/
     width: 1000px;
     -webkit-box-flex: 1;
     display: flex;
@@ -342,7 +344,7 @@
     top: 14px;
 }
 .sgstn {
-    border: 1px solid black;
+    /* border: 1px solid black; */
     margin-top: 25px;
     border-radius: var(--modal-radius);
     box-sizing: border-box;
@@ -362,25 +364,25 @@
 }
 .sgstn_tst {
     display: flex;
-    border: 2px solid blue;
+    /* border: 2px solid blue; */
     box-sizing: border-box;
     margin-bottom: 4px;
     padding-top: 5px; padding-bottom: 5px;
 }
 .sgstn_tst > div:nth-child(1) {
-    border: 1px solid red;
+    /* border: 1px solid red; */
     /* padding-left: 14px; */
     width: 17%;
     box-sizing: border-box;
 }
 .sgstn_tst > div:nth-child(2) {
-    border: 1px solid blue;
+    /* border: 1px solid blue; */
     width: 55%;
     box-sizing: border-box;
     padding-left: 5px;
 }
 .sgstn_tst > div:nth-child(3) {
-    border: 1px solid rgb(128, 0, 51);
+    /* border: 1px solid rgb(128, 0, 51); */
     width: 28%;
     box-sizing: border-box;
     /* padding-right: 16px; */
@@ -2802,7 +2804,7 @@ input[type="search"].search__emojis::placeholder {
         display: none;
     }
     ._000leftbar {
-        border: 1px solid red;
+        /* border: 1px solid red; */               /*this one is important*/
         width: 89px;
         /* position: fixed; */
         /* top: 0px; */
@@ -2819,12 +2821,12 @@ input[type="search"].search__emojis::placeholder {
         /* min-height: 100vh; */
         /* margin: auto; */
         display: flex;
-        border: 1px solid red;
+        /* border: 1px solid red; */             /*this one is important*/
         /* justify-content: space-between;
         align-items: flex-start; */
     }
     .main_flex_components {
-        border: 1px solid green;
+        /* border: 1px solid green; */            /*this one is important*/
         width: 990px;
         /* -webkit-box-flex: 1; */
         /* display: flex; */
@@ -2856,7 +2858,7 @@ this is a frontend-error here --- still working on it, and would resolve it asap
         /* min-height: 100vh; */
         /* margin: auto; */
         display: flex;
-        border: 1px solid blue;
+        /* border: 1px solid blue; */                    /*this one is important*/
         /* justify-content: start; */
         /* align-items: normal; */
         /* justify-content: ; */
@@ -2879,7 +2881,7 @@ this is a frontend-error here --- still working on it, and would resolve it asap
         margin-right: 18px;
     }
     ._000rightbar {
-        border: 1px solid green;
+        /* border: 1px solid green; */                            /*this one is important*/
         /* width: 368px; */
         /* max-width: 350px; */
         /* width: max-content; */
@@ -2890,7 +2892,7 @@ this is a frontend-error here --- still working on it, and would resolve it asap
         max-width: 280px;    /*the error is coming from the width not being responsive*/
     }
     .main_flex_components {
-        border: 1px solid green;
+        /* border: 1px solid green; */                             /*this one is important*/
         /* width: 100%; */
         /* -webkit-box-flex: 1; */
         /* display: flex; */
@@ -2903,7 +2905,7 @@ this is a frontend-error here --- still working on it, and would resolve it asap
         /* width: 90%; */
     }
     .main_flex_components {
-        border: 1px solid red;
+        /* border: 1px solid red; */                              /*this one is important*/
         /* width: 100%; */
         /* -webkit-box-flex: 1; */
         /* display: flex; */
@@ -2931,7 +2933,7 @@ this is a frontend-error here --- still working on it, and would resolve it asap
         /* min-height: 100vh; */
         /* margin: auto; */
         display: flex;
-        border: 1px solid blue;
+        /* border: 1px solid blue; */                        /*this one is important*/
         /* justify-content: start; */
         /* align-items: normal; */
         /* justify-content: ; */
@@ -2966,7 +2968,7 @@ there's an issue with this one too, I will fixed em. it's width problem too
         /* width: 645px; */
     }
     .main_flex_components {
-        border: 1px solid red;
+        /* border: 1px solid red; */                    /*this one is important*/
         width: 100%;
         /* -webkit-box-flex: 1; */
         /* display: block; */
@@ -2982,7 +2984,7 @@ there's an issue with this one too, I will fixed em. it's width problem too
         display: none;
     }
     .main_flex_components {
-        border: 1px solid red;
+        /* border: 1px solid red; */                      /*this one is important*/
         width: 100%;
         /* -webkit-box-flex: 1; */
         display: block;

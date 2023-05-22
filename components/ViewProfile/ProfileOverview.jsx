@@ -414,7 +414,7 @@ const ProfileOverview = () => {
       )}
       {/* Video modal ends*/}
 
-      {/* edit profile modal */}
+      {/* edit profile modal */} 
       {isEditModalOpen && (
       <div className={styles.editprofile__modal__xx}>
         <div className={styles.editprofile__child__xx}>

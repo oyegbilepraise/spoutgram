@@ -150,20 +150,7 @@ const inputDesc=createRef()
         <nav className={styles.___main_nav}>
           <div>
             <span class={styles.icon_back} onClick={handleGoBack}>
-              <svg
-                class={styles._00_history__back}
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="rgb(90, 90, 90)"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path d="M19 12H6M12 5l-7 7 7 7" />
-              </svg>
+              <svg class={styles._00_history__back} fill="rgb(120, 120, 120)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10.8284 12.0007L15.7782 16.9504L14.364 18.3646L8 12.0007L14.364 5.63672L15.7782 7.05093L10.8284 12.0007Z"></path></svg>
             </span>
             <span class={styles.not_home_nav_text}>Create Post</span>
           </div>
