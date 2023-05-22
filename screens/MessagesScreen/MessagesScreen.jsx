@@ -1,18 +1,43 @@
 import { MessagesLayout } from '@/layout'
 import { MessagesLeft, MessagesRight } from '@/components'
-import Image from 'next/image'
-import img from '../../images/default-photo.svg'
-import banner from '../../images/banner.jpg'
-
-import styles from '@/layout/HomeLayout/HomeLayout.module.css'
+import { useDispatch, useSelector } from 'react-redux';
+import { getMessagedFriends } from '@/redux/slices/messageSlice/messageSlice';
+import { useEffect, useState } from 'react';
+import Cookies from 'js-cookie';
 
 const MessagesScreen = () => {
+    const { user, apiError } = useSelector((state) => state?.auth?.getUser);
+    const [messages, setMessages] = useState('')
+    const [loading, setLoading] = useState(true)
+    const [openMessage, setOpenMessage] = useState(false)
+    const [eachMessage, setEachMessage] = useState('')
+    const dispatch = useDispatch();
+    const token = Cookies.get("token");
+
+    useEffect(() => {
+        getFreinds()
+    }, [])
+
+    const handleMessage = async (m) => {
+        setEachMessage(m)
+        setOpenMessage(true)
+    }
+
+    const getFreinds = async () => {
+        try {
+            const res = await dispatch(getMessagedFriends({lastId: ''}))
+            setMessages(res.payload.data)
+            setLoading(false)
+        } catch (error) {
+            console.log(error);
+        }
+    }
     return (
         <MessagesLayout>
-            <MessagesRight/>
-            <MessagesLeft/>
+            <MessagesRight messages={messages} loading={loading} handleMessage={handleMessage} />
+            {openMessage && <MessagesLeft eachMessage={eachMessage} />}
         </MessagesLayout>
     )
 }
 
-export default MessagesScreen
+export default MessagesScreen;

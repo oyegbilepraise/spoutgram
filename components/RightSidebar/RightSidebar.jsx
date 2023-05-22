@@ -123,22 +123,15 @@ const CustomDot = ({ onClick, ...rest }) => {
 };
 
 const RightSidebar = () => {
-
   const dispatch = useDispatch()
-
   const token = Cookies.get("token");
   const { loading, apiError, suggested } = useSelector(
     (state) => state?.message?.suggestedUsers
   );
-
-
   useEffect(() => {
     dispatch(getSuggestedUsers(token));
   }, []);
-
   console.log(suggested);
-
-
   const responsive = {
     desktop: {
       breakpoint: { max: 3000, min: 1024 },
@@ -156,175 +149,27 @@ const RightSidebar = () => {
       slidesToSlide: 1, // optional, default to 1.
     },
   };
-
   let info = suggested.data
+  let data = []
+  const itemsPerPage = 6;
 
-  const data = [
-    {
-      id: 1,
-      items: [
-        {
-          id: 1,
-          name: "Preshpie",
-          username: "@pie",
-          btn: "Follow",
-        },
-        {
-          id: 2,
-          name: "John",
-          username: "@penuel",
-          btn: "Follow",
-        },
-        {
-          id: 3,
-          name: "Tomiwa",
-          username: "@tom",
-          btn: "Follow",
-        },
-        {
-          id: 4,
-          name: "Dipo",
-          username: "@dipox",
-          btn: "Follow",
-        },
-        {
-          id: 5,
-          name: "Dipo",
-          username: "@dipox",
-          btn: "Follow",
-        },
-        {
-          id: 6,
-          name: "Dipo",
-          username: "@dipox",
-          btn: "Follow",
-        },
-      ],
-    },
-    {
-      id: 2,
-      items: [
-        {
-          id: 1,
-          name: "Dada",
-          username: "@pie",
-          btn: "Follow",
-        },
-        {
-          id: 2,
-          name: "YORA",
-          username: "@penuel",
-          btn: "Follow",
-        },
-        {
-          id: 3,
-          name: "dami",
-          username: "@tom",
-          btn: "Follow",
-        },
-        {
-          id: 4,
-          name: "Yemi",
-          username: "@dipox",
-          btn: "Follow",
-        },
-        {
-          id: 5,
-          name: "Yemi",
-          username: "@dipox",
-          btn: "Follow",
-        },
-        {
-          id: 6,
-          name: "Yemi",
-          username: "@dipox",
-          btn: "Follow",
-        },
-      ],
-    },
-    {
-      id: 3,
-      items: [
-        {
-          id: 1,
-          name: "Rema",
-          username: "@badguy",
-          btn: "Follow",
-        },
-        {
-          id: 2,
-          name: "Doja",
-          username: "@cat",
-          btn: "Follow",
-        },
-        {
-          id: 3,
-          name: "Drake",
-          username: "@yourmama",
-          btn: "Follow",
-        },
-        {
-          id: 4,
-          name: "James",
-          username: "@brown",
-          btn: "Follow",
-        },
-        {
-          id: 5,
-          name: "James",
-          username: "@brown",
-          btn: "Follow",
-        },
-        {
-          id: 6,
-          name: "James",
-          username: "@brown",
-          btn: "Follow",
-        },
-      ],
-    },
-    {
-      id: 4,
-      items: [
-        {
-          id: 1,
-          name: "Rema",
-          username: "@badguy",
-          btn: "Follow",
-        },
-        {
-          id: 2,
-          name: "Doja",
-          username: "@cat",
-          btn: "Follow",
-        },
-        {
-          id: 3,
-          name: "Drake",
-          username: "@yourmama",
-          btn: "Follow",
-        },
-        {
-          id: 4,
-          name: "James",
-          username: "@brown",
-          btn: "Follow",
-        },
-        {
-          id: 5,
-          name: "James",
-          username: "@brown",
-          btn: "Follow",
-        },
-        {
-          id: 6,
-          name: "James",
-          username: "@brown",
-          btn: "Follow",
-        },
-      ],
-    },
-  ];
+  if (info) {
+
+    let total = Math.round(info.length / 6)
+    console.log(total);
+    for (let index = 1; index <= total; index++) {
+      let format = displayPage(index);
+      data.push({ id: index, items: format })
+    }
+
+  }
+
+  function displayPage(page) {
+    let startIndex = (page - 1) * itemsPerPage;
+    let endIndex = startIndex + itemsPerPage;
+    let pageItems = info.slice(startIndex, endIndex);
+    return pageItems
+  }
 
   // show search modal toggle
   const [showSearch, setShowSearch] = useState(false);
@@ -367,9 +212,8 @@ const RightSidebar = () => {
 
         {/* suggestions */}
         <div className={styles.sgstn}>
-
           <span>Suggested Follows</span>
-          {info ?
+          {data ?
             <Carousel
               swipeable={true}
               draggable={true}
@@ -388,31 +232,36 @@ const RightSidebar = () => {
               dotListClass="custom-dot-list-style"
               itemClass="carousel-item-padding-40-px"
             >
-              {info.map((user, index) => {
+              {data.map(({ id, items }) => {
                 return (
-                  <div key={index}>
+                  <div key={id}>
                     <div>
-                      <div>
-                        <Image
-                          src={img}
-                          alt="img"
-                          className={styles.xqsstn_bn}
-                        />
-                      </div>
-                      <div>
-                        <span className={styles.yynmsq}>{user.name}</span>
-                        <span className={styles.yyusbsq}>@{user.username}</span>
-                      </div>
-                      <div>
-                        <button className={styles.flwx_xyq_fllw}>
-                          Follow
-                        </button>
-                      </div>
+                      {items.map(({ name, id, username }) => {
+                        return (
+                          <div key={id} className={styles.sgstn_tst}>
+                            <div>
+                              <Image
+                                src={img}
+                                alt="img"
+                                className={styles.xqsstn_bn}
+                              />
+                            </div>
+                            <div>
+                              <span className={styles.yynmsq}>{name}</span>
+                              <span className={styles.yyusbsq}>{username}</span>
+                            </div>
+                            <div>
+                              <button className={styles.flwx_xyq_fllw}>
+                                follow
+                              </button>
+                            </div>
+                          </div>
+                        );
+                      })}
                     </div>
                   </div>
                 );
               })}
-
             </Carousel>
 
             : "No user"}
