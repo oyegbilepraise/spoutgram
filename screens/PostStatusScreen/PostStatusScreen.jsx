@@ -29,7 +29,7 @@ const { user, apiError } = useSelector((state) => state?.auth?.getUser);
   };
 
   useEffect(() => {
-    console.log(router.query.postId);
+    console.log(router);
     if (router.query.postId) {
       localStorage.setItem("postId", router.query.postId);
       dispatch(getSinglePostAction(router.query.postId));
@@ -143,7 +143,7 @@ const { user, apiError } = useSelector((state) => state?.auth?.getUser);
                 </span>
               </div>
               <div>
-                {/* <span className={styles._000_dt_data}><PostedAt time={individualPost?.data?.createdAt} /></span> */}
+                <span className={styles._000_dt_data}><PostedAt time={individualPost?.data?.createdAt} /></span>
               </div>
             </div>
 
