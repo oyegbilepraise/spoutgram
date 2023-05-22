@@ -24,7 +24,7 @@ const CommentStatusScreen = () => {
     (state) => state?.comment?.getComments
   );
   const { user, apiError } = useSelector((state) => state?.auth?.getUser);
-  const {individualPost}=useSelector(state=>state?.post?.singlePost)
+  const { individualPost } = useSelector(state => state?.post?.singlePost)
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -37,7 +37,6 @@ const CommentStatusScreen = () => {
   };
 
   useEffect(() => {
-    console.log(router.query.postId);
     if (router.query.postId) {
       localStorage.setItem("postId", router.query.postId);
       dispatch(getCommentsAction(router.query.postId));
@@ -111,11 +110,11 @@ const CommentStatusScreen = () => {
             <span style={{paddingLeft: "18px"}} class={styles.icon_back} onClick={handleGoBack}>
               <svg style={{marginLeft: "18px"}} class={styles._00_history__back} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgb(90, 90, 90)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H6M12 5l-7 7 7 7"/></svg>
             </span>
-         {!loading &&    <span
+            {!loading && <span
               // style={{textAlign: "center", width: "max-content",marginTop: "0px", margin: "auto", paddingLeft: "0px", paddingTop: "0px", border: "1px solid black", display: "block"}}
               class={styles.not_home_nav_text}
             >
-            {comments?.data?.length < 1? "No Comment": <span>{comments?.data?.length > 1? `${comments?.data?.length} Comments`:`${comments?.data?.length} Comment`}</span> }
+              {comments?.data?.length < 1 ? "No Comment" : <span>{comments?.data?.length > 1 ? `${comments?.data?.length} Comments` : `${comments?.data?.length} Comment`}</span>}
             </span>}
           </div>
         </nav>
@@ -249,21 +248,21 @@ const CommentStatusScreen = () => {
                             <span className={styles._00mn_spn_cnt}>900</span>
                           </span>
                           <span className={styles._00mn_span}>
-                          <Link href={`reply/${comment?._id}`}>
-                            <span>
-                              <svg
-                                id="comment"
-                                className={`${styles.blue} ${styles.x_icn_ftr}`}
-                                xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 24 24"
-                                width={24}
-                                height={24}
-                              >
-                                <path fill="none" d="M0 0h24v24H0z" />
-                                <path d="M10 3h4a8 8 0 1 1 0 16v3.5c-5-2-12-5-12-11.5a8 8 0 0 1 8-8zm2 14h2a6 6 0 1 0 0-12h-4a6 6 0 0 0-6 6c0 3.61 2.462 5.966 8 8.48V17z" />
-                              </svg>
-                            </span>
-                          </Link>
+                            <Link href={`reply/${comment?._id}`}>
+                              <span>
+                                <svg
+                                  id="comment"
+                                  className={`${styles.blue} ${styles.x_icn_ftr}`}
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  viewBox="0 0 24 24"
+                                  width={24}
+                                  height={24}
+                                >
+                                  <path fill="none" d="M0 0h24v24H0z" />
+                                  <path d="M10 3h4a8 8 0 1 1 0 16v3.5c-5-2-12-5-12-11.5a8 8 0 0 1 8-8zm2 14h2a6 6 0 1 0 0-12h-4a6 6 0 0 0-6 6c0 3.61 2.462 5.966 8 8.48V17z" />
+                                </svg>
+                              </span>
+                            </Link>
                             <span className={styles._00mn_spn_cnt}>10.1k</span>
                           </span>
                           <span className={styles._00mn_span}>
@@ -405,11 +404,11 @@ const CommentStatusScreen = () => {
                   </div>
                   <div>
                     <textarea
-                     name="text"
+                      name="text"
                       id=""
                       cols="30"
                       rows="10"
-                        onChange={formik.handleChange}
+                      onChange={formik.handleChange}
                       value={formik.values.text}
                       onBlur={formik.handleBlur}
                       placeholder="Compose your reply"
@@ -459,7 +458,7 @@ const CommentStatusScreen = () => {
                     Upload Pic/gif
                   </button>
                   <input
-                   name="image"
+                    name="image"
                     type="file"
                     id="fileInput"
                     accept="image/jpg, image/jpeg, image/png"
