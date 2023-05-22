@@ -17,7 +17,6 @@ const MessagesLeft = ({ eachMessage }) => {
   }, [eachMessage])
   useEffect(() => {
     window.scrollTo(0, document.body.scrollHeight);
-    // socket.on( +user.data._id,{name: receiverusername  + senderusername})
   }, []);
 
   const formik = useFormik({

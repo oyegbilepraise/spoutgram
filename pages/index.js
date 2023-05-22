@@ -1,9 +1,23 @@
+import { SocketContext } from "@/redux/context/socket";
 import { HomeScreen } from "@/screens";
 import Head from "next/head";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
+import { useSelector } from "react-redux";
+// import { SocketContext } from "../../redux/context/socket.js";
 
 function Home() {
+  const { user, apiError } = useSelector((state) => state?.auth?.getUser);
+  console.log({user});
+  const socket = useContext(SocketContext);
+
+
   useEffect(() => {
+
+    if (user) {
+      socket.emit("NEW_USER_ONLINE",user?.data?._id)
+    }
+ 
+
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         handleSuccess,

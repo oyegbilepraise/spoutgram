@@ -3,14 +3,16 @@ import Image from "next/image";
 import img from '../../images/default.jpeg' 
 import styles from "@/layout/HomeLayout/HomeLayout.module.css";
 import Post from "@/components/Home/Post";
-import { useEffect, useState } from "react"; 
+import { useContext, useEffect, useState } from "react"; 
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import Cookies from "js-cookie";
 import { getAllPostsAction } from "@/redux/slices/postSlice/postSlice";
+import { SocketContext } from "../../redux/context/socket.js";
 
 const HomeScreen = (props) => {
   const { user } = props
+  const socket = useContext(SocketContext);
 
   const dispatch = useDispatch()
   
@@ -21,6 +23,8 @@ const HomeScreen = (props) => {
 
   useEffect(() => {
     dispatch(getAllPostsAction(token));
+    console.log(user);
+    // socket.emit("NEW_USER_ONLINE",user._id)
   }, []);
 
   return (

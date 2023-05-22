@@ -4,10 +4,14 @@ import Image from 'next/image';
 import { useDispatch, useSelector } from "react-redux";
 import imgOne from '../../images/me.jpeg'
 import styles from '@/layout/HomeLayout/HomeLayout.module.css'
-import { useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
+import { SocketContext } from "../../redux/context/socket.js"
+
 
 
 const EachMessage = ({ eachMessage, message }) => {
+  // console.log({ eachMessage: eachMessage._id });
+  const socket = useContext(SocketContext);
   const dispatch = useDispatch();
   const { user, apiError } = useSelector((state) => state?.auth?.getUser);
   const [image, setImage] = useState(null);
@@ -26,7 +30,7 @@ const EachMessage = ({ eachMessage, message }) => {
       const formData = new FormData();
       formData.append("message", values.text);
       formData.append("status", false);
-      formData.append("to", message._id);
+      formData.append("to", eachMessage._id);
       formData.append("image", image);
       const res = await dispatch(sendMessage(formData));
       if (res.payload) {
@@ -60,7 +64,16 @@ const EachMessage = ({ eachMessage, message }) => {
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
+   
   }, []);
+
+  useEffect(()=>{
+    socket.on("NEW_MESSAGE",(data)=>{
+      console.log("RESPONSE: " + data.data.message);
+      // message.push(data.data)
+    } )
+  },[socket])
+
   function toggleEmoji() {
     setIsEmojiOpen(prevState => !prevState);
   }
