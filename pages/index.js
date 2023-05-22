@@ -12,12 +12,6 @@ function Home() {
 
 
   useEffect(() => {
-
-    if (user) {
-      socket.emit("NEW_USER_ONLINE",user?.data?._id)
-    }
- 
-
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         handleSuccess,
@@ -27,6 +21,12 @@ function Home() {
       console.log('Geolocation is not supported by your browser');
     }
   }, [])
+
+  useEffect(() => {
+    console.log("socket:: ", socket.id);
+    socket.emit("NEW_USER_ONLINE",user?.data?._id)
+
+  },[user])
 
   const handleSuccess = (position) => {
     const { latitude, longitude } = position.coords;

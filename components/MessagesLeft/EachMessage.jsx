@@ -27,6 +27,7 @@ const EachMessage = ({ eachMessage, message }) => {
   });
   const handleSendMessage = async (values) => {
     try {
+
       const formData = new FormData();
       formData.append("message", values.text);
       formData.append("status", false);
@@ -34,6 +35,7 @@ const EachMessage = ({ eachMessage, message }) => {
       formData.append("image", image);
       const res = await dispatch(sendMessage(formData));
       if (res.payload) {
+        socket.emit("NEW_MESSAGE", { from: user.data._id, to: eachMessage._id, data: res.payload.data })
         setMessage(prevData => [...prevData, res.payload.data]);
         console.log({ message });
         // let newMessage = [ ...message, ...res.payload.data ]
@@ -64,15 +66,15 @@ const EachMessage = ({ eachMessage, message }) => {
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-   
+
   }, []);
 
-  useEffect(()=>{
-    socket.on("NEW_MESSAGE",(data)=>{
-      console.log("RESPONSE: " + data.data.message);
+  useEffect(() => {
+    socket.on("NEW_MESSAGE_RECEIVE", (data) => {
+      console.log("RESPONSE: " + data);
       // message.push(data.data)
-    } )
-  },[socket])
+    })
+  }, [socket])
 
   function toggleEmoji() {
     setIsEmojiOpen(prevState => !prevState);
