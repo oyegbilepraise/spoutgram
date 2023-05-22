@@ -131,7 +131,7 @@ const RightSidebar = () => {
   useEffect(() => {
     dispatch(getSuggestedUsers(token));
   }, []);
-  console.log(suggested);
+  // console.log(suggested);
   const responsive = {
     desktop: {
       breakpoint: { max: 3000, min: 1024 },

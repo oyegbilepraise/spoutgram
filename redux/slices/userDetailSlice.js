@@ -1,8 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { postRequest } from "../api";
+import { patchRequest, postRequest } from "../api";
 import { URL } from "../urls";
 import Cookies from "js-cookie";
 import { baseUrl } from "../baseUrl";
+import { updateUserProfile } from "./authSlice/authSlice";
 
 // Create user profile
 export const createProfileAction = createAsyncThunk(
@@ -21,6 +22,16 @@ export const createProfileAction = createAsyncThunk(
     }
   }
 );
+export const updateProfileAction = createAsyncThunk("/users/updateProfile", async(payload, {rejectWithValue, dispatch})=>{
+    const token = Cookies.get("token");
+    try{
+        const res = await patchRequest({url: `${baseUrl}${URL.updateProfile}`, token, data: payload})
+        dispatch(updateUserProfile(res?.data?.data))
+        return res.data
+    }catch(err){
+        rejectWithValue(err?.response?.data.data);
+    }
+})
 
 const userDetailSlice = createSlice({
   name: "userDetails",
@@ -39,6 +50,10 @@ const userDetailSlice = createSlice({
       appError: null,
       profile: {},
     },
+    updateProfile: {
+      loading: false,
+      appError: null,
+    }
   },
   reducers: {
     addDetailsToUserProfile: (state, action) => {
@@ -63,6 +78,20 @@ const userDetailSlice = createSlice({
       state.profileCreation.loading = false;
       state.profileCreation.appError = action?.payload;
     });
+    //update profile.
+    builder
+      .addCase(updateProfileAction.pending, (state, action)=>{
+          state.updateProfile.loading = true;
+          state.updateProfile.appError = null
+      })
+      .addCase(updateProfileAction.fulfilled, (state, action)=>{
+          state.updateProfile.loading = false;
+          
+      })
+      .addCase(updateProfileAction.rejected, (state, action)=>{
+            state.updateProfile.loading = false;
+            state.updateProfile.appError = action?.payload
+      })
   },
 });
 

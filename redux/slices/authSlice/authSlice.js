@@ -193,6 +193,11 @@ const authSlice = createSlice({
     },
   },
   reducers: {
+    //updating the user profile
+    updateUserProfile(state, action){
+      console.log(action.payload);
+        state.getUser.user = action.payload
+    },
     logout: (state) => {
       Cookies.remove('token')
       state.getUser.user = {};
@@ -323,6 +328,6 @@ const authSlice = createSlice({
   },
 });
 
-export const { logout } = authSlice.actions
+export const { updateUserProfile, logout } = authSlice.actions
 
 export default authSlice.reducer;

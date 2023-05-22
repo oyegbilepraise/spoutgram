@@ -11,7 +11,7 @@ export const URL = {
   // Users
   createProfile: "/users/create-profile",
   verifyUsername: "/users/verify-username",
-
+  updateProfile: "/users/user/update",
   // Posts
 createPost:"/posts/create",
 getPosts:"/posts/all-posts",

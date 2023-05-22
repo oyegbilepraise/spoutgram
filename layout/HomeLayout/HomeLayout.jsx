@@ -1,6 +1,5 @@
 import { LeftSidebar, RightSidebar } from '@/components'
 import styles from '@/layout/HomeLayout/HomeLayout.module.css'
-
 const HomeLayout = (props) => {
   return (
     <main className={`${styles.main__app} ${styles._000_main_js} ${styles.app_component}`}>

@@ -2,24 +2,28 @@ import { HomeLayout } from '@/layout'
 import styles from '@/layout/HomeLayout/HomeLayout.module.css'
 import Image from "next/image";
 import img from "../../images/default-photo.svg";
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useFormik } from 'formik';
+import { updateProfileAction } from '@/redux/slices/userDetailSlice';
+import { BtnloadSvg } from '@/components';
 
 const EditProfileScreen = () => {
+  const dispatch = useDispatch({});
   const { user, apiError } = useSelector((state) => state?.auth?.getUser);
-
-  console.log({ user: user.data });
+  const {loading, appError} = useSelector(state=>state?.userDetails?.updateProfile)
+  // console.log({ user: user.data });
   const formik = useFormik({
     initialValues: {
       name: user?.data?.name,
       username: user?.data?.username,
-      bio: "",
-      location: "",
-      link: user?.data?.links[0]
+      bio: user?.data?.bio,
+      location: user?.data?.location,
+      website: user?.data?.links[0]
     },
     onSubmit: (values) => {
-      console.log({ values });
-      const data = { token: token, password: values.password };
+      const {name, username, website, bio, location} = values;
+      dispatch(updateProfileAction({name, username, website, bio, location}));
+      // const data = { token: token, password: values.password };
       // dispatch(changePasswordAction(data));
     },
     // validationSchema: changeValidationSchema,
@@ -36,7 +40,17 @@ const EditProfileScreen = () => {
                 <svg class={styles._00_history__back} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgb(90, 90, 90)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H6M12 5l-7 7 7 7" /></svg>
               </span>
               <span class={styles.not_home_nav_text}>Edit Profile</span>
-              <button type="submit" className={styles.save__edit__btn}>Save</button>
+              <button type="submit" className={styles.save__edit__btn} style={loading? { padding: '2vh', color: "transparent", transition: "0.1s all" }: {}}>
+                {
+                  loading?(
+                    <>
+                      <BtnloadSvg/>
+                    </>
+                  ):(
+                    'Save'
+                  )
+                }
+                </button>
             </div>
           </nav>
 
@@ -50,27 +64,27 @@ const EditProfileScreen = () => {
               </div>
               <div>
                 <div>
-                  <input className={styles.data_content_pass} type="text" placeholder="Name" value={formik.values.name} />
+                  <input className={styles.data_content_pass} type="text" name='name' placeholder="Name" value={formik.values.name} onChange={formik.handleChange}/>
                 </div>
                 <div>
-                  <input className={styles.data_content_pass} type="text" placeholder="Username" value={formik.values.username} />
+                  <input className={styles.data_content_pass} type="text" name='username' placeholder="Username" value={formik.values.username} onChange={formik.handleChange}/>
                 </div>
               </div>
             </div>
             <div className={styles.edit__pc__block}>
               <div>
-                <textarea name="" id="" className={styles.data_content_pass_bio} placeholder="Bio"></textarea>
+                <textarea name="bio" id="" className={styles.data_content_pass_bio} placeholder="Bio" value={formik.values.bio} onChange={formik.handleChange}></textarea>
               </div>
               <div>
-                <input className={styles.data_content_pass} type="text" placeholder="Location" value={"Miami, USA"} />
+                <input className={styles.data_content_pass} name='location' id='location' type="text" placeholder="Location" value={formik.values.location} onChange={formik.handleChange}/>
               </div>
-              <div>
-                <select name="" id="">
+              {/* <div>
+                <select name="" id="" onChange={formik.handleChange}>
                   <option value="">Creator</option>
                 </select>
-              </div>
+              </div> */}
               <div>
-                <input className={styles.data_content_pass} type="text" placeholder="Bio Link" value={"https://yourlinks/avary"} />
+                <input className={styles.data_content_pass} type="text" name='website' placeholder="Bio Link" value={formik.values.website} onChange={formik.handleChange}/>
               </div>
             </div>
           </div>
