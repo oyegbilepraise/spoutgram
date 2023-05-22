@@ -93,16 +93,16 @@ function ImageCarousels({ postImage }) {
       </div>
 
       {modalOpen && (
-        <div>
+        <div className={styles.post__post__img__carsl}>
           <div>
             <span onClick={closeModal}>&times;</span>
             {isSingleImage ? (
-              <div>
+              <div className={styles.carouselItem_}>
                 <Image
                   src={selectedImage}
                   alt="picgrid"
-                  className={styles.carouselImage}
-                  width={800}
+                  className={styles.carouselImage_}
+                  width={500}
                   height={500}
                   priority
                 />
@@ -118,12 +118,12 @@ function ImageCarousels({ postImage }) {
                   transitionDuration={300}
                 >
                   {imagesToShow.map((pic, id) => (
-                    <div key={id} className={styles.carouselItem}>
+                    <div key={id} className={styles.carouselItem_}>
                       {pic.endsWith(".jpg") ? (
                         <Image
                           src={pic !== null && pic}
                           alt="picgrid"
-                          className={styles.carouselImage}
+                          className={styles.carouselImage_}
                           width={500}
                           height={500}
                           priority

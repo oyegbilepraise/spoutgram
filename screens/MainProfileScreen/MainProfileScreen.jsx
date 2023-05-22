@@ -61,17 +61,24 @@ const MainProfileScreen = () => {
     }
   }
 
+
+  const handleGoBack = () => {
+      router.back(); // Go back to the previous page or route
+  };
+
   return (
     <HomeLayout>
       {/* div.timeline -> middle */}
       <div class={`${styles.timeline} ${styles._000middlebar}`}>
 
-        <nav className={styles.___main_nav}>
+        <nav className={styles.___main_nav} style={{borderBottom: "transparent"}}>
           <div>
-            <span class={styles.icon_back}>
-              <svg class={styles._00_history__back} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgb(90, 90, 90)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H6M12 5l-7 7 7 7" /></svg>
+            <span class={styles.icon_back} onClick={handleGoBack}>
+            <svg class={styles._00_history__back} fill="rgb(120, 120, 120)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10.8284 12.0007L15.7782 16.9504L14.364 18.3646L8 12.0007L14.364 5.63672L15.7782 7.05093L10.8284 12.0007Z"></path></svg>
+              {/* <svg class={styles._00_history__back} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgb(90, 90, 90)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H6M12 5l-7 7 7 7" /></svg> */}
             </span>
             <span style={{ color: "transparent" }}>hidden</span>
+            <svg class={styles._00_history__back_more} fill="rgb(120, 120, 120)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 10C3.9 10 3 10.9 3 12C3 13.1 3.9 14 5 14C6.1 14 7 13.1 7 12C7 10.9 6.1 10 5 10ZM19 10C17.9 10 17 10.9 17 12C17 13.1 17.9 14 19 14C20.1 14 21 13.1 21 12C21 10.9 20.1 10 19 10ZM12 10C10.9 10 10 10.9 10 12C10 13.1 10.9 14 12 14C13.1 14 14 13.1 14 12C14 10.9 13.1 10 12 10Z"></path></svg>
           </div>
         </nav>
 

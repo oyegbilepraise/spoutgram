@@ -1,10 +1,11 @@
 ._000_main_div {
     width: 100%;
     max-width: var(--main-width);
-    /* border: var(--testing-borders);   */
+    border: var(--testing-borders);  
     min-height: 100vh;
     margin: auto;
     display: flex;
+    /* border: 1px solid black; */                       /*this one is important*/
     /* justify-content: space-between;
     align-items: flex-start; */
 }
@@ -49,7 +50,7 @@
     letter-spacing: 0.1px;
 }
 .sidebar__svg {
-    width: 21px; height: 21px;
+    width: 28px; height: 28px;
     /* stroke-width: 2px; */
     /* stroke: rgb(197, 197, 197); */
     /* border: 1px solid black; */
@@ -70,8 +71,8 @@
   
   
 ._000leftbar {
-    /* border: 1px solid red; */
-    width: 250px;
+    /* border: 1px solid red; */                                     /*this one is important*/
+    width: 230px;
     position: fixed;
     top: 0px;
     margin-top: 0px;
@@ -82,15 +83,15 @@
 ._000middlebar {
     border: var(--border-all);
     width: 590px;
-    padding-bottom: 120px;
+    padding-bottom: 300px;
     position: relative;
     border-top: none;
     border-bottom: none;
     /* margin: auto; */ 
 }
 ._000rightbar {
-    /* border: 1px solid green; */
-    width: 320px;
+    /* border: 1px solid green; */                                 /*this one is important*/
+    width: 350px;
     /* width: max-content; */
 }
 .___main_nav {
@@ -122,20 +123,37 @@
     /* display: none; */
     padding: 4px;
     box-sizing: content-box;
-    width: 21px; height: 21px;
+    width: 26px; height: 26px;
     border-radius: 50%;
-    left: -5px;
+    left: 3px;
     cursor: pointer;
     transition: 0.7s all;
-    top: -1px;
+    background-color: #5b676c1d;
+    top: -1.5px;
+}
+._00_history__back_more {
+    position: absolute;
+    /* background-color: #01a8ea2d; */
+    /* display: none; */
+    padding: 4px;
+    box-sizing: content-box;
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: 0.7s all;
+    background-color: #5b676c1d;
+    top: -1.5px;
+    right: 19px;
 }
 ._00_history__back:hover {
-    stroke: var(--brand-color);
+    /* stroke: var(--brand-color); */
     background-color: #01a8ea1d;
     transition: 0.7s all;
 }
 .not_home_nav_text {
-    padding-left: 34px;
+    padding-left: 55px;
+    display: block;
+    padding-top: 2px;
 }
 .data_count_bookm {
     font-family: var(--global-regular) !important;
@@ -160,8 +178,8 @@
     padding: 13px;
     display: block;
     box-sizing: border-box;
-    padding-right: 25px;
-    padding-left: 25px;
+    padding-right: 20px;
+    padding-left: 20px;
     /* padding-right: 0px; padding-left: 0px; */
     padding-bottom: 7px;
     border-bottom: 1px solid rgb(225, 225, 225);
@@ -179,17 +197,23 @@
     padding-top: 5px;
 }
 .main_flex_components {
-    /* border: 1px solid yellow; */
-    width: 990px;
+    /* border: 1px solid blue; */                         /*this one is important*/
+    width: 1000px;
     -webkit-box-flex: 1;
     display: flex;
-    margin-left: 290px;
+    margin-left: 270px;
     justify-content: space-between;
 }
 .data_content_pimg {
-    width: 45px; height: 45px;
+    width: 48px; height: 48px;
     border-radius: 50%; object-fit: cover;
     margin-right: 15px;
+    transition: 0.4s ease;
+}
+.data_content_pimg:hover {
+    /* image-rendering: b; */
+    transition: 0.4s ease;
+    filter: brightness(90%);
 }
 ._0022_nm_usr {
     font-family: var(--global-bold);
@@ -197,7 +221,7 @@
     /* font-weight: 600; */
     color: rgb(55, 55, 55);
 }
-._0022_nm_usr > span, .postt-uname-hover {
+._0022_nm_usr > span, .postt_uname_hover {
     color: gray;
     font-family: var(--global-regular);
     font-size: 16px;
@@ -298,7 +322,7 @@
 }
   input[type="search"]._000sch_int {
     /* border: 1px solid black; */
-    width: 91%;
+    width: 100%;
     padding-left: 19px;
     /* padding-top: 10px; padding-bottom: 10px; */
     border-radius: 1000px;
@@ -307,7 +331,7 @@
     font-family: var(--global-regular);
     font-size: 15px;
     cursor: pointer;
-    height: 47px;
+    height: 50px;
     pointer-events: auto;
 }
   input[type="search"]._000sch_int::placeholder {
@@ -325,7 +349,7 @@
     border-radius: var(--modal-radius);
     box-sizing: border-box;
     /* background-color: #a5bbc30b; */
-    padding-bottom: 15px;
+    /* padding-bottom: 15px; */
     position: relative;
 }
 .sgstn > span {
@@ -333,26 +357,27 @@
     font-size: 18px;
     padding-top: 15px; padding-bottom: 22px;
     display: block;
-    margin-left: 19px;
+    /* margin-left: 19px; */
     color: rgb(67, 67, 67);
     letter-spacing: 0.2px;
+    /* border: 1px solid red; */
 }
 .sgstn_tst {
     display: flex;
     /* border: 2px solid blue; */
     box-sizing: border-box;
-    margin-bottom: 5px;
+    margin-bottom: 4px;
     padding-top: 5px; padding-bottom: 5px;
 }
 .sgstn_tst > div:nth-child(1) {
     /* border: 1px solid red; */
-    padding-left: 14px;
-    width: 20%;
+    /* padding-left: 14px; */
+    width: 17%;
     box-sizing: border-box;
 }
 .sgstn_tst > div:nth-child(2) {
     /* border: 1px solid blue; */
-    width: 52%;
+    width: 55%;
     box-sizing: border-box;
     padding-left: 5px;
 }
@@ -360,33 +385,38 @@
     /* border: 1px solid rgb(128, 0, 51); */
     width: 28%;
     box-sizing: border-box;
-    padding-right: 16px;
+    /* padding-right: 16px; */
+    text-align: right;
 }
 .xqsstn_bn {
-    width: 37px;
-    height: 37px;
+    width: 42px;
+    height: 42px;
     border-radius: 50%;
     object-fit: cover;
     cursor: pointer;
 }
 .yynmsq, .yyusbsq {
     display: block;
-    letter-spacing: 0.2px;
+    letter-spacing: 0.1px;
 }
 .yynmsq {
     font-family: var(--global-bold);
-    font-size: 15px;
-    color: rgb(75, 74, 89);
+    font-size: 15.5px;
+    color: rgb(109, 109, 117);
+}
+.yynmsq:hover {
+    cursor: pointer;
+    text-decoration: underline;
 }
 .yyusbsq {
     font-family: var(--global-regular);
-    font-size: 13px;
+    font-size: 13.4px;
     color: rgb(156, 156, 156);
     margin-top: 0px;
 }
 .flwx_xyq_fllw {
     /* background-color: var(--transparent-background-color); */
-    width: 100%;
+    /* width: 100%; */
     padding-top: 5px; padding-bottom: 5px;
     border-radius: var(--rounded-radius);
     color: var(--brand-color);
@@ -458,9 +488,9 @@
             user-select: none;
 }
 .n_m_text {
-    font-family: var(--global-regular);
+    font-family: var(--global-light);
     /* font-weight: 400; */
-    font-size: 15px;
+    font-size: 15.3px;
     color: #c1c1c1;
     margin-top: 0px;
     margin-bottom: 0px; 
@@ -474,7 +504,7 @@
     /* change this back to orginal position after launch */
   
     
-    padding-bottom: 8px; padding-top: 0px;
+    padding-bottom: 15px; padding-top: 0px;
     margin: auto;
     position: relative;
     padding-right: 10px; padding-left: 10px;
@@ -688,18 +718,18 @@
     padding-left: 20px;
 }
 ._000data__img__div {
-    background-color: gray;
-    height: 140px; width: 140px;
+    /* background-color: rgba(87, 92, 102, 0.5); */
+    height: 135px; width: 135px;
     border-radius: 50%;
     position: relative;
     /* margin-top: -90px; */
-    margin-bottom: 8px;
+    margin-bottom: 4px;
     /* padding: 5px; */
 }
 .profile_img {
     position: absolute;
-    width: 95%;
-    height: 95%;
+    width: 97%;
+    height: 97%;
     left: 50%;
     transform: translate(-50%, -50%);
     top: 50%;
@@ -722,11 +752,11 @@
     letter-spacing: 0.2px;
 }
 .xoxtrn {
-    margin-right: 20px;
+    margin-right: 30px;
     font-family: var(--global-bold);
-    font-size: 14.5px;
+    font-size: 14.6px;
     color: rgb(78, 78, 78);
-    letter-spacing: 0.2px;
+    letter-spacing: 0.1px;
     display: block;
     /* border: 1px solid black; */
     text-align: center;
@@ -1070,23 +1100,27 @@
     max-height: 350px;
     overflow: auto;
 }
-  
+.hover_main_image {
+    /* border: 1px solid black; */
+    position: relative;
+}
 .hover_main_image .hover_card, .hover_card  {
     /* border: 1px solid rgb(230, 230, 230); */
     position: absolute;
     background-color: white;
-    z-index: 45;
+    z-index: 450;
     width: 300px;
     cursor: default;
     border-radius: 10px;
-    padding: 5px; padding-left: 12px; padding-top: 10px; padding-right: 12px;
+    padding: 9px; padding-left: 15px; padding-top: 12px; padding-right: 15px;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    left: -200%;
 }
 .flex_h_div {
     display: flex;
 }
 .image_h_c {
-    height: 40px; width: 40px;
+    height: 41px; width: 41px;
     object-fit: cover; border-radius: 50%;
     margin-right: 15px;
 }
@@ -1097,6 +1131,8 @@
     display: block;
     margin-left: 0px;
     font-size: 14px;
+    font-family: var(--global-regular);
+    margin-top: -1px;
 }
 .xmoric {
     /* border: 1px solid black; */
@@ -1106,20 +1142,11 @@
 .hovr__f {
     /* font-size: 14px; */
 }
-.hovr__bio {
-    width: 98%;
-    color: rgb(44, 44, 44);
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-}
 .button__for__hover__div {
     /* border: 1px solid black; */
     width: 100%;
     display: flex;
-    margin-bottom: 13px; margin-top: 13px;
+    margin-bottom: 9px; margin-top: 15px;
 }
 .button__for__hover__div > div {
     width: 50%;
@@ -1127,19 +1154,19 @@
 }
 .fllw_hvr_btn {
     width: 100%;
-    padding-top: 8px; padding-bottom: 8px;
+    padding-top: 10px; padding-bottom: 10px;
     cursor: pointer;
     font-family: var(--global-bold);
     font-size: 15px;
-    border-radius: 11px;
-}
-.msg__hvr {
-    background-color: var(--brand-color);
-    color: white;
+    border-radius: 1000px;
 }
 .follow__hvr {
     background-color: var(--transparent-background-color);
     color: var(--brand-color);
+}
+.msg__hvr {
+    background-color: var(--brand-color);
+    color: white;
 }
 .hover_main_image .hover_card:before  {
     display: block;
@@ -1176,7 +1203,7 @@
     background-color: var(--transparent-brand-color);
     color: var(--brand-color);
     /* width: 50%; */
-    padding-top: 7px; padding-bottom: 7px;
+    padding-top: 10px; padding-bottom: 10px;
     padding-left: 20px; padding-right: 20px;
     border-radius: 1000px;
     font-family: var(--global-medium);
@@ -1665,6 +1692,15 @@
     width: 85%;
     color: rgb(62, 62, 62);
 }
+.hovr__bio {
+    width: 98%;
+    color: rgb(44, 44, 44);
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
 .parnt__cnt_wyyyt {
     /* border: 1px solid black; */
     display: flex;
@@ -1673,9 +1709,9 @@
 }
 .whats_yyy {
     border-bottom: var(--border-all);
-    padding-right: 25px; padding-left: 25px;
+    padding-right: 20px; padding-left: 20px;
     display: flex;
-    padding-top: 20px; padding-bottom: 18px;
+    padding-top: 20px; padding-bottom: 20px;
     margin-top: 3px;
 }
 .inipic_xyz, .ini__inp {
@@ -1705,7 +1741,9 @@ input[type="text"].disbld__inp__post {
     color: rgb(202, 202, 202);
 }
 .img__winipc {
-    width: 41px; height: 41px; border-radius: 50%; object-fit: cover;
+    width: 38px; height: 38px; border-radius: 50%; object-fit: cover;
+    margin-top: 1px;
+    cursor: pointer;
 }
 .inp__create__btn {
     position: absolute;
@@ -1725,8 +1763,8 @@ input[type="text"].disbld__inp__post {
 .carousel__btn__div {
     /* border: 1px solid black; */
     position: absolute;
-    top: 19px;
-    right: 27px;
+    top: 12px;
+    right: 0px;
 }
 
 
@@ -2101,7 +2139,7 @@ input[type="text"].disbld__inp__post {
     /* border: 1px solid black; */
     margin-top: 3px;
     padding-top: 40px;
-    padding-right: 35px; padding-left: 35px;
+    padding-right: 20px; padding-left: 20px;
 }
 .edit__pc__flex {
     /* border: 1px solid black; */
@@ -2119,24 +2157,29 @@ input[type="text"].disbld__inp__post {
     width: 80px; height: 80px; border-radius: 50%; object-fit: cover;
     margin-top: 10px;
 }
-input[type="text"].data_content_pass, input[type="password"].data_content_pass {
-    height: 45px;
+input[type="text"].data_content_pass, input[type="password"].data_content_pass, .prfole_edit_bio {
+    height: 49px;
     width: 100%;
-    border-radius: 4px;
-    padding-left: 15px;
+    padding-left: 19px;
     font-family: var(--global-regular);
-    font-size: 16px;
+    font-size: 15px;
     background-color: rgb(248, 248, 248);
     outline: none;
     border: 1px solid rgba(228, 228, 228, 0.264);
     border: none;
     caret-color: var(--brand-color);
-    margin-bottom: 6px;
+    margin-bottom: 5px;
+    border-radius: 7px;
+    letter-spacing: 0.15px;
+    padding-right: 10px;
+    box-sizing: border-box;
 }
-.edit__pc__block {
-    /* border: 1px solid black; */
-    margin-top: 20px;
-} 
+.prfole_edit_bio {
+    height: 100px;
+    resize: none;
+    padding-top: 12px;
+    line-height: 22px;
+}
 .data_content_pass_bio {
     height: 105px;
     width: 100%;
@@ -2638,23 +2681,316 @@ input[type="search"].search__emojis::placeholder {
     left: 50%;
     transform: translate(-50%, -50%);
 } 
-
-
-/* .grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr); 
-  grid-gap: 1px; 
+.buttons__prv__slide {
+    /* border: 1px solid black; */
+    width: 29px; height: 29px;
+    border-radius: 50%; position: relative;
+    background-color: rgb(240, 240, 240, 0.7);
+}
+.post__post__img__carsl {
+    position: fixed;
+    height: 100%; width: 100%;
+    background-color: rgb(0, 0, 0, 0.8);
+    top: 0; left: 0; z-index: 100;
+}
+.carouselItem_ {
+    border: 1px solid red;
+    text-align: center;
+    /* margin-top: 50%; */
+    /* position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100vw; */
+    /* margin-top: 100px; */
+    /* width: 100%; */
+    width: 100%;
+    margin: auto;
+}
+.carouselImage_ {
+    max-width: 100%;
+    max-height: 100%;
 }
 
-.four-columns {
-  grid-template-columns: repeat(4, 1fr); 
+
+/* edit profile modal */
+.editprofile__modal__xx {
+    background-color: rgb(0, 0, 0, 0.4);
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    z-index: 100;
+    overflow-y: scroll;
+}
+.editprofile__child__xx {
+    width: 500px;
+    background-color: white;
+    height: 580px;
+    border-radius: 20px;
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.editprofile__hdr {
+    text-align: center;
+    border-bottom: var(--border-all);
+    padding-top: 10px; padding-bottom: 10px;
+}
+.editprofile__hdr {
+    display: block;
+    font-family: var(
+        --global-medium
+    );
+    letter-spacing: 0.15px;
+}
+.img__edit__img {
+    width: 110px; height: 110px;
+    border-radius: 50%; object-fit: cover;
+    filter: brightness(40%);
+    cursor: pointer;
+}
+/* edit profile modal */
+.awayy__uuu___vvvv {
+    /* border: 1px solid black; */
+    width: max-content; height: max-content;
+    position: relative;
+    margin: auto;
+}
+.svg__edit__upld__yyy {
+    position: absolute;
+    top: 70%; left: 50%;
+    transform: translate(-50%, -50%);
+}
+.span___rmv__edt__pp {
+    position: absolute;
+    bottom: 19px;
+    right: 76px;
+    font-family: var(--global-medium);
+    color: var(--brand-color);
+    font-size: 14px;
+    letter-spacing: 0.1px;
+}
+.span___rmv__edt__pp:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+.btn__edit__save {
+    position: absolute;
+    background-color: #3c3c3c;
+    padding: 5px;
+    padding-left: 17px; padding-right: 17px;
+    color: rgb(245, 245, 245);
+    right: 8px;
+    font-family: var(--global-medium);
+    font-size: 14px;
+    border-radius: 1000px;
+    cursor: pointer;
+    top: 9px;
+} 
+.create__home__btn {
+    width: 100%;
+    background-color: var(--brand-color);
+    padding-top: 5px; padding-bottom: 5px;
+    border-radius: 1000px;
+    color: white;
 }
 
-.three-columns {
-  grid-template-columns: repeat(2, 1fr); 
+
+
+/* responsiveness works */
+@media screen and (max-width: 1280px) {
+    .span_data_sidebar {
+        display: none;
+    }
+    ._000leftbar {
+        /* border: 1px solid red; */               /*this one is important*/
+        width: 89px;
+        /* position: fixed; */
+        /* top: 0px; */
+        /* margin-top: 0px; */
+        /* height: 100%; */
+        /* overflow: auto; */
+        /* text-align: center; */
+        /* padding-top: 20px; */ 
+    }
+    ._000_main_div {
+        width: 100%;
+        max-width: 1052px;
+        /* border: var(--testing-borders);   */
+        /* min-height: 100vh; */
+        /* margin: auto; */
+        display: flex;
+        /* border: 1px solid red; */             /*this one is important*/
+        /* justify-content: space-between;
+        align-items: flex-start; */
+    }
+    .main_flex_components {
+        /* border: 1px solid green; */            /*this one is important*/
+        width: 990px;
+        /* -webkit-box-flex: 1; */
+        /* display: flex; */
+        margin-left: 89px;
+        /* justify-content: space-between; */
+    }
+    ._000leftbar > .Link > div, ._000leftbar > div {
+        /* border: 1px solid black; */
+        /* display: flex; */
+        /* margin-bottom: 19px; */
+        /* width: max-content; */
+        /* border-radius: var(--button-radius); */
+        /* padding: 5px; */
+        /* padding-right: 10px; */
+        margin: auto;
+        margin-bottom: 19px;
+    }
 }
 
-.three-columns .grid-item:nth-child(3) {
-  grid-column: span 2; 
-}
+
+/*
+this is a frontend-error here --- still working on it, and would resolve it asap. 
  */
+@media screen and (max-width: 1120px) {
+    ._000_main_div {
+        width: 100%;
+        /* max-width: 1030px; */
+        /* border: var(--testing-borders);   */
+        /* min-height: 100vh; */
+        /* margin: auto; */
+        display: flex;
+        /* border: 1px solid blue; */                    /*this one is important*/
+        /* justify-content: start; */
+        /* align-items: normal; */
+        /* justify-content: ; */
+        /* margin-right: 30px; margin-left: 30px; */
+        /* margin: auto; */
+        margin: 0px;
+        width: 100%;
+        max-width: none;
+        padding-right: 35px;
+    }
+    ._000middlebar {
+        border: var(--border-all);
+        width: 590px;
+        /* padding-bottom: 350px;
+        position: relative;
+        border-top: none; */
+        /* margin-right: 110px; */
+        /* border-bottom: none; */
+        /* margin: auto; */ 
+        margin-right: 18px;
+    }
+    ._000rightbar {
+        /* border: 1px solid green; */                            /*this one is important*/
+        /* width: 368px; */
+        /* max-width: 350px; */
+        /* width: max-content; */
+        /* padding-left: 0px; */
+        /* width: 400px; */
+        /* padding-left: 10px; */
+        width: 38%;
+        max-width: 280px;    /*the error is coming from the width not being responsive*/
+    }
+    .main_flex_components {
+        /* border: 1px solid green; */                             /*this one is important*/
+        /* width: 100%; */
+        /* -webkit-box-flex: 1; */
+        /* display: flex; */
+        margin-left: 89px;
+        /* justify-content: space-between; */
+        justify-content: left;
+        width: 970px;
+    }
+    .sgstn {
+        /* width: 90%; */
+    }
+    .main_flex_components {
+        /* border: 1px solid red; */                              /*this one is important*/
+        /* width: 100%; */
+        /* -webkit-box-flex: 1; */
+        /* display: flex; */
+        margin-left: 89px;
+        /* justify-content: space-between; */
+        /* justify-content: left; */
+        width: max-content;
+    }
+}
+
+
+@media screen and (max-width: 1006px) {
+    ._000rightbar {
+        display: none;
+    }
+    ._000middlebar {
+        /* border: var(--border-all); */
+        width: 645px;
+        margin-right: 0px;
+    }
+    ._000_main_div {
+        width: 100%;
+        /* max-width: 1030px; */
+        /* border: var(--testing-borders);   */
+        /* min-height: 100vh; */
+        /* margin: auto; */
+        display: flex;
+        /* border: 1px solid blue; */                        /*this one is important*/
+        /* justify-content: start; */
+        /* align-items: normal; */
+        /* justify-content: ; */
+        /* margin-right: 30px; margin-left: 30px; */
+        /* margin: auto; */
+        margin: auto;
+        /* width: 100%; */
+        max-width: max-content;
+        padding-right: 0px;
+    }
+}
+
+
+/*
+there's an issue with this one too, I will fixed em. it's width problem too 
+ */
+@media screen and (max-width: 763px) {
+    ._000_main_div {
+        max-width: none;
+        padding-right: 0px;
+    }
+    ._000middlebar {
+        /* width: 100vh; */
+        /* display: block; */
+        width: 100%;
+        /* min-width: 645px; */
+        /* align-self: stretch; */
+    }
+    .div {
+        width: 100%;
+        /* min-width: 645px; */
+        /* width: 645px; */
+    }
+    .main_flex_components {
+        /* border: 1px solid red; */                    /*this one is important*/
+        width: 100%;
+        /* -webkit-box-flex: 1; */
+        /* display: block; */
+        margin-left: 89px;
+        /* justify-content: space-between; */
+        /* justify-content: left; */
+        /* width: max-content; */
+    }
+}
+
+@media screen and (max-width: 525px) {
+    ._000leftbar {
+        display: none;
+    }
+    .main_flex_components {
+        /* border: 1px solid red; */                      /*this one is important*/
+        width: 100%;
+        /* -webkit-box-flex: 1; */
+        display: block;
+        margin-left: 0px;
+        /* justify-content: space-between; */
+        /* justify-content: left; */
+        /* width: max-content; */
+    }
+}

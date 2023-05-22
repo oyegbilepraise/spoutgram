@@ -20,26 +20,26 @@
 .vdf_data, .span_dta_vn {
   font-family: var(--global-medium);
   display: block;
-  /* text-align: center; */
+  text-align: center;
   font-size: 21px;
   margin-top: 10px; margin-bottom: 12px;
   color: rgb(81, 81, 81);
   letter-spacing: 0.1px;
-  padding-left: 2px;
+  /* padding-left: 2px; */
 }
 .oauths_ {
   width: 100%;
-  padding-top: 14px; padding-bottom: 14px;
+  padding-top: 18px; padding-bottom: 18px;
   border-radius: var(--rounded-radius);
   margin-bottom: 6px;
   font-family: var(--global-regular);
-  font-weight: 500;
+  /* font-weight: 500; */
   position: relative;
   padding-left: 22px;
   color: rgb(100, 100, 100);
   cursor: pointer;
   transition: 0.5s all;
-  font-size: 15px;
+  font-size: 15.3px;
   background-color: rgb(249, 249, 249);
   letter-spacing: 0.3px;
   color: rgb(132, 132, 132);
@@ -54,14 +54,14 @@
   position: absolute;
   left: 18px;
   transition: 0.5s all;
-  top: 13px;
+  top: 18px;
 }
 .twtr_oauth {
   /* color: white;
   background-color: #00acee; */
 }
 ._oxr {
-  padding-top: 25px; padding-bottom: 25px;
+  padding-top: 23px; padding-bottom: 23px;
   position: relative;
 }
 ._oxr > div {
@@ -70,27 +70,27 @@
 }
 .or {
   position: absolute;
-  font-family: var(--global-regular);
+  font-family: var(--global-medium);
   padding: 4px;
   background-color: white;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 14px;
+  font-size: 13px;
   color: rgb(170, 170, 170);
-  /* color: rgb(81, 81, 81); */
+  color: rgb(81, 81, 81);
 }
 ._xpnds_oauths_div {
-  display: flex;
+  display: block;
   /* border: 1px solid black; */
 }
 ._xpnds_oauths_div > div:nth-child(1) {
-  width: 50%;
-  padding-right: 6px;
+  /* width: 50%; */
+  /* padding-right: 6px; */
   /* border: 1px solid black; */
 }
 ._xpnds_oauths_div > div:nth-child(2){
-  width: 50%;
-  padding-left: 6px;
+  /* width: 50%; */
+  /* padding-left: 6px; */
   /* border: 1px solid black; */
 }
 .xpnd_inpts > div, .ibistro__xyz > div, .ibistro__xyz__one > div {
@@ -108,7 +108,7 @@
 input[type="text"].data_content_pass, input[type="password"].data_content_pass,  input[type="date"].data_content_pass {
   height: 47px;
   width: 100%;
-  border-radius: 7px;
+  border-radius: 8px;
   padding-left: 15px;
   font-family: var(--global-regular);
   font-size: 15.3px;
@@ -176,7 +176,7 @@ input[type="text"].data_content_inpcode:not(:focus):not(:placeholder-shown) {
   margin-top: 28px;
   padding-top: 14px; padding-bottom: 14px;
   border-radius: var(--rounded-radius);
-  border-radius: 14px;
+  border-radius: 1000px;
   cursor: pointer;
   font-size: 15.7px;
   transition: 0.6s all;
@@ -540,11 +540,11 @@ input[type="text"].data_content_inpcode:not(:focus):not(:placeholder-shown) {
   z-index: 1000;
 }
 ._loader_img {
-  width: 190px;
+  width: 170px;
 }
 .react__loader__child__div {
   position: absolute;
-  top: 48%;
+  top: 45%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
@@ -818,19 +818,20 @@ input[type="text"].data_content_inpcode:not(:focus):not(:placeholder-shown) {
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizelegibility;
     box-sizing: border-box;
-    padding-right: 39px; padding-left: 39px;
+    padding-right: 12px; padding-left: 12px;
   }
   .vdf_data, .span_dta_vn {
     font-family: var(--global-bold);
     font-weight: 500;
     font-size: 18px;
-    margin-top: 32px; margin-bottom: 22px;
+    margin-top: 32px; 
+    /* margin-bottom: 22px; */
     color: rgb(80, 80, 80);
     letter-spacing: 0.2px;
   }
   .oauths_ {
     width: 100%;
-    padding-top: 18px; padding-bottom: 18px;
+    /* padding-top: 18px; padding-bottom: 18px; */
     border-radius: var(--rounded-radius);
     margin-bottom: 4px;
     font-family: var(--global-regular);
@@ -843,22 +844,22 @@ input[type="text"].data_content_inpcode:not(:focus):not(:placeholder-shown) {
     border: none;
   }
   ._0016_auth_svg {
-    width: 16px; height: 16px;
+    /* width: 16px; height: 16px;
     position: absolute;
     left: 19px;
     transition: 0.5s all;
-    top: 17px;
+    top: 17px; */
   }
   ._oxr {
-    padding-top: 17px; padding-bottom: 11px;
-    position: relative;
+    /* padding-top: 17px; padding-bottom: 11px;
+    position: relative; */
   }
   ._oxr > div {
-    height: 1px;
-    background-color: rgba(225, 225, 225, 0);
+    /* height: 1px;
+    background-color: rgba(225, 225, 225, 0); */
   }
   .or {
-    position: absolute;
+    /* position: absolute;
     font-family: var(--global-bold);
     padding: 4px;
     background-color: white;
@@ -866,10 +867,14 @@ input[type="text"].data_content_inpcode:not(:focus):not(:placeholder-shown) {
     transform: translate(-50%, -50%);
     font-size: 12px;
     font-weight: 600;
-    color: rgb(80, 80, 80);
+    color: rgb(80, 80, 80); */
+    font-family: var(--global-bold);
+    font-weight: 600;
+    font-size: 12px;
+    color: rgb(90, 90, 90);
   }
   input[type="text"].data_content_pass, input[type="password"].data_content_pass, input[type="date"].data_content_pass {
-    height: 49px;
+    height: 46px;
     width: 100%;
     padding-left: 15px;
     font-family: var(--global-regular);
@@ -878,10 +883,12 @@ input[type="text"].data_content_inpcode:not(:focus):not(:placeholder-shown) {
     outline: none;
     border: 1px solid rgba(228, 228, 228, 0.264);
     border: none;
+    border-radius: 8px;
     caret-color: var(--brand-color);
+    /* margin-bottom: 2px; */
   }
   .xpnd_inpts > div, .ibistro__xyz__one > div {
-    height: 53px;
+    /* height: 53px; */
   }
   .svg__showpaswd {
     width: 13px; height: 13px;
@@ -905,7 +912,7 @@ input[type="text"].data_content_inpcode:not(:focus):not(:placeholder-shown) {
     color: white;
     display: block;
     margin-top: 33px;
-    padding-top: 15px; padding-bottom: 15px;
+    /* padding-top: 15px; padding-bottom: 15px; */
     border-radius: var(--rounded-radius);
     cursor: pointer;
     font-size: 15px;
@@ -929,7 +936,7 @@ input[type="text"].data_content_inpcode:not(:focus):not(:placeholder-shown) {
     font-family: var(--global-regular);
     font-size: 11px;
     padding-top: 3px;
-    color: #01A8EA;
+    /* color: #01A8EA; */
     cursor: pointer;
     letter-spacing: 0.2px;
   }
@@ -946,7 +953,7 @@ input[type="text"].data_content_inpcode:not(:focus):not(:placeholder-shown) {
   .xkktndckl {
     color: rgb(176, 176, 176);
     padding-top: 10px;
-    padding-bottom: 10px;
+    padding-bottom: 0px;
     text-align: center;
     font-size: 9px;
   }
@@ -1105,7 +1112,7 @@ input[type="text"].data_content_inpcode:not(:focus):not(:placeholder-shown) {
     width: 135px;
   }
   .react__loader__child__div {
-    top: 45%;
+    top: 44%;
   }
   .span__inperr {
     display: none;

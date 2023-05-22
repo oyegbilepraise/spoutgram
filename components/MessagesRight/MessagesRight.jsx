@@ -1,5 +1,6 @@
 import imgOne from "../../images/me.jpeg";
 import Image from 'next/image'
+import { useRouter } from "next/router";
 import styles from '@/layout/HomeLayout/HomeLayout.module.css'
 
 const MessagesRight = ({ messages, loading, handleMessage }) => {
