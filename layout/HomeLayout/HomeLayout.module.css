@@ -1,10 +1,11 @@
 ._000_main_div {
     width: 100%;
     max-width: var(--main-width);
-    /* border: var(--testing-borders);   */
+    border: var(--testing-borders);  
     min-height: 100vh;
     margin: auto;
     display: flex;
+    border: 1px solid black;
     /* justify-content: space-between;
     align-items: flex-start; */
 }
@@ -49,7 +50,7 @@
     letter-spacing: 0.1px;
 }
 .sidebar__svg {
-    width: 21px; height: 21px;
+    width: 28px; height: 28px;
     /* stroke-width: 2px; */
     /* stroke: rgb(197, 197, 197); */
     /* border: 1px solid black; */
@@ -70,8 +71,8 @@
   
   
 ._000leftbar {
-    /* border: 1px solid red; */
-    width: 250px;
+    border: 1px solid red;
+    width: 230px;
     position: fixed;
     top: 0px;
     margin-top: 0px;
@@ -82,15 +83,15 @@
 ._000middlebar {
     border: var(--border-all);
     width: 590px;
-    padding-bottom: 120px;
+    padding-bottom: 300px;
     position: relative;
     border-top: none;
     border-bottom: none;
     /* margin: auto; */ 
 }
 ._000rightbar {
-    /* border: 1px solid green; */
-    width: 320px;
+    border: 1px solid green;
+    width: 350px;
     /* width: max-content; */
 }
 .___main_nav {
@@ -194,11 +195,11 @@
     padding-top: 5px;
 }
 .main_flex_components {
-    /* border: 1px solid yellow; */
-    width: 990px;
+    border: 1px solid blue;
+    width: 1000px;
     -webkit-box-flex: 1;
     display: flex;
-    margin-left: 290px;
+    margin-left: 270px;
     justify-content: space-between;
 }
 .data_content_pimg {
@@ -319,7 +320,7 @@
 }
   input[type="search"]._000sch_int {
     /* border: 1px solid black; */
-    width: 91%;
+    width: 100%;
     padding-left: 19px;
     /* padding-top: 10px; padding-bottom: 10px; */
     border-radius: 1000px;
@@ -328,7 +329,7 @@
     font-family: var(--global-regular);
     font-size: 15px;
     cursor: pointer;
-    height: 47px;
+    height: 50px;
     pointer-events: auto;
 }
   input[type="search"]._000sch_int::placeholder {
@@ -341,12 +342,12 @@
     top: 14px;
 }
 .sgstn {
-    /* border: 1px solid black; */
+    border: 1px solid black;
     margin-top: 25px;
     border-radius: var(--modal-radius);
     box-sizing: border-box;
     /* background-color: #a5bbc30b; */
-    padding-bottom: 15px;
+    /* padding-bottom: 15px; */
     position: relative;
 }
 .sgstn > span {
@@ -354,34 +355,36 @@
     font-size: 18px;
     padding-top: 15px; padding-bottom: 22px;
     display: block;
-    margin-left: 19px;
+    /* margin-left: 19px; */
     color: rgb(67, 67, 67);
     letter-spacing: 0.2px;
+    /* border: 1px solid red; */
 }
 .sgstn_tst {
     display: flex;
-    /* border: 2px solid blue; */
+    border: 2px solid blue;
     box-sizing: border-box;
     margin-bottom: 4px;
     padding-top: 5px; padding-bottom: 5px;
 }
 .sgstn_tst > div:nth-child(1) {
-    /* border: 1px solid red; */
-    padding-left: 14px;
-    width: 20%;
+    border: 1px solid red;
+    /* padding-left: 14px; */
+    width: 17%;
     box-sizing: border-box;
 }
 .sgstn_tst > div:nth-child(2) {
-    /* border: 1px solid blue; */
-    width: 52%;
+    border: 1px solid blue;
+    width: 55%;
     box-sizing: border-box;
     padding-left: 5px;
 }
 .sgstn_tst > div:nth-child(3) {
-    /* border: 1px solid rgb(128, 0, 51); */
+    border: 1px solid rgb(128, 0, 51);
     width: 28%;
     box-sizing: border-box;
-    padding-right: 16px;
+    /* padding-right: 16px; */
+    text-align: right;
 }
 .xqsstn_bn {
     width: 42px;
@@ -399,6 +402,10 @@
     font-size: 15.5px;
     color: rgb(109, 109, 117);
 }
+.yynmsq:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
 .yyusbsq {
     font-family: var(--global-regular);
     font-size: 13.4px;
@@ -407,7 +414,7 @@
 }
 .flwx_xyq_fllw {
     /* background-color: var(--transparent-background-color); */
-    width: 100%;
+    /* width: 100%; */
     padding-top: 5px; padding-bottom: 5px;
     border-radius: var(--rounded-radius);
     color: var(--brand-color);
@@ -1755,7 +1762,7 @@ input[type="text"].disbld__inp__post {
     /* border: 1px solid black; */
     position: absolute;
     top: 12px;
-    right: 27px;
+    right: 0px;
 }
 
 
@@ -2778,4 +2785,210 @@ input[type="search"].search__emojis::placeholder {
     border-radius: 1000px;
     cursor: pointer;
     top: 9px;
+} 
+.create__home__btn {
+    width: 100%;
+    background-color: var(--brand-color);
+    padding-top: 5px; padding-bottom: 5px;
+    border-radius: 1000px;
+    color: white;
+}
+
+
+
+/* responsiveness works */
+@media screen and (max-width: 1280px) {
+    .span_data_sidebar {
+        display: none;
+    }
+    ._000leftbar {
+        border: 1px solid red;
+        width: 89px;
+        /* position: fixed; */
+        /* top: 0px; */
+        /* margin-top: 0px; */
+        /* height: 100%; */
+        /* overflow: auto; */
+        /* text-align: center; */
+        /* padding-top: 20px; */ 
+    }
+    ._000_main_div {
+        width: 100%;
+        max-width: 1052px;
+        /* border: var(--testing-borders);   */
+        /* min-height: 100vh; */
+        /* margin: auto; */
+        display: flex;
+        border: 1px solid red;
+        /* justify-content: space-between;
+        align-items: flex-start; */
+    }
+    .main_flex_components {
+        border: 1px solid green;
+        width: 990px;
+        /* -webkit-box-flex: 1; */
+        /* display: flex; */
+        margin-left: 89px;
+        /* justify-content: space-between; */
+    }
+    ._000leftbar > .Link > div, ._000leftbar > div {
+        /* border: 1px solid black; */
+        /* display: flex; */
+        /* margin-bottom: 19px; */
+        /* width: max-content; */
+        /* border-radius: var(--button-radius); */
+        /* padding: 5px; */
+        /* padding-right: 10px; */
+        margin: auto;
+        margin-bottom: 19px;
+    }
+}
+
+
+/*
+this is a frontend-error here --- still working on it, and would resolve it asap. 
+ */
+@media screen and (max-width: 1120px) {
+    ._000_main_div {
+        width: 100%;
+        /* max-width: 1030px; */
+        /* border: var(--testing-borders);   */
+        /* min-height: 100vh; */
+        /* margin: auto; */
+        display: flex;
+        border: 1px solid blue;
+        /* justify-content: start; */
+        /* align-items: normal; */
+        /* justify-content: ; */
+        /* margin-right: 30px; margin-left: 30px; */
+        /* margin: auto; */
+        margin: 0px;
+        width: 100%;
+        max-width: none;
+        padding-right: 35px;
+    }
+    ._000middlebar {
+        border: var(--border-all);
+        width: 590px;
+        /* padding-bottom: 350px;
+        position: relative;
+        border-top: none; */
+        /* margin-right: 110px; */
+        /* border-bottom: none; */
+        /* margin: auto; */ 
+        margin-right: 18px;
+    }
+    ._000rightbar {
+        border: 1px solid green;
+        /* width: 368px; */
+        /* max-width: 350px; */
+        /* width: max-content; */
+        /* padding-left: 0px; */
+        /* width: 400px; */
+        /* padding-left: 10px; */
+        width: 38%;
+        max-width: 280px;    /*the error is coming from the width not being responsive*/
+    }
+    .main_flex_components {
+        border: 1px solid green;
+        /* width: 100%; */
+        /* -webkit-box-flex: 1; */
+        /* display: flex; */
+        margin-left: 89px;
+        /* justify-content: space-between; */
+        justify-content: left;
+        width: 970px;
+    }
+    .sgstn {
+        /* width: 90%; */
+    }
+    .main_flex_components {
+        border: 1px solid red;
+        /* width: 100%; */
+        /* -webkit-box-flex: 1; */
+        /* display: flex; */
+        margin-left: 89px;
+        /* justify-content: space-between; */
+        /* justify-content: left; */
+        width: max-content;
+    }
+}
+
+
+@media screen and (max-width: 1006px) {
+    ._000rightbar {
+        display: none;
+    }
+    ._000middlebar {
+        /* border: var(--border-all); */
+        width: 645px;
+        margin-right: 0px;
+    }
+    ._000_main_div {
+        width: 100%;
+        /* max-width: 1030px; */
+        /* border: var(--testing-borders);   */
+        /* min-height: 100vh; */
+        /* margin: auto; */
+        display: flex;
+        border: 1px solid blue;
+        /* justify-content: start; */
+        /* align-items: normal; */
+        /* justify-content: ; */
+        /* margin-right: 30px; margin-left: 30px; */
+        /* margin: auto; */
+        margin: auto;
+        /* width: 100%; */
+        max-width: max-content;
+        padding-right: 0px;
+    }
+}
+
+
+/*
+there's an issue with this one too, I will fixed em. it's width problem too 
+ */
+@media screen and (max-width: 763px) {
+    ._000_main_div {
+        max-width: none;
+        padding-right: 0px;
+    }
+    ._000middlebar {
+        /* width: 100vh; */
+        /* display: block; */
+        width: 100%;
+        /* min-width: 645px; */
+        /* align-self: stretch; */
+    }
+    .div {
+        width: 100%;
+        /* min-width: 645px; */
+        /* width: 645px; */
+    }
+    .main_flex_components {
+        border: 1px solid red;
+        width: 100%;
+        /* -webkit-box-flex: 1; */
+        /* display: block; */
+        margin-left: 89px;
+        /* justify-content: space-between; */
+        /* justify-content: left; */
+        /* width: max-content; */
+    }
+}
+
+@media screen and (max-width: 525px) {
+    ._000leftbar {
+        display: none;
+    }
+    .main_flex_components {
+        border: 1px solid red;
+        width: 100%;
+        /* -webkit-box-flex: 1; */
+        display: block;
+        margin-left: 0px;
+        /* justify-content: space-between; */
+        /* justify-content: left; */
+        /* width: max-content; */
+    }
 }

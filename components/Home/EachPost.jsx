@@ -82,7 +82,7 @@ const EachPost = ({ post }) => {
               <span className={styles._ttl_top}>{post.title}</span>
             </div>
 
-            <div>
+            <div style={{ whiteSpace: 'pre-line' }}>
               <span className={styles._ttl_contxt}>{post?.desc?.length>300? <span>{more? post?.desc : `${post?.desc?.substring(0,300)}...`} <button style={{color:'grey'}} onClick={()=>setMore(!more)}>{more?"see less":"see more"}</button></span> : post?.desc}</span>
             </div>
           </div>

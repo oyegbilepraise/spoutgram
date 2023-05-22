@@ -3,7 +3,7 @@ import Image from "next/image";
 import img from '../../images/default.jpeg' 
 import styles from "@/layout/HomeLayout/HomeLayout.module.css";
 import Post from "@/components/Home/Post";
-import { useEffect, useState } from "react";
+import { useEffect, useState } from "react"; 
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import Cookies from "js-cookie";

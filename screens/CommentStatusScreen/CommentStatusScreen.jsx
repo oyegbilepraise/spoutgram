@@ -98,6 +98,10 @@ const CommentStatusScreen = () => {
     },
   });
 
+  const handleGoBack = () => {
+    router.back(); // Go back to the previous page or route
+  };
+
   return (
     <HomeLayout>
       {/* div.timeline -> middle */}

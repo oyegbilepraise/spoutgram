@@ -9,6 +9,7 @@ import Search from "../SearchComp/Search";
 import Cookies from "js-cookie";
 import { getSuggestedUsers } from '@/redux/slices/messageSlice/messageSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import Link from "next/link";
 
 const ButtonGroup = ({ next, previous, goToSlide, ...rest }) => {
   const {
@@ -223,7 +224,7 @@ const RightSidebar = () => {
 
         {/* suggestions */}
         <div className={styles.sgstn}>
-          <span>Suggested Follows</span>
+          <span>Follow Suggestions</span>
           {data ?
             <Carousel
               swipeable={true}
@@ -251,15 +252,21 @@ const RightSidebar = () => {
                         return (
                           <div key={id} className={styles.sgstn_tst}>
                             <div>
-                              <Image
-                                src={img}
-                                alt="img"
-                                className={styles.xqsstn_bn}
-                              />
+                              {/* replace with the appropriate username variable */}
+                              <Link href="/{username}">
+                                <Image
+                                  src={img}
+                                  alt="img"
+                                  className={styles.xqsstn_bn}
+                                />
+                              </Link>
                             </div>
                             <div>
-                              <span className={styles.yynmsq}>{name}</span>
-                              <span className={styles.yyusbsq}>{username}</span>
+                              {/* replace with the appropriate username variable */}
+                              <Link href="/{username}">
+                                <span className={styles.yynmsq}>{name}</span>
+                              </Link>
+                              <span className={styles.yyusbsq}>@{username}</span>
                             </div>
                             <div>
                               <button className={styles.flwx_xyq_fllw}>
