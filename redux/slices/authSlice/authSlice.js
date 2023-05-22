@@ -195,7 +195,6 @@ const authSlice = createSlice({
   reducers: {
     //updating the user profile
     updateUserProfile(state, action){
-      console.log(action.payload);
         state.getUser.user = action.payload
     },
     logout: (state) => {
