@@ -2,6 +2,8 @@ import { configureStore } from "@reduxjs/toolkit";
 import authSlice from "./slices/authSlice/authSlice";
 import userDetailSlice from "./slices/userDetailSlice";
 import postSlice from "./slices/postSlice/postSlice";
+import commentSlice from "./slices/commentSlice/commentSlice";
+import messageSlice from "./slices/messageSlice/messageSlice";
 
 
 
@@ -30,6 +32,8 @@ export const store = configureStore({
     userDetails: userDetailSlice,
     auth: authSlice,
     post: postSlice,
+    comment: commentSlice,
+    message: messageSlice,
   },
   // middleware: (getDefaultMiddleware) =>
   //   getDefaultMiddleware({

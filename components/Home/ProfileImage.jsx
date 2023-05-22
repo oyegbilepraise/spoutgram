@@ -1,6 +1,5 @@
 import styles from "@/layout/HomeLayout/HomeLayout.module.css";
 import img from '../../images/default-photo.svg'
-import people1 from '../../images/people-1.jpeg'
 import Image from "next/image";
 import PostedAt from "../PostedAt/postedAt";
 import { useDispatch, useSelector } from "react-redux";
@@ -42,7 +41,7 @@ const ProfileImage = ({ post }) => {
                 {post?.user?.name}
               </span>
               <span className={styles.postt_uname_hover}>@{post?.user?.username}</span>
-            </div>
+            </div> 
             {/* {{!  }} */}
           </div>
           <div>
@@ -187,7 +186,6 @@ const ProfileImage = ({ post }) => {
         </div>
         <div>
           <span className={styles._000_dt_data}>
-            { }
             <PostedAt time={post?.createdAt} />
           </span>
         </div>

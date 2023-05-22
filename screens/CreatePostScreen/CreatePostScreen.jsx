@@ -7,22 +7,27 @@ import ImagePost from "./ImagePost";
 import { useDispatch, useSelector } from "react-redux";
 import { createPostAction } from "@/redux/slices/postSlice/postSlice";
 import { useFormik } from "formik";
-import { MdPermMedia } from 'react-icons/md'
-import {
-  BtnloadSvg,
-} from "../../components";
+import { MdPermMedia } from "react-icons/md";
+import { BtnloadSvg } from "../../components";
+import EmojiPicker from "emoji-picker-react";
+import { createRef } from "react";
 
 const CreatePostScreen = () => {
+const inputTitle=createRef()
+const inputDesc=createRef()
+  const [cursorPosition, setcursorPosition] = useState("")
   const [showPostSettings, setShowPostSettings] = useState(false);
   const dispatch = useDispatch();
   const fileInputRef = useRef();
   const VideoInputRef = useRef();
 
-  const { reccentPost } = useSelector((state) => state?.post?.createPost);
+  const { loading, reccentPost } = useSelector(
+    (state) => state?.post?.createPost
+  );
   const handleButtonClick = () => {
     fileInputRef.current.click();
   };
-  // console.log(reccentPost);
+  console.log(reccentPost);
   //   useEffect(() => {
   //   if (reccentPost.success) {
   //     //  router.push(Routes.HOME);
@@ -61,8 +66,7 @@ const CreatePostScreen = () => {
       for (let i = 0; i < values.media.length; i++) {
         if (values.media[i].type.startsWith("image/")) {
           formData.append("image", values.media[i]);
-        }
-        else if (values.media[i].type.startsWith("video/")) {
+        } else if (values.media[i].type.startsWith("video/")) {
           formData.append("video", values.media[i]);
         }
       }
@@ -74,9 +78,8 @@ const CreatePostScreen = () => {
       fileInputRef.current.value = "";
       VideoInputRef.current.value = "";
       router.push(Routes.HOME);
-    }
+    },
   });
-
 
   //emoji show and hide handler
   const [isEmojiOpen, setIsEmojiOpen] = useState(false);
@@ -89,20 +92,50 @@ const CreatePostScreen = () => {
       }
     }
 
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
   function toggleEmoji() {
-    setIsEmojiOpen(prevState => !prevState);
+    setIsEmojiOpen((prevState) => !prevState);
   }
 
   function handleButtonClickk(event) {
     event.stopPropagation();
     toggleEmoji();
   }
+
+      const handleEmojiClick=({emoji})=>{
+  if (inputDesc.current.name=="desc") {
+  const ref=inputDesc.current;
+  ref.focus()
+  const start=formik.values.desc.substring(0,ref.selectionStart)
+  const end=formik.values.desc.substring(ref.selectionStart)
+  let message= start + emoji + end
+  formik.values.desc=message
+  console.log(inputDesc.current.name);
+  setcursorPosition(start.length+emoji.length)  
+  }else if (inputTitle.current.name=="title") {
+  const ref=inputTitle.current;
+  ref.focus()
+  const start=formik.values.title.substring(0,ref.selectionStart)
+  const end=formik.values.title.substring(ref.selectionStart)
+  let message= start + emoji + end
+  formik.values.title=message
+  console.log(inputTitle.current.name);
+  setcursorPosition(start.length+emoji.length)   
+  }
+  }
+
+   useEffect(() => {
+     if (inputDesc.current.name=="desc") {
+    inputDesc.current.selectionEnd=cursorPosition
+  }else if (inputTitle.current.name=="title") {  
+    inputTitle.current.selectionEnd=cursorPosition
+  }
+  }, [cursorPosition])
 
 
   return (
@@ -142,6 +175,7 @@ const CreatePostScreen = () => {
                 className={`${styles.post__data__content} ${styles.title__content}`}
                 placeholder="Post Title"
                 name="title"
+                ref={inputTitle}
                 value={formik.values.title}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
@@ -152,23 +186,28 @@ const CreatePostScreen = () => {
                 className={styles.post__data__content}
                 placeholder="Start Post"
                 name="desc"
+                ref={inputDesc}
                 value={formik.values.desc}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
               />
             </div>
             {/* this is the successful and error popup */}
-            <div>
-              <span className={styles.post__msg__pp}>
-                Post created successfully!
-              </span>
-            </div>
+            {reccentPost.success && (
+              <div>
+                <span className={styles.post__msg__pp}>
+                  Post created successfully!
+                </span>
+              </div>
+            )}
             {/* this is the successful and error popup */}
           </div>
 
-
           {/* image/video */}
-          <div className={styles.media__preview} style={{border: "transparent"}}>
+          <div
+            className={styles.media__preview}
+            style={{ border: "transparent" }}
+          >
             {/*image parent container */}
             <ImagePost media={media} />
             {/*video parent container */}
@@ -179,7 +218,7 @@ const CreatePostScreen = () => {
           <div className={`${styles.img} ${styles.vid} ${styles.__09xfgc}`}>
             <div className={styles._sxvg_div} onClick={handleButtonClick}>
               <MdPermMedia className={`${styles.post_icon_data} text-info`} />
-              <h6 className={styles.tooltip}>Image</h6>
+              <h6 className={styles.tooltip}>Media</h6>
             </div>
             <input
               type="file"
@@ -188,7 +227,6 @@ const CreatePostScreen = () => {
               name="media"
               style={{ display: "none" }}
               onChange={(event) => {
-
                 formik.setFieldValue("media", Array.from(event.target.files));
                 const newMedia = [];
                 const files = event.target.files;
@@ -272,7 +310,7 @@ const CreatePostScreen = () => {
               {showPostSettings && (
                 <div
                   className={styles.options__postsettns}
-                // style={{ display: "none" }}
+                  // style={{ display: "none" }}
                 >
                   <div>
                     <div>
@@ -352,59 +390,88 @@ const CreatePostScreen = () => {
               )}
             </div>
 
-
             {/* this is for the emojis */}
             <div>
-              <div style={{position: "relative"}}>
-                <svg className={styles.post_icon_data} onMouseDown={handleButtonClickk} fill="#00acee" width="24px" cursor="pointer"  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10.5199 19.8634C10.5955 18.6615 10.8833 17.5172 11.3463 16.4676C9.81124 16.3252 8.41864 15.6867 7.33309 14.7151L8.66691 13.2248C9.55217 14.0172 10.7188 14.4978 12 14.4978C12.1763 14.4978 12.3501 14.4887 12.5211 14.471C14.227 12.2169 16.8661 10.7083 19.8634 10.5199C19.1692 6.80877 15.9126 4 12 4C7.58172 4 4 7.58172 4 12C4 15.9126 6.80877 19.1692 10.5199 19.8634ZM19.0233 12.636C15.7891 13.2396 13.2396 15.7891 12.636 19.0233L19.0233 12.636ZM22 12C22 12.1677 21.9959 12.3344 21.9877 12.5L12.5 21.9877C12.3344 21.9959 12.1677 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12ZM10 10C10 10.8284 9.32843 11.5 8.5 11.5C7.67157 11.5 7 10.8284 7 10C7 9.17157 7.67157 8.5 8.5 8.5C9.32843 8.5 10 9.17157 10 10ZM17 10C17 10.8284 16.3284 11.5 15.5 11.5C14.6716 11.5 14 10.8284 14 10C14 9.17157 14.6716 8.5 15.5 8.5C16.3284 8.5 17 9.17157 17 10Z"></path></svg>
-                 
+              <div style={{ position: "relative" }}>
+                <svg
+                  className={styles.post_icon_data}
+                  onMouseDown={handleButtonClickk}
+                  fill="#00acee"
+                  width="24px"
+                  cursor="pointer"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M10.5199 19.8634C10.5955 18.6615 10.8833 17.5172 11.3463 16.4676C9.81124 16.3252 8.41864 15.6867 7.33309 14.7151L8.66691 13.2248C9.55217 14.0172 10.7188 14.4978 12 14.4978C12.1763 14.4978 12.3501 14.4887 12.5211 14.471C14.227 12.2169 16.8661 10.7083 19.8634 10.5199C19.1692 6.80877 15.9126 4 12 4C7.58172 4 4 7.58172 4 12C4 15.9126 6.80877 19.1692 10.5199 19.8634ZM19.0233 12.636C15.7891 13.2396 13.2396 15.7891 12.636 19.0233L19.0233 12.636ZM22 12C22 12.1677 21.9959 12.3344 21.9877 12.5L12.5 21.9877C12.3344 21.9959 12.1677 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12ZM10 10C10 10.8284 9.32843 11.5 8.5 11.5C7.67157 11.5 7 10.8284 7 10C7 9.17157 7.67157 8.5 8.5 8.5C9.32843 8.5 10 9.17157 10 10ZM17 10C17 10.8284 16.3284 11.5 15.5 11.5C14.6716 11.5 14 10.8284 14 10C14 9.17157 14.6716 8.5 15.5 8.5C16.3284 8.5 17 9.17157 17 10Z"></path>
+                </svg>
+
                 {/* this is the emoji container */}
                 {isEmojiOpen && (
-                <div className={styles.emojis__container__parent} ref={emojiRef}>
-                  <div>
+                  <div
+                    className={styles.emojis__container__parent}
+                    ref={emojiRef}
+                  >
                     <div>
-                      {/* search for emojis */}
-                      <input type="search" name="" id="" placeholder="Search emojis" className={styles.search__emojis} />
-                    </div>
-                    <div style={{width: "100%", height: "105px", overflowY: "auto"}}>
+                      <div>
+                        {/* search for emojis */}
+                        {/* <input
+                          type="search"
+                          name=""
+                          id=""
+                          placeholder="Search emojis"
+                          className={styles.search__emojis}
+                        /> */}
+                      </div>
+                      <div
+                        style={{
+                          width: "100%",
+                          height: "105px",
+                          overflowY: "auto",
+                        }}
+                      >
+                        {/* shoot the emoji here */}
+                        {/* emojis */}
 
-                      {/* shoot the emoji here */}
-                      {/* emojis */}
-
-
+                        <EmojiPicker height={350} width={300} onEmojiClick={handleEmojiClick} />
+                      </div>
                     </div>
                   </div>
-                </div>
                 )}
                 {/* this is the emoji container */}
-
+                {/* <EmojiPicker height={350} width={300} onEmojiClick={handleEmojiClick} /> */}
               </div>
             </div>
             {/* this is for the emojis */}
 
-
             <div>
-              <button
-                className={styles.data_vh_post}
-                type="submit"
-                disabled={(formik.values.title == "" && formik.values.desc == "" && formik.values.media.length == 0) || (formik.values.title != "" && formik.values.desc == "" && formik.values.media.length == 0)}
-              >
-                Post
-              </button>
-
-              {/* this is the loading button. remove the display: none in the styles below */}
+              {loading ? (
                 <button
                   className={styles.data_vh_post}
                   type="submit"
-                  style={{color: "transparent", transition: "0.1s all", display: "none" }} 
-                  disabled>
+                  style={{ color: "transparent", transition: "0.1s all" }}
+                  disabled
+                >
                   <>
-                        <BtnloadSvg />
-                      </>
+                    <BtnloadSvg />
+                  </>
                   Post
                 </button>
-              {/* this is the loading button. remove the display: none in the styles below */}
-
+              ) : (
+                <button
+                  className={styles.data_vh_post}
+                  type="submit"
+                  disabled={
+                    (formik.values.title == "" &&
+                      formik.values.desc == "" &&
+                      formik.values.media.length == 0) ||
+                    (formik.values.title != "" &&
+                      formik.values.desc == "" &&
+                      formik.values.media.length == 0)
+                  }
+                >
+                  Post
+                </button>
+              )}
             </div>
           </div>
         </form>

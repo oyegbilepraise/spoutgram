@@ -1,8 +1,7 @@
 import React, { useState, useRef } from "react";
 import styles from "@/layout/HomeLayout/HomeLayout.module.css";
 
-function HomeVideo({postVideo}) {
-  //  custom button states
+function HomeVideo({ videoUrl }) {
   const [playing, setPlaying] = useState(false);
   const [buttonVisible, setButtonVisible] = useState(true);
   const [currentTime, setCurrentTime] = useState(0);
@@ -13,81 +12,69 @@ function HomeVideo({postVideo}) {
   const videoRef = useRef();
   const progressBarRef = useRef();
   const volumeBarRef = useRef();
-
   // ------ custom video starts here ------
-  const togglePlay = () => {
-    setPlaying(!playing);
-    if (playing) {
-      videoRef.current.pause();
-      setButtonVisible(true);
-    } else {
-      videoRef.current.play();
-      setButtonVisible(false);
-    }
-  };
+  // const togglePlay = () => {
+  //   setPlaying(!playing);
+  //   if (playing) {
+  //     videoRef.current.pause();
+  //     setButtonVisible(true);
+  //   } else {
+  //     videoRef.current.play();
+  //     setButtonVisible(false);
+  //   }
+  // };
 
-  const handleTimeUpdate = () => {
-    setCurrentTime(videoRef.current.currentTime);
-    progressBarRef.current.value = videoRef.current.currentTime;
-  };
+  // const handleTimeUpdate = () => {
+  //   setCurrentTime(videoRef.current.currentTime);
+  //   progressBarRef.current.value = videoRef.current.currentTime;
+  // };
 
-  const handleLoadedMetadata = () => {
-    setDuration(videoRef.current.duration);
-    progressBarRef.current.max = videoRef.current.duration;
-  };
+  // const handleLoadedMetadata = () => {
+  //   setDuration(videoRef.current.duration);
+  //   progressBarRef.current.max = videoRef.current.duration;
+  // };
 
-  const handleProgressChange = () => {
-    videoRef.current.currentTime = progressBarRef.current.value;
-  };
+  // const handleProgressChange = () => {
+  //   videoRef.current.currentTime = progressBarRef.current.value;
+  // };
 
-  const handleVolumeChange = () => {
-    const newVolume = volumeBarRef.current.value;
-    videoRef.current.volume = newVolume;
-    setVolume(newVolume);
-    setMuted(false);
-  };
+  // const handleVolumeChange = () => {
+  //   const newVolume = volumeBarRef.current.value;
+  //   videoRef.current.volume = newVolume;
+  //   setVolume(newVolume);
+  //   setMuted(false);
+  // };
 
-  const toggleMute = () => {
-    const newMuted = !muted;
-    videoRef.current.volume = newMuted ? 0 : volume;
-    setMuted(newMuted);
-  };
+  // const toggleMute = () => {
+  //   const newMuted = !muted;
+  //   videoRef.current.volume = newMuted ? 0 : volume;
+  //   setMuted(newMuted);
+  // };
 
-  const formatTime = (time) => {
-    const minutes = Math.floor(time / 60);
-    const seconds = Math.floor(time % 60);
-    return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
-  };
+  // const formatTime = (time) => {
+  //   const minutes = Math.floor(time / 60);
+  //   const seconds = Math.floor(time % 60);
+  //   return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+  // };
 
-  const handlePlaybackRateChange = (rate) => {
-    setPlaybackRate(rate);
-    videoRef.current.playbackRate = rate;
-  };
+  // const handlePlaybackRateChange = (rate) => {
+  //   setPlaybackRate(rate);
+  //   videoRef.current.playbackRate = rate;
+  // };
 
   // --------- custom video stops here --------
   return (
     <div>
-      <div>
-      {postVideo.map((videoUrl,id)=>{
-      return (
-        <video
-        key={id}
-          src={videoUrl}
-          ref={videoRef}
-          onTimeUpdate={handleTimeUpdate}
-          onLoadedMetadata={handleLoadedMetadata}
-          muted={muted}
-          onClick={togglePlay}
-          className={styles.vide0__baby}
-          // you will have to change the styling {styles.vide0__baby} for others to work.
-          // currently, it's only play button that is working.
-          //  check it out and come up with something. Sorry
-        />
-      )
-      })}
-      </div>
-
-      <div>
+      <video
+        src={videoUrl}
+        ref={videoRef}
+        // onTimeUpdate={handleTimeUpdate}
+        // onLoadedMetadata={handleLoadedMetadata}
+        muted={muted}
+        // onClick={togglePlay}
+        className={styles.vide0__baby}
+      />
+      {/* <div>
         <button
           style={{ display: buttonVisible ? "block" : "none" }}
           onClick={togglePlay}
@@ -155,7 +142,6 @@ function HomeVideo({postVideo}) {
             onChange={handleVolumeChange}
           />
         </div>
-
         <div>
           <span>Speed:</span>
           <button onClick={() => handlePlaybackRateChange(0.5)}>0.5x</button>
@@ -163,7 +149,7 @@ function HomeVideo({postVideo}) {
           <button onClick={() => handlePlaybackRateChange(1.5)}>1.5x</button>
           <button onClick={() => handlePlaybackRateChange(2)}>2x</button>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }

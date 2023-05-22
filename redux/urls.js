@@ -15,11 +15,16 @@ export const URL = {
   // Posts
 createPost:"/posts/create",
 getPosts:"/posts/all-posts",
+getSinglePost:"/posts/post/",
 likePost:"/posts/post/like",
 dislikePost:"/posts/post/unlike",
   // Category
 
   // Comment
+createComment:"/comments/create",
+getParticularPostComments:"/comments/",
+replyComment:"/comments/reply",
+getOneComment:"/comments/comment/",
 
   // Link
 
@@ -30,6 +35,14 @@ dislikePost:"/posts/post/unlike",
 
   // Boomarks
   boomarks: '/posts/bookmarks',
+
+  // Views
+  views: '/posts/view_post/',
+
+  //MESSAGES
+  suggestedUsers:"/message/suggested",
+  friends: '/message/friends',
+  sendMessage: '/message/send_message'
 };
 
 

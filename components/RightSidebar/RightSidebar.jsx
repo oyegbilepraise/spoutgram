@@ -1,15 +1,15 @@
 import './RightSidebar.module.css'
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import img from "../../images/default-photo.svg";
 import Image from "next/image";
 import styles from "@/layout/HomeLayout/HomeLayout.module.css";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import Search from "../SearchComp/Search";
+import Cookies from "js-cookie";
+import { getSuggestedUsers } from '@/redux/slices/messageSlice/messageSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
-// read documentation to style and also inspect element. https://www.npmjs.com/package/react-multi-carousel
-
-// custom arrows. add arrows in place of the buttons
 const ButtonGroup = ({ next, previous, goToSlide, ...rest }) => {
   const {
     carouselState: { currentSlide },
@@ -67,19 +67,19 @@ const carouselItems = [
     id: 1,
   },
   {
-    id: 2,  
+    id: 2,
   },
   {
-    id: 3,  
+    id: 3,
   },
   {
-    id: 4,  
+    id: 4,
   },
   {
-    id: 5,  
+    id: 5,
   },
   {
-    id: 6,  
+    id: 6,
   },
 
 ];
@@ -123,6 +123,15 @@ const CustomDot = ({ onClick, ...rest }) => {
 };
 
 const RightSidebar = () => {
+  const dispatch = useDispatch()
+  const token = Cookies.get("token");
+  const { loading, apiError, suggested } = useSelector(
+    (state) => state?.message?.suggestedUsers
+  );
+  useEffect(() => {
+    dispatch(getSuggestedUsers(token));
+  }, []);
+  console.log(suggested);
   const responsive = {
     desktop: {
       breakpoint: { max: 3000, min: 1024 },
@@ -140,173 +149,27 @@ const RightSidebar = () => {
       slidesToSlide: 1, // optional, default to 1.
     },
   };
+  let info = suggested.data
+  let data = []
+  const itemsPerPage = 6;
 
-  const data = [
-    {
-      id: 1,
-      items: [
-        {
-          id: 1,
-          name: "Preshpie",
-          username: "@pie",
-          btn: "Follow",
-        },
-        {
-          id: 2,
-          name: "John",
-          username: "@penuel",
-          btn: "Follow",
-        },
-        {
-          id: 3,
-          name: "Tomiwa",
-          username: "@tom",
-          btn: "Follow",
-        },
-        {
-          id: 4,
-          name: "Dipo",
-          username: "@dipox",
-          btn: "Follow",
-        },
-        {
-          id: 5,
-          name: "Dipo",
-          username: "@dipox",
-          btn: "Follow",
-        },
-        {
-          id: 6,
-          name: "Dipo",
-          username: "@dipox",
-          btn: "Follow",
-        },
-      ],
-    },
-    {
-      id: 2,
-      items: [
-        {
-          id: 1,
-          name: "Dada",
-          username: "@pie",
-          btn: "Follow",
-        },
-        {
-          id: 2,
-          name: "YORA",
-          username: "@penuel",
-          btn: "Follow",
-        },
-        {
-          id: 3,
-          name: "dami",
-          username: "@tom",
-          btn: "Follow",
-        },
-        {
-          id: 4,
-          name: "Yemi",
-          username: "@dipox",
-          btn: "Follow",
-        },
-        {
-          id: 5,
-          name: "Yemi",
-          username: "@dipox",
-          btn: "Follow",
-        },
-        {
-          id: 6,
-          name: "Yemi",
-          username: "@dipox",
-          btn: "Follow",
-        },
-      ],
-    },
-    {
-      id: 3,
-      items: [
-        {
-          id: 1,
-          name: "Rema",
-          username: "@badguy",
-          btn: "Follow",
-        },
-        {
-          id: 2,
-          name: "Doja",
-          username: "@cat",
-          btn: "Follow",
-        },
-        {
-          id: 3,
-          name: "Drake",
-          username: "@yourmama",
-          btn: "Follow",
-        },
-        {
-          id: 4,
-          name: "James",
-          username: "@brown",
-          btn: "Follow",
-        },
-        {
-          id: 5,
-          name: "James",
-          username: "@brown",
-          btn: "Follow",
-        },
-        {
-          id: 6,
-          name: "James",
-          username: "@brown",
-          btn: "Follow",
-        },
-      ],
-    }, 
-    {
-      id: 4,
-      items: [
-        {
-          id: 1,
-          name: "Rema",
-          username: "@badguy",
-          btn: "Follow",
-        },
-        {
-          id: 2,
-          name: "Doja",
-          username: "@cat",
-          btn: "Follow",
-        },
-        {
-          id: 3,
-          name: "Drake",
-          username: "@yourmama",
-          btn: "Follow",
-        },
-        {
-          id: 4,
-          name: "James",
-          username: "@brown",
-          btn: "Follow",
-        },
-        {
-          id: 5,
-          name: "James",
-          username: "@brown",
-          btn: "Follow",
-        },
-        {
-          id: 6,
-          name: "James",
-          username: "@brown",
-          btn: "Follow",
-        },
-      ],
-    }, 
-  ];
+  if (info) {
+
+    let total = Math.round(info.length / 6)
+    console.log(total);
+    for (let index = 1; index <= total; index++) {
+      let format = displayPage(index);
+      data.push({ id: index, items: format })
+    }
+
+  }
+
+  function displayPage(page) {
+    let startIndex = (page - 1) * itemsPerPage;
+    let endIndex = startIndex + itemsPerPage;
+    let pageItems = info.slice(startIndex, endIndex);
+    return pageItems
+  }
 
   // show search modal toggle
   const [showSearch, setShowSearch] = useState(false);
@@ -350,55 +213,59 @@ const RightSidebar = () => {
         {/* suggestions */}
         <div className={styles.sgstn}>
           <span>Suggested Follows</span>
-          <Carousel
-            swipeable={true}
-            draggable={true}
-            arrows={false}
-            showDots={true}
-            responsive={responsive}
-            ssr={true}
-            infinite={true}
-            keyBoardControl={true}
-            customTransition="all .5"
-            transitionDuration={500}
-            customButtonGroup={<ButtonGroup />}
-            customDot={<CustomDot />}
-            containerClass="carousel-container"
-            renderButtonGroupOutside={true}
-            dotListClass="custom-dot-list-style"
-            itemClass="carousel-item-padding-40-px"
-          >
-            {data.map(({ id, items }) => {
-              return (
-                <div key={id}>
-                  <div>
-                    {items.map(({ name, id, username, btn }) => {
-                      return (
-                        <div key={id} className={styles.sgstn_tst}>
-                          <div>
-                            <Image
-                              src={img}
-                              alt="img"
-                              className={styles.xqsstn_bn}
-                            />
+          {data ?
+            <Carousel
+              swipeable={true}
+              draggable={true}
+              arrows={false}
+              showDots={true}
+              responsive={responsive}
+              ssr={true}
+              infinite={true}
+              keyBoardControl={true}
+              customTransition="all .5"
+              transitionDuration={500}
+              customButtonGroup={<ButtonGroup />}
+              customDot={<CustomDot />}
+              containerClass="carousel-container"
+              renderButtonGroupOutside={true}
+              dotListClass="custom-dot-list-style"
+              itemClass="carousel-item-padding-40-px"
+            >
+              {data.map(({ id, items }) => {
+                return (
+                  <div key={id}>
+                    <div>
+                      {items.map(({ name, id, username }) => {
+                        return (
+                          <div key={id} className={styles.sgstn_tst}>
+                            <div>
+                              <Image
+                                src={img}
+                                alt="img"
+                                className={styles.xqsstn_bn}
+                              />
+                            </div>
+                            <div>
+                              <span className={styles.yynmsq}>{name}</span>
+                              <span className={styles.yyusbsq}>{username}</span>
+                            </div>
+                            <div>
+                              <button className={styles.flwx_xyq_fllw}>
+                                follow
+                              </button>
+                            </div>
                           </div>
-                          <div>
-                            <span className={styles.yynmsq}>{name}</span>
-                            <span className={styles.yyusbsq}>{username}</span>
-                          </div>
-                          <div>
-                            <button className={styles.flwx_xyq_fllw}>
-                              {btn}
-                            </button>
-                          </div>
-                        </div>
-                      );
-                    })}
+                        );
+                      })}
+                    </div>
                   </div>
-                </div>
-              );
-            })}
-          </Carousel>
+                );
+              })}
+            </Carousel>
+
+            : "No user"}
+
         </div>
         {/* footer */}
         <div className={styles._00main_ftr}>

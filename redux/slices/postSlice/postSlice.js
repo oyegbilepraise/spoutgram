@@ -3,8 +3,6 @@ import { baseUrl } from "../../baseUrl";
 import { URL } from "../../urls";
 import Cookies from "js-cookie";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { logout } from "../authSlice/authSlice";
-import { useDispatch } from "react-redux";
 
 export const createPostAction = createAsyncThunk(
   "posts/create",
@@ -30,6 +28,22 @@ export const getAllPostsAction = createAsyncThunk(
     try {
       const res = await getRequest({
         url: `${baseUrl}${URL.getPosts}`,
+        token: token,
+      });
+      return res.data;
+    } catch (err) {
+      return rejectWithValue(err?.response?.data?.message);
+    }
+  }
+);
+
+export const getSinglePostAction = createAsyncThunk(
+  "post/single-post",
+  async (postId, { rejectWithValue }) => {
+    const token = Cookies.get("token");
+    try {
+      const res = await getRequest({
+        url: `${baseUrl}${URL.getSinglePost}${postId}`,
         token: token,
       });
       return res.data;
@@ -86,29 +100,33 @@ export const getAllBoomarks = createAsyncThunk(
     const token = Cookies.get("token");
     try {
       const res = await getRequest({ url: `${baseUrl}${URL.boomarks}`, token })
-      console.log(res);
       return res.data
     } catch (error) {
       if (!error?.response?.data.status) {
-        // Cookies.remove("token");
-        // router.push(Routes.LOGIN)
+        Cookies.remove("token");
+        router.push(Routes.LOGIN)
       }
       return rejectWithValue(error);
     }
   }
 )
 
-// export const repostAction= createAsyncThunk(
-// 'post/repost', 
-// async (postId,{rejectWithValue})=>{
-// const token = Cookies.get("token");
-// try {
-//   const res=await patchRequest({url:`${baseUrl}${URL.likePost}`,data:postId,token})
-//   return res.data
-// } catch (error) {
-//   return rejectWithValue(error);
-// }
-// })
+export const setViews = createAsyncThunk('post/view_post',
+  async (postId, { rejectWithValue }) => {
+    console.log({postId});
+    const token = Cookies.get("token");
+    try {
+      const res = await getRequest({ url: `${baseUrl}${URL.views}${postId}`, token })
+      return res.data
+    } catch (error) {
+      if (!error?.response?.data.status) {
+        Cookies.remove("token");
+        router.push(Routes.LOGIN)
+      }
+      return rejectWithValue(error);
+    }
+  }
+)
 
 const postSlice = createSlice({
   name: "post",
@@ -122,6 +140,11 @@ const postSlice = createSlice({
       loading: false,
       apiError: null,
       posts: [],
+    },
+    singlePost: {
+      loading: false,
+      apiError: null,
+      individualPost: {},
     },
     likedPost: {
       loading: false,
@@ -166,6 +189,22 @@ const postSlice = createSlice({
       state.allPosts.apiError = action?.payload;
     });
 
+    //singlePost
+    builder.addCase(getSinglePostAction.pending, (state) => {
+      state.singlePost.loading = true;
+      state.singlePost.individualPost = {};
+      state.singlePost.apiError = null;
+    })
+    builder.addCase(getSinglePostAction.fulfilled, (state, action) => {
+      console.log(state, action);
+      state.singlePost.loading = false
+      state.singlePost.individualPost = action?.payload
+    })
+    builder.addCase(getSinglePostAction.rejected, (state, action) => {
+      state.singlePost.loading = false
+      state.singlePost.apiError = action?.payload
+    });
+
     //likePost
     builder.addCase(likePostAction.pending, (state) => {
       state.likedPost.loading = true;
@@ -173,6 +212,7 @@ const postSlice = createSlice({
       state.likedPost.apiError = null;
     })
     builder.addCase(likePostAction.fulfilled, (state, action) => {
+      console.log(state, action);
       state.likedPost.loading = false
       state.likedPost.reccentPost = action?.payload
     })

@@ -10,15 +10,15 @@ const SubscriptionScreen = () => {
       {/* div.timeline -> middle */}
       <div class={`${styles.timeline} ${styles._000middlebar}`}>
         <nav className={styles.___main_nav}>
-            <div>
-                <span className={styles.icon_back}>
-                    <svg className={styles._00_history__back} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgb(90, 90, 90)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H6M12 5l-7 7 7 7"/></svg>
-                </span>
-                <span class={styles.not_home_nav_text}>Subscriptions</span>
-                <span class={styles.data_count_bookm}>
-                  0 Subscription
-                </span>
-            </div>
+          <div>
+            <span className={styles.icon_back}>
+              <svg className={styles._00_history__back} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgb(90, 90, 90)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H6M12 5l-7 7 7 7"/></svg>
+            </span>
+            <span class={styles.not_home_nav_text}>Subscriptions</span>
+            <span class={styles.data_count_bookm}>
+              0 Subscription
+            </span>
+          </div>
         </nav>
 
         {/* Subscribed */}
@@ -26,7 +26,7 @@ const SubscriptionScreen = () => {
           <div className={styles.hold_them}>
             <div>
               <Image
-                src={img}
+                src={imgOne}
                 className={styles.npd_toast_png}
               />
             </div>
