@@ -9,7 +9,6 @@ import { SocketContext } from "../../redux/context/socket.js";
 import Link from "next/link";
 import { InView } from 'react-intersection-observer';
 
-
 const EachPost = ({ post }) => {
   const dispatch = useDispatch()
   const socket = useContext(SocketContext);
@@ -24,8 +23,6 @@ const EachPost = ({ post }) => {
   const isLiked = post.likes.includes(user?.data?._id)
   const isBookmarked = post.bookmarks.includes(user?.data?._id)
   const isViewed = post.view.includes(user?.data?._id)
-
-  console.log({post});
 
   const handlePostView = async (inView, post, entry) => {
     if (inView && !isViewed) {
