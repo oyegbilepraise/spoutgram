@@ -48,7 +48,7 @@ const LeftSidebar = () => {
       console.log({ error });
     }
   };
-
+ 
   return (
     <div
       className={`${styles.sidebar} ${styles.onebar} ${styles.no_bar} ${styles._000leftbar}`}
@@ -131,8 +131,16 @@ const LeftSidebar = () => {
       </Link>
       {/* Create */}
 
+      {/* Create__button */}
+      <Link href="/">
+        <button className={styles.create__home__btn} style={{display: "none"}}>
+          <span>Create</span>
+        </button>
+      </Link>
+      {/* Create__button */}
+
       {/* Profile */}
-      <div className={styles.profile__fxd}>
+      <div className={styles.profile__fxd} style={{display: "none"}}>
         {showLogout && (
           <div className={styles.more_explained}>
             <Link href="/edit">
@@ -144,6 +152,7 @@ const LeftSidebar = () => {
           </div>
         )}
 
+        {/* this was set to display none for a reason */}
         <span>
           <Link href={`${user?.data?.username}`}>
             <div className={styles.__user__data__hold}>

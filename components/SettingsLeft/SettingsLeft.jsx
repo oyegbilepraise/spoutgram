@@ -1,14 +1,21 @@
 import img from '../../images/default-photo.svg'
 import Image from 'next/image'
 import styles from '@/layout/HomeLayout/HomeLayout.module.css'
+import { useRouter } from 'next/router';
 
 const SettingsLeft = () => {
+
+    const router = useRouter();
+    const handleGoBack = () => {
+        router.back(); // Go back to the previous page or route
+    };
+
     return  (
         <div className={styles.settings___left__hng}>
             {/* content */}
             <nav className={styles.___main_nav}>
                 <div>
-                <span className={styles.icon_back}>
+                <span className={styles.icon_back} onClick={handleGoBack}>
                     <svg
                     className={styles._00_history__back}
                     xmlns="http://www.w3.org/2000/svg"

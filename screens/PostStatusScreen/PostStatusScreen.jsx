@@ -86,13 +86,17 @@ const { user, apiError } = useSelector((state) => state?.auth?.getUser);
     },
   });
 
+  const handleGoBack = () => {
+    router.back(); // Go back to the previous page or route
+  };
+
   return (
     <HomeLayout>
       {/* div.timeline -> middle */}
       <div class={`${styles.timeline} ${styles._000middlebar}`}>
         <nav style={{ paddingLeft: "0px" }} className={styles.___main_nav}>
           <div>
-            <span style={{ paddingLeft: "18px" }} class={styles.icon_back}>
+            <span style={{ paddingLeft: "18px" }} class={styles.icon_back} onClick={handleGoBack}>
               <svg
                 style={{ marginLeft: "18px" }}
                 class={styles._00_history__back}
