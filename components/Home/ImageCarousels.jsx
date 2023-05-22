@@ -78,27 +78,31 @@ function ImageCarousels({ postImage }) {
   }
   return (
     <>
-      <div className={`grid ${postImage.length > 4 ? 'four-columns' : 'two-columns'}`}>
+      <div
+        className={`grid ${
+          postImage.length === 3
+            ? "three-columns"
+            : postImage.length > 4
+            ? "four-columns"
+            : "two-columns"
+        }`}
+      >
         {postImage.map((pic, id) => (
-          <div className="grid-item">
-            {handleImageVideodisplay(pic,id)}
-          </div>
+          <div className="grid-item">{handleImageVideodisplay(pic, id)}</div>
         ))}
       </div>
 
       {modalOpen && (
         <div>
           <div>
-            <span onClick={closeModal}>
-              &times;
-            </span>
+            <span onClick={closeModal}>&times;</span>
             {isSingleImage ? (
               <div>
                 <Image
                   src={selectedImage}
                   alt="picgrid"
                   className={styles.carouselImage}
-                  width={500}
+                  width={800}
                   height={500}
                   priority
                 />

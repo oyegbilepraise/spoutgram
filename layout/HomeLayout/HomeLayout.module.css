@@ -2638,3 +2638,23 @@ input[type="search"].search__emojis::placeholder {
     left: 50%;
     transform: translate(-50%, -50%);
 } 
+
+
+/* .grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); 
+  grid-gap: 1px; 
+}
+
+.four-columns {
+  grid-template-columns: repeat(4, 1fr); 
+}
+
+.three-columns {
+  grid-template-columns: repeat(2, 1fr); 
+}
+
+.three-columns .grid-item:nth-child(3) {
+  grid-column: span 2; 
+}
+ */
