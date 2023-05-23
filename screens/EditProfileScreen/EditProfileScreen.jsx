@@ -7,24 +7,22 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useFormik } from 'formik';
 import { updateProfileAction } from '@/redux/slices/userDetailSlice';
 import { BtnloadSvg } from '@/components';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Pensvg from '@/components/svg/pensvg';
 
 const EditProfileScreen = () => {
   const dispatch = useDispatch({});
   const { user, apiError } = useSelector((state) => state?.auth?.getUser);
   const {loading, appError} = useSelector(state=>state?.userDetails?.updateProfile)
-  const [detail, setDetail] = useState({
-    name: '',
-    username: '',
-    bio: '',
-    location: '',
-    website: ''
-  })
-  // console.log({ user: user.data });
-  useEffect(()=>{
-      setDetail(()=>{return {...detail, name: user?.data?.name}})
-  }, [dispatch, user?.data])
+  const [fileURL, setFileURL] = useState(null);
+  const handleChooseFile=(e)=>{
+    let file = e.target.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload=()=>{
+      setFileURL(reader.result);
+    }
+  }
   const formik = useFormik({
     initialValues: {
       name: user?.data?.name,
@@ -75,8 +73,8 @@ const EditProfileScreen = () => {
                 <div>
                   <label htmlFor="img_file" className={editStyle.__img_file}>
                     <Image src={!!user?.data?.profilePhoto ?user?.data?.profilePhoto: img} className={styles.edit__profile__img} />
-                    <input type="file" id='img_file' className={editStyle.__file_input} accept='.jpg, .png, .jpeg'/>
-                    <Pensvg height="2vh"/>
+                    <input type="file" id='img_file' onChange={handleChooseFile} className={editStyle.__file_input} accept='.jpg, .png, .jpeg'/>
+                    <Pensvg/>
                   </label>
                 </div>
               </div>
