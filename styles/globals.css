@@ -107,10 +107,23 @@ button:focus, a:focus {
   display: grid;
   grid-template-columns: repeat(2, 1fr); /* Default: 2 columns */
   grid-gap: 1px; /* Adjust the gap between grid items */
+}
 
-  /* Additional grid properties if needed */
+.grid-item{
+  width:100%;
+  height:100%;
 }
 
 .four-columns {
   grid-template-columns: repeat(4, 1fr); /* 4 columns if array length > 4 */
 }
+
+.three-columns {
+  grid-template-columns: repeat(2, 1fr); /* First row: 2 columns */
+}
+
+.three-columns .grid-item:nth-child(3) {
+  grid-column: span 2; /* Third image spans two columns */
+}
+
+
