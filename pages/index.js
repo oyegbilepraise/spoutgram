@@ -1,4 +1,4 @@
-import { SocketContext } from "@/redux/context/socket.js";
+import { SocketContext } from "@/redux/context/socket";
 import { HomeScreen } from "@/screens";
 import Head from "next/head";
 import { useContext, useEffect } from "react";
@@ -25,6 +25,7 @@ function Home() {
   // useEffect(() => {
   //   console.log("socket:: ", socket.id);
   //   socket.emit("NEW_USER_ONLINE",user?.data?._id)
+
   // },[user])
 
   const handleSuccess = (position) => {

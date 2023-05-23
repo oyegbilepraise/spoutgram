@@ -7,8 +7,6 @@ import styles from '@/layout/HomeLayout/HomeLayout.module.css'
 import { useContext, useEffect, useRef, useState } from 'react';
 import { SocketContext } from "../../redux/context/socket.js"
 
-
-
 const EachMessage = ({ eachMessage }) => {
   // console.log({ eachMessage: eachMessage._id });
   const socket = useContext(SocketContext);
