@@ -25,7 +25,7 @@ const ButtonGroup = ({ next, previous, goToSlide, ...rest }) => {
         className={styles.buttons__prv__slide}
         onClick={() => previous()}
         style={{ cursor: "pointer" }}
-        // {currentSlide === 0 ? "disable" : ""}
+      // {currentSlide === 0 ? "disable" : ""}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -46,7 +46,7 @@ const ButtonGroup = ({ next, previous, goToSlide, ...rest }) => {
         </svg>
       </button>
       <button
-      className={styles.buttons__prv__slide}
+        className={styles.buttons__prv__slide}
         onClick={() => next()}
         style={{ marginLeft: "11px", cursor: "pointer" }}
       >
@@ -143,7 +143,6 @@ const RightSidebar = () => {
   useEffect(() => {
     dispatch(getSuggestedUsers(token));
   }, []);
-  console.log(suggested);
   const responsive = {
     desktop: {
       breakpoint: { max: 3000, min: 1024 },
@@ -168,7 +167,6 @@ const RightSidebar = () => {
   if (info) {
 
     let total = Math.round(info.length / 6)
-    console.log(total);
     for (let index = 1; index <= total; index++) {
       let format = displayPage(index);
       data.push({ id: index, items: format })
