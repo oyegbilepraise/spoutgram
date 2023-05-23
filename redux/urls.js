@@ -24,6 +24,8 @@ dislikePost:"/posts/post/unlike",
 createComment:"/comments/create",
 getParticularPostComments:"/comments/",
 replyComment:"/comments/reply",
+likeComment:"/comments/like/",
+likeReply:"/comments/like/reply/",
 getOneComment:"/comments/comment/",
 getParticularCommentReplies:"/comments/all_reply/",
 

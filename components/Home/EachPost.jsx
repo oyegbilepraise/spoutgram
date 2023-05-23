@@ -10,7 +10,7 @@ import Link from "next/link";
 import { InView } from 'react-intersection-observer';
 
 
-const EachPost = ({ post }) => {
+const EachPost = ({ post,route }) => {
   const dispatch = useDispatch()
   const socket = useContext(SocketContext);
   const [postId, setPostId] = useState(post._id)
@@ -21,11 +21,14 @@ const EachPost = ({ post }) => {
   const [_views, set_Views] = useState(post.view);
   const { user, apiError } = useSelector((state) => state?.auth?.getUser);
 
-  const isLiked = post.likes.includes(user?.data?._id)
+   const [isLiked, setisLiked] = useState(
+    post?.likes?.includes(user?.data?._id)
+  );
   const isBookmarked = post.bookmarks.includes(user?.data?._id)
   const isViewed = post.view.includes(user?.data?._id)
 
   console.log({post});
+  console.log(route);
 
   const handlePostView = async (inView, post, entry) => {
     if (inView && !isViewed) {
@@ -62,10 +65,10 @@ const EachPost = ({ post }) => {
     }
   }
 
-  // const full = (event) => {
-  //   event.stopPropagation(); // Prevent event propagation to the parent container
-  //   setMore(!more)
-  // };
+  useEffect(() => {
+    setisLiked(likes?.includes(user?.data?._id));
+  }, [likes]);
+
   return (
     <>
       <InView as="div" triggerOnce="true" threshold='0.5' onChange={(inView, entry) => handlePostView(inView, post, entry)}>
@@ -75,7 +78,7 @@ const EachPost = ({ post }) => {
             className={`${styles.data_content_all} ${styles._00dca} ${styles.data_no_content}`}
           >
           {/* <Link href={`@${post?.user?.username}/postComments/${post._id}`}> */}
-          <Link href={`postComments/${post._id}`}>
+          <Link href={route?.one?`${route?.one}${post?._id}`:"#"}>
           <div>
           
             <div>
@@ -123,7 +126,7 @@ const EachPost = ({ post }) => {
               </span>
                <span className={styles._00mn_span}>
                           {/* <Link href={`reply/${comment?._id}`}> */}
-                          <Link href={`comment/${post._id}`}>
+                          <Link href={route?.two?`${route.two}${post._id}`:"#"}>
                             <span>
                               <svg
                                 id="comment"
