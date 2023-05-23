@@ -36,13 +36,12 @@ const EachMessage = ({ eachMessage }) => {
       if (res.payload) {
         socket.emit("NEW_MESSAGE", { from: user.data._id, to: eachMessage._id, data: res.payload.data })
         setMessage(prevData => [...prevData, res.payload.data]);
-        console.log({ message });
+        values.text = "";
+        values.image = "";
         // let newMessage = [ ...message, ...res.payload.data ]
         // setMessage(newMessage)
         // console.log(newMessage);
       }
-      // values.text = "";
-      // values.image = "";
       // setImage(null);
       // router.push(Routes.HOME);
     } catch (error) {
@@ -70,7 +69,9 @@ const EachMessage = ({ eachMessage }) => {
 
   useEffect(() => {
     socket.on("NEW_MESSAGE_RECEIVE", (data) => {
-      console.log("RESPONSE: " + data);
+      console.log(data.data);
+      setMessage(prevData => [...prevData, data.data.data]);
+      // console.log("RESPONSE: " + data);
       // message.push(data.data)
     })
   }, [socket])
