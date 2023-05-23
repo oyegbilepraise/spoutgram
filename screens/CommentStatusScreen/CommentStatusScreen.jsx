@@ -333,7 +333,7 @@ const CommentStatusScreen = () => {
               <div className={styles.parnt__cnt_wyyyt}>
                 <div className={styles.inipic_xyz}>
                   <Image
-                    alt="img"
+                    alt="img" fill
                     className={styles.img__winipc}
                     src={
                       user?.data?.profilePhoto == ""
@@ -402,6 +402,7 @@ const CommentStatusScreen = () => {
                       }
                       alt="image_profile_img"
                       className={styles.impg__cpr__nal}
+                      fill
                     />
                   </div>
                   <div>

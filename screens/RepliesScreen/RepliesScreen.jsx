@@ -333,6 +333,7 @@ const RepliesScreen = () => {
                 <div className={styles.inipic_xyz}>
                   <Image
                     alt="img"
+                    fill
                     className={styles.img__winipc}
                     src={
                       user?.data?.profilePhoto == ""
@@ -397,6 +398,7 @@ const RepliesScreen = () => {
                       }
                       alt="image_profile_img"
                       className={styles.impg__cpr__nal}
+                      fill
                     />
                   </div>
                   <div>

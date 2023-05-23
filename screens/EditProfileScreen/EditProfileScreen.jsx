@@ -54,7 +54,7 @@ const EditProfileScreen = () => {
               <div>
                 <div>
                   {/* this was your former src (src={user?.data?.profilePhoto ?? img}) */}
-                  <Image src={img} className={styles.edit__profile__img} />
+                  <Image fill src={img} className={styles.edit__profile__img} />
                 </div>
               </div>
             </div>

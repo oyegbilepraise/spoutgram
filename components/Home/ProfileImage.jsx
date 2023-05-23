@@ -25,7 +25,7 @@ const ProfileImage = ({ post }) => {
     <div style={{ position: "relative" }}>
       <div className={styles.hover_main_image}>
         <Link href={`${post?.user?.username}`}>
-          <Image src={post?.user?.profilePhoto == '' ? imgOne : post?.user?.profilePhoto} alt="profile-img" className={styles.data_content_pimg}/>
+          <Image src={post?.user?.profilePhoto == '' ? imgOne : post?.user?.profilePhoto} alt="profile-img" fill className={styles.data_content_pimg}/>
         </Link>
 
         {/* hovercard */}
@@ -37,7 +37,7 @@ const ProfileImage = ({ post }) => {
               {/* {{#if this.owner_avatar_link}} */}
               <Link href={`${post?.user?.username}`}>
               <Image src={post?.user?.profilePhoto == '' ? imgOne : post?.user?.profilePhoto} alt="img" 
-              className={styles.image_h_c} />
+              className={styles.image_h_c} fill />
               </Link>
             </div>
             <div>

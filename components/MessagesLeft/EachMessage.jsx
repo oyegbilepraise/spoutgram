@@ -9,7 +9,7 @@ import { SocketContext } from "../../redux/context/socket.js"
 
 
 
-const EachMessage = ({ eachMessage, message }) => {
+const EachMessage = ({ eachMessage }) => {
   // console.log({ eachMessage: eachMessage._id });
   const socket = useContext(SocketContext);
   const dispatch = useDispatch();
@@ -17,7 +17,7 @@ const EachMessage = ({ eachMessage, message }) => {
   const [image, setImage] = useState(null);
   const [isEmojiOpen, setIsEmojiOpen] = useState(false);
   const emojiRef = useRef(null);
-  // const [message, setMessage] = useState([...eachMessage.messages].reverse());
+  const [message, setMessage] = useState([...eachMessage.messages].reverse());
 
   const formik = useFormik({
     initialValues: { text: "", image: null },
@@ -27,7 +27,6 @@ const EachMessage = ({ eachMessage, message }) => {
   });
   const handleSendMessage = async (values) => {
     try {
-
       const formData = new FormData();
       formData.append("message", values.text);
       formData.append("status", false);

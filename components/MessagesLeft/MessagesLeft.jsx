@@ -64,7 +64,6 @@ const MessagesLeft = ({ eachMessage }) => {
     setImage(null);
   };
   const handleSendMessage = async (values) => {
-    console.log(message);
     try {
       const formData = new FormData();
       formData.append("message", values.text);
