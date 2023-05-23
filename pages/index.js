@@ -25,7 +25,6 @@ function Home() {
   useEffect(() => {
     console.log("socket:: ", socket.id);
     socket.emit("NEW_USER_ONLINE",user?.data?._id)
-
   },[user])
 
   const handleSuccess = (position) => {
