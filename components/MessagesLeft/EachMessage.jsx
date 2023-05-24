@@ -4,16 +4,18 @@ import Image from 'next/image';
 import { useDispatch, useSelector } from "react-redux";
 import imgOne from '../../images/me.jpeg'
 import styles from '@/layout/HomeLayout/HomeLayout.module.css'
-import { useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
+import { SocketContext } from "../../redux/context/socket.js"
 
-
-const EachMessage = ({ eachMessage, message }) => {
+const EachMessage = ({ eachMessage }) => {
+  // console.log({ eachMessage: eachMessage._id });
+  const socket = useContext(SocketContext);
   const dispatch = useDispatch();
   const { user, apiError } = useSelector((state) => state?.auth?.getUser);
   const [image, setImage] = useState(null);
   const [isEmojiOpen, setIsEmojiOpen] = useState(false);
   const emojiRef = useRef(null);
-  // const [message, setMessage] = useState([...eachMessage.messages].reverse());
+  const [message, setMessage] = useState([...eachMessage.messages].reverse());
 
   const formik = useFormik({
     initialValues: { text: "", image: null },
@@ -26,18 +28,18 @@ const EachMessage = ({ eachMessage, message }) => {
       const formData = new FormData();
       formData.append("message", values.text);
       formData.append("status", false);
-      formData.append("to", message._id);
+      formData.append("to", eachMessage._id);
       formData.append("image", image);
       const res = await dispatch(sendMessage(formData));
       if (res.payload) {
+        socket.emit("NEW_MESSAGE", { from: user.data._id, to: eachMessage._id, data: res.payload.data })
         setMessage(prevData => [...prevData, res.payload.data]);
-        console.log({ message });
+        values.text = "";
+        values.image = "";
         // let newMessage = [ ...message, ...res.payload.data ]
         // setMessage(newMessage)
         // console.log(newMessage);
       }
-      // values.text = "";
-      // values.image = "";
       // setImage(null);
       // router.push(Routes.HOME);
     } catch (error) {
@@ -60,7 +62,18 @@ const EachMessage = ({ eachMessage, message }) => {
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
+
   }, []);
+
+  useEffect(() => {
+    socket.on("NEW_MESSAGE_RECEIVE", (data) => {
+      console.log(data.data);
+      setMessage(prevData => [...prevData, data.data.data]);
+      // console.log("RESPONSE: " + data);
+      // message.push(data.data)
+    })
+  }, [socket])
+
   function toggleEmoji() {
     setIsEmojiOpen(prevState => !prevState);
   }

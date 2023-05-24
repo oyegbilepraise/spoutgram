@@ -1,10 +1,15 @@
 
 import styles from '@/layout/HomeLayout/HomeLayout.module.css'
 import { TypeLoader } from "../../components";
-import { useState, useEffect } from "react";
+import { useState, useRef, useEffect, useContext } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { sendMessage } from "@/redux/slices/messageSlice/messageSlice";
+import { useFormik } from "formik";
+import { SocketContext } from "../../redux/context/socket.js"
 import EachMessage from "./EachMessage";
 
 const MessagesLeft = ({ eachMessage }) => {
+  const socket = useContext(SocketContext);
   const [message, setMessage] = useState([...eachMessage.messages].reverse());
   useEffect(() => {
     window.scrollTo(0, document.body.scrollHeight);
@@ -13,6 +18,73 @@ const MessagesLeft = ({ eachMessage }) => {
   useEffect(() => {
     window.scrollTo(0, document.body.scrollHeight);
   }, []);
+
+  const formik = useFormik({
+    initialValues: { text: "", image: null },
+    onSubmit: (values) => {
+      handleSendMessage(values)
+    },
+  });
+  //emoji show and hide handler
+  const [isEmojiOpen, setIsEmojiOpen] = useState(false);
+  const emojiRef = useRef(null);
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (emojiRef.current && !emojiRef.current.contains(event.target)) {
+        setIsEmojiOpen(false);
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+  function toggleEmoji() {
+    setIsEmojiOpen(prevState => !prevState);
+  }
+  function handleButtonClickk(event) {
+    event.stopPropagation();
+    toggleEmoji();
+  }
+  //img upld
+  const [image, setImage] = useState(null);
+  // Function to handle image upload
+  const handleImageUpload = (event) => {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      setImage(e.target.result);
+    };
+    if (file) {
+      reader.readAsDataURL(file);
+    }
+  };
+  // Function to handle image removal
+  const handleImageRemove = () => {
+    setImage(null);
+  };
+  const handleSendMessage = async (values) => {
+    try {
+      const formData = new FormData();
+      formData.append("message", values.text);
+      formData.append("status", false);
+      formData.append("to", '645e311fba7dc336192a6577');
+      const res = await dispatch(sendMessage(formData));
+      if (res.payload) {
+        console.log(res.payload);
+        setMessage(prevData => [...prevData, res.payload.data]);
+        // let newMessage = [ ...message, ...res.payload.data ]
+        // setMessage(newMessage)
+        // console.log(newMessage);
+      }
+      // values.text = "";
+      // values.image = "";
+      // setImage(null);
+      // router.push(Routes.HOME);
+    } catch (error) {
+      console.log({ error });
+    }
+  }
   return (
     <>
       <div className={styles.left__mssg__div}>

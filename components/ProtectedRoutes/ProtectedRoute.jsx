@@ -2,8 +2,10 @@ import { getUserAction } from "@/redux/slices/authSlice/authSlice";
 import Routes from "@/utils/routes";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { SocketContext } from "@/redux/context/socket";
+
 
 const ProtectedRoute = ({ children }) => {
   const [error, setError] = useState("");
@@ -11,14 +13,30 @@ const ProtectedRoute = ({ children }) => {
   const dispatch = useDispatch();
   const { user, apiError } = useSelector((state) => state?.auth?.getUser);
   const isAuthenticated = Cookies.get("token");
+  const socket = useContext(SocketContext);
+
   useEffect(() => {
     //only make the call when there is a token and when dispatch is mounted
     if (isAuthenticated) {
       if (dispatch && dispatch !== null && dispatch !== undefined) {
-        dispatch(getUserAction(isAuthenticated));
+        getUser(isAuthenticated)
       }
     }
   }, [dispatch, isAuthenticated]);
+
+  const getUser = async (auth) => {
+    try {
+      const res = await dispatch(getUserAction(auth));
+      socket.emit("NEW_USER_ONLINE", res?.payload?.data._id)
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  // useEffect(() => {
+  //   console.log("socket:: ", socket.id);
+  //   socket.emit("NEW_USER_ONLINE",user?.data?._id)
+  // },[user])
 
   const handleAuthentication = () => {
     switch (true) {

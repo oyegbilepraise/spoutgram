@@ -75,7 +75,7 @@ const ProfileOverview = () => {
       <div>
         <div className={styles.sxuiip}>
           <div className={styles._000data__img__div}>
-            <Image src={img} alt="img" className={styles.profile_img} />
+            <Image src={img} alt="img" className={styles.profile_img} fill />
           </div>
           <div>
             <div className={styles.dxcWAsd}>
@@ -319,7 +319,7 @@ const ProfileOverview = () => {
                 className={styles.div__subsvrib__pht}
                 style={{ textAlign: "center" }}
               >
-                <Image src={img} className={styles.submodal__ppic} />
+                <Image fill src={img} className={styles.submodal__ppic} />
               </div>
               <div className={styles.subprofile___show}>
                 <h5>Penuel John</h5>
@@ -434,7 +434,7 @@ const ProfileOverview = () => {
             <div style={{textAlign: "center", paddingBottom: "12px", paddingTop: "5px", position: "relative"}}>
             {!image && (
               <div className={styles.awayy__uuu___vvvv} onClick={() => document.getElementById('fileInput').click()}>
-                <Image src={img} className={styles.img__edit__img} alt="pic"/>
+                <Image src={img} className={styles.img__edit__img} fill alt="pic"/>
                 {isLoading ? (
                   <div style={{position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)"}}>
                     < PageSpinner />
