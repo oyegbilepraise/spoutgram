@@ -110,15 +110,6 @@ const ReplyCommentScreen = () => {
           </div>
         </nav>
 
-<<<<<<< HEAD
-      {loading? "Loading...":  
-        <div>
-        {/* comment preview */}
-     <EachComment comment={individualComment?.data}/>
-        {/* comment preview */}
-        
-        {/* comment box */}
-=======
         {loading ? "Loading..." :
           <div>
               <div>
@@ -328,7 +319,6 @@ const ReplyCommentScreen = () => {
               </span>
             </div>
           </div>
->>>>>>> dev
         <div className={styles.whats_yyy}>
           <div className={styles.parnt__cnt_wyyyt}>
             <div className={styles.inipic_xyz}>
