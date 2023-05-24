@@ -15,15 +15,21 @@ const NotificationScreen = () => {
   const [currentTab, setCurrentTab] = useState("/");
   const pathname = router.pathname.split("/")[1];
 
-  //   get the current tab
-  useEffect(() => {
-    const { tab } = router.query;
-    if (tab) {
-      setCurrentTab(tab);
-    } else {
-      setCurrentTab("/");
-    }
-  }, [router.query.tab]);
+    //   get the current tab
+    useEffect(() => {
+      const { tab } = router.query;
+      if (tab) {
+        setCurrentTab(tab);
+      } else {
+        setCurrentTab("/");
+      }
+    }, [router.query.tab]);
+
+
+  
+    const handleGoBack = () => {
+      router.back(); // Go back to the previous page or route
+    };
 
   return (
     <HomeLayout>
@@ -31,7 +37,7 @@ const NotificationScreen = () => {
       <div className={`${styles.timeline} ${styles._000middlebar}`}>
         <nav className={styles.___main_nav}>
           <div>
-            <span className={styles.icon_back}>
+            <span className={styles.icon_back} onClick={handleGoBack}>
               <svg
                 className={styles._00_history__back}
                 xmlns="http://www.w3.org/2000/svg"

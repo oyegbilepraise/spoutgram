@@ -1,8 +1,16 @@
+import { SocketContext } from "@/redux/context/socket";
 import { HomeScreen } from "@/screens";
 import Head from "next/head";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
+import { useSelector } from "react-redux";
+// import { SocketContext } from "../../redux/context/socket.js";
 
 function Home() {
+  const { user, apiError } = useSelector((state) => state?.auth?.getUser);
+  console.log({user});
+  const socket = useContext(SocketContext);
+
+
   useEffect(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -13,6 +21,12 @@ function Home() {
       console.log('Geolocation is not supported by your browser');
     }
   }, [])
+
+  // useEffect(() => {
+  //   console.log("socket:: ", socket.id);
+  //   socket.emit("NEW_USER_ONLINE",user?.data?._id)
+
+  // },[user])
 
   const handleSuccess = (position) => {
     const { latitude, longitude } = position.coords;

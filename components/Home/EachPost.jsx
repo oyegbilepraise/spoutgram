@@ -3,12 +3,10 @@ import ProfileImage from "./ProfileImage";
 import ImageCarousels from "./ImageCarousels";
 import { useDispatch, useSelector } from "react-redux";
 import { dislikePostAction, likePostAction, setViews } from "@/redux/slices/postSlice/postSlice";
-import { AiOutlineDislike } from 'react-icons/ai'
 import { useContext, useEffect, useState } from "react";
 import { SocketContext } from "../../redux/context/socket.js";
 import Link from "next/link";
 import { InView } from 'react-intersection-observer';
-
 
 const EachPost = ({ post }) => {
   const dispatch = useDispatch()
@@ -20,12 +18,11 @@ const EachPost = ({ post }) => {
   const [more, setMore] = useState(false)
   const [_views, set_Views] = useState(post.view);
   const { user, apiError } = useSelector((state) => state?.auth?.getUser);
+  const [isLiked, setIsLiked] = useState(!!post.likes.includes(user?.data?._id))
 
-  const isLiked = post.likes.includes(user?.data?._id)
+  // let isLiked = post.likes.includes(user?.data?._id)
   const isBookmarked = post.bookmarks.includes(user?.data?._id)
   const isViewed = post.view.includes(user?.data?._id)
-
-  console.log({post});
 
   const handlePostView = async (inView, post, entry) => {
     if (inView && !isViewed) {
@@ -36,10 +33,10 @@ const EachPost = ({ post }) => {
   const handleLike = async () => {
     try {
       const res = await dispatch(likePostAction({ postId }))
-      console.log(res.payload.data);
       setLikes(res.payload.data.likes)
+      setIsLiked(!isLiked)
+      // isLiked = true;
     } catch (error) {
-      console.log({ error });
     }
   }
   useEffect(() => {
@@ -61,11 +58,6 @@ const EachPost = ({ post }) => {
       console.log({ error });
     }
   }
-
-  // const full = (event) => {
-  //   event.stopPropagation(); // Prevent event propagation to the parent container
-  //   setMore(!more)
-  // };
   return (
     <>
       <InView as="div" triggerOnce="true" threshold='0.5' onChange={(inView, entry) => handlePostView(inView, post, entry)}>
@@ -74,41 +66,41 @@ const EachPost = ({ post }) => {
           <div
             className={`${styles.data_content_all} ${styles._00dca} ${styles.data_no_content}`}
           >
-          {/* <Link href={`@${post?.user?.username}/postComments/${post._id}`}> */}
-          <Link href={`postComments/${post._id}`}>
-          <div>
-          
-            <div>
-              <span className={styles._ttl_top}>{post.title}</span>
-            </div>
+            {/* <Link href={`@${post?.user?.username}/postComments/${post._id}`}> */}
+            <Link href={`postComments/${post._id}`}>
+              <div>
 
-            <div>
-              <span className={styles._ttl_contxt}>{post?.desc?.length>300? <span>{more? post?.desc : `${post?.desc?.substring(0,300)}...`} <button style={{color:'grey'}} onClick={()=>setMore(!more)}>{more?"see less":"see more"}</button></span> : post?.desc}</span>
-            </div>
-          </div>
-          {/* John, this is the ImageCarousels */}
-          {post.postImage.length !== 0 && (
-            <ImageCarousels postImage={post.postImage} />
-          )}
-          {post.postVideo.length !== 0 && (
-            <div className={styles.div__for__vid}>
-              {/* John, this is the video */}
-              <HomeVideo postVideo={post.postVideo} />
-            </div>)
-          }
-          </Link>
-          {/* comment route */}
-{/* {`@${post?.user?.username}/comment/${post._id}`} */}
-          <div className={styles._00ftr_pst}>
-            <span className={`${styles._00mn_span}`}
-              onClick={handleLike}
-            >
-              <span>
-                {
-                  !isLiked ? <svg xmlns="http://www.w3.org/2000/svg" className={`${styles.red} ${styles.x_icn_ftr} ${styles.redheart} ${styles.post__heart}`} viewBox="0 0 24 24" width={24} height={24}  >
-                    <path fill="none" d="M0 0H24V24H0z" />
-                    <path
-                      d="M16.5 3C19.538 3 22 5.5 22 9c0 7-7.5 11-10 12.5C9.5 20 2 16 2 9c0-3.5 2.5-6 5.5-6C9.36 3 11 4 12 5c1-1 2.64-2 4.5-2zm-3.566 
+                <div>
+                  <span className={styles._ttl_top}>{post.title}</span>
+                </div>
+
+                <div style={{ whiteSpace: 'pre-line' }}>
+                  <span className={styles._ttl_contxt}>{post?.desc?.length > 300 ? <span>{more ? post?.desc : `${post?.desc?.substring(0, 300)}...`} <button style={{ color: 'grey' }} onClick={() => setMore(!more)}>{more ? "see less" : "see more"}</button></span> : post?.desc}</span>
+                </div>
+              </div>
+              {/* John, this is the ImageCarousels */}
+              {post.postImage.length !== 0 && (
+                <ImageCarousels postImage={post.postImage} />
+              )}
+              {post.postVideo.length !== 0 && (
+                <div className={styles.div__for__vid}>
+                  {/* John, this is the video */}
+                  <HomeVideo postVideo={post.postVideo} />
+                </div>)
+              }
+            </Link>
+            {/* comment route */}
+            {/* {`@${post?.user?.username}/comment/${post._id}`} */}
+            <div className={styles._00ftr_pst}>
+              <span className={`${styles._00mn_span}`}
+                onClick={handleLike}
+              >
+                <span>
+                  {
+                    !isLiked ? <svg xmlns="http://www.w3.org/2000/svg" className={`${styles.red} ${styles.x_icn_ftr} ${styles.redheart} ${styles.post__heart}`} viewBox="0 0 24 24" width={24} height={24}  >
+                      <path fill="none" d="M0 0H24V24H0z" />
+                      <path
+                        d="M16.5 3C19.538 3 22 5.5 22 9c0 7-7.5 11-10 12.5C9.5 20 2 16 2 9c0-3.5 2.5-6 5.5-6C9.36 3 11 4 12 5c1-1 2.64-2 4.5-2zm-3.566 
                                             15.604c.881-.556 1.676-1.109 2.42-1.701C18.335 14.533 20 11.943 20 9c0-2.36-1.537-4-3.5-4-1.076 0-2.24.57-3.086 1.414L12 
                                             7.828l-1.414-1.414C9.74 5.57 8.576 5 7.5 5 5.56 5 4 6.656 4 9c0 2.944 1.666 5.533 4.645 7.903.745.592 1.54 1.145 2.421 
                                             1.7.299.189.595.37.934.572.339-.202.635-.383.934-.571z"
@@ -119,27 +111,27 @@ const EachPost = ({ post }) => {
                     </svg>
                   }
                 </span>
-                <span className={styles._00mn_spn_cnt}>{likes.length> 0 && likes.length}</span>
+                <span className={styles._00mn_spn_cnt}>{likes.length > 0 && likes.length}</span>
               </span>
-               <span className={styles._00mn_span}>
-                          {/* <Link href={`reply/${comment?._id}`}> */}
-                          <Link href={`comment/${post._id}`}>
-                            <span>
-                              <svg
-                                id="comment"
-                                className={`${styles.blue} ${styles.x_icn_ftr}`}
-                                xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 24 24"
-                                width={24}
-                                height={24}
-                              >
-                                <path fill="none" d="M0 0h24v24H0z" />
-                                <path d="M10 3h4a8 8 0 1 1 0 16v3.5c-5-2-12-5-12-11.5a8 8 0 0 1 8-8zm2 14h2a6 6 0 1 0 0-12h-4a6 6 0 0 0-6 6c0 3.61 2.462 5.966 8 8.48V17z" />
-                              </svg>
-                            </span>
-                          </Link>
-                            <span className={styles._00mn_spn_cnt}>{post?.comment > 0 && post?.comment}</span>
-                          </span>
+              <span className={styles._00mn_span}>
+                {/* <Link href={`reply/${comment?._id}`}> */}
+                <Link href={`comment/${post._id}`}>
+                  <span>
+                    <svg
+                      id="comment"
+                      className={`${styles.blue} ${styles.x_icn_ftr}`}
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      width={24}
+                      height={24}
+                    >
+                      <path fill="none" d="M0 0h24v24H0z" />
+                      <path d="M10 3h4a8 8 0 1 1 0 16v3.5c-5-2-12-5-12-11.5a8 8 0 0 1 8-8zm2 14h2a6 6 0 1 0 0-12h-4a6 6 0 0 0-6 6c0 3.61 2.462 5.966 8 8.48V17z" />
+                    </svg>
+                  </span>
+                </Link>
+                <span className={styles._00mn_spn_cnt}>{post?.comment > 0 && post?.comment}</span>
+              </span>
               <span className={styles._00mn_span}>
                 <span>
                   {/* this is the normal repost icon /> */}
