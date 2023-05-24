@@ -89,13 +89,17 @@ const { user, apiError } = useSelector((state) => state?.auth?.getUser);
     },
   });
 
+  const handleGoBack = () => {
+    router.back(); // Go back to the previous page or route
+  };
+
   return (
     <HomeLayout>
       {/* div.timeline -> middle */}
       <div class={`${styles.timeline} ${styles._000middlebar}`}>
         <nav style={{ paddingLeft: "0px" }} className={styles.___main_nav}>
           <div>
-            <span style={{ paddingLeft: "18px" }} class={styles.icon_back}>
+            <span style={{ paddingLeft: "18px" }} class={styles.icon_back} onClick={handleGoBack}>
               <svg
                 style={{ marginLeft: "18px" }}
                 class={styles._00_history__back}
@@ -131,7 +135,7 @@ const { user, apiError } = useSelector((state) => state?.auth?.getUser);
         <div className={styles.whats_yyy}>
           <div className={styles.parnt__cnt_wyyyt}>
             <div className={styles.inipic_xyz}>
-              <Image alt="img" className={styles.img__winipc} src={user?.data?.profilePhoto==""?img:user?.data?.profilePhoto} />
+              <Image alt="img" fill className={styles.img__winipc} src={user?.data?.profilePhoto==""?img:user?.data?.profilePhoto} />
             </div>
             <div className={styles.ini__inp}>
               <input
@@ -310,6 +314,7 @@ const { user, apiError } = useSelector((state) => state?.auth?.getUser);
                       src={user?.data?.profilePhoto==""?img:user?.data?.profilePhoto}
                       alt="image_profile_img"
                       className={styles.impg__cpr__nal}
+                      fill
                     />
                   </div>
                   <div>

@@ -1,8 +1,20 @@
 import imgOne from "../../images/me.jpeg";
 import Image from 'next/image'
+import { useRouter } from "next/router";
 import styles from '@/layout/HomeLayout/HomeLayout.module.css'
+import { SocketContext } from "../../redux/context/socket.js";
+import { useContext, useEffect } from "react";
+
 
 const MessagesRight = ({ messages, loading, handleMessage }) => {
+
+  const socket = useContext(SocketContext);
+
+  useEffect(()=>{
+   console.log("messages:: ", messages);
+
+  })
+
   const handleOpenMessage = async (m) => {
     handleMessage(m)
   }

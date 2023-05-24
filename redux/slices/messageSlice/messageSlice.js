@@ -20,6 +20,8 @@ export const getSuggestedUsers = createAsyncThunk(
   }
 );
 
+
+
 export const getMessagedFriends = createAsyncThunk(
   "message/friends",
   async (payload, { rejectWithValue }) => {
@@ -58,6 +60,7 @@ export const sendMessage = createAsyncThunk(
 
 
 
+
 const messageSlice = createSlice({
   name: "message",
   initialState: {
@@ -71,6 +74,7 @@ const messageSlice = createSlice({
       apiError: null,
       suggested: [],
     },
+    
   },
   reducers: {},
   extraReducers: (builder) => {

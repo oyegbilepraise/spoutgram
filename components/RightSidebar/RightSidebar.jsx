@@ -7,10 +7,15 @@ import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import Search from "../SearchComp/Search";
 import Cookies from "js-cookie";
-import { getSuggestedUsers } from '@/redux/slices/messageSlice/messageSlice';
+import { Follow, getSuggestedUsers } from '@/redux/slices/messageSlice/messageSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import Link from "next/link";
+import { followUser } from '@/redux/slices/postSlice/postSlice';
+import { useFormik } from 'formik';
 
 const ButtonGroup = ({ next, previous, goToSlide, ...rest }) => {
+
+
   const {
     carouselState: { currentSlide },
   } = rest;
@@ -20,38 +25,49 @@ const ButtonGroup = ({ next, previous, goToSlide, ...rest }) => {
     >
       {" "}
       <button
-        className={currentSlide === 0 ? "disable" : ""}
+        // className={currentSlide === 0 ? "disable" : ""}
+        className={styles.buttons__prv__slide}
         onClick={() => previous()}
         style={{ cursor: "pointer" }}
+      // {currentSlide === 0 ? "disable" : ""}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          width={21}
-          height={21}
+          width={19}
+          height={19}
           viewBox="0 0 24 24"
           fill="none"
-          stroke="var(--brand-color)"
+          stroke="#8e8e8e"
           strokeWidth={2}
           strokeLinecap="round"
           strokeLinejoin="round"
+          style={{
+            position: "absolute",
+            top: "50%", left: "50%", transform: "translate(-50%, -50%)"
+          }}
         >
           <path d="M15 18l-6-6 6-6" />
         </svg>
       </button>
       <button
+        className={styles.buttons__prv__slide}
         onClick={() => next()}
-        style={{ marginLeft: "5px", cursor: "pointer" }}
+        style={{ marginLeft: "11px", cursor: "pointer" }}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          width={21}
-          height={21}
+          width={19}
+          height={19}
           viewBox="0 0 24 24"
           fill="none"
-          stroke="var(--brand-color)"
+          stroke="#8e8e8e"
           strokeWidth={2}
           strokeLinecap="round"
           strokeLinejoin="round"
+          style={{
+            position: "absolute",
+            top: "50%", left: "50%", transform: "translate(-50%, -50%)"
+          }}
         >
           <path d="M9 18l6-6-6-6" />
         </svg>
@@ -131,7 +147,18 @@ const RightSidebar = () => {
   useEffect(() => {
     dispatch(getSuggestedUsers(token));
   }, []);
-  console.log(suggested);
+
+  const formik = useFormik({
+    onSubmit: (id) => {
+      handleFollow(id)
+    },
+  });
+
+  const handleFollow = async(id)=>{
+    // const res =  dispatch(followUser(id))
+    console.log("Following:: ", id);
+  }
+  
   const responsive = {
     desktop: {
       breakpoint: { max: 3000, min: 1024 },
@@ -156,7 +183,6 @@ const RightSidebar = () => {
   if (info) {
 
     let total = Math.round(info.length / 6)
-    console.log(total);
     for (let index = 1; index <= total; index++) {
       let format = displayPage(index);
       data.push({ id: index, items: format })
@@ -212,7 +238,7 @@ const RightSidebar = () => {
 
         {/* suggestions */}
         <div className={styles.sgstn}>
-          <span>Suggested Follows</span>
+          <span>Follow Suggestions</span>
           {data ?
             <Carousel
               swipeable={true}
@@ -240,18 +266,24 @@ const RightSidebar = () => {
                         return (
                           <div key={id} className={styles.sgstn_tst}>
                             <div>
-                              <Image
-                                src={img}
-                                alt="img"
-                                className={styles.xqsstn_bn}
-                              />
+                              {/* replace with the appropriate username variable */}
+                              <Link href="/{username}">
+                                <Image
+                                  src={img}
+                                  alt="img"
+                                  className={styles.xqsstn_bn}
+                                />
+                              </Link>
                             </div>
                             <div>
-                              <span className={styles.yynmsq}>{name}</span>
-                              <span className={styles.yyusbsq}>{username}</span>
+                              {/* replace with the appropriate username variable */}
+                              <Link href="/{username}">
+                                <span className={styles.yynmsq}>{name}</span>
+                              </Link>
+                              <span className={styles.yyusbsq}>@{username}</span>
                             </div>
                             <div>
-                              <button className={styles.flwx_xyq_fllw}>
+                              <button className={styles.flwx_xyq_fllw} onClick={handleFollow(id)}>
                                 follow
                               </button>
                             </div>

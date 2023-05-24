@@ -13,18 +13,14 @@ function ImageCarousels({ postImage }) {
     setSelectedImage(image);
     setModalOpen(true);
   };
-
   const closeModal = () => {
     setSelectedImage(null);
     setModalOpen(false);
   };
-
-    const imagesToShow = selectedImage
+  const imagesToShow = selectedImage
     ? [selectedImage, ...postImage.filter((image) => image !== selectedImage)]
     : postImage;
-
-    const isSingleImage = postImage.length === 1;
-
+  const isSingleImage = postImage.length === 1;
   const responsive = {
     desktop: {
       breakpoint: { max: 3000, min: 1024 },
@@ -42,62 +38,62 @@ function ImageCarousels({ postImage }) {
       slidesToSlide: 1,
     },
   };
-
-  const handleImageVideodisplay=(pic,id)=>{
-  const fileExtension = pic.split('.').pop().toLowerCase();
-  console.log(fileExtension);
-  
- if (['jpg', 'jpeg', 'png'].includes(fileExtension)) {
-   return(
-  <div>
-  <Image
-              src={pic !== null && pic}
-              alt="picgrid"
-              className={''}
-              width={200}
-              height={200}
-              priority
-              key={id}
-              onClick={() => openModal(pic)}
-            />
-  </div>
-  )
- } else if (fileExtension === 'mp4') {
-   return(
-  <div>
-   <video controls width={200}
-              height={200} priority
-              key={id} 
-              onClick={() => openModal(pic)}
-              >
-        <source src={pic !== null && pic} type="video/mp4" />
-      </video>
-  </div>
-  )
- }
+  const handleImageVideodisplay = (pic, id) => {
+    const fileExtension = pic.split('.').pop().toLowerCase();
+    if (['jpg', 'jpeg', 'png'].includes(fileExtension)) {
+      return (
+        <div>
+          <Image
+            src={pic !== null && pic}
+            alt="picgrid"
+            className={''}
+            width={200}
+            height={200}
+            priority
+            key={id}
+            onClick={() => openModal(pic)}
+          />
+        </div>
+      )
+    } else if (fileExtension === 'mp4') {
+      return (
+        <div>
+          <video controls width={200}
+            height={200} priority
+            key={id}
+            onClick={() => openModal(pic)}
+          >
+            <source src={pic !== null && pic} type="video/mp4" />
+          </video>
+        </div>
+      )
+    }
   }
   return (
     <>
-      <div className={`grid ${postImage.length > 4 ? 'four-columns' : 'two-columns'}`}>
+      <div
+        className={`grid ${postImage.length === 3
+          ? "three-columns"
+          : postImage.length > 4
+            ? "four-columns"
+            : "two-columns"
+          }`}
+      >
         {postImage.map((pic, id) => (
-          <div className="grid-item">
-            {handleImageVideodisplay(pic,id)}
-          </div>
+          <div className="grid-item">{handleImageVideodisplay(pic, id)}</div>
         ))}
       </div>
 
       {modalOpen && (
-        <div>
+        <div className={styles.post__post__img__carsl}>
           <div>
-            <span onClick={closeModal}>
-              &times;
-            </span>
+            <span onClick={closeModal}>&times;</span>
             {isSingleImage ? (
-              <div>
+              <div className={styles.carouselItem_}>
                 <Image
                   src={selectedImage}
                   alt="picgrid"
-                  className={styles.carouselImage}
+                  className={styles.carouselImage_}
                   width={500}
                   height={500}
                   priority
@@ -114,12 +110,12 @@ function ImageCarousels({ postImage }) {
                   transitionDuration={300}
                 >
                   {imagesToShow.map((pic, id) => (
-                    <div key={id} className={styles.carouselItem}>
+                    <div key={id} className={styles.carouselItem_}>
                       {pic.endsWith(".jpg") ? (
                         <Image
                           src={pic !== null && pic}
                           alt="picgrid"
-                          className={styles.carouselImage}
+                          className={styles.carouselImage_}
                           width={500}
                           height={500}
                           priority
