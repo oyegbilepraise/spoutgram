@@ -1,5 +1,5 @@
 import { HomeLayout } from "@/layout";
-import React, { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import styles from "@/layout/HomeLayout/HomeLayout.module.css";
 import "./CreatePostScreen.module.css";
 import VideoUploader from "@/components/VideoUpload/VideoUploader";
@@ -11,10 +11,11 @@ import { MdPermMedia } from "react-icons/md";
 import { BtnloadSvg } from "../../components";
 import EmojiPicker from "emoji-picker-react";
 import { createRef } from "react";
+import { useRouter } from "next/router";
 
 const CreatePostScreen = () => {
-const inputTitle=createRef()
-const inputDesc=createRef()
+  const inputTitle = createRef()
+  const inputDesc = createRef()
   const [cursorPosition, setcursorPosition] = useState("")
   const [showPostSettings, setShowPostSettings] = useState(false);
   const dispatch = useDispatch();
@@ -27,7 +28,6 @@ const inputDesc=createRef()
   const handleButtonClick = () => {
     fileInputRef.current.click();
   };
-  console.log(reccentPost);
   //   useEffect(() => {
   //   if (reccentPost.success) {
   //     //  router.push(Routes.HOME);
@@ -107,34 +107,34 @@ const inputDesc=createRef()
     toggleEmoji();
   }
 
-      const handleEmojiClick=({emoji})=>{
-  if (inputDesc.current.name=="desc") {
-  const ref=inputDesc.current;
-  ref.focus()
-  const start=formik.values.desc.substring(0,ref.selectionStart)
-  const end=formik.values.desc.substring(ref.selectionStart)
-  let message= start + emoji + end
-  formik.values.desc=message
-  console.log(inputDesc.current.name);
-  setcursorPosition(start.length+emoji.length)  
-  }else if (inputTitle.current.name=="title") {
-  const ref=inputTitle.current;
-  ref.focus()
-  const start=formik.values.title.substring(0,ref.selectionStart)
-  const end=formik.values.title.substring(ref.selectionStart)
-  let message= start + emoji + end
-  formik.values.title=message
-  console.log(inputTitle.current.name);
-  setcursorPosition(start.length+emoji.length)   
-  }
+  const handleEmojiClick = ({ emoji }) => {
+    if (inputDesc.current.name == "desc") {
+      const ref = inputDesc.current;
+      ref.focus()
+      const start = formik.values.desc.substring(0, ref.selectionStart)
+      const end = formik.values.desc.substring(ref.selectionStart)
+      let message = start + emoji + end
+      formik.values.desc = message
+      console.log(inputDesc.current.name);
+      setcursorPosition(start.length + emoji.length)
+    } else if (inputTitle.current.name == "title") {
+      const ref = inputTitle.current;
+      ref.focus()
+      const start = formik.values.title.substring(0, ref.selectionStart)
+      const end = formik.values.title.substring(ref.selectionStart)
+      let message = start + emoji + end
+      formik.values.title = message
+      console.log(inputTitle.current.name);
+      setcursorPosition(start.length + emoji.length)
+    }
   }
 
-   useEffect(() => {
-     if (inputDesc.current.name=="desc") {
-    inputDesc.current.selectionEnd=cursorPosition
-  }else if (inputTitle.current.name=="title") {  
-    inputTitle.current.selectionEnd=cursorPosition
-  }
+  useEffect(() => {
+    if (inputDesc.current.name == "desc") {
+      inputDesc.current.selectionEnd = cursorPosition
+    } else if (inputTitle.current.name == "title") {
+      inputTitle.current.selectionEnd = cursorPosition
+    }
   }, [cursorPosition])
 
 
@@ -311,7 +311,7 @@ const inputDesc=createRef()
               {showPostSettings && (
                 <div
                   className={styles.options__postsettns}
-                  // style={{ display: "none" }}
+                // style={{ display: "none" }}
                 >
                   <div>
                     <div>

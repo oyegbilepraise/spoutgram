@@ -118,14 +118,31 @@ const LoginScreen = () => {
     setShowPasswordError(false);
   }
 
+  const [showError, setShowError] = useState(false);
+
+  useEffect(() => {
+    let timer;
+    if (appError) {
+      setShowError(true);
+      timer = setTimeout(() => {
+        setShowError(false);
+      }, 5000); // Display error message for 5 seconds
+    }
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [appError]);
+
   return (
     <AuthLayout>
       <main className={styles.__main} role="main">
         <form onSubmit={formik.handleSubmit}>
           <div className={styles._xparnts}>
             <div className={styles._xparnts_cvr}>
-              <span className={styles.vdf_data}>Sign in</span>
-              {appError && (
+              <span className={styles.vdf_data}>Sign in to Spoutgram</span>
+
+              {/* custom popup error */}
+              {showError && ( 
                 <div className={styles.byyy__err}>
                   <span className={styles.error__msg__xyx}>
                     <CautionSvg />
@@ -233,7 +250,7 @@ const LoginScreen = () => {
               </div>
 
               <div className={styles._oxr}>
-                <span className={styles.or}>or continue with</span>
+                <span className={styles.or}>OR</span>
               </div>
 
               <div className={styles._xpnds_oauths_div}>
@@ -244,18 +261,18 @@ const LoginScreen = () => {
                     onClick={handleGoogleLogin}
                   >
                     <GoogleSvg />
-                    Google
+                    Continue with Google
                   </button>
                 </div>
 
-                <div>
+                <div style={{display: "none"}}>
                   {/* continue with twitter */}
                   <button type="button"
                     className={`${styles.oauths_} ${styles.twtr_oauth}`}
                     onClick={handleTwitterLogin}
                   >
                     <TwitterSvg />
-                    Twitter
+                    Continue with Twitter
                   </button>
                 </div>
               </div>

@@ -121,7 +121,7 @@ const SignUpScreen = () => {
         <form onSubmit={formik.handleSubmit}>
           <div className={styles._xparnts}>
             <div className={styles._xparnts_cvr}>
-              <span className={styles.vdf_data}>Sign up</span>
+              <span className={styles.vdf_data}>Sign up for Spoutgram</span>
 
               {/* this is the error msg from the API : User already registered. Please login. */}
               {storedData?.appError && (
@@ -295,7 +295,7 @@ const SignUpScreen = () => {
 
               <div className={styles._oxr}>
                 <div></div>
-                <span className={styles.or}>or continue with</span>
+                <span className={styles.or}>OR</span>
               </div>
 
               <div className={styles._xpnds_oauths_div}>
@@ -306,18 +306,18 @@ const SignUpScreen = () => {
                     onClick={() => signIn()}
                   >
                     <GoogleSvg />
-                    Google
+                    Continue with Google
                   </button>
                 </div>
 
-                <div>
+                <div style={{display: "none"}}>
                   {/* continue with twitter */}
                   <button type="button"
                     className={`${styles.oauths_} ${styles.twtr_oauth}`}
                     onClick={() => signOut()}
                   >
                     <TwitterSvg />
-                    Twitter
+                    Continue with Twitter
                   </button>
                 </div>
               </div>

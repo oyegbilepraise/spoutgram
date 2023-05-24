@@ -1,16 +1,18 @@
 import { HomeLayout } from "@/layout";
 import Image from "next/image";
-import img from "../../images/default-photo.svg";
+import img from '../../images/default.jpeg' 
 import styles from "@/layout/HomeLayout/HomeLayout.module.css";
 import Post from "@/components/Home/Post";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState, } from "react"; 
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import Cookies from "js-cookie";
 import { getAllPostsAction } from "@/redux/slices/postSlice/postSlice";
+import { SocketContext } from "../../redux/context/socket.js";
 
 const HomeScreen = (props) => {
   const { user } = props
+  const socket = useContext(SocketContext);
 
   const dispatch = useDispatch()
   
@@ -21,26 +23,30 @@ const HomeScreen = (props) => {
 
   useEffect(() => {
     dispatch(getAllPostsAction(token));
+    console.log(user);
+    // socket.emit("NEW_USER_ONLINE",user._id)
   }, []);
 
   return (
     <HomeLayout>
       <div className={`${styles.timeline} ${styles._000middlebar}`}>
-        <nav className={styles.___main_nav}>
+        <nav className={styles.___main_nav} style={{borderBottom: "transparent"}}>
           <span>Home</span>
         </nav>
 
         <div className={styles.whats_yyy}>
           <div className={styles.parnt__cnt_wyyyt}>
             <div className={styles.inipic_xyz}>
-              <Image alt="img" className={styles.img__winipc} src={img} />
+              <Link href={`${user?.data?.username}`}>
+                <Image alt="img" className={styles.img__winipc} src={img} />
+              </Link>
             </div>
             <div className={styles.ini__inp}>
               <Link href="/createpost">
                 <input
                   type="text"
                   className={styles.disbld__inp__post}
-                  placeholder="What's in the Spotlight?"
+                  placeholder="Compose a new post"
                   disabled
                 />
               </Link>
