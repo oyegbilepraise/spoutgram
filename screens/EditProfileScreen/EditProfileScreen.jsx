@@ -5,23 +5,21 @@ import Image from "next/image";
 import img from "../../images/default-photo.svg";
 import { useDispatch, useSelector } from 'react-redux';
 import { useFormik } from 'formik';
-import { updateProfileAction } from '@/redux/slices/userDetailSlice';
+import { updateProfileAction, updateProfilePictureAction } from '@/redux/slices/userDetailSlice';
 import { BtnloadSvg } from '@/components';
-import { useState } from 'react';
 import Pensvg from '@/components/svg/pensvg';
 
 const EditProfileScreen = () => {
   const dispatch = useDispatch({});
   const { user, apiError } = useSelector((state) => state?.auth?.getUser);
   const {loading, appError} = useSelector(state=>state?.userDetails?.updateProfile)
-  const [fileURL, setFileURL] = useState(null);
-  const handleChooseFile=(e)=>{
-    let file = e.target.files[0];
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload=()=>{
-      setFileURL(reader.result);
-    }
+  const {uploading, uploadError} = useSelector(state=>state?.userDetails?.updateProfilePicture)
+
+  const handleChooseFile=async(e)=>{
+    const file = e.target.files[0];
+    const formData = new FormData();
+    formData.append("image", file);
+    dispatch(updateProfilePictureAction(formData))
   }
   const formik = useFormik({
     initialValues: {
@@ -65,6 +63,13 @@ const EditProfileScreen = () => {
                 </button>
             </div>
           </nav>
+          {appError && (
+                <div>
+                <span className={styles.post__msg__pp}>
+                  {uploadError}
+                </span>
+              </div>
+              )}
 
           <div className={styles.edit__profile__container}>
             {/*  */}
@@ -72,7 +77,8 @@ const EditProfileScreen = () => {
               <div>
                 <div>
                   <label htmlFor="img_file" className={editStyle.__img_file}>
-                    <Image src={!!user?.data?.profilePhoto ?user?.data?.profilePhoto: img} className={styles.edit__profile__img} />
+                    <Image src={!!user?.data?.profilePhoto ? (user?.data?.profilePhoto): (img)} className={styles.edit__profile__img} width={50} height={50}/>
+                    <span style={!uploading? {display: 'none'}: {}}>loading</span>
                     <input type="file" id='img_file' onChange={handleChooseFile} className={editStyle.__file_input} accept='.jpg, .png, .jpeg'/>
                     <Pensvg/>
                   </label>

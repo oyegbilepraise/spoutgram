@@ -125,7 +125,6 @@ const LoginScreen = () => {
           <div className={styles._xparnts}>
             <div className={styles._xparnts_cvr}>
               <span className={styles.vdf_data}>Sign in</span>
-
               {appError && (
                 <div className={styles.byyy__err}>
                   <span className={styles.error__msg__xyx}>

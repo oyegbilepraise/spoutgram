@@ -234,6 +234,7 @@ const inputDesc=createRef()
                 for (let i = 0; i < files.length; i++) {
                   const file = files[i];
                   newMedia.push(file);
+                  console.log(file);
                 }
                 setMedia([...media, ...newMedia]);
               }}

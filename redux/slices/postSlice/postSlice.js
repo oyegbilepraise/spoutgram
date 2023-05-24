@@ -7,7 +7,6 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 export const createPostAction = createAsyncThunk(
   "posts/create",
   async (payload, { rejectWithValue }) => {
-
     const token = Cookies.get("token");
     try {
       const res = await postRequestWithImage({

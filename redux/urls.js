@@ -12,6 +12,8 @@ export const URL = {
   createProfile: "/users/create-profile",
   verifyUsername: "/users/verify-username",
   updateProfile: "/users/user/update",
+  updateProfilePicture: "/users/user/profile-photo/upload",
+  getAllUsers: "/users/all-users",
   // Posts
 createPost:"/posts/create",
 getPosts:"/posts/all-posts",
@@ -42,7 +44,10 @@ getOneComment:"/comments/comment/",
   //MESSAGES
   suggestedUsers:"/message/suggested",
   friends: '/message/friends',
-  sendMessage: '/message/send_message'
+  sendMessage: '/message/send_message',
+
+  //Notifications
+  socialNotification: "/notification/social"
 };
 
 
