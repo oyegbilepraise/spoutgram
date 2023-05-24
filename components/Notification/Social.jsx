@@ -9,7 +9,7 @@ import { getAllUsersAction } from "@/redux/slices/userDetailSlice";
 
 const Social = () => {
   const dispatch = useDispatch({});
-  const {loading, appError, data: {data}} = useSelector(state=>state.notification.notification);
+  const {loading, appError, data} = useSelector(state=>state.notification.notification);
   useEffect(()=>{
       dispatch(getAllUsersAction())
       dispatch(socialNotificationAction())
@@ -34,11 +34,11 @@ const Social = () => {
       className={styles.npd_body_content}
     >
       {
-        data?.length? (
+        data?.data?.length? (
           <div >
             {/* follow */}
             {
-              data?.filter((item)=>item.notification===1)?.map((notif)=>{
+              data?.data?.filter((item)=>item.notification===1)?.map((notif)=>{
                 return (
                     <div className={`${styles.npd_toast} ${styles.npd_f_notif}`}>
                       <div className={styles.hold_them}>
@@ -55,13 +55,21 @@ const Social = () => {
                       <div>
                         <div>
                           <h6 className={styles.notf_title} >
-                            <span style={notif?.notification_type!==1 ?{display: "none"}: {}}>You have a new follower!</span>
-                            <span style={notif?.notification_type!==2 ?{display: "none"}: {}}>{notif?.user?.username}&nbsp;Liked your post!</span>
+                            <span >
+                              {notif?.notification_type==1? (`You have a new follower`):
+                                notif?.notification_type==2? (<>{notif?.user?.username}&nbsp;Liked your post!</>): notif.notification_type==3?
+                                (`${notif?.user?.username} Reposted your post`): ("")
+                              }
+                            </span>
+
                           </h6>
                         </div>
                         <div>
-                          <span style={notif?.notification_type!==1 ?{display: "none"}: {}}><a href="" >@username</a> now follows you.</span>
-                          <span style={notif?.notification_type!==2 ?{display: "none"}: {}}>"{notif?.post?.desc}"</span>
+                              <span >
+                              {notif?.notification_type==1? (<><a href="" >@username</a> now follows you.</>):
+                                notif?.notification_type==2 || notif.notification_type==3? (<>"{notif?.post?.desc}"</>): ("")
+                              }
+                            </span>
                         </div>
                       </div>
                     </div>
@@ -113,13 +121,13 @@ const Social = () => {
               <div>
                 <div>
                   <h6 className={styles.notf_title}>
-                    <span>Username</span>&nbsp;Reposted your post!
+                    <span>Username Reposted your post!</span>
                   </h6>
                 </div>
                 <div>
                   <h6 className={styles.notf_contnt}>
-                    "This is the way it is going to work from now trust me, we are going to
-                    make this work for real"
+                    <span>"The post description here. This is the way it is going to work from now trust me, we are going
+                    to make this work for real"</span>
                   </h6>
                 </div>
               </div>
