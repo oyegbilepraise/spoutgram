@@ -10,7 +10,7 @@ export const socialNotificationAction = createAsyncThunk("/notification/socialNo
     try{
         const res =await getRequest({url: `${baseUrl}${URL.socialNotification}`, token});
         console.log(res?.data)
-        return res?.data;
+        return res?.data?.data;
     }catch(err){
         rejectWithValue(err?.response?.data?.message);
     }
