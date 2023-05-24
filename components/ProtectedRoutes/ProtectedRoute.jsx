@@ -14,16 +14,24 @@ const ProtectedRoute = ({ children }) => {
   const { user, apiError } = useSelector((state) => state?.auth?.getUser);
   const isAuthenticated = Cookies.get("token");
   const socket = useContext(SocketContext);
-  
+
   useEffect(() => {
     //only make the call when there is a token and when dispatch is mounted
     if (isAuthenticated) {
       if (dispatch && dispatch !== null && dispatch !== undefined) {
-        dispatch(getUserAction(isAuthenticated));
-        socket.emit("NEW_USER_ONLINE", user?.data?._id)
+        getUser(isAuthenticated)
       }
     }
   }, [dispatch, isAuthenticated]);
+
+  const getUser = async (auth) => {
+    try {
+      const res = await dispatch(getUserAction(auth));
+      socket.emit("NEW_USER_ONLINE", res?.payload?.data._id)
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   // useEffect(() => {
   //   console.log("socket:: ", socket.id);
