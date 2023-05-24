@@ -39,6 +39,7 @@ const EachPost = ({ post }) => {
     } catch (error) {
     }
   }
+
   useEffect(() => {
     socket.on(postId, (data) => {
       if (data.data.type === 'view') {

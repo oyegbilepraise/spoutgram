@@ -20,6 +20,8 @@ export const getSuggestedUsers = createAsyncThunk(
   }
 );
 
+
+
 export const getMessagedFriends = createAsyncThunk(
   "message/friends",
   async (payload, { rejectWithValue }) => {
@@ -55,6 +57,7 @@ export const sendMessage = createAsyncThunk(
     }
   }
 );
+
 
 
 
