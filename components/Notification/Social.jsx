@@ -5,14 +5,24 @@ import { useEffect, useState } from "react";
 import { socialNotificationAction } from "@/redux/slices/notificationSlice/notificationSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllUsersAction } from "@/redux/slices/userDetailSlice";
-
+import { useRouter } from "next/router";
+import Routes from "@/utils/routes";
 const Social = () => {
   const dispatch = useDispatch({});
+  const router = useRouter({});
   const {loading, appError, data} = useSelector(state=>state.notification.notification);
   useEffect(()=>{
       dispatch(getAllUsersAction())
-      dispatch(socialNotificationAction())
+      dispatch(socialNotificationAction())  
   }, [dispatch])
+
+  const goToPost=({type, postId})=>{
+    if(type ===2 || type ===3){
+      console.log(postId);
+        router.push(`${Routes.EACHPOST}${postId}`);
+    }
+  }
+
 
   if(loading){
     return<>
@@ -21,8 +31,6 @@ const Social = () => {
     </div>
     </>
   }
-
-
 
   return (
     <div
@@ -33,11 +41,10 @@ const Social = () => {
       {
         data?.length? (
           <div >
-            {/* follow */}
             {
               data?.filter((item)=>item.notification===1)?.map((notif)=>{
                 return (
-                    <div className={`${styles.npd_toast} ${styles.npd_f_notif}`}>
+                    <div className={`${styles.npd_toast} ${styles.npd_f_notif}`} onClick={()=>goToPost({type: notif.notification_type, postId: notif?.post?._id})}>
                       <div className={styles.hold_them}>
                         <div>
                           <Image src={!!notif?.user?.profilePhoto ? notif?.user?.profilePhoto : imgOne} className={styles.npd_toast_png} width={50} height={50}/>
@@ -55,20 +62,26 @@ const Social = () => {
                             <span >
                               {
                                 //notification title
-                              notif?.notification_type==1? (`You have a new follower`): //follow
-                                notif?.notification_type==2? (<>{notif?.user?.username}&nbsp;Liked your post!</>): notif.notification_type==3?
-                                (`${notif?.user?.username} Reposted your post`): ("")
+                                notif?.notification_type==1? //follow
+                                (`You have a new follower`): 
+                                notif?.notification_type==2? //like
+                                (<>{notif?.user?.username}&nbsp;Liked your post!</>): 
+                                notif.notification_type==3? //repost
+                                (`${notif?.user?.username} Reposted your post`):
+                                ("")
                               }
                             </span>
-
                           </h6>
                         </div>
                         <div>
                               <span >
                               {
                                 //notification contents
-                              notif?.notification_type==1? (<><a href="" >@username</a> now follows you.</>):
-                                notif?.notification_type==2 || notif.notification_type==3? (<>"{notif?.post?.desc}"</>): ("")
+                                notif?.notification_type==1? //follow
+                                (<><a href="" >@username</a> now follows you.</>):
+                                notif?.notification_type==2 || notif.notification_type==3? //like and repost
+                                (<>"{notif?.post?.desc}"</>): 
+                                ("")
                               }
                             </span>
                         </div>
@@ -77,33 +90,6 @@ const Social = () => {
                 )
               })
             }
-
-            {/* liked */}
-            <div className={`${styles.npd_toast} ${styles.active_notification}`}>
-              <div className={styles.hold_them}>
-                <div>
-                  <Image
-                    src={imgOne}
-                    className={styles.npd_toast_png}
-                  />
-                </div>
-                <div className={styles.float_nicn}>
-                  {/* <img src="/images/utility icon/favorite.svg" className={styles.notf_title} /> */}
-                </div>
-              </div>
-              <div>
-                <div>
-                  <h6 className={styles.notf_title}>
-                    <span>You have a new follower</span>
-                  </h6>
-                </div>
-                <div>
-                  <h6 className={styles.notf_contnt}>
-                  <a href="" >@username</a> now follows you.
-                  </h6>
-                </div>
-              </div>
-            </div>
           </div>
         ):(
           // {/* no social notification */}
@@ -134,11 +120,8 @@ const Social = () => {
             </div>
           </div>
           // {/* no social notification */}
-
         )
       }
-
-
     </div>
   );
 };

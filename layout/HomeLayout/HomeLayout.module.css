@@ -2462,7 +2462,7 @@ input[type="text"].data_content_pass, input[type="password"].data_content_pass, 
     user-select: none;
 }
 .npd_toast:hover {
-    background-color: rgb(252, 252, 252);
+    background-color: rgb(249, 243, 243);
     transition: 0.6s all;
 }
 .npd_toast_png {
