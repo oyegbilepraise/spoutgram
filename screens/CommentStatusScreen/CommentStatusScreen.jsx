@@ -404,8 +404,7 @@ const CommentStatusScreen = () => {
                       }
                       alt="image_profile_img"
                       className={styles.impg__cpr__nal}
-                      width={'22'}
-                      height={'22'}
+                      fill
                     />
                   </div>
                   <div>

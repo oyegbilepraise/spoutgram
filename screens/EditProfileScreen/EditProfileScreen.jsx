@@ -2,12 +2,12 @@ import { HomeLayout } from '@/layout'
 import styles from '@/layout/HomeLayout/HomeLayout.module.css'
 import editStyle from './EditProfileScreen.module.css'
 import Image from "next/image";
+import img from '../../images/default.jpeg' 
 import { useDispatch, useSelector } from 'react-redux';
 import { useFormik } from 'formik';
 import { updateProfileAction, updateProfilePictureAction } from '@/redux/slices/userDetailSlice';
 import { BtnloadSvg } from '@/components';
 import Pensvg from '@/components/svg/pensvg';
-import img from '../../images/default.jpeg'
 import { useRouter } from "next/router";
 
 const EditProfileScreen = () => {
