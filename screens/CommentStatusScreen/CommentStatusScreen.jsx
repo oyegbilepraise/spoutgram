@@ -23,6 +23,7 @@ const CommentStatusScreen = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const [postId, setPostId] = useState(null);
+  const [getCommentId,setGetCommentId] = useState(null);
   const { comments } = useSelector(
     (state) => state?.comment?.getComments
   );
@@ -44,7 +45,7 @@ const CommentStatusScreen = () => {
   useEffect(() => {
     if (router.query.postId) {
       localStorage.setItem("postId", router.query.postId);
-      dispatch(getCommentsAction(router.query.postId));
+      dispatch(getCommentsAction(getCommentId));
       dispatch(getSinglePostAction(router.query.postId));
     } else {
       const id = localStorage.getItem("postId");
@@ -55,9 +56,12 @@ const CommentStatusScreen = () => {
   }, []);
 
   useEffect(() => {
-    console.log(comments);
-    console.log(individualPost);
-  }, [loading == false]);
+
+    if (individualPost.data) {
+      console.log(individualPost.data);
+      setGetCommentId(individualPost?.data[0]?.post[0]?._id)
+    }
+  }, [individualPost]);
 
   // Function to handle image upload
   const [image, setImage] = useState(null);
@@ -86,35 +90,47 @@ const CommentStatusScreen = () => {
   // Function for sending comments
   const formik = useFormik({
     initialValues: { text: "", image: null },
-    onSubmit: (values) => {
+    onSubmit: async(values) => {
       const formData = new FormData();
       console.log(values);
       formData.append("text", values.text);
       formData.append("image", values.image);
       formData.append(
-        "post",
-        router.query.postId ? router.query.postId : postId
+        "post",getCommentId
       );
-      dispatch(createCommentAction(formData));
+      const res=await dispatch(createCommentAction(formData));
+// console.log(res?.payload?.success);
+if (res?.payload?.success) {
       values.text = "";
       values.image = "";
       setImage(null);
-      router.push(Routes.HOME);
+      // router.push(Routes.HOME);
+}
     },
   });
-
-  const handleGoBack = () => {
-    router.back(); // Go back to the previous page or route
-  };
 
   return (
     <HomeLayout>
       {/* div.timeline -> middle */}
       <div class={`${styles.timeline} ${styles._000middlebar}`}>
-        <nav style={{paddingLeft: "0px"}} className={styles.___main_nav}>
-          <div> 
-            <span style={{paddingLeft: "18px"}} class={styles.icon_back} onClick={handleGoBack}>
-              <svg style={{marginLeft: "18px"}} class={styles._00_history__back} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgb(90, 90, 90)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H6M12 5l-7 7 7 7"/></svg>
+        <nav style={{ paddingLeft: "0px" }} className={styles.___main_nav}>
+          <div>
+            <span style={{ paddingLeft: "18px" }} class={styles.icon_back}>
+              <svg
+                style={{ marginLeft: "18px" }}
+                class={styles._00_history__back}
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="rgb(90, 90, 90)"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M19 12H6M12 5l-7 7 7 7" />
+              </svg>
             </span>
             {!loading && <span
               // style={{textAlign: "center", width: "max-content",marginTop: "0px", margin: "auto", paddingLeft: "0px", paddingTop: "0px", border: "1px solid black", display: "block"}}
@@ -129,7 +145,7 @@ const CommentStatusScreen = () => {
         ) : (
           <div>
           {/* post preview */}
-      {individualPost?.success && <EachPost post={individualPost?.data}/>}
+      {individualPost?.success && <EachPost post={individualPost?.data[0]}/>}
           {/* post preview */}
 
           {/* comment box */}
@@ -137,13 +153,22 @@ const CommentStatusScreen = () => {
               <div className={styles.parnt__cnt_wyyyt}>
                 <div className={styles.inipic_xyz}>
                   <Image
-                    alt="img" fill
+                    alt="img"
                     className={styles.img__winipc}
                     src={
                       user?.data?.profilePhoto == ""
                         ? defaultImg
                         : user?.data?.profilePhoto
                     }
+                    width="50"
+                    height="22"
+                    style={{
+                      height: "200px",
+                      width: "100%",
+                      border: "1px solid gray",
+                      objectFit: "cover",
+                      borderRadius: "8px",
+                    }}
                   />
                 </div>
                 <div className={styles.ini__inp}>
@@ -215,9 +240,17 @@ const CommentStatusScreen = () => {
                           ? defaultImg
                           : user?.data?.profilePhoto
                       }
+                      width="50"
+                      height="22"
+                      style={{
+                        height: "200px",
+                        width: "100%",
+                        border: "1px solid gray",
+                        objectFit: "cover",
+                        borderRadius: "8px",
+                      }}
                       alt="image_profile_img"
                       className={styles.impg__cpr__nal}
-                      fill
                     />
                   </div>
                   <div>
@@ -247,6 +280,8 @@ const CommentStatusScreen = () => {
                           objectFit: "cover",
                           borderRadius: "8px",
                         }}
+                        width="50"
+                        height="22"
                       />
                       <button onClick={handleImageRemove}>Remove image</button>
                     </div>

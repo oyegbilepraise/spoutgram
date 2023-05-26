@@ -17,7 +17,7 @@ const EachComment = ({ comment, individualPost, route }) => {
   //   const [_views, set_Views] = useState(comment.view);
   const { user, apiError } = useSelector((state) => state?.auth?.getUser);
 
-   const [isLiked, setisLiked] = useState(
+   const [isLiked, setIsLiked] = useState(
     comment?.likes?.includes(user?.data?._id)
   );
   //   const isBookmarked = comment.bookmarks.includes(user?.data?._id)
@@ -53,7 +53,7 @@ const EachComment = ({ comment, individualPost, route }) => {
   }, [socket]);
 
   useEffect(() => {
-    setisLiked(likes?.includes(user?.data?._id));
+    setIsLiked(likes?.includes(user?.data?._id));
   }, [likes]);
 
   return (
@@ -148,14 +148,22 @@ const EachComment = ({ comment, individualPost, route }) => {
         className={`${styles.data_content_all} ${styles._00dca} ${styles.data_no_content}`}
       >
         <div>
-          <Link href={route?.one ? `${route.one}${comment?._id}` : "#"}>
+        {route?.one ? <Link href={`${route.one}${comment?._id}`}>
             <span className={`${styles._ttl_contxt} ${styles._ttl_contxt__pp}`}>
               {comment?.text}
             </span>
             {comment?.images.length > 0 && (
               <ImageCarousels postImage={comment?.images} />
             )}
-          </Link>
+          </Link>:<div>
+            <span className={`${styles._ttl_contxt} ${styles._ttl_contxt__pp}`}>
+              {comment?.text}
+            </span>
+            {comment?.images.length > 0 && (
+              <ImageCarousels postImage={comment?.images} />
+            )}
+          </div>}
+          
         </div>
 
         <div className={styles._00ftr_pst}>
@@ -196,7 +204,7 @@ const EachComment = ({ comment, individualPost, route }) => {
             </span>
           </span>
           <span className={styles._00mn_span}>
-            <Link href={route?.two ? `${route.two}${comment?._id}` : "#"}>
+          {route?.two ? <Link href={`${route.two}${comment?._id}`}>
               <span>
                 <svg
                   id="comment"
@@ -210,7 +218,22 @@ const EachComment = ({ comment, individualPost, route }) => {
                   <path d="M10 3h4a8 8 0 1 1 0 16v3.5c-5-2-12-5-12-11.5a8 8 0 0 1 8-8zm2 14h2a6 6 0 1 0 0-12h-4a6 6 0 0 0-6 6c0 3.61 2.462 5.966 8 8.48V17z" />
                 </svg>
               </span>
-            </Link>
+            </Link>:<div>
+              <span>
+                <svg
+                  id="comment"
+                  className={`${styles.blue} ${styles.x_icn_ftr}`}
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  width={24}
+                  height={24}
+                >
+                  <path fill="none" d="M0 0h24v24H0z" />
+                  <path d="M10 3h4a8 8 0 1 1 0 16v3.5c-5-2-12-5-12-11.5a8 8 0 0 1 8-8zm2 14h2a6 6 0 1 0 0-12h-4a6 6 0 0 0-6 6c0 3.61 2.462 5.966 8 8.48V17z" />
+                </svg>
+              </span>
+            </div>}
+            
             <span className={styles._00mn_spn_cnt}>
               {comment?.reply > 0 && comment?.reply}
             </span>

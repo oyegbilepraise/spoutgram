@@ -22,7 +22,6 @@ const PostStatusScreen = () => {
 const {loading,individualPost}=useSelector(state=>state?.post?.singlePost)
 const { user, apiError } = useSelector((state) => state?.auth?.getUser);
 
-// const route={one:"postComments/"}
 
   const openModal = () => {
     setIsOpen(true);
@@ -75,23 +74,21 @@ const { user, apiError } = useSelector((state) => state?.auth?.getUser);
   // Function for sending comments
   const formik = useFormik({
     initialValues: { text: "", image: null },
-    onSubmit: (values) => {
+    onSubmit: async(values) => {
       const formData = new FormData();
       console.log(values);
       formData.append("text", values.text);
       formData.append("image", values.image);
       formData.append("post", router.query.postId?router.query.postId:postId);
-      dispatch(createCommentAction(formData));
+     const res=await dispatch(createCommentAction(formData));
+     if (res?.payload?.success) {
       values.text = "";
       values.image = "";
       setImage(null);
-      router.push(Routes.HOME);
+      // router.push(Routes.HOME);
+     }
     },
   });
-
-  const handleGoBack = () => {
-    router.back(); // Go back to the previous page or route
-  };
 
   return (
     <HomeLayout>
@@ -99,7 +96,7 @@ const { user, apiError } = useSelector((state) => state?.auth?.getUser);
       <div class={`${styles.timeline} ${styles._000middlebar}`}>
         <nav style={{ paddingLeft: "0px" }} className={styles.___main_nav}>
           <div>
-            <span style={{ paddingLeft: "18px" }} class={styles.icon_back} onClick={handleGoBack}>
+            <span style={{ paddingLeft: "18px" }} class={styles.icon_back}>
               <svg
                 style={{ marginLeft: "18px" }}
                 class={styles._00_history__back}
@@ -128,14 +125,14 @@ const { user, apiError } = useSelector((state) => state?.auth?.getUser);
       {loading? "Loading...":  
         <div>
         {/* post preview */}
-      {individualPost?.success && <EachPost post={individualPost?.data}/>}
+      {individualPost?.success && <EachPost post={individualPost?.data[0]}/>}
         {/* post preview */}
         
         {/* comment box */}
         <div className={styles.whats_yyy}>
           <div className={styles.parnt__cnt_wyyyt}>
             <div className={styles.inipic_xyz}>
-              <Image alt="img" fill className={styles.img__winipc} src={user?.data?.profilePhoto==""?img:user?.data?.profilePhoto} />
+              <Image alt="img" className={styles.img__winipc} src={user?.data?.profilePhoto==""?img:user?.data?.profilePhoto} />
             </div>
             <div className={styles.ini__inp}>
               <input
@@ -314,7 +311,6 @@ const { user, apiError } = useSelector((state) => state?.auth?.getUser);
                       src={user?.data?.profilePhoto==""?img:user?.data?.profilePhoto}
                       alt="image_profile_img"
                       className={styles.impg__cpr__nal}
-                      fill
                     />
                   </div>
                   <div>

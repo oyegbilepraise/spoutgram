@@ -3,7 +3,7 @@ import { ResendLdSvg } from "../../components";
 
 const Post = ({ posts, loading }) => {
 const route={one:"postComments/",two:"comment/"}
-console.log(posts);
+// console.log(posts);
   return (
     <div>
       {loading ? <div style={{ height: "78vh" }} className="d-flex justify-content-center align-items-center">
@@ -12,7 +12,7 @@ console.log(posts);
         </div>
       </div> :
         <div>
-          {posts?.data?.map((post, id) => {
+          {posts?.map((post, id) => {
             return (
               <EachPost post={post} key={id} route={route}/>
             )
