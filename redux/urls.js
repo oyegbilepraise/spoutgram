@@ -21,11 +21,8 @@ getPosts:"/posts/all-posts",
 getSinglePost:"/posts/post/",
 likePost:"/posts/post/like",
 dislikePost:"/posts/post/unlike",
-<<<<<<< HEAD
 getUserPost: "/users/posts",
-=======
 repost:"/posts/repost/",
->>>>>>> dev
   // Category
 
   // Comment

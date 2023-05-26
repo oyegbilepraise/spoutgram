@@ -171,16 +171,12 @@ const postSlice = createSlice({
       loading: false,
       apiError: null,
       reccentPost: {},
-<<<<<<< HEAD
-    }
-=======
     },
     repost: {
       loading: false,
       apiError: null,
       reccentPost: {},
     },
->>>>>>> dev
   },
   reducers: {},
   extraReducers: (builder) => {
