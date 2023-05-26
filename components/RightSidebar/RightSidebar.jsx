@@ -7,11 +7,15 @@ import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import Search from "../SearchComp/Search";
 import Cookies from "js-cookie";
-import { getSuggestedUsers } from '@/redux/slices/messageSlice/messageSlice';
+import { Follow, getSuggestedUsers } from '@/redux/slices/messageSlice/messageSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import Link from "next/link";
+import { followUser } from '@/redux/slices/postSlice/postSlice';
+import { useFormik } from 'formik';
 
 const ButtonGroup = ({ next, previous, goToSlide, ...rest }) => {
+
+
   const {
     carouselState: { currentSlide },
   } = rest;
@@ -143,6 +147,18 @@ const RightSidebar = () => {
   useEffect(() => {
     dispatch(getSuggestedUsers(token));
   }, []);
+
+  const handleFollow = async (id) => {
+    console.log("Following:: ", id);
+    const res = dispatch(followUser(id))
+    console.log(res);
+
+
+    // if (id) {
+    // }
+
+  }
+
   const responsive = {
     desktop: {
       breakpoint: { max: 3000, min: 1024 },
@@ -246,7 +262,7 @@ const RightSidebar = () => {
                 return (
                   <div key={id}>
                     <div>
-                      {items.map(({ name, id, username }) => {
+                      {items.map(({ name, _id, username }) => {
                         return (
                           <div key={id} className={styles.sgstn_tst}>
                             <div>
@@ -267,7 +283,7 @@ const RightSidebar = () => {
                               <span className={styles.yyusbsq}>@{username}</span>
                             </div>
                             <div>
-                              <button className={styles.flwx_xyq_fllw}>
+                              <button className={styles.flwx_xyq_fllw} onClick={()=>handleFollow(_id)}>
                                 follow
                               </button>
                             </div>

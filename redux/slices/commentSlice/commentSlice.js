@@ -71,6 +71,18 @@ export const getSingleCommentAction = createAsyncThunk(
   }
 );
 
+export const likeCommentAction = createAsyncThunk(
+  'comment/like',
+  async (commentId, { rejectWithValue }) => {
+    const token = Cookies.get("token");
+    try {
+      const res = await getRequest({ url: `${baseUrl}${URL.likeComment}${commentId}`, token:token })
+      return res.data
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  })
+
 export const getRepliesAction = createAsyncThunk(
   "comment/get-replies",
  async (postId, { rejectWithValue }) => {
@@ -86,6 +98,18 @@ export const getRepliesAction = createAsyncThunk(
     }
   }
 );
+
+export const likeReplyAction = createAsyncThunk(
+  'reply/like',
+  async (replyId, { rejectWithValue }) => {
+    const token = Cookies.get("token");
+    try {
+      const res = await getRequest({ url: `${baseUrl}${URL.likeReply}${replyId}`, token:token })
+      return res.data
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  })
 
 
 
@@ -110,12 +134,22 @@ const commentSlice = createSlice({
     replyComment: {
       loading: false,
       apiError: null,
-      reccentPost: {},
+      reccentComment: {},
+    },
+    likeComment: {
+      loading: false,
+      apiError: null,
+      reccentComment: {},
     },
      getReplies: {
       loading: false,
       apiError: null,
       replies: [],
+    },
+    likeReply: {
+      loading: false,
+      apiError: null,
+      reccentReply: {},
     },
   },
   reducers: {},
@@ -173,18 +207,35 @@ state.singleComment.apiError=action?.payload
     builder.addCase(replyCommentAction.pending, (state) => {
 console.log(state);
       state.replyComment.loading = true;
-      state.replyComment.reccentPost = {};
+      state.replyComment.reccentComment = {};
       state.replyComment.apiError = null;
     });
     builder.addCase(replyCommentAction.fulfilled, (state,action) => {
 console.log(state,action);
       state.replyComment.loading = false;
-      state.replyComment.reccentPost = action?.payload;
+      state.replyComment.reccentComment = action?.payload;
     });
     builder.addCase(replyCommentAction.rejected, (state,action) => {
 console.log(state,action);
       state.replyComment.loading = false;
       state.replyComment.apiError = action?.payload;
+    });
+    //like comment
+    builder.addCase(likeCommentAction.pending, (state) => {
+console.log(state);
+      state.likeComment.loading = true;
+      state.likeComment.reccentComment = {};
+      state.likeComment.apiError = null;
+    });
+    builder.addCase(likeCommentAction.fulfilled, (state,action) => {
+console.log(state,action);
+      state.likeComment.loading = false;
+      state.likeComment.reccentComment = action?.payload;
+    });
+    builder.addCase(likeCommentAction.rejected, (state,action) => {
+console.log(state,action);
+      state.likeComment.loading = false;
+      state.likeComment.apiError = action?.payload;
     });
 
        //get Replies
@@ -203,6 +254,24 @@ console.log(state,action);
     console.log(state,action)
       state.getReplies.loading = false;
       state.getReplies.apiError = action?.payload;
+    });
+
+        //like reply
+    builder.addCase(likeReplyAction.pending, (state) => {
+console.log(state);
+      state.likeReply.loading = true;
+      state.likeReply.reccentReply = {};
+      state.likeReply.apiError = null;
+    });
+    builder.addCase(likeReplyAction.fulfilled, (state,action) => {
+console.log(state,action);
+      state.likeReply.loading = false;
+      state.likeReply.reccentReply = action?.payload;
+    });
+    builder.addCase(likeReplyAction.rejected, (state,action) => {
+console.log(state,action);
+      state.likeReply.loading = false;
+      state.likeReply.apiError = action?.payload;
     });
       },
 });
