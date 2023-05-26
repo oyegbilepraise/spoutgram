@@ -55,10 +55,10 @@ const ProfileImage = ({ post }) => {
             style={{display: "flex", width: "max-content", marginTop: "11px"}}
             >
               <span className={`${styles.xoxtrn} ${styles.hovr__f}`} style={{display: "flex"}}>
-                {post?.user?.followers.length}&nbsp;<span className={styles.xyxxn}>{post?.user?.followers.length < 2 ? "Follower" : "Followers"}</span>
+                {post?.user?.followers?.length}&nbsp;<span className={styles.xyxxn}>{post?.user?.followers?.length < 2 ? "Follower" : "Followers"}</span>
               </span>
               <span className={`${styles.xoxtrn} ${styles.hovr__f}`} style={{display: "flex"}}>
-                {post?.user?.following.length}&nbsp;<span className={styles.xyxxn}>Following</span>
+                {post?.user?.following?.length}&nbsp;<span className={styles.xyxxn}>Following</span>
               </span>
             </span>
           </div>

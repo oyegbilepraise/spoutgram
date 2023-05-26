@@ -22,8 +22,8 @@ const EachPost = ({ post,route }) => {
    const [isLiked, setisLiked] = useState(
     post?.likes?.includes(user?.data?._id)
   );
-  const isBookmarked = post.bookmarks.includes(user?.data?._id)
-  const isViewed = post.view.includes(user?.data?._id)
+  const isBookmarked = post?.bookmarks?.includes(user?.data?._id)
+  const isViewed = post?.view?.includes(user?.data?._id)
 
   console.log({post});
   console.log(route);
@@ -93,7 +93,7 @@ const EachPost = ({ post,route }) => {
                 </div>
               </div>
               {/* John, this is the ImageCarousels */}
-              {post.postImage.length !== 0 && (
+              {post.post.postImage.length !== 0 && (
                 <ImageCarousels postImage={post.postImage} />
               )}
               {post.postVideo.length !== 0 && (

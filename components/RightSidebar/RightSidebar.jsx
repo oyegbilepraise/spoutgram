@@ -148,17 +148,17 @@ const RightSidebar = () => {
     dispatch(getSuggestedUsers(token));
   }, []);
 
-  const formik = useFormik({
-    onSubmit: (id) => {
-      handleFollow(id)
-    },
-  });
-
-  const handleFollow = async(id)=>{
-    // const res =  dispatch(followUser(id))
+  const handleFollow = async (id) => {
     console.log("Following:: ", id);
+    const res = dispatch(followUser(id))
+    console.log(res);
+
+
+    // if (id) {
+    // }
+
   }
-  
+
   const responsive = {
     desktop: {
       breakpoint: { max: 3000, min: 1024 },
@@ -262,7 +262,7 @@ const RightSidebar = () => {
                 return (
                   <div key={id}>
                     <div>
-                      {items.map(({ name, id, username }) => {
+                      {items.map(({ name, _id, username }) => {
                         return (
                           <div key={id} className={styles.sgstn_tst}>
                             <div>
@@ -283,7 +283,7 @@ const RightSidebar = () => {
                               <span className={styles.yyusbsq}>@{username}</span>
                             </div>
                             <div>
-                              <button className={styles.flwx_xyq_fllw} onClick={handleFollow(id)}>
+                              <button className={styles.flwx_xyq_fllw} onClick={()=>handleFollow(_id)}>
                                 follow
                               </button>
                             </div>
