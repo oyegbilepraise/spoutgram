@@ -18,6 +18,7 @@ getPosts:"/posts/all-posts",
 getSinglePost:"/posts/post/",
 likePost:"/posts/post/like",
 dislikePost:"/posts/post/unlike",
+repost:"/posts/repost/",
   // Category
 
   // Comment

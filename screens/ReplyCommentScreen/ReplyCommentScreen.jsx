@@ -19,9 +19,9 @@ const ReplyCommentScreen = () => {
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
   const [commentId, setCommentId] = useState(null)
-const {loading,individualComment}=useSelector(state=>state?.comment?.singleComment)
-const {individualPost}=useSelector(state=>state?.post?.singlePost)
-const { user, apiError } = useSelector((state) => state?.auth?.getUser);
+  const { loading, individualComment } = useSelector(state => state?.comment?.singleComment)
+  const { individualPost } = useSelector(state => state?.post?.singlePost)
+  const { user, apiError } = useSelector((state) => state?.auth?.getUser);
   const openModal = () => {
     setIsOpen(true);
   };
@@ -35,8 +35,8 @@ const { user, apiError } = useSelector((state) => state?.auth?.getUser);
       localStorage.setItem("commentId", router.query.commentId);
       dispatch(getSingleCommentAction(router.query.commentId));
     } else {
-     const id=localStorage.getItem("commentId");
-    setCommentId(id);
+      const id = localStorage.getItem("commentId");
+      setCommentId(id);
       dispatch(getSingleCommentAction(id));
     }
   }, []);
@@ -44,15 +44,15 @@ const { user, apiError } = useSelector((state) => state?.auth?.getUser);
   useEffect(() => {
     // console.log(individualComment?.data?._d);
     console.log(individualComment);
-  }, [loading==false]);
+  }, [loading == false]);
 
   // Function to handle image upload
   const [image, setImage] = useState(null);
 
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
-      setImage(file);
-      formik.values.image = file;
+    setImage(file);
+    formik.values.image = file;
   };
 
   // Function to handle image removal
@@ -64,17 +64,19 @@ const { user, apiError } = useSelector((state) => state?.auth?.getUser);
   // Function for sending reply
   const formik = useFormik({
     initialValues: { text: "", image: null },
-    onSubmit: (values) => {
+    onSubmit: async(values) => {
       const formData = new FormData();
       console.log(values);
       formData.append("text", values.text);
       formData.append("image", values.image);
-      formData.append("comment", router.query.commentId?router.query.commentId:commentId);
-      dispatch(replyCommentAction(formData));
+      formData.append("comment", router.query.commentId ? router.query.commentId : commentId);
+      const res = await dispatch(replyCommentAction(formData));
+      if (res?.payload?.success) {
       values.text = "";
       values.image = "";
       setImage(null);
-      router.push(Routes.HOME);
+      // router.push(Routes.HOME);
+      }
     },
   });
 
@@ -104,7 +106,7 @@ const { user, apiError } = useSelector((state) => state?.auth?.getUser);
             <span
               class={styles.not_home_nav_text}
             >
-             Reply this comment
+              Reply this comment
             </span>
             <span>{/*  */}</span>
           </div>
@@ -120,7 +122,7 @@ const { user, apiError } = useSelector((state) => state?.auth?.getUser);
         <div className={styles.whats_yyy}>
           <div className={styles.parnt__cnt_wyyyt}>
             <div className={styles.inipic_xyz}>
-              <Image alt="img" className={styles.img__winipc} src={user?.data?.profilePhoto==""?img:user?.data?.profilePhoto} />
+              <Image alt="img" fill className={styles.img__winipc} src={user?.data?.profilePhoto==""?img:user?.data?.profilePhoto} />
             </div>
             <div className={styles.ini__inp}>
               <input
@@ -296,9 +298,10 @@ const { user, apiError } = useSelector((state) => state?.auth?.getUser);
                 <div style={{ display: "flex" }}>
                   <div>
                     <Image
-                      src={user?.data?.profilePhoto==""?img:user?.data?.profilePhoto}
+                      src={user?.data?.profilePhoto == "" ? img : user?.data?.profilePhoto}
                       alt="image_profile_img"
                       className={styles.impg__cpr__nal}
+                      fill
                     />
                   </div>
                   <div>

@@ -23,6 +23,7 @@ const CommentStatusScreen = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const [postId, setPostId] = useState(null);
+  const [getCommentId,setGetCommentId] = useState(null);
   const { comments } = useSelector(
     (state) => state?.comment?.getComments
   );
@@ -44,7 +45,7 @@ const CommentStatusScreen = () => {
   useEffect(() => {
     if (router.query.postId) {
       localStorage.setItem("postId", router.query.postId);
-      dispatch(getCommentsAction(router.query.postId));
+      dispatch(getCommentsAction(getCommentId));
       dispatch(getSinglePostAction(router.query.postId));
     } else {
       const id = localStorage.getItem("postId");
@@ -55,8 +56,13 @@ const CommentStatusScreen = () => {
   }, []);
 
   useEffect(() => {
-    console.log(comments);
+    // console.log(comments);
     console.log(individualPost);
+    if (individualPost) {
+      // setGetCommentId(individualPost?.data[0]?.post[0]?._id)
+      let found = individualPost.data
+    console.log(found);
+    }
   }, [loading == false]);
 
   // Function to handle image upload
@@ -86,20 +92,22 @@ const CommentStatusScreen = () => {
   // Function for sending comments
   const formik = useFormik({
     initialValues: { text: "", image: null },
-    onSubmit: (values) => {
+    onSubmit: async(values) => {
       const formData = new FormData();
       console.log(values);
       formData.append("text", values.text);
       formData.append("image", values.image);
       formData.append(
-        "post",
-        router.query.postId ? router.query.postId : postId
+        "post",getCommentId
       );
-      dispatch(createCommentAction(formData));
+      const res=await dispatch(createCommentAction(formData));
+// console.log(res?.payload?.success);
+if (res?.payload?.success) {
       values.text = "";
       values.image = "";
       setImage(null);
-      router.push(Routes.HOME);
+      // router.push(Routes.HOME);
+}
     },
   });
 
@@ -139,7 +147,7 @@ const CommentStatusScreen = () => {
         ) : (
           <div>
           {/* post preview */}
-      {individualPost?.success && <EachPost post={individualPost?.data}/>}
+      {individualPost?.success && <EachPost post={individualPost?.data[0]}/>}
           {/* post preview */}
 
           {/* comment box */}

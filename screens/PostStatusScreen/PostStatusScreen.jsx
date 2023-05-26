@@ -22,7 +22,6 @@ const PostStatusScreen = () => {
 const {loading,individualPost}=useSelector(state=>state?.post?.singlePost)
 const { user, apiError } = useSelector((state) => state?.auth?.getUser);
 
-// const route={one:"postComments/"}
 
   const openModal = () => {
     setIsOpen(true);
@@ -75,17 +74,19 @@ const { user, apiError } = useSelector((state) => state?.auth?.getUser);
   // Function for sending comments
   const formik = useFormik({
     initialValues: { text: "", image: null },
-    onSubmit: (values) => {
+    onSubmit: async(values) => {
       const formData = new FormData();
       console.log(values);
       formData.append("text", values.text);
       formData.append("image", values.image);
       formData.append("post", router.query.postId?router.query.postId:postId);
-      dispatch(createCommentAction(formData));
+     const res=await dispatch(createCommentAction(formData));
+     if (res?.payload?.success) {
       values.text = "";
       values.image = "";
       setImage(null);
-      router.push(Routes.HOME);
+      // router.push(Routes.HOME);
+     }
     },
   });
 
@@ -124,7 +125,7 @@ const { user, apiError } = useSelector((state) => state?.auth?.getUser);
       {loading? "Loading...":  
         <div>
         {/* post preview */}
-      {individualPost?.success && <EachPost post={individualPost?.data}/>}
+      {individualPost?.success && <EachPost post={individualPost?.data[0]}/>}
         {/* post preview */}
         
         {/* comment box */}

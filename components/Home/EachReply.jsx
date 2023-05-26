@@ -21,7 +21,7 @@ const EachReply = ({ reply }) => {
   //   const [_views, set_Views] = useState(reply.view);
   const { user, apiError } = useSelector((state) => state?.auth?.getUser);
 
-  const [isLiked, setisLiked] = useState(
+  const [isLiked, setIsLiked] = useState(
     reply?.likes?.includes(user?.data?._id)
   );
   //   const isBookmarked = reply.bookmarks.includes(user?.data?._id)
@@ -59,7 +59,7 @@ const EachReply = ({ reply }) => {
   }, [socket]);
 
   useEffect(() => {
-    setisLiked(likes?.includes(user?.data?._id));
+    setIsLiked(likes?.includes(user?.data?._id));
   }, [likes]);
 
   return (

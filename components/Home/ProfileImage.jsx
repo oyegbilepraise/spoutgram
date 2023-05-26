@@ -9,11 +9,11 @@ const ProfileImage = ({ post }) => {
   const { user, apiError } = useSelector((state) => state?.auth?.getUser);
   const dispatch = useDispatch();
 
-  const isPostOwner = post?.user?._id === user?.data?._id
+  const isPostOwner = post?.user[0]?._id === user?.data?._id
 
   const handleFollow = async () => {
     try {
-      dispatch(followUser(post?.user?._id));
+      dispatch(followUser(post?.user[0]?._id));
     } catch (error) {
       console.log({ error });
     }
@@ -22,7 +22,7 @@ const ProfileImage = ({ post }) => {
     <div style={{ position: "relative" }}>
       <div className={styles.hover_main_image}>
         <Image
-          src={post?.user?.profilePhoto == '' ? img : post?.user?.profilePhoto}
+          src={post?.user[0]?.profilePhoto == '' ? img : post?.user[0]?.profilePhoto}
           alt="profile-img"
           className={styles.data_content_pimg}
           width="22"
@@ -34,13 +34,13 @@ const ProfileImage = ({ post }) => {
           <div className={styles.flex_h_div}>
             <div>
               {/* {{#if this.owner_avatar_link}} */}
-              <Image src={post?.user?.profilePhoto == '' ? img : post?.user?.profilePhoto} alt="img" width="22" height="22" className={styles.image_h_c} />
+              <Image src={post?.user[0]?.profilePhoto == '' ? img : post?.user[0]?.profilePhoto} alt="img" width="22" height="22" className={styles.image_h_c} />
             </div>
             <div>
               <span className={`${styles.postt_name} ${styles._0022_nm_usr}`}>
-                {post?.user?.name}
+                {post?.user[0]?.name}
               </span>
-              <span className={styles.postt_uname_hover}>@{post?.user?.username}</span>
+              <span className={styles.postt_uname_hover}>@{post?.user[0]?.username}</span>
             </div> 
             {/* {{!  }} */}
           </div>
@@ -49,10 +49,10 @@ const ProfileImage = ({ post }) => {
             style={{display: "flex", width: "max-content", marginTop: "11px"}}
             >
               <span className={`${styles.xoxtrn} ${styles.hovr__f}`} style={{display: "flex"}}>
-                {post?.user?.followers.length}&nbsp;<span className={styles.xyxxn}>{post?.user?.followers.length < 2 ? "Follower" : "Followers"}</span>
+                {post?.user[0]?.followers?.length}&nbsp;<span className={styles.xyxxn}>{post?.user[0]?.followers?.length < 2 ? "Follower" : "Followers"}</span>
               </span>
               <span className={`${styles.xoxtrn} ${styles.hovr__f}`} style={{display: "flex"}}>
-                {post?.user?.following.length}&nbsp;<span className={styles.xyxxn}>Following</span>
+                {post?.user[0]?.following?.length}&nbsp;<span className={styles.xyxxn}>Following</span>
               </span>
             </span>
           </div>
@@ -180,13 +180,13 @@ const ProfileImage = ({ post }) => {
       <div>
         <div>
           <span className={styles._0022_nm_usr}>
-            {post?.user?.name}
-            <span>@{post?.user?.username}</span>
+            {post?.user[0]?.name}
+            <span>@{post?.user[0]?.username}</span>
           </span>
         </div>
         <div>
           <span className={styles._000_dt_data}>
-            <PostedAt time={post?.createdAt} />
+            <PostedAt time={post?.post[0]?.createdAt} />
           </span>
         </div>
       </div>

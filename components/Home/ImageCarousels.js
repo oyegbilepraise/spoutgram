@@ -22,43 +22,40 @@ function ImageCarousels({ postImage }) {
       slidesToSlide: 1, // optional, default to 1.
     },
   };
-
-  const handleImageVideodisplay=(pic,id)=>{
-  const fileExtension = pic.split('.').pop().toLowerCase();
-  console.log(fileExtension);
-  
- if (['jpg', 'jpeg', 'png'].includes(fileExtension)) {
-   return(
-  <div>
-  <Image
-              src={pic !== null && pic}
-              alt="picgrid"
-              className={''}
-              width={200}
-              height={200}
-              priority
-              key={id}
-            />
-  </div>
-  )
- } else if (fileExtension === 'mp4') {
-   return(
-  <div>
-   <video controls width={200}
-              height={200} priority
-              key={id} >
-        <source src={pic !== null && pic} type="video/mp4" />
-      </video>
-  </div>
-  )
- }
+  const handleImageVideodisplay = (pic, id) => {
+    const fileExtension = pic.split('.').pop().toLowerCase();
+    if (['jpg', 'jpeg', 'png'].includes(fileExtension)) {
+      return (
+        <div>
+          <Image
+            src={pic !== null && pic}
+            alt="picgrid"
+            className={''}
+            width={200}
+            height={200}
+            priority
+            key={id}
+          />
+        </div>
+      )
+    } else if (fileExtension === 'mp4') {
+      return (
+        <div>
+          <video controls width={200}
+            height={200} priority
+            key={id} >
+            <source src={pic !== null && pic} type="video/mp4" />
+          </video>
+        </div>
+      )
+    }
   }
   return (
     <>
       <div className={`grid ${postImage.length > 4 ? 'four-columns' : 'two-columns'}`}>
         {postImage.map((pic, id) => (
           <div className="grid-item">
-            {handleImageVideodisplay(pic,id)}
+            {handleImageVideodisplay(pic, id)}
           </div>
         ))}
       </div>

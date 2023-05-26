@@ -78,17 +78,19 @@ const RepliesScreen = () => {
  // Function for sending reply
   const formik = useFormik({
     initialValues: { text: "", image: null },
-    onSubmit: (values) => {
+    onSubmit: async(values) => {
       const formData = new FormData();
       console.log(values);
       formData.append("text", values.text);
       formData.append("image", values.image);
       formData.append("comment", router.query.commentId?router.query.commentId:commentId);
-      dispatch(replyCommentAction(formData));
+      const res =await dispatch(replyCommentAction(formData));
+      if (res?.payload?.success) { 
       values.text = "";
       values.image = "";
       setImage(null);
-      router.push(Routes.HOME);
+      // router.push(Routes.HOME);
+      }
     },
   });
 
@@ -137,6 +139,7 @@ const RepliesScreen = () => {
                 <div className={styles.inipic_xyz}>
                   <Image
                     alt="img"
+                    fill
                     className={styles.img__winipc}
                     src={
                       user?.data?.profilePhoto == ""
@@ -216,6 +219,7 @@ const RepliesScreen = () => {
                       }
                       alt="image_profile_img"
                       className={styles.impg__cpr__nal}
+                      fill
                     />
                   </div>
                   <div>
