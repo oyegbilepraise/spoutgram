@@ -12,7 +12,7 @@ export const createProfileAction = createAsyncThunk(
     try {
       const res = await postRequest({
         url: `${baseUrl}${URL.createProfile}`,
-        data: payload,
+        data: { ...payload },
         token,
       });
       return res.data;
@@ -25,15 +25,6 @@ export const createProfileAction = createAsyncThunk(
 const userDetailSlice = createSlice({
   name: "userDetails",
   initialState: {
-    userProfile: {
-      name: "",
-      username: "",
-      dob: "",
-      location: "",
-      website: "",
-      bio: "",
-    },
-    currentComponent: 1,
     profileCreation: {
       loading: false,
       appError: null,

@@ -30,7 +30,7 @@ const VerifyAccountScreen = () => {
   const dispatch = useDispatch();
 
   // get data from redux about verify email and verifyCode
-  const { loading, verifyUserEmail, verifyCode } = useSelector((state) => state?.auth);
+  const { verifyUserEmail, verifyCode } = useSelector((state) => state?.auth);
 
   const formik = useFormik({
     initialValues: {
@@ -46,7 +46,7 @@ const VerifyAccountScreen = () => {
       console.log({ verifyCode });
       router.push(Routes.CREATE_PROFILE);
     } else {
-      setShowCodeError(true)
+      setShowCodeError(true);
     }
   }, [router, verifyCode?.user]);
   // resend verification code function
@@ -172,7 +172,7 @@ const VerifyAccountScreen = () => {
                     name="code"
                     maxlength="6"
                     autoComplete="off"
-                    placeholder="Code" 
+                    placeholder="Code"
                     pattern="[0-9]{1,6}"
                     className={`${styles.data_content_pass} ${styles.data_content_inpcode}`}
                   />
@@ -189,8 +189,8 @@ const VerifyAccountScreen = () => {
                       <div style={{ position: "relative" }}>
                         {/* this is the email error msg */}
                         {showCodeError &&
-                          formik.touched.code &&
-                          formik.errors.code ? (
+                        formik.touched.code &&
+                        formik.errors.code ? (
                           <span className={styles.span__inperr}>
                             <span>{formik.errors.code}</span>
                           </span>
@@ -204,13 +204,16 @@ const VerifyAccountScreen = () => {
               </div>
 
               <div>
-
-              {loading ? (
-                //loading btn
+                {verifyCode.loading ? (
+                  //loading btn
                   <button
-                  className={`${styles.pass_data_bd} ${styles.new__change__btn}`}
+                    className={`${styles.pass_data_bd} ${styles.new__change__btn}`}
                     type="submit"
-                    style={{ position: "relative", color: "transparent", transition: "0.1s all" }} 
+                    style={{
+                      position: "relative",
+                      color: "transparent",
+                      transition: "0.1s all",
+                    }}
                     disabled
                   >
                     <>
@@ -220,7 +223,11 @@ const VerifyAccountScreen = () => {
                   </button>
                 ) : (
                   //main button
-                  <button className={`${styles.pass_data_bd} ${styles.new__change__btn}`} type="submit"  disabled={!formik.isValid || !formik.dirty}>
+                  <button
+                    className={`${styles.pass_data_bd} ${styles.new__change__btn}`}
+                    type="submit"
+                    disabled={!formik.isValid || !formik.dirty}
+                  >
                     Verify
                   </button>
                 )}
