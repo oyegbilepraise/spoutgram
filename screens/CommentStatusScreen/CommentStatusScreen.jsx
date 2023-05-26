@@ -27,6 +27,9 @@ const CommentStatusScreen = () => {
   const { comments } = useSelector(
     (state) => state?.comment?.getComments
   );
+  const Loading = useSelector(
+    (state) => state?.comment?.getComments?.loading
+  );
   const { user, apiError } = useSelector((state) => state?.auth?.getUser);
   const {loading,individualPost}=useSelector(state=>state?.post?.singlePost)
 
@@ -45,23 +48,33 @@ const CommentStatusScreen = () => {
   useEffect(() => {
     if (router.query.postId) {
       localStorage.setItem("postId", router.query.postId);
-      dispatch(getCommentsAction(getCommentId));
       dispatch(getSinglePostAction(router.query.postId));
     } else {
       const id = localStorage.getItem("postId");
       setPostId(localStorage.getItem("postId"));
-      dispatch(getCommentsAction(id));
       dispatch(getSinglePostAction(id));
     }
   }, []);
 
   useEffect(() => {
+      if (getCommentId) {
+        dispatch(getCommentsAction(getCommentId));
+      }
+  }, [getCommentId])
+  
+
+  useEffect(() => {
 
     if (individualPost.data) {
-      console.log(individualPost.data);
+      console.log(individualPost.data[0]);
       setGetCommentId(individualPost?.data[0]?.post[0]?._id)
     }
   }, [individualPost]);
+
+  useEffect(() => {
+  console.log(comments);
+  }, [!loading])
+  
 
   // Function to handle image upload
   const [image, setImage] = useState(null);
@@ -132,7 +145,7 @@ if (res?.payload?.success) {
                 <path d="M19 12H6M12 5l-7 7 7 7" />
               </svg>
             </span>
-            {!loading && <span
+            {!Loading && comments?.data && <span
               // style={{textAlign: "center", width: "max-content",marginTop: "0px", margin: "auto", paddingLeft: "0px", paddingTop: "0px", border: "1px solid black", display: "block"}}
               class={styles.not_home_nav_text}
             >
@@ -202,7 +215,7 @@ if (res?.payload?.success) {
                 {comments?.data?.map((comment, id) => {
                   return (
                     <div key={id}>
-                     <EachComment comment={comment} individualPost={individualPost} route={route}/>
+                     <EachComment comment={comment} individualPost={individualPost?.data&&individualPost?.data[0]} route={route}/>
                     </div>
                   );
                 })}
@@ -228,7 +241,7 @@ if (res?.payload?.success) {
                   >
                     Replying to{" "}
                     <span style={{ color: "var(--brand-color)" }}>
-                      @{individualPost?.data?.user?.username}
+                      @{individualPost.data && individualPost.data[0]?.user[0]?.username}
                     </span>
                   </span>
                 </div>

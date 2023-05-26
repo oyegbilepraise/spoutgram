@@ -19,6 +19,7 @@ const PostStatusScreen = () => {
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
   const [postId, setPostId] = useState(null)
+  const [getCommentId,setGetCommentId] = useState(null);
 const {loading,individualPost}=useSelector(state=>state?.post?.singlePost)
 const { user, apiError } = useSelector((state) => state?.auth?.getUser);
 
@@ -43,9 +44,11 @@ const { user, apiError } = useSelector((state) => state?.auth?.getUser);
   }, []);
 
   useEffect(() => {
-    // console.log(individualPost?.data?._d);
-    console.log(individualPost);
-  }, [loading==false]);
+    if (individualPost.data) {
+      console.log(individualPost.data[0]?.post[0]?._id);
+      setGetCommentId(individualPost?.data[0]?.post[0]?._id)
+    }
+  }, [individualPost]);
 
   // Function to handle image upload
   const [image, setImage] = useState(null);
@@ -79,7 +82,7 @@ const { user, apiError } = useSelector((state) => state?.auth?.getUser);
       console.log(values);
       formData.append("text", values.text);
       formData.append("image", values.image);
-      formData.append("post", router.query.postId?router.query.postId:postId);
+      formData.append("post", getCommentId);
      const res=await dispatch(createCommentAction(formData));
      if (res?.payload?.success) {
       values.text = "";
@@ -301,7 +304,7 @@ const { user, apiError } = useSelector((state) => state?.auth?.getUser);
                   >
                     Replying to{" "}
                     <span style={{ color: "var(--brand-color)" }}>
-                      @{individualPost?.data?.user?.username}
+                      @{individualPost?.data&&individualPost?.data[0]?.user[0]?.username}
                     </span>
                   </span>
                 </div>

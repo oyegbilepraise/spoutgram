@@ -97,7 +97,7 @@ const EachComment = ({ comment, individualPost, route }) => {
             <span className={styles._000_dt_data} style={{ fontSize: "16px" }}>
               Replying{" "}
               <span style={{ color: "var(--brand-color)" }}>
-                @{individualPost?.data?.user?.username}
+                @{individualPost?.user[0]?.username}
               </span>
             </span>
           </div>

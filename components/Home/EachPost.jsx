@@ -282,7 +282,7 @@ const EachPost = ({ post, route }) => {
                 )}
 
                 <span className={styles._00mn_spn_cnt}>
-                  {post?.post[0]?.comment > 0 && post?.post[0]?.comment}
+                  {post?.comment > 0 && post?.comment}
                 </span>
               </span>
               <span
