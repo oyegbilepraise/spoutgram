@@ -41,9 +41,6 @@ html {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizelegibility;
 }
-body {
-  /* background-color: rgb(254, 254, 254); */
-}
 /* hide scrollbar  */
 .no-scroll {
   overflow: hidden;
@@ -79,7 +76,7 @@ input:autofill {
 }
 button:disabled, 
 button[disabled]{
-  background-color: #a7cafd;
+  background-color: #cac5ff;
   color: #ffffff;
   cursor: default;
   transition: 0.6s all;
@@ -125,5 +122,13 @@ button:focus, a:focus {
 .three-columns .grid-item:nth-child(3) {
   grid-column: span 2; /* Third image spans two columns */
 }
-
-
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: white;
+  }
+}
+@media (prefers-color-scheme: light) {
+  body {
+    background-color: white;
+  }
+}

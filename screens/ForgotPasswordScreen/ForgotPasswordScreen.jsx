@@ -63,16 +63,11 @@ const ForgotPasswordScreen = () => {
             <div className={styles._xparnts_cvr}>
               <span className={styles.vdf_data}>Forgot Password?</span>
 
-              <span className={styles._000xsry}>
-                Enter the email connected to your account. We will send an email
-                with a link to reset your password.
-              </span>
-
               {storeData.apiError && (
                 <div className={styles.byyy__err}>
                 <div style={{ paddingTop: "0px" }}>
                   <span className={styles.error__msg__xyx}>
-                    <CautionSvg />
+                    {/* <CautionSvg /> */}
                     <span className={styles.error__txt__xyx}>
                       {storeData.apiError}
                     </span>
@@ -80,11 +75,12 @@ const ForgotPasswordScreen = () => {
                 </div>
                 </div>
               )}
+
               {storeData?.message?.message && (
                 <div className={styles.byyy__err}>
-                <div style={{ paddingTop: "5px" }}>
+                <div style={{ paddingTop: "0px" }}>
                   <span className={styles.error__msg__xyx}>
-                    <CautionSvg />
+                    {/* <CautionSvg /> */}
                     <span className={styles.error__txt__xyx}>
                       {storeData?.message?.message}
                     </span>
@@ -92,6 +88,12 @@ const ForgotPasswordScreen = () => {
                 </div>
                 </div>
               )}
+
+              <span className={styles._000xsry}>
+                Enter the email connected to your account. We will send an email
+                with a link to reset your password.
+              </span>
+
               <div className={styles.xpnd_inpts} style={{ paddingTop: "0px" }}>
                 <div style={{ position: "relative" }}>
                   <input
@@ -145,7 +147,7 @@ const ForgotPasswordScreen = () => {
                   <button
                     className={`${styles.pass_data_bd} ${styles.new__change__btn}`}
                     type="submit" 
-                    // disabled={!formik.isValid || !formik.dirty}
+                    disabled={!formik.isValid || !formik.dirty}
                   >
                     Continue
                   </button>

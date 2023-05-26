@@ -4,9 +4,11 @@ import * as Yup from "yup";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import styles from "@/layout/AuthLayout/AuthLayout.module.css";
+import Image from "next/image";
+import img from '../../images/default.jpeg'
 
 // Components
-import { CautionSvg, ErrorSvg } from "../../components";
+import { CautionSvg, ErrorSvg, PageSpinner } from "../../components";
 import { AuthLayout } from "@/layout";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
@@ -230,16 +232,27 @@ const CreateProfileScreen = () => {
 
   // date code
 
+  
+  
+
   const [image, setImage] = useState(null);
+  const [isLoading, setLoading] = useState(false);
 
   // Function to handle image upload
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
     const reader = new FileReader();
 
-    reader.onload = (e) => {
-      setImage(e.target.result);
+    reader.onloadstart = () => {
+      setLoading(true);
     };
+  
+    reader.onload = (e) => {
+      setTimeout(() => {
+        setLoading(false);
+        setImage(e.target.result);
+      }, 2500); // Delay of 2 seconds (2000 milliseconds)
+    };  
 
     if (file) {
       reader.readAsDataURL(file);
@@ -248,7 +261,12 @@ const CreateProfileScreen = () => {
 
   // Function to handle image removal
   const handleImageRemove = () => {
-    setImage(null);
+    setLoading(true);
+
+    setTimeout(() => {
+      setLoading(false);
+      setImage(null);
+    }, 2500); // Delay of 2 seconds (2000 milliseconds)
   };
 
 
@@ -276,14 +294,9 @@ const CreateProfileScreen = () => {
   return (
     <AuthLayout>
       <main className={styles.__main} role="main">
-        <div className={styles._xparnts}>
+        <div className={styles._xparnts_y}>
           <div className={styles._xparnts_cvr}>
-            {/* api messages  */}
-            {/* {loading && <p>Creating profile ...</p>} */}
-            {/* {appError && <p>{appError}</p>} */}
             {profile?.message && <p>{profile?.message}</p>}
-            {/* {profile.updatedUser && <p>profile created successfully</p>} */}
-            {/* api messages  */}
 
             <span className={styles.vdf_data}>
               Add your info.
@@ -293,67 +306,53 @@ const CreateProfileScreen = () => {
             {/* this is the form that would proccess all the users data for create-profile */}
             <form onSubmit={formik.handleSubmit}>
               {!image && (
-                <div className={styles.image__wrapper__xx}>
-                  <div
-                    style={{
-                      textAlign: "center", position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", width: "100%",
-                    }}
-                  >
-                    <svg className={styles.xyxy__svgg__upld} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" >
-                      <path d="M4 22C4 17.5817 7.58172 14 12 14C16.4183 14 20 17.5817 20 22H18C18 18.6863 15.3137 16 12 16C8.68629 16 6 18.6863 6 22H4ZM12 13C8.685 13 6 10.315 6 7C6 3.685 8.685 1 12 1C15.315 1 18 3.685 18 7C18 10.315 15.315 13 12 13ZM12 11C14.21 11 16 9.21 16 7C16 4.79 14.21 3 12 3C9.79 3 8 4.79 8 7C8 9.21 9.79 11 12 11Z"></path>
-                    </svg>
-                    <span style={{ marginTop: "0px" }} className={styles._00sxtry}>
-                      Profile Picture
-                    </span>
-                    {/* Upload Picture */}
+                <div className={styles.image__wrapper__xx} onClick={() => document.getElementById('fileInput').click()}>
+                  <Image
+                    src={img}
+                    alt="profile_avatar"
+                    className={styles.x_xjhhl_img}
+                  /> 
+                  {isLoading ? (
+                  <div style={{position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)"}}>
+                    < PageSpinner />
                   </div>
-                  <span style={{ position: "absolute", right: "0px", bottom: "3px" }} >
-                    <button type="button" onClick={() => document.getElementById('fileInput').click()}
-                      style={{ width: "43px", cursor: "pointer", height: "43px", borderRadius: "50%", background: "rgb(248, 248, 248)", position: "relative" }}>
-                      <svg style={{ width: "19px", height: "19px", fill: "rgb(150, 150, 150)", boxSizing: "content-box", position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}
-                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 15V18H24V20H21V23H19V20H16V18H19V15H21ZM21.0082 3C21.556 3 22 3.44495 22 3.9934V13H20V5H4V18.999L14 9L17 12V14.829L14 11.8284L6.827 19H14V21H2.9918C2.44405 21 2 20.5551 2 20.0066V3.9934C2 3.44476 2.45531 3 2.9918 3H21.0082ZM8 7C9.10457 7 10 7.89543 10 9C10 10.1046 9.10457 11 8 11C6.89543 11 6 10.1046 6 9C6 7.89543 6.89543 7 8 7Z"></path></svg>
-                    </button>
-                    <input
-                      type="file"
-                      id="fileInput"
-                      accept="image/jpg, image/jpeg, image/png"
-                      onChange={handleImageUpload}
-                      style={{ display: 'none' }}
-                    />
-                  </span>
+                ) : ( <svg fill="rgb(235, 235, 235)" className={styles.svg__edit__upld__yyy} style={{width: "21px", height: "21px"}} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.82843 5L7.82843 7H4V19H20V7H16.1716L14.1716 5H9.82843ZM9 3H15L17 5H21C21.5523 5 22 5.44772 22 6V20C22 20.5523 21.5523 21 21 21H3C2.44772 21 2 20.5523 2 20V6C2 5.44772 2.44772 5 3 5H7L9 3ZM12 18C8.96243 18 6.5 15.5376 6.5 12.5C6.5 9.46243 8.96243 7 12 7C15.0376 7 17.5 9.46243 17.5 12.5C17.5 15.5376 15.0376 18 12 18ZM12 16C13.933 16 15.5 14.433 15.5 12.5C15.5 10.567 13.933 9 12 9C10.067 9 8.5 10.567 8.5 12.5C8.5 14.433 10.067 16 12 16Z"></path></svg> )}
+                <input
+                    type="file"
+                    id="fileInput"
+                    accept="image/jpg, image/jpeg, image/png"
+                    onChange={handleImageUpload}
+                    style={{ display: 'none' }}
+                    hidden
+                  />
                 </div>
               )}
 
               {image && (
-                <>
-                  <div style={{ position: "relative" }} className={styles.image__wrapper__}>
+                <div style={{position: "relative"}}>
+                  <div style={{ position: "relative" }} className={styles.image__wrapper__} onClick={() => document.getElementById('fileInput').click()}>
                     <img
                       src={image}
                       alt="profile_avatar"
                       className={styles.x_xjhhl_img}
                       priority
                     />
-                    <span style={{ position: "absolute", right: "0px", bottom: "3px" }} >
-                      <button type="button" onClick={() => document.getElementById('fileInput').click()}
-                        style={{ width: "43px", cursor: "pointer", height: "43px", borderRadius: "50%", background: "rgb(248, 248, 248)", position: "relative" }}>
-                        <svg style={{ width: "19px", height: "19px", fill: "rgb(150, 150, 150)", boxSizing: "content-box", position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}
-                          xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 15V18H24V20H21V23H19V20H16V18H19V15H21ZM21.0082 3C21.556 3 22 3.44495 22 3.9934V13H20V5H4V18.999L14 9L17 12V14.829L14 11.8284L6.827 19H14V21H2.9918C2.44405 21 2 20.5551 2 20.0066V3.9934C2 3.44476 2.45531 3 2.9918 3H21.0082ZM8 7C9.10457 7 10 7.89543 10 9C10 10.1046 9.10457 11 8 11C6.89543 11 6 10.1046 6 9C6 7.89543 6.89543 7 8 7Z"></path></svg>
-                      </button>
-                      <input
-                        type="file"
-                        id="fileInput"
-                        accept="image/jpg, image/jpeg, image/png"
-                        onChange={handleImageUpload}
-                        style={{ display: 'none' }}
-                      />
-                    </span>
+                    {isLoading ? (
+                      <div style={{position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)"}}>
+                        < PageSpinner />
+                      </div>
+                    ) : ( <svg fill="rgb(235, 235, 235)" className={styles.svg__edit__upld__yyy} style={{width: "21px", height: "21px"}} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.82843 5L7.82843 7H4V19H20V7H16.1716L14.1716 5H9.82843ZM9 3H15L17 5H21C21.5523 5 22 5.44772 22 6V20C22 20.5523 21.5523 21 21 21H3C2.44772 21 2 20.5523 2 20V6C2 5.44772 2.44772 5 3 5H7L9 3ZM12 18C8.96243 18 6.5 15.5376 6.5 12.5C6.5 9.46243 8.96243 7 12 7C15.0376 7 17.5 9.46243 17.5 12.5C17.5 15.5376 15.0376 18 12 18ZM12 16C13.933 16 15.5 14.433 15.5 12.5C15.5 10.567 13.933 9 12 9C10.067 9 8.5 10.567 8.5 12.5C8.5 14.433 10.067 16 12 16Z"></path></svg> )}
+                    <input
+                      type="file"
+                      id="fileInput"
+                      accept="image/jpg, image/jpeg, image/png"
+                      onChange={handleImageUpload}
+                      style={{ display: 'none' }}
+                      hidden
+                    />
                   </div>
-                  <div style={{ textAlign: "center" }}>
-                    <button
-                      style={{ cursor: "pointer", marginBottom: "10px", padding: "10px", borderRadius: "8px", color: "white", background: "var(--brand-color)" }}
-                      onClick={handleImageRemove}>Remove image</button>
-                  </div>
-                </>
+                  <span className={styles.span___rmv__edt__pp} onClick={handleImageRemove}>Remove Photo</span>
+                </div>
               )}
 
 
@@ -419,7 +418,7 @@ const CreateProfileScreen = () => {
 
                   {
                     suggestedUName ? (
-                      <Select options={suggestedUName} onChange={(values) => setValues(values)} />
+                      <Select options={suggestedUName} onChange={(values) => setValues(values)} /> 
                     ) : ''
                   }
 

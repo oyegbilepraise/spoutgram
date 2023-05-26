@@ -11,7 +11,7 @@ import {
   EnvelopeSvg,
   ErrorSvg,
   ResendLdSvg,
-  CautionSvg, BtnloadSvg,
+  CautionSvg, BtnloadSvg, PageSpinner,
 } from "../../components";
 import Link from "next/link";
 import * as Yup from "yup";
@@ -66,6 +66,53 @@ const VerifyAccountScreen = () => {
     setShowCodeError(false);
   }
 
+
+  const [showError, setShowError] = useState(false);
+
+  const [showMsg, setShowMsg] = useState(false);
+
+  const [showSucess, setShowSuccess] = useState(false);
+
+  useEffect(() => {
+    let timer;
+    if (verifyCode.appError) {
+      setShowError(true);
+      timer = setTimeout(() => {
+        setShowError(false);
+      }, 2500); // Display error message for 5 seconds
+    }
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [verifyCode.appError]);
+
+  useEffect(() => {
+    let timer;
+    if (verifyUserEmail.codeSent) {
+      setShowMsg(true);
+      timer = setTimeout(() => {
+        setShowMsg(false);
+      }, 2500); // Display error message for 5 seconds
+    }
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [verifyUserEmail.codeSent]);
+
+
+  useEffect(() => {
+    let timer;
+    if (verifyCode?.user?.success) {
+      setShowSuccess(true);
+      timer = setTimeout(() => {
+        setShowSuccess(false);
+      }, 2500); // Display error message for 5 seconds
+    }
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [verifyCode?.user?.success]);
+
   return (
     <AuthLayout>
       <main className={styles.__main} role="main">
@@ -74,70 +121,46 @@ const VerifyAccountScreen = () => {
             <div className={styles._xparnts_cvr}>
               <span className={styles.vdf_data}>Verify your account</span>
 
-              <span className={styles._000xsry}>
-                Enter the code sent to your email. If you can't find the email,
-                check your spam.
-              </span>
-
               {/* show this notify if the code was resent  */}
-              {verifyUserEmail.codeSent && (
+              {showMsg && (
                 <div className={styles.byyy__err}>
-                <div style={{ paddingTop: "0px" }}>
                   <span className={styles.error__msg__xyx}>
-                    <svg
-                      className={styles.error__inval}
-                      width={17}
-                      height={17}
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 24 24"
-                    >
-                      <path d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM11.0026 16L18.0737 8.92893L16.6595 7.51472L11.0026 13.1716L8.17421 10.3431L6.75999 11.7574L11.0026 16Z"></path>
-                    </svg>
                     <span className={styles.error__txt__xyx}>
                       {verifyUserEmail?.codeSent?.message}
                     </span>
                   </span>
                 </div>
-                </div>
               )}
 
               {/* show this error if the code is invalid  */}
-              {verifyCode.appError && (
+              {showError && (
                 <div className={styles.byyy__err}>
-                <div style={{ paddingTop: "5px" }}>
                   <span className={styles.error__msg__xyx}>
-                    <CautionSvg />
                     <span className={styles.error__txt__xyx}>
                       {verifyCode.appError}
                     </span>
                   </span>
                 </div>
-                </div>
               )}
 
-              {/* VERIFICATION CODE RESENT SUCCESSFUL  */}
-              {/* {verifyCode.appError && ( */}
-                {/* <div className={styles.byyy__err}>
-                <div style={{ paddingTop: "5px" }}>
+              {/* show this error if the code is verified successful  */}
+              {showSucess && (
+                <div className={styles.byyy__err}>
                   <span className={styles.error__msg__xyx}>
-                    <svg
-                      className={styles.error__inval}
-                      width={17}
-                      height={17}
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 24 24"
-                      >
-                      <path d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM11.0026 16L18.0737 8.92893L16.6595 7.51472L11.0026 13.1716L8.17421 10.3431L6.75999 11.7574L11.0026 16Z"></path>
-                    </svg>
                     <span className={styles.error__txt__xyx}>
-                      Verification code resent!
+                      Verification Successful!
                     </span>
                   </span>
                 </div>
-                </div> */}
-              {/* )} */}
+              )}
 
-              <div className={styles.xpnd_inpts} style={{ paddingTop: "14px" }}>
+
+              <span className={styles._000xsry}>
+                Enter the code sent to your email. If you can't find the email,
+                check your spam.
+              </span>
+
+              <div className={styles.xpnd_inpts} style={{ paddingTop: "0px" }}>
                 <div style={{ position: "relative" }}>
                   <input
                     type="text"
@@ -154,7 +177,11 @@ const VerifyAccountScreen = () => {
                     className={`${styles.data_content_pass} ${styles.data_content_inpcode}`}
                   />
 
-{/* <BtnloadSvg /> */} <ResendLdSvg />
+                  {verifyUserEmail?.loading && (
+                    <div style={{width: "max-content", position: "absolute", right: "4px", top: "-0.5px"}}>
+                      <PageSpinner />
+                    </div>
+                  )}
 
                   {/* error svg */}
                   {formik.touched.code && formik.errors.code ? (
@@ -209,43 +236,6 @@ const VerifyAccountScreen = () => {
                   </span>
                 </span>
               </div>
-              <div>
-                {/* <button className="pass-data-bd overrd-pass-dbd" onClick={handleResendCode}>Resend code</button> */}
-              </div>
-              <div>
-                {/* verification code resent */}
-                {verifyUserEmail?.loading && (
-                  <span className={`${styles.sending_code} ${styles._00rsnd}`}>
-                    <>
-                      <ResendLdSvg />
-                    </>
-                  </span>
-                )}
-
-                {verifyCode?.user?.success && (
-                  <div className={styles.byyy__err}>
-                  <div style={{ paddingTop: "0px" }}>
-                    <span className={styles.error__msg__xyx}>
-                      <svg
-                        className={styles.error__inval}
-                        width={17}
-                        height={17}
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                      >
-                        <path d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM11.0026 16L18.0737 8.92893L16.6595 7.51472L11.0026 13.1716L8.17421 10.3431L6.75999 11.7574L11.0026 16Z"></path>
-                      </svg>
-                      <span className={styles.error__txt__xyx}>
-                        Verification Successful!
-                      </span>
-                    </span>
-                  </div>
-                  </div>
-                )}
-              </div>
-              <span className={styles.ouplskk}>
-                {/* <Link href="/signup">Back to Sign up</Link> */}
-              </span>
             </div>
           </div>
         </form>
