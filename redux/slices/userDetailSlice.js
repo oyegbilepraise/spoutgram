@@ -82,6 +82,11 @@ const userDetailSlice = createSlice({
       uploading: false,
       uploadError: null,
     },
+    singleUser: {
+      loading: false,
+      appError: null,
+      newUser: {}
+    },
     allUsers: {
       loading: false,
       appError: null,

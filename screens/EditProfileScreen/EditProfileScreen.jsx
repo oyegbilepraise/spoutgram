@@ -9,6 +9,7 @@ import { updateProfileAction, updateProfilePictureAction } from '@/redux/slices/
 import { BtnloadSvg } from '@/components';
 import Pensvg from '@/components/svg/pensvg';
 import { useRouter } from "next/router";
+import { useEffect, useRef, useState } from 'react';
 
 const EditProfileScreen = () => {
   const dispatch = useDispatch({});
@@ -19,7 +20,7 @@ const EditProfileScreen = () => {
   const handleChooseFile=async(e)=>{
     const file = e.target.files[0];
     const formData = new FormData();
-    formData.append("image", file);
+    formData.append("Image", file, file.name);
     dispatch(updateProfilePictureAction(formData))
   }
   const formik = useFormik({
@@ -39,13 +40,10 @@ const EditProfileScreen = () => {
     },
     // validationSchema: changeValidationSchema,
   });
-
-
   const router = useRouter();
    const handleGoBack = () => {
       router.back(); // Go back to the previous page or route
   };
-
 
   return (
     <HomeLayout> 
@@ -84,12 +82,12 @@ const EditProfileScreen = () => {
             <div className={styles.edit__pc__flex}>
               <div>
                 <div>
-                  <label htmlFor="img_file" className={editStyle.__img_file}>
-                    <Image src={!!user?.data?.profilePhoto ? (user?.data?.profilePhoto): (img)} className={styles.edit__profile__img} width={50} height={50}/>
-                    <span style={!uploading? {display: 'none'}: {}}>loading</span>
-                    <input type="file" id='img_file' onChange={handleChooseFile} className={editStyle.__file_input} accept='.jpg, .png, .jpeg'/>
-                    <Pensvg/>
-                  </label>
+                    <label htmlFor="img_file" className={editStyle.__img_file}>
+                      <Image src={!!user?.data?.profilePhoto ? (user?.data?.profilePhoto): (img)} className={styles.edit__profile__img} width={50} height={50}/>
+                      <span style={!uploading? {display: 'none'}: {}}>loading</span>
+                      <input type="file" id='img_file' onChange={(e)=>handleChooseFile(e)} className={editStyle.__file_input} accept='.jpg, .png, .jpeg'/>
+                      <Pensvg/>
+                    </label>
                 </div>
               </div>
             </div>
@@ -102,11 +100,11 @@ const EditProfileScreen = () => {
                   <input className={styles.data_content_pass} type="text" name='username' placeholder="Username" value={formik.values.username} onChange={formik.handleChange}/>
                 </div>
               </div>
-              <div>
+            {/* this className (className={styles.edit__pc__block}) was here before. */}
+              <div className={styles.edit__pc__block}>
                 <textarea name="bio" id="" className={styles.data_content_pass_bio} placeholder="Bio" value={formik.values.bio} onChange={formik.handleChange}></textarea>
               </div>
             </div>
-            {/* this className (className={styles.edit__pc__block}) was here before. */}
             <div>
               <div>
                 <input className={styles.data_content_pass} name='location' id='location' type="text" placeholder="Location" value={formik.values.location} onChange={formik.handleChange}/>

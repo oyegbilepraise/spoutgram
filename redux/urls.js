@@ -14,12 +14,14 @@ export const URL = {
   updateProfile: "/users/user/update",
   updateProfilePicture: "/users/user/profile-photo/upload",
   getAllUsers: "/users/all-users",
+  getSingleUser: "/users/user/",
   // Posts
 createPost:"/posts/create",
 getPosts:"/posts/all-posts",
 getSinglePost:"/posts/post/",
 likePost:"/posts/post/like",
 dislikePost:"/posts/post/unlike",
+getUserPost: "/users/posts",
   // Category
 
   // Comment

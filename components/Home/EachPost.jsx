@@ -27,7 +27,7 @@ const EachPost = ({ post }) => {
   const handlePostView = async (inView, post, entry) => {
     if (inView && !isViewed) {
       const res = await dispatch(setViews(post._id))
-      set_Views(res.payload.data.view);
+      set_Views(res?.payload?.data?.view);
     }
   }
   const handleLike = async () => {

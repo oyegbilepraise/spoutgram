@@ -3,6 +3,7 @@ import { getRequest, postRequest, putRequest } from "../../api";
 import { URL } from "../../urls";
 import Cookies from "js-cookie";
 import { baseUrl } from "@/redux/baseUrl";
+import { getAllUsersAction } from "../userDetailSlice";
 
 // Register a user
 export const registerUserAction = createAsyncThunk(

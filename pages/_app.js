@@ -21,6 +21,7 @@ export default function App({ Component, pageProps }) {
 
   useEffect(() => {
     socket.emit("connection")
+
   }, [])
 
   return (

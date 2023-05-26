@@ -250,8 +250,8 @@ const RightSidebar = () => {
                         return (
                           <div key={id} className={styles.sgstn_tst}>
                             <div>
+                              <Link href={`/${username}`}>
                               {/* replace with the appropriate username variable */}
-                              <Link href="/{username}">
                                 <Image
                                   src={img}
                                   alt="img"
@@ -261,7 +261,7 @@ const RightSidebar = () => {
                             </div>
                             <div>
                               {/* replace with the appropriate username variable */}
-                              <Link href="/{username}">
+                              <Link href={`/${username}`}>
                                 <span className={styles.yynmsq}>{name}</span>
                               </Link>
                               <span className={styles.yyusbsq}>@{username}</span>

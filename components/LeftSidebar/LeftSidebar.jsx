@@ -140,7 +140,7 @@ const LeftSidebar = () => {
       {/* Create__button */}
 
       {/* Profile */}
-      <div className={styles.profile__fxd} style={{display: "none"}}>
+      <div className={styles.profile__fxd} style={{display: ""}}>
         {showLogout && (
           <div className={styles.more_explained}>
             <Link href="/edit">
@@ -154,7 +154,7 @@ const LeftSidebar = () => {
 
         {/* this was set to display none for a reason */}
         <span>
-          <Link href={`${user?.data?.username}`}>
+          <Link href={`${user.data?.username}`}>
             <div className={styles.__user__data__hold}>
               <span className={styles.user__initial}>AV</span>
             </div>
@@ -164,7 +164,6 @@ const LeftSidebar = () => {
           {user?.data?.name}
           <span className={styles.normass__zz}> {user?.data?.email} </span>
         </span>
-
         <svg
           className={styles.options___prfl__dxdy}
           title="More account options"

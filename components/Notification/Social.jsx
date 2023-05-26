@@ -18,11 +18,9 @@ const Social = () => {
 
   const goToPost=({type, postId})=>{
     if(type ===2 || type ===3){
-      console.log(postId);
         router.push(`${Routes.EACHPOST}${postId}`);
     }
   }
-
 
   if(loading){
     return<>
@@ -42,9 +40,9 @@ const Social = () => {
         data?.length? (
           <div >
             {
-              data?.filter((item)=>item.notification===1)?.map((notif)=>{
+              data?.filter((item)=>item.notification===1)?.map((notif, index)=>{
                 return (
-                    <div className={`${styles.npd_toast} ${styles.npd_f_notif}`} onClick={()=>goToPost({type: notif.notification_type, postId: notif?.post?._id})}>
+                    <div className={`${styles.npd_toast} ${styles.npd_f_notif}`} onClick={()=>goToPost({type: notif.notification_type, postId: notif?.post?._id})} key={index}>
                       <div className={styles.hold_them}>
                         <div>
                           <Image src={!!notif?.user?.profilePhoto ? notif?.user?.profilePhoto : imgOne} className={styles.npd_toast_png} width={50} height={50}/>

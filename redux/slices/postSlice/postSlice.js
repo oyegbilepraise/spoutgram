@@ -29,6 +29,7 @@ export const getAllPostsAction = createAsyncThunk(
         url: `${baseUrl}${URL.getPosts}`,
         token: token,
       });
+      console.log(res?.data)
       return res.data;
     } catch (err) {
       return rejectWithValue(err?.response?.data?.message);
@@ -154,7 +155,7 @@ const postSlice = createSlice({
       loading: false,
       apiError: null,
       reccentPost: {},
-    },
+    }
   },
   reducers: {},
   extraReducers: (builder) => {

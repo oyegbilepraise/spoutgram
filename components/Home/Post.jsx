@@ -1,7 +1,9 @@
 import EachPost from "./EachPost";
 import { ResendLdSvg } from "../../components";
 
-const Post = ({ posts, loading }) => {
+
+
+const Post = ({posts, loading}) => {
   return (
     <div>
       {loading ? <div style={{ height: "78vh" }} className="d-flex justify-content-center align-items-center">
@@ -10,7 +12,7 @@ const Post = ({ posts, loading }) => {
         </div>
       </div> :
         <div>
-          {posts.map((post, id) => {
+          {posts?.map((post, id) => {
             return (
               <EachPost post={post} key={id} />
             )
@@ -23,3 +25,4 @@ const Post = ({ posts, loading }) => {
 };
 
 export default Post;
+
