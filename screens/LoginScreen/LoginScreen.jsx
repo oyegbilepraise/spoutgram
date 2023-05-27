@@ -126,7 +126,7 @@ const LoginScreen = () => {
       setShowError(true);
       timer = setTimeout(() => {
         setShowError(false);
-      }, 5000); // Display error message for 5 seconds
+      }, 2500); // Display error message for 5 seconds
     }
     return () => {
       clearTimeout(timer);
@@ -145,7 +145,7 @@ const LoginScreen = () => {
               {showError && ( 
                 <div className={styles.byyy__err}>
                   <span className={styles.error__msg__xyx}>
-                    <CautionSvg />
+                    {/* <CautionSvg /> */}
                     <span className={styles.error__txt__xyx}>{appError}</span>
                   </span>
                 </div>
@@ -192,6 +192,7 @@ const LoginScreen = () => {
                     onFocus={handlePasswordFocus}
                     onBlur={handlePasswordBlur}
                     autoCorrect="false"
+                    autoComplete="new-password"
                     spellCheck="false"
                     placeholder="Password"
                     name="password"

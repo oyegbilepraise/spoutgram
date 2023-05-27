@@ -73,6 +73,36 @@ const ChangePasswordScreen = () => {
     setShowCPasswordError(false);
   }
 
+
+  const [showError, setShowError] = useState(false);
+  const [showMsg, setShowMsg] = useState(false);
+
+  useEffect(() => {
+    let timer;
+    if (storeData?.apiError) {
+      setShowError(true);
+      timer = setTimeout(() => {
+        setShowError(false);
+      }, 2500); // Display error message for 5 seconds
+    }
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [storeData?.apiError]);
+
+  useEffect(() => {
+    let timer;
+    if (storeData?.message?.message) {
+      setShowMsg(true);
+      timer = setTimeout(() => {
+        setShowMsg(false);
+      }, 2500); // Display error message for 5 seconds
+    }
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [storeData?.message?.message]);
+
   return (
     <AuthLayout>
       <main className={styles.__main} role="main">
@@ -81,23 +111,10 @@ const ChangePasswordScreen = () => {
             <div className={styles._xparnts_cvr}>
               <span className={styles.vdf_data}>Reset Password</span>
 
-              <span className={styles._000xsry}>
-                Enter password, and confirm it.
-              </span>
-
               {/* //this is the one with that issue... */}
-              {storeData?.message && (
-                <div style={{ paddingTop: "5px" }}>
+              {showMsg && (
+                <div className={styles.byyy__err}>
                   <span className={styles.error__msg__xyx}>
-                    <svg
-                      className={styles.error__inval}
-                      width={17}
-                      height={17}
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 24 24"
-                    >
-                      <path d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM11.0026 16L18.0737 8.92893L16.6595 7.51472L11.0026 13.1716L8.17421 10.3431L6.75999 11.7574L11.0026 16Z"></path>
-                    </svg>
                     <span className={styles.error__txt__xyx}>
                       {storeData?.message?.message}
                     </span>
@@ -105,17 +122,21 @@ const ChangePasswordScreen = () => {
                 </div>
               )}
 
-              {storeData?.apiError && (
-                <div style={{ paddingTop: "5px" }}>
+              {showError && (
+                <div className={styles.byyy__err}>
                   <span className={styles.error__msg__xyx}>
-                    <CautionSvg />
                     <span className={styles.error__txt__xyx}>
                       {storeData?.apiError}
                     </span>
                   </span>
                 </div>
               )}
-              <div className={styles.xpnd_inpts} style={{ paddingTop: "14px" }}>
+
+              <span className={styles._000xsry}>
+                Enter password, and confirm it.
+              </span>
+
+              <div className={styles.xpnd_inpts} style={{ paddingTop: "0px" }}>
                 <div style={{ position: "relative" }}>
                   <input
                     type={visible ? "text" : "password"}
@@ -127,6 +148,7 @@ const ChangePasswordScreen = () => {
                     name="password"
                     placeholder="Password"
                     spellcheck="false"
+                    autoComplete="new-password"
                     className={`${styles.data_content_pass} ${styles._00x00_pwd}`}
                   />
                   <span className={styles.absolute__span}>
@@ -165,6 +187,7 @@ const ChangePasswordScreen = () => {
                     name="confirmPassword"
                     placeholder="Confirm Password"
                     spellcheck="false"
+                    autoComplete="new-password"
                     className={`${styles.data_content_pass} ${styles._00x00_pwd}`}
                   />
 

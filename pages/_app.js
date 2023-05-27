@@ -29,9 +29,9 @@ export default function App({ Component, pageProps }) {
       <SessionProvider session={pageProps.session}>
         <Provider store={store}>
           <SocketContext.Provider value={socket}>
-            <ProtectedRoute>
+            {/* <ProtectedRoute> */}
               <Component {...pageProps} />
-            </ProtectedRoute>
+            {/* </ProtectedRoute> */}
           </SocketContext.Provider>
         </Provider>
       </SessionProvider>

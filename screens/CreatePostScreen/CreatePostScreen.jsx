@@ -26,6 +26,22 @@ const CreatePostScreen = () => {
   const { loading, reccentPost } = useSelector(
     (state) => state?.post?.createPost
   );
+
+  const [showSuccess, setShowSuccess] = useState(false);
+
+  useEffect(() => {
+    let timer;
+    if (reccentPost.success) {
+      setShowSuccess(true);
+      timer = setTimeout(() => {
+        setShowSuccess(false);
+      }, 4000); // Display error message for 5 seconds
+    }
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [reccentPost.success]);
+
   const handleButtonClick = () => {
     fileInputRef.current.click();
   };
@@ -147,86 +163,75 @@ if (res?.payload?.success) {
   }, [cursorPosition])
 
 
+  const [showAddButton, setShowAddButton] = useState(true);
+  const [showRemoveButton, setShowRemoveButton] = useState(false);
+
+  const handleAddTitle = () => {
+    setShowAddButton(false);
+    setShowRemoveButton(true);
+  };
+
+  const handleRemoveTitle = () => {
+    setShowAddButton(true);
+    setShowRemoveButton(false);
+    formik.setFieldValue('title', ''); // Clear the value of the "title" field 
+  };
+
+
   return (
     <HomeLayout>
       {/* div.timeline -> middle */}
       <div class={`${styles.timeline} ${styles._000middlebar}`}>
-        <nav className={styles.___main_nav}>
-          <div>
-            <span class={styles.icon_back}>
-              <svg
-                class={styles._00_history__back}
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="rgb(90, 90, 90)"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path d="M19 12H6M12 5l-7 7 7 7" />
-              </svg>
-            </span>
-            <span class={styles.not_home_nav_text}>Create Post</span>
-          </div>
-        </nav>
-
-        <form
-          className={styles.post__compose__container}
+      <form
           style={{ display: "" }}
           onSubmit={formik.handleSubmit}
         >
-          <div className={styles.pcc__child}>
-            <div style={{ display: "" }}>
-              <textarea
-                className={`${styles.post__data__content} ${styles.title__content}`}
-                placeholder="Post Title"
-                name="title"
-                ref={inputTitle}
-                value={formik.values.title}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-              />
-            </div>
+        <nav className={styles.___main_nav}>
+          <div>
+            <span class={styles.icon_back}>
+            <svg class={styles._00_history__back} fill="rgb(120, 120, 120)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10.8284 12.0007L15.7782 16.9504L14.364 18.3646L8 12.0007L14.364 5.63672L15.7782 7.05093L10.8284 12.0007Z"></path></svg>
+              {/* <svg class={styles._00_history__back} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgb(90, 90, 90)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H6M12 5l-7 7 7 7" /></svg> */}
+            </span>
+            <span class={styles.not_home_nav_text}>Create Post</span>
             <div>
-              <textarea
-                className={styles.post__data__content}
-                placeholder="Start Post"
-                name="desc"
-                ref={inputDesc}
-                value={formik.values.desc}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-              />
+              {loading ? (
+                <button
+                  className={styles.data_vh_post}
+                  type="submit"
+                  style={{ color: "transparent", transition: "0.1s all" }}
+                  disabled
+                >
+                  <>
+                    <BtnloadSvg />
+                  </>
+                  Post
+                </button>
+              ) : (
+                <button
+                  className={styles.data_vh_post}
+                  type="submit"
+                  disabled={
+                    (formik.values.title == "" &&
+                      formik.values.desc == "" &&
+                      formik.values.media.length == 0) ||
+                    (formik.values.title != "" &&
+                      formik.values.desc == "" &&
+                      formik.values.media.length == 0)
+                  }
+                >
+                  Post
+                </button>
+              )}
             </div>
-            {/* this is the successful and error popup */}
-            {postSucceeds && (
-              <div>
-                <span className={styles.post__msg__pp}>
-                  Post created successfully!
-                </span>
-              </div>
-            )}
-            {/* this is the successful and error popup */}
           </div>
+        </nav>
 
-          {/* image/video */}
-          <div
-            className={styles.media__preview}
-            style={{ border: "transparent" }}
-          >
-            {/*image parent container */}
-            <ImagePost media={media} />
-            {/*video parent container */}
-            {/* <VideoUploader video={video} /> */}
-          </div>
 
-          {/* image/video */}
-          <div className={`${styles.img} ${styles.vid} ${styles.__09xfgc}`}>
+
+        {/* image/video */}
+        <div className={`${styles.img} ${styles.vid} ${styles.__09xfgc}`}>
             <div className={styles._sxvg_div} onClick={handleButtonClick}>
-              <MdPermMedia className={`${styles.post_icon_data} text-info`} />
+              {/* <MdPermMedia className={`${styles.post_icon_data} text-info`} /> */}
               <h6 className={styles.tooltip}>Media</h6>
             </div>
             <input
@@ -453,7 +458,7 @@ if (res?.payload?.success) {
             </div>
             {/* this is for the emojis */}
 
-            <div>
+            {/* <div>
               {loading ? (
                 <button
                   className={styles.data_vh_post}
@@ -482,8 +487,76 @@ if (res?.payload?.success) {
                   Post
                 </button>
               )}
-            </div>
+            </div> */}
+
+
+            {showAddButton && (
+                    <button className="btn" onClick={handleAddTitle}>
+                      Add title
+                    </button>
+            )}
+            {showRemoveButton && (
+              <div>
+                <button className="btn" onClick={handleRemoveTitle}>
+                  Remove title
+                </button>
+                {/* <textarea className="t_a" placeholder="your title" /> */}
+              </div>
+            )}
+
           </div>
+          {/* image/video */}   
+
+
+          <div className={`${styles.pcc__child} ${styles.post__compose__container}`}>
+          {showRemoveButton && (
+            <div style={{ display: "" }}>
+              <textarea
+                className={`${styles.post__data__content} ${styles.title__content}`}
+                placeholder="Add title"
+                name="title"
+                ref={inputTitle}
+                value={formik.values.title}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+              />
+            </div>
+          )}  
+            <div>
+              <textarea
+                className={styles.post__data__content}
+                placeholder="Compose a post"
+                name="desc"
+                ref={inputDesc}
+                value={formik.values.desc}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+              />
+            </div>
+            {/* this is the successful and error popup */}
+            {showSuccess && (
+              <div>
+                <span className={styles.post__msg__pp}>
+                  Post created successfully!
+                </span>
+              </div>
+            )}
+            {/* this is the successful and error popup */}
+          </div>
+
+          {/* image/video */}
+          <div
+            className={styles.media__preview}
+            style={{ border: "transparent" }}
+            >
+            {/*image parent container */}
+            <ImagePost media={media} />
+            {/*video parent container */}
+            {/* <VideoUploader video={video} /> */}
+          </div>
+
+          
+
         </form>
       </div>
       {/* div.timeline -> middle */}

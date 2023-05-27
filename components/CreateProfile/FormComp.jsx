@@ -2,13 +2,16 @@ import { useFormik } from "formik";
 import styles from "@/layout/AuthLayout/AuthLayout.module.css";
 import * as Yup from "yup";
 import { useState } from "react";
-import { BtnloadSvg, CautionSvg, ErrorSvg } from "../../components";
+import { BtnloadSvg, CautionSvg, ErrorSvg, PageSpinner } from "../../components";
+import img from '../../images/default.jpeg'
 import { createProfileAction } from "@/redux/slices/userDetailSlice";
 import { useDispatch } from "react-redux";
+import Image from "next/image";
 
 const FormComp = ({ formProps }) => {
   const {
     image,
+    isLoading,
     handleImageUpload,
     appError,
     profile,
@@ -65,52 +68,44 @@ const FormComp = ({ formProps }) => {
     <form onSubmit={formik.handleSubmit}>
       {!image && (
         <div className={styles.image__wrapper__xx}>
-          <div
-            style={{
-              textAlign: "center",
-              position: "absolute",
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%, -50%)",
-              width: "100%",
-            }}
-          >
-            <svg
-              className={styles.xyxy__svgg__upld}
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-            >
-              <path d="M4 22C4 17.5817 7.58172 14 12 14C16.4183 14 20 17.5817 20 22H18C18 18.6863 15.3137 16 12 16C8.68629 16 6 18.6863 6 22H4ZM12 13C8.685 13 6 10.315 6 7C6 3.685 8.685 1 12 1C15.315 1 18 3.685 18 7C18 10.315 15.315 13 12 13ZM12 11C14.21 11 16 9.21 16 7C16 4.79 14.21 3 12 3C9.79 3 8 4.79 8 7C8 9.21 9.79 11 12 11Z"></path>
-            </svg>
-            <span style={{ marginTop: "0px" }} className={styles._00sxtry}>
-              Profile Picture
-            </span>
-            {/* Upload Picture */}
-          </div>
+          <Image
+            src={img}
+            alt="profile_avatar"
+            className={styles.x_xjhhl_img}
+            priority
+          />
+          {isLoading ? (
+                  <div style={{position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)"}}>
+                    < PageSpinner />
+                  </div>
+                ) : ( 
           <span
             style={{
               position: "absolute",
-              right: "0px",
-              bottom: "3px",
+              top: "70%",
+              left: "50%",
+              transform: "translate(-50%, -50%)", 
+              pointerEvents: "fill"
             }}
           >
             <button
               type="button"
               onClick={() => document.getElementById("fileInput").click()}
               style={{
-                width: "43px",
+                width: "35px",
                 cursor: "pointer",
-                height: "43px",
+                height: "35px",
                 borderRadius: "50%",
-                background: "rgb(248, 248, 248)",
+                background: "rgb(245, 245, 245)",
                 position: "relative",
+                boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;",
               }}
             >
-              <svg
+              <svg 
                 style={{
-                  width: "19px",
-                  height: "19px",
-                  fill: "rgb(150, 150, 150)",
+                  width: "18px",
+                  height: "18px",
+                  fill: "rgb(180, 180, 180)",
                   boxSizing: "content-box",
                   position: "absolute",
                   top: "50%",
@@ -130,7 +125,8 @@ const FormComp = ({ formProps }) => {
               onChange={handleImageUpload}
               style={{ display: "none" }}
             />
-          </span>
+          </span> 
+          )}
         </div>
       )}
 
@@ -144,31 +140,40 @@ const FormComp = ({ formProps }) => {
               src={image}
               alt="profile_avatar"
               className={styles.x_xjhhl_img}
+              priority
             />
+            {isLoading ? (
+                  <div style={{position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)"}}>
+                    < PageSpinner />
+                  </div>
+                ) : ( 
             <span
               style={{
                 position: "absolute",
-                right: "0px",
-                bottom: "3px",
+              top: "70%",
+              left: "50%",
+              transform: "translate(-50%, -50%)", 
+              pointerEvents: "fill"
               }}
             >
               <button
                 type="button"
                 onClick={() => document.getElementById("fileInput").click()}
                 style={{
-                  width: "43px",
+                  width: "35px",
                   cursor: "pointer",
-                  height: "43px",
+                  height: "35px",
                   borderRadius: "50%",
-                  background: "rgb(248, 248, 248)",
+                  background: "rgb(245, 245, 245)",
                   position: "relative",
+                  boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;",
                 }}
               >
                 <svg
                   style={{
-                    width: "19px",
-                    height: "19px",
-                    fill: "rgb(150, 150, 150)",
+                    width: "18px",
+                    height: "18px",
+                    fill: "rgb(180, 180, 180)",
                     boxSizing: "content-box",
                     position: "absolute",
                     top: "50%",
@@ -188,10 +193,10 @@ const FormComp = ({ formProps }) => {
                 onChange={handleImageUpload}
                 style={{ display: "none" }}
               />
-            </span>
+            </span> )}
           </div>
           <div style={{ textAlign: "center" }}>
-            <button
+            <button type="button"
               style={{
                 cursor: "pointer",
                 marginBottom: "10px",
@@ -317,6 +322,41 @@ const FormComp = ({ formProps }) => {
         </div>
       </div>
       {/* this is the username */}
+
+      <div>
+        <div style={{ justifyContent: "space-between", display: "none" }}>
+          
+          {/* this is the month dropdown */}
+          <div className={styles.month__dropdwn}>
+            <span className={styles.months}>Month</span>
+              <span className={styles.dropdown__list}>
+                {months.map((month) => (
+                  // <option key={month.id} value={month.value}>
+                  //   {month.label}
+                  // </option>
+                  <span key={month.id} value={month.value} className={styles.option__list}>{month.label}</span>
+                ))}
+              </span>
+          </div>
+
+          {/* this is the day dropdown */}
+          <div className={styles.day__dropdwn}>
+            <span className={styles.days}>Day</span>
+              <span className={styles.dropdown__list}>
+                <span className={styles.option__list}>10</span>
+              </span>
+          </div>
+
+          {/* this is the year dropdown */}
+          <div className={styles.year__dropdwn}>
+            <span className={styles.years}>Year</span>
+              <span className={styles.dropdown__list}>
+                <span className={styles.option__list}>2023</span>
+              </span>
+          </div>
+
+        </div>
+      </div>
 
       {/* this is the test */}
       <div style={{ justifyContent: "space-between", display: "flex" }}>

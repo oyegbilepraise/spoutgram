@@ -41,9 +41,6 @@ html {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizelegibility;
 }
-body {
-  /* background-color: rgb(254, 254, 254); */
-}
 /* hide scrollbar  */
 .no-scroll {
   overflow: hidden;
@@ -79,7 +76,7 @@ input:autofill {
 }
 button:disabled, 
 button[disabled]{
-  background-color: #a7cafd;
+  background-color: #cac5ff;
   color: #ffffff;
   cursor: default;
   transition: 0.6s all;
@@ -132,7 +129,6 @@ button:focus, a:focus {
   grid-row: 1;
 }
 
-
 .singleItem {
   width: 548px;
   height: 500px;
@@ -156,3 +152,14 @@ button:focus, a:focus {
   width: 100%;
   object-fit: cover;
 }
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: white;
+  }
+}
+@media (prefers-color-scheme: light) {
+  body {
+    background-color: white;
+  }
+} 

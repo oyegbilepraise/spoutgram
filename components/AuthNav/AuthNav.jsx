@@ -64,10 +64,17 @@ const AuthNav = () => {
         <stop offset={1} stopColor="#00fff0" /> */}
 
         {/* this is the testing/new */}
-        <stop offset={0} stopColor="#655dbb" />
+        {/* <stop offset={0} stopColor="#655dbb" />
         <stop offset=".38" stopColor="#655dbb" />
         <stop offset=".8" stopColor="#655dbb" />
-        <stop offset={1} stopColor="#655dbb" />
+        <stop offset={1} stopColor="#655dbb" /> */}
+
+        {/* this is the testing/new */}
+        <stop offset={0} stopColor="rgb(210, 210, 210)" />
+        <stop offset=".38" stopColor="rgb(210, 210, 210)" />
+        <stop offset=".8" stopColor="rgb(210, 210, 210)" />
+        <stop offset={1} stopColor="rgb(210, 210, 210)" />
+
       </linearGradient>
     </defs>
     <path

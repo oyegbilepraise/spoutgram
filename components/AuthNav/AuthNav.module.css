@@ -1,7 +1,7 @@
 .authnav {
     width: 90%;
     margin: auto;
-    padding-top: 25px;
+    padding-top: 30px;
     padding-bottom: 28px;
     /* border: 1px solid black; */
   }
@@ -10,17 +10,17 @@
     display: none;
   }
   ._0004_logo_svg {
-    width: 140px;
+    width: 135px;
     margin: auto;
   }
 
   @media screen and (max-width: 520px) {
     ._0004_logo_svg {
-      width: 115px;
+      width: 115px; 
     }
     .authnav {
       width: 87%;
       padding-top: 12px;
-      padding-bottom: 20px;
+      padding-bottom: 20px; 
     }
   }
