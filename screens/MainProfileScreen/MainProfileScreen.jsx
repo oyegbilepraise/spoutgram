@@ -15,16 +15,29 @@ import Cookies from 'js-cookie';
 import Post from '@/components/Home/Post';
 import Routes from '@/utils/routes';
 import { logout } from '@/redux/slices/authSlice/authSlice';
+import { getAllPostsAction } from '@/redux/slices/postSlice/postSlice';
+import { getUserPostsAction } from '@/redux/slices/userDetailSlice';
 
 const MainProfileScreen = () => {
   const router = useRouter();
   const [currentTab, setCurrentTab] = useState("/");
   const { userId } = router.query;
   const { user, apiError } = useSelector((state) => state?.auth?.getUser);
+  const allPosts = useSelector(
+    (state) => state?.post?.allPosts
+  );
+  console.log(allPosts);
   // const {loading, appError, posts} = useSelector((state)=>state.post.allPosts)
   const [post, setPost] = useState();
   const [loading, setLoading] = useState(true)
   const dispatch = useDispatch()
+    const token = Cookies.get("token");
+  useEffect(() => {
+    dispatch(getAllPostsAction(token));
+    console.log(user);
+    // socket.emit("NEW_USER_ONLINE",user._id)
+  }, []);
+
   //   get the current tab
   useEffect(() => {
     const { tab } = router.query;
@@ -37,8 +50,8 @@ const MainProfileScreen = () => {
   }, [router.query.tab]);
 
   useEffect(()=>{
-      // const {userId} = router.query;
-      
+      const {userId} = router.query;
+      dispatch(getUserPostsAction(userId));
   }, [router.query.userId])
 
   useEffect(() => {
@@ -49,22 +62,20 @@ const MainProfileScreen = () => {
     //   second
     // }
   }, [])
-
-
   const getUsersPost = async () => {
-    console.log({ user });
-    const token = Cookies.get('token')
-    try {
-      const { data } = await axios.get(`${baseUrl}/users/posts`, { headers: { Authorization: 'Bearer ' + token } })
-      setPost(data.data)
-      console.log(data?.data)
-      setLoading(false)
-    } catch (error) {
-      // if (!error?.response?.data.status) {
-      //   dispatch(logout())
-      // }
-      console.log({ error });
-    }
+    // console.log({ user });
+    // const token = Cookies.get('token')
+    // try {
+    //   const { data } = await axios.get(`${baseUrl}/users/posts`, { headers: { Authorization: 'Bearer ' + token } })
+    //   setPost(data.data)
+    //   console.log(data?.data)
+    //   setLoading(false)
+    // } catch (error) {
+    //   // if (!error?.response?.data.status) {
+    //   //   dispatch(logout())
+    //   // }
+    //   console.log({ error });
+    // }
   }
 
 
@@ -134,7 +145,7 @@ const MainProfileScreen = () => {
         </div>
 
         {/* post container */}
-        {currentTab === "/" && <Post posts={post} loading={loading} />}
+        {currentTab === "/" && <Post posts={allPosts?.posts?.data} loading={allPosts.loading} />}
         {/* post container */}
         {/* gallery container */}
         {/* Media */}

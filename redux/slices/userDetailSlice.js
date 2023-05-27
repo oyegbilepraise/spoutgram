@@ -57,6 +57,18 @@ export const getAllUsersAction= createAsyncThunk("users/getAllUsers", async(_, {
   }
 })
 
+//get user posts
+export const getUserPostsAction = createAsyncThunk("/users/post", async(payload, {rejectWithValue})=>{
+    const token = Cookies.get("token");
+    try{
+        const res = await getRequest({url: `${baseUrl}${URL.getUserPost}`, token, data: payload});
+        console.log(res?.data);
+        return res?.data;
+    }catch(err){
+        rejectWithValue(err?.response?.data);
+    }
+})
+
 const userDetailSlice = createSlice({
   name: "userDetails",
   initialState: {
@@ -82,6 +94,11 @@ const userDetailSlice = createSlice({
       loading: false,
       appError: null,
       users: []
+    },
+    getUserPost: {
+      loading: false,
+      appError: null,
+      posts: []
     }
   },
   reducers: {
@@ -144,6 +161,19 @@ const userDetailSlice = createSlice({
       .addCase(getAllUsersAction.rejected, (state, action)=>{
           state.allUsers.loading = false;
           state.allUsers.appError = action.payload;
+      })
+      //get user posts
+      .addCase(getUserPostsAction.pending, (state, action)=>{
+        state.getUserPost.loading = true;
+        state.getUserPost.appError = null;
+      })
+      .addCase(getUserPostsAction.fulfilled, (state, action)=>{
+          state.getUserPost.loading = false;
+          state.getUserPost.posts = action.payload
+      })
+      .addCase(getUserPostsAction.rejected, (state, action)=>{
+          state.getUserPost.loading = false;
+          state.getUserPost.appError = action.payload;
       })
   },
 });
