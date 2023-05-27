@@ -283,7 +283,7 @@ const RightSidebar = () => {
                               <span className={styles.yyusbsq}>@{username}</span>
                             </div>
                             <div>
-                              {followers.includes(user.data._id)
+                              {followers.includes(user?.data?._id)
                               ?  <button className={styles.flwx_xyq_fllw}>Following</button>
 
                               : <button className={styles.flwx_xyq_fllw} onClick={()=>handleFollow(_id)}>follow</button>
