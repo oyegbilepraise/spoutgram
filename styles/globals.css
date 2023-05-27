@@ -103,27 +103,56 @@ button:focus, a:focus {
   outline: 2px solid var(--transparent);
 }
 
-.grid {
+.imageContainer{
+  place-items:center;
+  justify-content: center;
   display: grid;
-  grid-template-columns: repeat(2, 1fr); /* Default: 2 columns */
-  grid-gap: 1px; /* Adjust the gap between grid items */
+  grid-gap:0px;
+  overflow: hidden;
+  border-radius: 25px;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto;
 }
 
-.grid-item{
-  width:100%;
-  height:100%;
+.thirdImageContainer {
+  background-color: rgb(178, 55, 55);
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  grid-template-rows: auto;
+  grid-gap: 0px;
 }
 
-.four-columns {
-  grid-template-columns: repeat(4, 1fr); /* 4 columns if array length > 4 */
+.thirdImageContainer > div:first-child {
+  grid-column: 1 / 2;
+  grid-row: 1 / 3;
 }
 
-.three-columns {
-  grid-template-columns: repeat(2, 1fr); /* First row: 2 columns */
-}
-
-.three-columns .grid-item:nth-child(3) {
-  grid-column: span 2; /* Third image spans two columns */
+.thirdImageContainer > div:last-child {
+  grid-column: 2;
+  grid-row: 1;
 }
 
 
+.singleItem {
+  width: 548px;
+  height: 500px;
+  border-radius: 25px;
+  object-fit: cover;
+}
+
+.secondStyle{
+  width: 548px;
+  height: 200px;
+  object-fit: cover;
+}
+
+.thirdStyle{
+  object-fit: cover;
+  width: 548px;
+  height: 200px;
+}
+
+.fourthStyle{
+  width: 100%;
+  object-fit: cover;
+}
