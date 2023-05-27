@@ -14,6 +14,7 @@ import { SocketContext } from "../../redux/context/socket.js";
 import Link from "next/link";
 import { InView } from "react-intersection-observer";
 import { useRouter } from "next/router";
+import HomeVideo from "../VideoUpload/HomeVideo";
 
 const EachPost = ({ post, route }) => {
   const dispatch = useDispatch();
