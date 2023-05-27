@@ -1,10 +1,11 @@
 import { useRouter } from "next/router";
 import { useFormik } from "formik";
 import { useDispatch } from "react-redux";
+import {useState} from 'react'
 import {
   forgotPasswordAction,
   registerUserAction,
-} from "@/redux/slices/authSlice/authSlice"; //this registerUserAction should be replaced with the appropriate redux user action
+} from "@/redux/slices/authSlice/authSlice";
 import { useSelector } from "react-redux";
 import { AuthLayout } from "@/layout";
 import {
@@ -36,7 +37,7 @@ const ConfirmPasswordChangeScreen = () => {
       code: "",
     },
     onSubmit: (values) => {
-      dispatch(registerUserAction(values)); //this registerUserAction should be replaced with the appropriate redux user action
+      dispatch(registerUserAction(values));
     },
     validationSchema: confirmValidationSchema,
   });
@@ -44,6 +45,38 @@ const ConfirmPasswordChangeScreen = () => {
   const resendEmail = () => {
     dispatch(forgotPasswordAction({ email }));
   };
+
+
+  const [showError, setShowError] = useState(false);
+  const [showMsg, setShowMsg] = useState(false);
+
+  useEffect(() => {
+    let timer;
+    if (storeData.apiError) {
+      setShowError(true);
+      timer = setTimeout(() => {
+        setShowError(false);
+      }, 2500); // Display error message for 5 seconds
+    }
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [storeData.apiError]);
+
+  useEffect(() => {
+    let timer;
+    if (storeData.message.message) {
+      setShowMsg(true);
+      timer = setTimeout(() => {
+        setShowMsg(false);
+      }, 2500); // Display error message for 5 seconds
+    }
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [storeData.message.message]);
+
+
 
   return (
     <AuthLayout>
@@ -54,10 +87,9 @@ const ConfirmPasswordChangeScreen = () => {
 
               <span className={styles.vdf_data}>Confirm it's you</span>
 
-              {storeData.apiError && (
+              {showError && (
                 <div  className={styles.byyy__err}>
                   <span className={styles.error__msg__xyx}>
-                    {/* <CautionSvg /> */}
                     <span className={styles.error__txt__xyx}>
                       {storeData.apiError}
                     </span>
@@ -65,10 +97,9 @@ const ConfirmPasswordChangeScreen = () => {
                 </div>
               )}
 
-              {storeData.message.message && (
+              {showMsg && (
                 <div className={styles.byyy__err}>
                   <span className={styles.error__msg__xyx}>
-                    {/* <CautionSvg /> */}
                     <span className={styles.error__txt__xyx}>
                       {storeData.message.message}
                     </span>
@@ -80,82 +111,13 @@ const ConfirmPasswordChangeScreen = () => {
                 Check your email for a confirmation link to reset your password.
                 If you can't find the email, check your spam.
               </span>
-
-              <div className={styles.xpnd_inpts} style={{ paddingTop: "14px" }}>
-                <div style={{ position: "relative", display: "none" }}>
-                  <input
-                    type="text"
-                    value={formik.values.code}
-                    onChange={formik.handleChange("code")}
-                    onBlur={formik.handleBlur}
-                    name="code"
-                    autoComplete="off"
-                    placeholder="Code"
-                    className={styles.data_content_pass}
-                  />
-
-                  {/* error svg */}
-                  {formik.touched.code && formik.errors.code ? (
-                    <span className={styles.__spanerror}>
-                      <ErrorSvg />
-                    </span>
-                  ) : null}
-                  {/* error svg  */}
-                </div>
-              </div>
-
-              <div>
-                {storeData?.loading ? (
-                  <button
-                    className={`${styles.pass_data_bd} ${styles.new__change__btn}`}
-                    type="submit"
-                    style={{ position: "relative", display: "none" }}
-                    disabled
-                  >
-                    <>
-                      <BtnloadSvg />
-                    </>
-                    Confirm
-                  </button>
-                ) : (
-                  <button
-                    style={{ position: "relative", display: "none" }}
-                    className={`${styles.pass_data_bd} ${styles.new__change__btn}`}
-                    type="submit"
-                  >
-                    Confirm
-                  </button>
-                )}
-              </div>
-              <div style={{ marginTop: "-15px" }}>
+              <div style={{ marginTop: "-5px" }}>
                 <span class={styles.sracde}>
                   Didn't recieve any email?{" "}
                   <span onClick={resendEmail} className={styles.sapn__rsbd}>
                     Resend email.
                   </span>
                 </span>
-              </div>
-              <div>
-                {/* verification code resent */}
-                <span className={styles._00rsnd} style={{ display: "none" }}>
-                  Code resent
-                  <svg
-                    className={styles.yxxz}
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="#01A8EA"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <polyline points="20 6 9 17 4 12"></polyline>
-                  </svg>
-                </span>
-
-                {/* verification code resent */}
               </div>
               <span className={styles.ouplskk}>
                 <Link href="/signup">Back to Sign up</Link>

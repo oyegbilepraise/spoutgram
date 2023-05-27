@@ -26,16 +26,16 @@ const ForgotPasswordScreen = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const storeData = useSelector((store) => store?.auth?.forgotPassword);
-  const email = Cookies.get("email");
+  const email = Cookies.get("email"); 
   const formik = useFormik({
     initialValues: {
-      email: email || "",
+      email: "", // I removed the " email || " here because it was making the formik disabled malfunction.
     },
     onSubmit: (values) => {
       dispatch(forgotPasswordAction(values));
       Cookies.set("email", values.email);
     },
-    validationSchema: forgotValidationSchema, //this was comment before my Bitee, I don't know why he did it....but, yh.
+    validationSchema: forgotValidationSchema,
   });
 
   useEffect(() => {
@@ -55,6 +55,35 @@ const ForgotPasswordScreen = () => {
     setShowEmailError(false);
   }
 
+  const [showError, setShowError] = useState(false);
+  const [showMsg, setShowMsg] = useState(false);
+
+  useEffect(() => {
+    let timer;
+    if (storeData.apiError) {
+      setShowError(true);
+      timer = setTimeout(() => {
+        setShowError(false);
+      }, 2500); // Display error message for 5 seconds
+    }
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [storeData.apiError]);
+
+  useEffect(() => {
+    let timer;
+    if (storeData?.message?.message) {
+      setShowMsg(true);
+      timer = setTimeout(() => {
+        setShowMsg(false);
+      }, 2500); // Display error message for 5 seconds
+    }
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [storeData?.message?.message]);
+
   return (
     <AuthLayout>
       <main className={styles.__main} role="main">
@@ -63,11 +92,10 @@ const ForgotPasswordScreen = () => {
             <div className={styles._xparnts_cvr}>
               <span className={styles.vdf_data}>Forgot Password?</span>
 
-              {storeData.apiError && (
+              {showError && (
                 <div className={styles.byyy__err}>
                 <div style={{ paddingTop: "0px" }}>
                   <span className={styles.error__msg__xyx}>
-                    {/* <CautionSvg /> */}
                     <span className={styles.error__txt__xyx}>
                       {storeData.apiError}
                     </span>
@@ -76,11 +104,10 @@ const ForgotPasswordScreen = () => {
                 </div>
               )}
 
-              {storeData?.message?.message && (
+              {showMsg && (
                 <div className={styles.byyy__err}>
                 <div style={{ paddingTop: "0px" }}>
                   <span className={styles.error__msg__xyx}>
-                    {/* <CautionSvg /> */}
                     <span className={styles.error__txt__xyx}>
                       {storeData?.message?.message}
                     </span>
@@ -144,11 +171,7 @@ const ForgotPasswordScreen = () => {
                     Continue
                   </button>
                 ) : (
-                  <button
-                    className={`${styles.pass_data_bd} ${styles.new__change__btn}`}
-                    type="submit" 
-                    disabled={!formik.isValid || !formik.dirty}
-                  >
+                  <button className={`${styles.pass_data_bd} ${styles.new__change__btn}`} type="submit" disabled={!formik.isValid || !formik.dirty}>
                     Continue
                   </button>
                 )}

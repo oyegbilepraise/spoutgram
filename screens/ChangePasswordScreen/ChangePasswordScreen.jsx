@@ -73,6 +73,36 @@ const ChangePasswordScreen = () => {
     setShowCPasswordError(false);
   }
 
+
+  const [showError, setShowError] = useState(false);
+  const [showMsg, setShowMsg] = useState(false);
+
+  useEffect(() => {
+    let timer;
+    if (storeData?.apiError) {
+      setShowError(true);
+      timer = setTimeout(() => {
+        setShowError(false);
+      }, 2500); // Display error message for 5 seconds
+    }
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [storeData?.apiError]);
+
+  useEffect(() => {
+    let timer;
+    if (storeData?.message?.message) {
+      setShowMsg(true);
+      timer = setTimeout(() => {
+        setShowMsg(false);
+      }, 2500); // Display error message for 5 seconds
+    }
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [storeData?.message?.message]);
+
   return (
     <AuthLayout>
       <main className={styles.__main} role="main">
@@ -82,7 +112,7 @@ const ChangePasswordScreen = () => {
               <span className={styles.vdf_data}>Reset Password</span>
 
               {/* //this is the one with that issue... */}
-              {storeData?.message?.message && (
+              {showMsg && (
                 <div className={styles.byyy__err}>
                   <span className={styles.error__msg__xyx}>
                     <span className={styles.error__txt__xyx}>
@@ -92,10 +122,9 @@ const ChangePasswordScreen = () => {
                 </div>
               )}
 
-              {storeData?.apiError && (
+              {showError && (
                 <div className={styles.byyy__err}>
                   <span className={styles.error__msg__xyx}>
-                    <CautionSvg />
                     <span className={styles.error__txt__xyx}>
                       {storeData?.apiError}
                     </span>
