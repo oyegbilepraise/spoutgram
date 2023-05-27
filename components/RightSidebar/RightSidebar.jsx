@@ -7,11 +7,15 @@ import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import Search from "../SearchComp/Search";
 import Cookies from "js-cookie";
-import { getSuggestedUsers } from '@/redux/slices/messageSlice/messageSlice';
+import { Follow, getSuggestedUsers } from '@/redux/slices/messageSlice/messageSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import Link from "next/link";
+import { followUser } from '@/redux/slices/postSlice/postSlice';
+import { useFormik } from 'formik';
 
 const ButtonGroup = ({ next, previous, goToSlide, ...rest }) => {
+
+
   const {
     carouselState: { currentSlide },
   } = rest;
@@ -135,6 +139,7 @@ const CustomDot = ({ onClick, ...rest }) => {
 };
 
 const RightSidebar = () => {
+  const { user } = useSelector((state) => state?.auth?.getUser);
   const dispatch = useDispatch()
   const token = Cookies.get("token");
   const { loading, apiError, suggested } = useSelector(
@@ -143,6 +148,7 @@ const RightSidebar = () => {
   useEffect(() => {
     dispatch(getSuggestedUsers(token));
   }, []);
+
   const responsive = {
     desktop: {
       breakpoint: { max: 3000, min: 1024 },
@@ -181,8 +187,18 @@ const RightSidebar = () => {
     return pageItems
   }
 
+  const handleFollow = async (id) => {
+    console.log("Following:: ", id);
+    const res = dispatch(followUser(id))
+    // let dataFind = suggested.data.findIndex((e => e._id == id));
+    // suggested.data[dataFind]?.followers.push(user?.data?._id)
+
+    // console.log(data);
+
+  }
   // show search modal toggle
   const [showSearch, setShowSearch] = useState(false);
+
   const handleSearch = () => {
     setShowSearch((prev) => !prev);
   };
@@ -246,7 +262,7 @@ const RightSidebar = () => {
                 return (
                   <div key={id}>
                     <div>
-                      {items.map(({ name, id, username }) => {
+                      {items.map(({ name, _id, username, followers }) => {
                         return (
                           <div key={id} className={styles.sgstn_tst}>
                             <div>
@@ -267,9 +283,12 @@ const RightSidebar = () => {
                               <span className={styles.yyusbsq}>@{username}</span>
                             </div>
                             <div>
-                              <button className={styles.flwx_xyq_fllw}>
-                                follow
-                              </button>
+                              {followers.includes(user?.data?._id)
+                              ?  <button className={styles.flwx_xyq_fllw}>Following</button>
+
+                              : <button className={styles.flwx_xyq_fllw} onClick={()=>handleFollow(_id)}>follow</button>
+                              }
+                             
                             </div>
                           </div>
                         );

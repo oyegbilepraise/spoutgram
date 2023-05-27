@@ -102,10 +102,10 @@ export const getAllBoomarks = createAsyncThunk(
       const res = await getRequest({ url: `${baseUrl}${URL.boomarks}`, token })
       return res.data
     } catch (error) {
-      if (!error?.response?.data.status) {
-        Cookies.remove("token");
-        router.push(Routes.LOGIN)
-      }
+      // if (!error?.response?.data.status) {
+      //   Cookies.remove("token");
+      //   router.push(Routes.LOGIN)
+      // }
       return rejectWithValue(error);
     }
   }
@@ -119,10 +119,26 @@ export const setViews = createAsyncThunk('post/view_post',
       const res = await getRequest({ url: `${baseUrl}${URL.views}${postId}`, token })
       return res.data
     } catch (error) {
-      if (!error?.response?.data.status) {
-        Cookies.remove("token");
-        router.push(Routes.LOGIN)
-      }
+      // if (!error?.response?.data.status) {
+      //   Cookies.remove("token");
+      //   router.push(Routes.LOGIN)
+      // }
+      return rejectWithValue(error);
+    }
+  }
+)
+export const repostAction = createAsyncThunk('post/repost',
+  async (postId, { rejectWithValue }) => {
+    console.log({postId});
+    const token = Cookies.get("token");
+    try {
+      const res = await patchRequest({ url: `${baseUrl}${URL.repost}${postId}`, token })
+      return res.data
+    } catch (error) {
+      // if (!error?.response?.data.status) {
+      //   Cookies.remove("token");
+      //   router.push(Routes.LOGIN)
+      // }
       return rejectWithValue(error);
     }
   }
@@ -155,7 +171,12 @@ const postSlice = createSlice({
       loading: false,
       apiError: null,
       reccentPost: {},
-    }
+    },
+    repost: {
+      loading: false,
+      apiError: null,
+      reccentPost: {},
+    },
   },
   reducers: {},
   extraReducers: (builder) => {
@@ -235,6 +256,23 @@ const postSlice = createSlice({
     builder.addCase(dislikePostAction.rejected, (state, action) => {
       state.dislikedPost.loading = false
       state.dislikedPost.apiError = action?.payload
+    });
+
+    //repost
+    builder.addCase(repostAction.pending, (state) => {
+      state.repost.loading = true;
+      state.repost.reccentPost = {};
+      state.repost.apiError = null;
+    })
+    builder.addCase(repostAction.fulfilled, (state, action) => {
+      console.log(state, action);
+      state.repost.loading = false
+      state.repost.reccentPost = action?.payload
+    })
+    builder.addCase(repostAction.rejected, (state, action) => {
+      console.log(state, action);
+      state.repost.loading = false
+      state.repost.apiError = action?.payload
     });
   },
 });

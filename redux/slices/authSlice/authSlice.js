@@ -260,7 +260,6 @@ const authSlice = createSlice({
     // Verify User mail code input.
     builder.addCase(verifyEmailAction.pending, (state) => {
       state.verifyCode.loading = true;
-      state.verifyCode.user = {};
       state.verifyCode.verified = false;
       state.verifyCode.appError = null;
     });

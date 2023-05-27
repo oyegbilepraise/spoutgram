@@ -22,12 +22,15 @@ getSinglePost:"/posts/post/",
 likePost:"/posts/post/like",
 dislikePost:"/posts/post/unlike",
 getUserPost: "/users/posts",
+repost:"/posts/repost/",
   // Category
 
   // Comment
 createComment:"/comments/create",
 getParticularPostComments:"/comments/",
 replyComment:"/comments/reply",
+likeComment:"/comments/like/",
+likeReply:"/comments/like/reply/",
 getOneComment:"/comments/comment/",
 getParticularCommentReplies:"/comments/all_reply/",
 
