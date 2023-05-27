@@ -245,7 +245,7 @@ const EachPost = ({ post, route }) => {
                   )}
                 </span>
                 <span className={styles._00mn_spn_cnt}>
-                  {likes.length > 0 && likes.length}
+                  {likes?.length > 0 && likes?.length}
                 </span>
               </span>
               <span className={styles._00mn_span}>
@@ -334,7 +334,7 @@ const EachPost = ({ post, route }) => {
                     </svg>
                   )}
                 </span>
-                <span className={styles._00mn_spn_cnt}>{bookmarks.length}</span>
+                <span className={styles._00mn_spn_cnt}>{bookmarks?.length}</span>
               </span>
               <span className={styles._00mn_span}>
                 <span>
