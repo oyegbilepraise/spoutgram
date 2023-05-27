@@ -7,7 +7,7 @@ export const API = axios.create({
     "Content-Type": "application/json",
   },
 });
-
+//GET REQUEST
 export const getRequest = async ({ url, token, params }) => {
   const requestResponse = await API({
     headers: { Authorization: `Bearer ${token}` },
@@ -78,6 +78,7 @@ export const deleteRequest = async ({ url, token, data, params }) => {
 
   return requestResponse;
 };
+
 
 //put request
 export const putRequest = async ({ url, token, data, formData, params }) => {

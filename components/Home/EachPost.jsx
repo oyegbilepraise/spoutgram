@@ -14,6 +14,7 @@ import { SocketContext } from "../../redux/context/socket.js";
 import Link from "next/link";
 import { InView } from "react-intersection-observer";
 import { useRouter } from "next/router";
+import HomeVideo from "../VideoUpload/HomeVideo";
 
 const EachPost = ({ post, route }) => {
   const dispatch = useDispatch();
@@ -244,7 +245,7 @@ const EachPost = ({ post, route }) => {
                   )}
                 </span>
                 <span className={styles._00mn_spn_cnt}>
-                  {likes.length > 0 && likes.length}
+                  {likes?.length > 0 && likes?.length}
                 </span>
               </span>
               <span className={styles._00mn_span}>
@@ -333,7 +334,7 @@ const EachPost = ({ post, route }) => {
                     </svg>
                   )}
                 </span>
-                <span className={styles._00mn_spn_cnt}>{bookmarks.length}</span>
+                <span className={styles._00mn_spn_cnt}>{bookmarks?.length}</span>
               </span>
               <span className={styles._00mn_span}>
                 <span>

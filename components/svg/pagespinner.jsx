@@ -11,8 +11,8 @@ const PageSpinner = () => {
           display: "block", 
           shapeRendering: "auto"
         }}
-        width="55px"
-        height="55px"
+        width="50px"
+        height="50px"
         viewBox="0 0 100 100"
         preserveAspectRatio="xMidYMid"
         >

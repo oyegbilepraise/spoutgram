@@ -11,5 +11,6 @@ const Routes = {
   CONFIRM_CHANGE_PASSWORD: "/confirm-change-password",
   FORGOT_PASSWORD: "/forgot-password",
   CHANGE_PASSWORD: "/change-password",
+  EACHPOST: "/postComments/"
 };
 export default Routes;
