@@ -324,7 +324,7 @@ const FormComp = ({ formProps }) => {
       {/* this is the username */}
 
       <div>
-        <div style={{ justifyContent: "space-between", display: "flex" }}>
+        <div style={{ justifyContent: "space-between", display: "none" }}>
           
           {/* this is the month dropdown */}
           <div className={styles.month__dropdwn}>
@@ -359,7 +359,7 @@ const FormComp = ({ formProps }) => {
       </div>
 
       {/* this is the test */}
-      <div style={{ justifyContent: "space-between", display: "none" }}>
+      <div style={{ justifyContent: "space-between", display: "flex" }}>
         <span>
           <select
             className={styles.select__cpf}
