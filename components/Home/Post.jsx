@@ -15,7 +15,7 @@ const Post = ({posts, loading}) => {
           {posts?.map((post, id) => {
             return (
               <EachPost post={post} key={id} />
-            )
+            ) 
           }
           )}
         </div>
