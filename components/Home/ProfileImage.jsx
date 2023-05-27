@@ -1,22 +1,19 @@
 import styles from "@/layout/HomeLayout/HomeLayout.module.css";
 import img from '../../images/default-photo.svg'
-import imgOne from '../../images/default.jpeg' 
-import people1 from '../../images/people-1.jpeg'
 import Image from "next/image";
 import PostedAt from "../PostedAt/postedAt";
 import { useDispatch, useSelector } from "react-redux";
 import { followUser } from "@/redux/slices/postSlice/postSlice";
-import Link from "next/link";
 
 const ProfileImage = ({ post }) => {
   const { user, apiError } = useSelector((state) => state?.auth?.getUser);
   const dispatch = useDispatch();
 
-  const isPostOwner = post?.user?._id === user?.data?._id
+  const isPostOwner = post?.user[0]?._id === user?.data?._id
 
   const handleFollow = async () => {
     try {
-      dispatch(followUser(post?.user?._id));
+      dispatch(followUser(post?.user[0]?._id));
     } catch (error) {
       console.log({ error });
     }
@@ -24,29 +21,26 @@ const ProfileImage = ({ post }) => {
   return (
     <div style={{ position: "relative" }}>
       <div className={styles.hover_main_image}>
-        <Link href={`${post?.user?.username}`}>
-          <Image src={post?.user?.profilePhoto == '' ? imgOne : post?.user?.profilePhoto} alt="profile-img" fill className={styles.data_content_pimg}/>
-        </Link>
+        <Image
+          src={post?.user[0]?.profilePhoto == '' ? img : post?.user[0]?.profilePhoto}
+          alt="profile-img"
+          className={styles.data_content_pimg}
+          width="22"
+          height="22"
+        />
 
         {/* hovercard */}
-
-        {!isPostOwner && (
         <div className={styles.hover_card}>
-          <div className={styles.flex_h_div}> 
+          <div className={styles.flex_h_div}>
             <div>
               {/* {{#if this.owner_avatar_link}} */}
-              <Link href={`${post?.user?.username}`}>
-              <Image src={post?.user?.profilePhoto == '' ? imgOne : post?.user?.profilePhoto} alt="img" 
-              className={styles.image_h_c} fill />
-              </Link>
+              <Image src={post?.user[0]?.profilePhoto == '' ? img : post?.user[0]?.profilePhoto} alt="img" width="22" height="22" className={styles.image_h_c} />
             </div>
             <div>
               <span className={`${styles.postt_name} ${styles._0022_nm_usr}`}>
-              <Link href={`${post?.user?.username}`}>
-                {post?.user?.name}
-              </Link>
+                {post?.user[0]?.name}
               </span>
-              <span className={styles.postt_uname_hover}>@{post?.user?.username}</span>
+              <span className={styles.postt_uname_hover}>@{post?.user[0]?.username}</span>
             </div> 
             {/* {{!  }} */}
           </div>
@@ -55,10 +49,10 @@ const ProfileImage = ({ post }) => {
             style={{display: "flex", width: "max-content", marginTop: "11px"}}
             >
               <span className={`${styles.xoxtrn} ${styles.hovr__f}`} style={{display: "flex"}}>
-                {post?.user?.followers.length}&nbsp;<span className={styles.xyxxn}>{post?.user?.followers.length < 2 ? "Follower" : "Followers"}</span>
+                {post?.user[0]?.followers?.length}&nbsp;<span className={styles.xyxxn}>{post?.user[0]?.followers?.length < 2 ? "Follower" : "Followers"}</span>
               </span>
               <span className={`${styles.xoxtrn} ${styles.hovr__f}`} style={{display: "flex"}}>
-                {post?.user?.following.length}&nbsp;<span className={styles.xyxxn}>Following</span>
+                {post?.user[0]?.following?.length}&nbsp;<span className={styles.xyxxn}>Following</span>
               </span>
             </span>
           </div>
@@ -69,46 +63,101 @@ const ProfileImage = ({ post }) => {
               for raising money.
             </span>
           </div>
-          <div style={{marginTop: "5px"}}>
-            <span className={styles.span__data__prfl}>
+          <div>
+            <span
+              style={{ marginRight: 25, display: "block" }}
+              className={styles.span__data__prfl}
+            >
               <svg
                 className={styles.xnprlf__icn}
+                width={18}
+                height={18}
+                viewBox="0 0 18 18"
+                fill="none"
                 xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
               >
-                <path d="M12 20.8995L16.9497 15.9497C19.6834 13.2161 19.6834 8.78392 16.9497 6.05025C14.2161 3.31658 9.78392 3.31658 7.05025 6.05025C4.31658 8.78392 4.31658 13.2161 7.05025 15.9497L12 20.8995ZM12 23.7279L5.63604 17.364C2.12132 13.8492 2.12132 8.15076 5.63604 4.63604C9.15076 1.12132 14.8492 1.12132 18.364 4.63604C21.8787 8.15076 21.8787 13.8492 18.364 17.364L12 23.7279ZM12 13C13.1046 13 14 12.1046 14 11C14 9.89543 13.1046 9 12 9C10.8954 9 10 9.89543 10 11C10 12.1046 10.8954 13 12 13ZM12 15C9.79086 15 8 13.2091 8 11C8 8.79086 9.79086 7 12 7C14.2091 7 16 8.79086 16 11C16 13.2091 14.2091 15 12 15Z" />
-              </svg>
-
-              <span className={styles.pfl__data}>Miami, USA</span>
-            </span>
-          </div>
-          <span className={styles.span__data__prfl}>
-            <span style={{ display: "flex", marginRight: "25px" }}>
-              <svg
-                className={styles.xnprlf__icn}
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                >
-                <path d="M7 5V2C7 1.44772 7.44772 1 8 1H16C16.5523 1 17 1.44772 17 2V5H21C21.5523 5 22 5.44772 22 6V20C22 20.5523 21.5523 21 21 21H3C2.44772 21 2 20.5523 2 20V6C2 5.44772 2.44772 5 3 5H7ZM4 16V19H20V16H4ZM4 14H20V7H4V14ZM9 3V5H15V3H9ZM11 11H13V13H11V11Z" />
+                <rect
+                  x="0.8"
+                  y="4.8"
+                  width="16.4"
+                  height="12.4"
+                  rx="2.2"
+                  stroke="#808080"
+                  strokeWidth="1.6"
+                />
+                <path
+                  d="M3 4.8H15C16.215 4.8 17.2 5.78497 17.2 7C17.2 9.3196 15.3196 11.2 13 11.2H5C2.6804 11.2 0.8 9.3196 0.8 7C0.8 5.78497 1.78497 4.8 3 4.8Z"
+                  stroke="#808080"
+                  strokeWidth="1.6"
+                />
+                <mask id="path-3-inside-1_423_38" fill="white">
+                  <path
+                    fillRule="evenodd"
+                    clipRule="evenodd"
+                    d="M7 1.6H11C11.7732 1.6 12.4 2.2268 12.4 3V4H14V3C14 1.34315 12.6569 0 11 0H7C5.34315 0 4 1.34315 4 3V4H5.6V3C5.6 2.2268 6.2268 1.6 7 1.6Z"
+                  />
+                </mask>
+                <path
+                  fillRule="evenodd"
+                  clipRule="evenodd"
+                  d="M7 1.6H11C11.7732 1.6 12.4 2.2268 12.4 3V4H14V3C14 1.34315 12.6569 0 11 0H7C5.34315 0 4 1.34315 4 3V4H5.6V3C5.6 2.2268 6.2268 1.6 7 1.6Z"
+                  fill="#D9D9D9"
+                />
+                <path
+                  d="M12.4 4H10.8V5.6H12.4V4ZM14 4V5.6H15.6V4H14ZM4 4H2.4V5.6H4V4ZM5.6 4V5.6H7.2V4H5.6ZM11 0H7V3.2H11V0ZM14 3C14 1.34315 12.6569 0 11 0V3.2C10.8895 3.2 10.8 3.11046 10.8 3H14ZM14 4V3H10.8V4H14ZM12.4 5.6H14V2.4H12.4V5.6ZM15.6 4V3H12.4V4H15.6ZM15.6 3C15.6 0.45949 13.5405 -1.6 11 -1.6V1.6C11.7732 1.6 12.4 2.2268 12.4 3H15.6ZM11 -1.6H7V1.6H11V-1.6ZM7 -1.6C4.45949 -1.6 2.4 0.45949 2.4 3H5.6C5.6 2.2268 6.2268 1.6 7 1.6V-1.6ZM2.4 3V4H5.6V3H2.4ZM4 5.6H5.6V2.4H4V5.6ZM4 3V4H7.2V3H4ZM7 0C5.34315 0 4 1.34315 4 3H7.2C7.2 3.11046 7.11046 3.2 7 3.2V0Z"
+                  fill="#808080"
+                  mask="url(#path-3-inside-1_423_38)"
+                />
               </svg>
               <span className={styles.pfl__data}>Creator</span>
             </span>
-
-            <span style={{ display: "flex" }}> 
-              <svg
-                className={styles.xnprlf__icn}
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-              >
-                <path d="M18.3643 15.5353L16.95 14.1211L18.3643 12.7069C20.3169 10.7543 20.3169 7.58847 18.3643 5.63585C16.4116 3.68323 13.2458 3.68323 11.2932 5.63585L9.87898 7.05007L8.46477 5.63585L9.87898 4.22164C12.6127 1.48797 17.0448 1.48797 19.7785 4.22164C22.5121 6.95531 22.5121 11.3875 19.7785 14.1211L18.3643 15.5353ZM15.5358 18.3638L14.1216 19.778C11.388 22.5117 6.9558 22.5117 4.22213 19.778C1.48846 17.0443 1.48846 12.6122 4.22213 9.87849L5.63634 8.46428L7.05055 9.87849L5.63634 11.2927C3.68372 13.2453 3.68372 16.4112 5.63634 18.3638C7.58896 20.3164 10.7548 20.3164 12.7074 18.3638L14.1216 16.9496L15.5358 18.3638ZM14.8287 7.75717L16.2429 9.17139L9.17187 16.2425L7.75766 14.8282L14.8287 7.75717Z" />
-              </svg>
-              <span className={`${styles.pfl__data} ${styles.user__link}`}>
-                https://linktr.ee/xyz
+          </div>
+          <div>
+            <span>
+              <span style={{ marginRight: 15 }}>
+                <svg
+                  className={`${styles.xnprlf__icn} ${styles.linkr__slnt}`}
+                  width={14}
+                  height={21}
+                  viewBox="0 0 14 21"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M7.31718 8.61566L7.29168 12.3585C7.28864 12.8042 6.92486 13.163 6.47914 13.16C6.03342 13.157 5.67456 12.7932 5.6776 12.3475L5.7031 8.60466C5.70613 8.15894 6.06992 7.80008 6.51564 7.80312C6.96135 7.80615 7.32022 8.16994 7.31718 8.61566Z"
+                    fill="#808080"
+                    stroke="#808080"
+                    strokeWidth="1.6"
+                  />
+                  <mask id="path-2-inside-1_423_8" fill="white">
+                    <path
+                      fillRule="evenodd"
+                      clipRule="evenodd"
+                      d="M2.08497 8.57152L2.09824 6.44305C2.11349 3.99744 4.10841 2.0278 6.55401 2.04373C8.9996 2.05966 10.9698 4.05512 10.9545 6.50072L10.9413 8.63185L12.9412 8.64548L12.9545 6.51375C12.9766 2.9636 10.1166 0.066888 6.56648 0.0437673C3.01633 0.0206471 0.120424 2.87987 0.0982841 6.43002L0.0850149 8.55789L2.08497 8.57152ZM2.06146 12.3409L0.0615095 12.3273L0.0483071 14.4444C0.0261682 17.9946 2.88618 20.8913 6.43633 20.9144C9.98647 20.9375 12.8824 18.0783 12.9045 14.5281L12.9177 12.4148L10.9177 12.4012L10.9046 14.5151C10.8893 16.9607 8.8944 18.9304 6.4488 18.9144C4.0032 18.8985 2.03301 16.903 2.04826 14.4574L2.06146 12.3409Z"
+                    />
+                  </mask>
+                  <path
+                    fillRule="evenodd"
+                    clipRule="evenodd"
+                    d="M2.08497 8.57152L2.09824 6.44305C2.11349 3.99744 4.10841 2.0278 6.55401 2.04373C8.9996 2.05966 10.9698 4.05512 10.9545 6.50072L10.9413 8.63185L12.9412 8.64548L12.9545 6.51375C12.9766 2.9636 10.1166 0.066888 6.56648 0.0437673C3.01633 0.0206471 0.120424 2.87987 0.0982841 6.43002L0.0850149 8.55789L2.08497 8.57152ZM2.06146 12.3409L0.0615095 12.3273L0.0483071 14.4444C0.0261682 17.9946 2.88618 20.8913 6.43633 20.9144C9.98647 20.9375 12.8824 18.0783 12.9045 14.5281L12.9177 12.4148L10.9177 12.4012L10.9046 14.5151C10.8893 16.9607 8.8944 18.9304 6.4488 18.9144C4.0032 18.8985 2.03301 16.903 2.04826 14.4574L2.06146 12.3409Z"
+                    fill="#808080"
+                  />
+                  <path
+                    d="M2.09824 6.44305L0.0982817 6.43057L2.09824 6.44305ZM2.08497 8.57152L2.07134 10.5715L4.07245 10.5851L4.08493 8.58399L2.08497 8.57152ZM6.55401 2.04373L6.56703 0.0437709L6.56703 0.0437709L6.55401 2.04373ZM10.9545 6.50072L8.95458 6.48825L8.95458 6.48825L10.9545 6.50072ZM10.9413 8.63185L8.94129 8.61938L8.92883 10.6182L10.9276 10.6318L10.9413 8.63185ZM12.9412 8.64548L12.9276 10.6454L14.9287 10.6591L14.9412 8.65795L12.9412 8.64548ZM12.9545 6.51375L14.9545 6.52622L14.9545 6.52622L12.9545 6.51375ZM6.56648 0.0437673L6.5795 -1.95619L6.5795 -1.95619L6.56648 0.0437673ZM0.0982841 6.43002L-1.90168 6.41755L-1.90168 6.41755L0.0982841 6.43002ZM0.0850149 8.55789L-1.91495 8.54542L-1.92741 10.5442L0.0713899 10.5578L0.0850149 8.55789ZM2.06146 12.3409L4.06142 12.3533L4.07389 10.3545L2.07509 10.3409L2.06146 12.3409ZM0.0615095 12.3273L0.0751346 10.3273L-1.92597 10.3137L-1.93845 12.3148L0.0615095 12.3273ZM0.0483071 14.4444L2.04827 14.4569L2.04827 14.4569L0.0483071 14.4444ZM6.43633 20.9144L6.4233 22.9144L6.4233 22.9144L6.43633 20.9144ZM12.9045 14.5281L10.9046 14.5157L12.9045 14.5281ZM12.9177 12.4148L14.9177 12.4273L14.9301 10.4285L12.9313 10.4149L12.9177 12.4148ZM10.9177 12.4012L10.9314 10.4013L8.93026 10.3876L8.91778 12.3887L10.9177 12.4012ZM10.9046 14.5151L12.9045 14.5276L12.9045 14.5276L10.9046 14.5151ZM6.4488 18.9144L6.46182 16.9145L6.4488 18.9144ZM2.04826 14.4574L0.0483035 14.445L2.04826 14.4574ZM0.0982817 6.43057L0.0850085 8.55905L4.08493 8.58399L4.0982 6.45552L0.0982817 6.43057ZM6.56703 0.0437709C3.01667 0.0206492 0.120422 2.88021 0.0982817 6.43057L4.0982 6.45552C4.10657 5.11468 5.20014 4.03495 6.54098 4.04369L6.56703 0.0437709ZM12.9545 6.5132C12.9766 2.96326 10.117 0.0668901 6.56703 0.0437709L6.54098 4.04369C7.88225 4.05242 8.96294 5.14698 8.95458 6.48825L12.9545 6.5132ZM12.9412 8.64432L12.9545 6.51319L8.95458 6.48825L8.94129 8.61938L12.9412 8.64432ZM10.9276 10.6318L12.9276 10.6454L12.9548 6.64552L10.9549 6.6319L10.9276 10.6318ZM14.9412 8.65795L14.9545 6.52622L10.9545 6.50128L10.9412 8.63301L14.9412 8.65795ZM14.9545 6.52622C14.9835 1.87174 11.234 -1.92588 6.5795 -1.95619L6.55345 2.04372C8.99927 2.05965 10.9698 4.05546 10.9545 6.50128L14.9545 6.52622ZM6.5795 -1.95619C1.9246 -1.98651 -1.87265 1.76264 -1.90168 6.41755L2.09825 6.44249C2.1135 3.99711 4.10807 2.0278 6.55345 2.04372L6.5795 -1.95619ZM-1.90168 6.41755L-1.91495 8.54542L2.08498 8.57036L2.09825 6.44249L-1.90168 6.41755ZM0.0713899 10.5578L2.07134 10.5715L2.09859 6.57156L0.09864 6.55794L0.0713899 10.5578ZM2.07509 10.3409L0.0751346 10.3273L0.0478845 14.3272L2.04784 14.3408L2.07509 10.3409ZM-1.93845 12.3148L-1.95165 14.4319L2.04827 14.4569L2.06147 12.3397L-1.93845 12.3148ZM-1.95165 14.4319C-1.98068 19.0864 1.76883 22.884 6.4233 22.9144L6.44935 18.9144C4.00354 18.8985 2.03302 16.9027 2.04827 14.4569L-1.95165 14.4319ZM6.4233 22.9144C11.0782 22.9447 14.8755 19.1955 14.9045 14.5406L10.9046 14.5157C10.8893 16.9611 8.89473 18.9304 6.44935 18.9144L6.4233 22.9144ZM14.9045 14.5406L14.9177 12.4273L10.9177 12.4024L10.9046 14.5157L14.9045 14.5406ZM12.9313 10.4149L10.9314 10.4013L10.9041 14.4012L12.9041 14.4148L12.9313 10.4149ZM12.9045 14.5276L12.9177 12.4137L8.91778 12.3887L8.9046 14.5026L12.9045 14.5276ZM6.43577 20.9144C9.98614 20.9375 12.8824 18.078 12.9045 14.5276L8.9046 14.5026C8.89624 15.8435 7.80266 16.9232 6.46182 16.9145L6.43577 20.9144ZM0.0483035 14.445C0.026166 17.9949 2.88584 20.8913 6.43577 20.9144L6.46182 16.9145C5.12056 16.9057 4.03986 15.8112 4.04823 14.4699L0.0483035 14.445ZM0.0615025 12.3284L0.0483035 14.445L4.04823 14.4699L4.06142 12.3533L0.0615025 12.3284Z"
+                    fill="#808080"
+                    mask="url(#path-2-inside-1_423_8)"
+                  />
+                </svg>
+                <span className={`${styles.pfl__data} ${styles.user__link}`}>
+                  <a href="" target="_blank">
+                    https://linktr.ee/xyz
+                  </a>
+                </span>
               </span>
             </span>
-          </span>
+          </div>
           <div className={styles.button__for__hover__div}>
-              <>
+            {!isPostOwner && (
               <div style={{ paddingRight: 5 }}>
                 <button
                   className={`${styles.fllw_hvr_btn} ${styles.follow__hvr}`} onClick={handleFollow}
@@ -116,16 +165,14 @@ const ProfileImage = ({ post }) => {
                   Follow
                 </button>
               </div>
-              <div style={{ paddingLeft: 5 }}>
-                <button className={`${styles.fllw_hvr_btn} ${styles.msg__hvr}`}>
-                  Message
-                </button>
-              </div>
-              </>
+            )}
+            <div style={{ paddingLeft: 5 }}>
+              <button className={`${styles.fllw_hvr_btn} ${styles.msg__hvr}`}>
+                Message
+              </button>
+            </div>
           </div>
         </div>
-        )}
-        
         {/* hovercard */}
 
       </div>
@@ -133,15 +180,13 @@ const ProfileImage = ({ post }) => {
       <div>
         <div>
           <span className={styles._0022_nm_usr}>
-            <Link href={`${post?.user?.username}`}>
-            {post?.user?.name}
-            </Link>
-            <span>@{post?.user?.username}</span>
+            {post?.user[0]?.name}
+            <span>@{post?.user[0]?.username}</span>
           </span>
         </div>
         <div>
           <span className={styles._000_dt_data}>
-            <PostedAt time={post?.createdAt} />
+            <PostedAt time={post?.post[0]?.createdAt} />
           </span>
         </div>
       </div>

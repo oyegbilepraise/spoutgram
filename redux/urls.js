@@ -11,19 +11,26 @@ export const URL = {
   // Users
   createProfile: "/users/create-profile",
   verifyUsername: "/users/verify-username",
-
+  updateProfile: "/users/user/update",
+  updateProfilePicture: "/users/user/profile-photo/upload",
+  getAllUsers: "/users/all-users",
+  getSingleUser: "/users/user/",
   // Posts
 createPost:"/posts/create",
 getPosts:"/posts/all-posts",
 getSinglePost:"/posts/post/",
 likePost:"/posts/post/like",
 dislikePost:"/posts/post/unlike",
+getUserPost: "/users/posts",
+repost:"/posts/repost/",
   // Category
 
   // Comment
 createComment:"/comments/create",
 getParticularPostComments:"/comments/",
 replyComment:"/comments/reply",
+likeComment:"/comments/like/",
+likeReply:"/comments/like/reply/",
 getOneComment:"/comments/comment/",
 getParticularCommentReplies:"/comments/all_reply/",
 
@@ -43,7 +50,10 @@ getParticularCommentReplies:"/comments/all_reply/",
   //MESSAGES
   suggestedUsers:"/message/suggested",
   friends: '/message/friends',
-  sendMessage: '/message/send_message'
+  sendMessage: '/message/send_message',
+
+  //Notifications
+  socialNotification: "/notification/social"
 };
 
 

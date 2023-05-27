@@ -509,8 +509,13 @@ input[type="text"].data_content_inpcode:not(:focus):not(:placeholder-shown) {
   transform: translate(-50%, -50%);
   border-radius: 50%;
   object-fit: cover;
-  filter: brightness(45%);
+  filter: brightness(95%);
   cursor: pointer;
+  transition: 0.6s all;
+}
+.x_xjhhl_img:hover {
+  filter: brightness(50%);
+  transition: 0.6s all;
 }
 .camera {
   position: absolute;
@@ -854,6 +859,70 @@ input[type="text"].data_content_inpcode:not(:focus):not(:placeholder-shown) {
   font-size: 12px;
   letter-spacing: 0.2px;
 }
+.month__dropdwn {
+  /* border: 1px solid black; */
+  height: 47px;
+  width: 45%;
+  background-color: rgb(248, 248, 248);
+  outline: none;
+  border: 1px solid rgba(228, 228, 228, 0.264);
+  border-radius: 8px;
+  cursor: pointer;
+  position: relative;
+}
+.day__dropdwn {
+  /* border: 1px solid black; */
+  height: 47px;
+  width: 23%;
+  background-color: rgb(248, 248, 248);
+  outline: none;
+  border: 1px solid rgba(228, 228, 228, 0.264);
+  border-radius: 8px;
+  cursor: pointer;
+  position: relative;
+}
+.year__dropdwn {
+  /* border: 1px solid black; */
+  height: 47px;
+  width: 28%;
+  background-color: rgb(248, 248, 248);
+  outline: none;
+  border: 1px solid rgba(228, 228, 228, 0.264);
+  border-radius: 8px;
+  cursor: pointer;
+  position: relative;
+}
+.months, .days, .years {
+  font-family: var(--global-regular);
+  font-size: 15.3px;
+  color: rgb(170, 170, 170);
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+}
+.dropdown__list {
+  border: 1px solid black;
+  width: 100%;
+  height: 250px;
+  position: absolute;
+  top: 54px;
+  border-radius: 8px;
+  background-color: rgb(248, 248, 248);
+  outline: none;
+  border: 1px solid rgba(228, 228, 228, 0.264);
+  overflow-y: auto;
+}
+.option__list {
+  display: block;
+  font-size: 15.3px;
+  font-family: var(--global-regular);
+  text-align: center;
+  color: rgb(10, 10, 10);
+  padding-top: 5px; padding-bottom: 5px;
+}
+.option__list:hover {
+  background-color: rgb(240, 240, 240);
+}
 /* responsiveness */
 @media screen and (max-width: 520px) {
   ._xparnts, ._xparnts_y {
@@ -1111,8 +1180,8 @@ input[type="text"].data_content_inpcode:not(:focus):not(:placeholder-shown) {
     border-radius: 10px; position: relative;
   }
   .image__wrapper__, .image__wrapper__xx {
-    width: 140px;
-    height: 140px;
+    width: 148px;
+    height: 148px;
     background-color: rgb(245, 245, 245);
     margin-top: 30px;
   }

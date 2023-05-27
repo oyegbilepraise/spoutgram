@@ -86,18 +86,18 @@ const CreateProfileScreen = () => {
 
   // date code
   const [months] = useState([
-    { id: 1, label: "Jan", value: 1 },
-    { id: 2, label: "Feb", value: 2 },
-    { id: 3, label: "Mar", value: 3 },
-    { id: 4, label: "Apr", value: 4 },
+    { id: 1, label: "January", value: 1 },
+    { id: 2, label: "February", value: 2 },
+    { id: 3, label: "March", value: 3 },
+    { id: 4, label: "April", value: 4 },
     { id: 5, label: "May", value: 5 },
-    { id: 6, label: "Jun", value: 6 },
-    { id: 7, label: "Jul", value: 7 },
-    { id: 8, label: "Aug", value: 8 },
-    { id: 9, label: "Sep", value: 9 },
-    { id: 10, label: "Oct", value: 10 },
-    { id: 11, label: "Nov", value: 11 },
-    { id: 12, label: "Dec", value: 12 },
+    { id: 6, label: "June", value: 6 },
+    { id: 7, label: "July", value: 7 },
+    { id: 8, label: "August", value: 8 },
+    { id: 9, label: "September", value: 9 },
+    { id: 10, label: "October", value: 10 },
+    { id: 11, label: "November", value: 11 },
+    { id: 12, label: "December", value: 12 },
   ]);
   const [days, setDays] = useState([]);
   const [years, setYears] = useState([]);
@@ -200,6 +200,7 @@ const CreateProfileScreen = () => {
 
   const formProps = {
     image,
+    isLoading,
     handleImageUpload,
     appError,
     profile,
@@ -212,7 +213,7 @@ const CreateProfileScreen = () => {
     months,
     years,
     loading,
-    handleMonthChange,
+    handleMonthChange, 
     handleDayChange,
     handleYearChange,
     handleImageRemove,
@@ -250,6 +251,10 @@ const CreateProfileScreen = () => {
             {profile?.message && <p>{profile?.message}</p>}
 
             <span className={styles.vdf_data}>Add your info.</span>
+
+            <span className={styles._000xsry}>
+              Photo • Name • Username • BirthDate
+            </span>
 
             {/* this is the form that would proccess all the users data for create-profile */}
             <FormComp formProps={formProps} />

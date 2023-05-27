@@ -21,20 +21,25 @@ const MainProfileScreen = () => {
   const [currentTab, setCurrentTab] = useState("/");
   const { userId } = router.query;
   const { user, apiError } = useSelector((state) => state?.auth?.getUser);
+  // const {loading, appError, posts} = useSelector((state)=>state.post.allPosts)
   const [post, setPost] = useState();
   const [loading, setLoading] = useState(true)
   const dispatch = useDispatch()
-
-
   //   get the current tab
   useEffect(() => {
     const { tab } = router.query;
+    console.log(router.query);
     if (tab) {
       setCurrentTab(tab);
     } else {
       setCurrentTab("/");
     }
   }, [router.query.tab]);
+
+  useEffect(()=>{
+      // const {userId} = router.query;
+      
+  }, [router.query.userId])
 
   useEffect(() => {
     getUsersPost()
@@ -52,11 +57,12 @@ const MainProfileScreen = () => {
     try {
       const { data } = await axios.get(`${baseUrl}/users/posts`, { headers: { Authorization: 'Bearer ' + token } })
       setPost(data.data)
+      console.log(data?.data)
       setLoading(false)
     } catch (error) {
-      if (!error?.response?.data.status) {
-        dispatch(logout())
-      }
+      // if (!error?.response?.data.status) {
+      //   dispatch(logout())
+      // }
       console.log({ error });
     }
   }

@@ -2,6 +2,8 @@ import EachPost from "./EachPost";
 import { PageSpinner } from "../../components";
 
 const Post = ({ posts, loading }) => {
+const route={one:"postComments/",two:"comment/"}
+// console.log(posts);
   return (
     <div>
       {loading ? <div style={{ height: "78vh" }} className="d-flex justify-content-center align-items-center">
@@ -10,9 +12,9 @@ const Post = ({ posts, loading }) => {
         </div>
       </div> :
         <div>
-          {posts.map((post, id) => {
+          {posts?.map((post, id) => {
             return (
-              <EachPost post={post} key={id} />
+              <EachPost post={post} key={id} route={route}/>
             )
           }
           )}
@@ -23,3 +25,4 @@ const Post = ({ posts, loading }) => {
 };
 
 export default Post;
+

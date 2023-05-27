@@ -1,0 +1,8 @@
+.__img_file{
+    display: flex;
+    gap: 1;
+    cursor: pointer;
+}
+.__file_input{
+    display: none;
+}

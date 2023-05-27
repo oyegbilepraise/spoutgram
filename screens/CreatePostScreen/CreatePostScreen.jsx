@@ -18,6 +18,7 @@ const CreatePostScreen = () => {
   const inputDesc = createRef()
   const [cursorPosition, setcursorPosition] = useState("")
   const [showPostSettings, setShowPostSettings] = useState(false);
+  const [postSucceeds, setPostSucceeds] = useState(false)
   const dispatch = useDispatch();
   const fileInputRef = useRef();
   const VideoInputRef = useRef();
@@ -67,6 +68,7 @@ const CreatePostScreen = () => {
   };
 
   const handleVideoClick = () => {
+    // VideoInputRef.current.click();
     VideoInputRef.current.click();
   };
 
@@ -86,14 +88,21 @@ const CreatePostScreen = () => {
           formData.append("video", values.media[i]);
         }
       }
-      dispatch(createPostAction(formData));
+      const res = await dispatch(createPostAction(formData));
+console.log(res?.payload?.success);
+if (res?.payload?.success) {
       values.title = "";
       values.desc = "";
+      setPostSucceeds(true)
+      setTimeout(()=>{
+      setPostSucceeds(false)
+      },3000)
       values.media = [];
       setMedia([]);
+      // router.push(Routes.HOME);
       fileInputRef.current.value = "";
       VideoInputRef.current.value = "";
-      router.push(Routes.HOME);
+}
     },
   });
 
@@ -239,6 +248,7 @@ const CreatePostScreen = () => {
                 for (let i = 0; i < files.length; i++) {
                   const file = files[i];
                   newMedia.push(file);
+                  console.log(file);
                 }
                 setMedia([...media, ...newMedia]);
               }}
