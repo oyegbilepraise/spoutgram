@@ -47,9 +47,12 @@ const EachPost = ({ post, route }) => {
       set_Views(res?.payload?.data?.view);
     }
   };
+  console.log(post);
   const handleLike = async () => {
     try {
-      const res = await dispatch(likePostAction({ postId:post?.post[0]?._id }));
+      const res = await dispatch(
+        likePostAction({ postId: post?.post[0]?._id })
+      );
       // console.log(res?.payload?.data);
       setLikes(res?.payload?.data?.likes);
     } catch (error) {
@@ -96,25 +99,24 @@ const EachPost = ({ post, route }) => {
         threshold="0.5"
         onChange={(inView, entry) => handlePostView(inView, post, entry)}
       >
-      {post?.repost_status && (
-            <div>
-              {" "}
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                id="repost"
-                className={`${styles.green} ${styles.x_icn_ftr} ${styles.repostme}`}
-                width={24}
-                height={24}
-              >
-                <path fill="none" d="M0 0h24v24H0z" />
-                <path d="M8 20v1.932a.5.5 0 0 1-.82.385l-4.12-3.433A.5.5 0 0 1 3.382 18H18a2 2 0 0 0 2-2V8h2v8a4 4 0 0 1-4 4H8zm8-16V2.068a.5.5 0 0 1 .82-.385l4.12 3.433a.5.5 0 0 1-.321.884H6a2 2 0 0 0-2 2v8H2V8a4 4 0 0 1 4-4h10z" />
-              </svg>{" "}
-              {post?.reposter[0].name} reposted
-            </div>
-          )}
+        {post?.repost_status && (
+          <div>
+            {" "}
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              id="repost"
+              className={`${styles.green} ${styles.x_icn_ftr} ${styles.repostme}`}
+              width={24}
+              height={24}
+            >
+              <path fill="none" d="M0 0h24v24H0z" />
+              <path d="M8 20v1.932a.5.5 0 0 1-.82.385l-4.12-3.433A.5.5 0 0 1 3.382 18H18a2 2 0 0 0 2-2V8h2v8a4 4 0 0 1-4 4H8zm8-16V2.068a.5.5 0 0 1 .82-.385l4.12 3.433a.5.5 0 0 1-.321.884H6a2 2 0 0 0-2 2v8H2V8a4 4 0 0 1 4-4h10z" />
+            </svg>{" "}
+            {post?.reposter[0].name} reposted
+          </div>
+        )}
         <div className={`${styles.div} ${styles.data_content}`}>
-          
           <ProfileImage post={post} />
           <div
             className={`${styles.data_content_all} ${styles._00dca} ${styles.data_no_content}`}
@@ -249,8 +251,10 @@ const EachPost = ({ post, route }) => {
               </span>
               <span className={styles._00mn_span}>
                 {/* <Link href={`reply/${comment?._id}`}> */}
-                {route?.two ? (
-                  <Link href={`${route.two}${post?._id}`}>
+                {/* {route?.two ? (
+                  <Link href={`${route.two}${post?._id}`}> */}
+                {route?.one ? (
+                  <Link href={`${route.one}${post._id}`}>
                     <span>
                       <svg
                         id="comment"
@@ -282,7 +286,7 @@ const EachPost = ({ post, route }) => {
                 )}
 
                 <span className={styles._00mn_spn_cnt}>
-                  {post?.comment > 0 && post?.comment}
+                  {post?.post[0]?.comment > 0 && post?.post[0]?.comment}
                 </span>
               </span>
               <span
