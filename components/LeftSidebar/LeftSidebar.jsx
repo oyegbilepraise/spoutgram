@@ -10,13 +10,13 @@ import {
   PodcastSvg,
   SubscriptionSvg,
 } from "@/components";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { SpoutgramSvg, HomeSvg } from "../../components";
 import { useRouter } from "next/router";
 import Cookies from "js-cookie";
 import Routes from "@/utils/routes";
 import { useDispatch, useSelector } from "react-redux";
-import { logout } from '../../redux/slices/authSlice/authSlice'
+import { getUserAction, logout } from '../../redux/slices/authSlice/authSlice'
 
 const LeftSidebar = () => {
   const [showMore, setShowMore] = useState(false);
@@ -24,7 +24,6 @@ const LeftSidebar = () => {
   const dispatch = useDispatch();
 
   const { user, apiError } = useSelector((state) => state?.auth?.getUser);
-
   const router = useRouter();
   // Define a function to determine if a link is active
   const isActive = (pathname) => {
@@ -32,6 +31,10 @@ const LeftSidebar = () => {
       ? styles.activeState
       : styles.inactiveState;
   };
+  useEffect(()=>{
+    const token = Cookies.get("token");
+      dispatch(getUserAction(token))
+  }, [])
 
   // show more toggle function
   const handleShowMore = () => {
@@ -48,6 +51,16 @@ const LeftSidebar = () => {
       console.log({ error });
     }
   };
+
+  // function stringAvatar(name) {
+  //   return {
+  //     // sx: {
+  //     //   bgcolor: stringToColor(name),
+  //     // },
+  //     // children: 
+  //     `${name.split(' ')[0][0]}${name.split(' ')[1][0]}`,
+  //   };
+  // }
  
   return (
     <div 
@@ -184,7 +197,7 @@ const LeftSidebar = () => {
       {/* Create__button */}
 
       {/* Profile */}
-      <div className={styles.profile__fxd} style={{display: "none"}}>
+      <div className={styles.profile__fxd} style={{display: ""}}>
         {showLogout && (
           <div className={styles.more_explained}>
             <Link href="/edit">
@@ -198,9 +211,14 @@ const LeftSidebar = () => {
 
         {/* this was set to display none for a reason */}
         <span>
-          <Link href={`${user.data?.username}`}>
+          <Link href={`${user.data?.username}`}> 
+          {/* I want to be using either anothewr tag or button so that I can use onClick on it and set username into the localStorage */}
             <div className={styles.__user__data__hold}>
-              <span className={styles.user__initial}>AV</span>
+              <span className={styles.user__initial}>
+                {
+                  `${user?.data?.name.split(" ")[0].split("")[0]}${user?.data?.name.split(" ")[1].split("")[0]}` ?? "JO"
+                }
+              </span>
             </div>
           </Link>
         </span>

@@ -1,8 +1,9 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import { MainProfileScreen } from '@/screens'
 import Head from 'next/head'
 
 const Profile = () => {
+
   return ( 
     <>
      <Head>

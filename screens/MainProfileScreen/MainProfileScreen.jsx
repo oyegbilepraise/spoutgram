@@ -49,9 +49,9 @@ const MainProfileScreen = () => {
     }
   }, [router.query.tab]);
 
+  // console.log(user)
   useEffect(()=>{
       const {userId} = router.query;
-      dispatch(getUserPostsAction(userId));
   }, [router.query.userId])
 
   useEffect(() => {

@@ -20,7 +20,16 @@ const ProfileOverview = () => {
   const [userDetail, setUserDetail] = useState({});
   const router = useRouter();
   const dispatch = useDispatch();
+  let userId;
   // remove and set overflow
+  useEffect(()=>{
+    if(localStorage.username){
+      userId = localStorage.username ? localStorage.getItem("username"): "";
+    }
+    else{
+      userId = router?.query?.userId;
+    }
+  })
   useEffect(() => {
     if (showSubscribe) {
       document.body.classList.add("no-scroll");
@@ -30,14 +39,14 @@ const ProfileOverview = () => {
   }, [showSubscribe]);
   useEffect(()=>{
     dispatch(getAllUsersAction());
+    localStorage.setItem("username", router.query.userId);
     getUserDetail();
   }, [router])
 
-  useEffect(()=>{
-  }, [router])
-  
   const getUserDetail=async ()=>{
-    const {userId} = router.query;
+    // let userId = localStorage.username ? localStorage.getItem("username"): "";
+    // console.log(userId);
+    // const {userId} = router.query;
     let newUser = await allUsers?.data?.find((user)=>user?.username==userId)
     if(newUser?.username == user?.data?.username){
       setUserDetail({...newUser, owner: true})

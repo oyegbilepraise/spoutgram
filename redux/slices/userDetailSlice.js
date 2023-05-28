@@ -60,8 +60,9 @@ export const getAllUsersAction= createAsyncThunk("users/getAllUsers", async(_, {
 //get user posts
 export const getUserPostsAction = createAsyncThunk("/users/post", async(payload, {rejectWithValue})=>{
     const token = Cookies.get("token");
+    console.log(payload);
     try{
-        const res = await getRequest({url: `${baseUrl}${URL.getUserPost}`, token, data: payload});
+        const res = await getRequest({url: `${baseUrl}${URL.getUserPost}${payload}`, token});
         console.log(res?.data);
         return res?.data;
     }catch(err){
