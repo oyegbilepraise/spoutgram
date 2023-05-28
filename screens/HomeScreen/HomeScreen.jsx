@@ -39,7 +39,7 @@ const HomeScreen = (props) => {
           <div className={styles.parnt__cnt_wyyyt}>
             <div className={styles.inipic_xyz}>
               <Link href={`${user?.data?.username}`}>
-                <Image alt="img" className={styles.img__winipc} src={img} />
+                <Image alt="img" className={styles.img__winipc} src={img} width="22" height="22"/>
               </Link>
             </div>
             <div className={styles.ini__inp}>

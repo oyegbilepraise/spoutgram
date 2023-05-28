@@ -120,7 +120,7 @@ const ProfileOverview = () => {
       <div>
         <div className={styles.sxuiip}>
           <div className={styles._000data__img__div}>
-            <Image src={userDetail?.profilePhoto? userDetail?.profilePhoto : img} alt="img" className={styles.profile_img} fill />
+            <Image src={userDetail?.profilePhoto? userDetail?.profilePhoto : img} alt="img" className={styles.profile_img} fill/>
           </div>
           <div>
             <div className={styles.dxcWAsd}>
@@ -368,7 +368,7 @@ const ProfileOverview = () => {
                 className={styles.div__subsvrib__pht}
                 style={{ textAlign: "center" }}
               >
-                <Image fill src={img} className={styles.submodal__ppic} />
+                <Image fill src={img} className={styles.submodal__ppic} width="22" height="22"/>
               </div>
               <div className={styles.subprofile___show}>
                 <h5>Penuel John</h5>

@@ -14,7 +14,7 @@ const Earnings = () => {
       <div className={`${styles.npd_toast} ${styles.npd_f_notif}`}>
         <div className={styles.hold_them}>
           <div>
-            <Image src={imgOne} className={styles.npd_toast_png} />
+            <Image src={imgOne} className={styles.npd_toast_png} width="22" height="22" />
           </div>
           <div className={`${styles.float_nicn} ${styles.fncn}`}>
             {/* <img
@@ -42,7 +42,7 @@ const Earnings = () => {
       <div className={`${styles.npd_toast} ${styles.npd_f_notif}`}>
         <div className={styles.hold_them}>
           <div>
-            <Image src={imgOne} className={styles.npd_toast_png} />
+            <Image src={imgOne} className={styles.npd_toast_png} width="22" height="22" />
           </div>
           <div className={`${styles.float_nicn} ${styles.fncn}`}>
             {/* <img

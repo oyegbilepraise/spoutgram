@@ -135,7 +135,7 @@ const { user, apiError } = useSelector((state) => state?.auth?.getUser);
         <div className={styles.whats_yyy}>
           <div className={styles.parnt__cnt_wyyyt}>
             <div className={styles.inipic_xyz}>
-              <Image alt="img" className={styles.img__winipc} src={user?.data?.profilePhoto==""?img:user?.data?.profilePhoto} />
+              <Image alt="img" className={styles.img__winipc} src={user?.data?.profilePhoto==""?img:user?.data?.profilePhoto} width="22" height="22"/>
             </div>
             <div className={styles.ini__inp}>
               <input
