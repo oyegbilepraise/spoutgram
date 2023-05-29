@@ -1,5 +1,5 @@
 import styles from "@/layout/HomeLayout/HomeLayout.module.css";
-import imgOne from "../../images/me.jpeg";
+import imgOne from "../../images/default.jpeg";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { socialNotificationAction } from "@/redux/slices/notificationSlice/notificationSlice";
@@ -11,9 +11,10 @@ const Social = () => {
   const dispatch = useDispatch({});
   const router = useRouter({});
   const {loading, appError, data} = useSelector(state=>state.notification.notification);
+  console.log(data);
   useEffect(()=>{
       dispatch(getAllUsersAction())
-      dispatch(socialNotificationAction())  
+      dispatch(socialNotificationAction())
   }, [dispatch])
 
   const goToPost=({type, postId})=>{
@@ -76,7 +77,7 @@ const Social = () => {
                               {
                                 //notification contents
                                 notif?.notification_type==1? //follow
-                                (<><a href="" >@username</a> now follows you.</>):
+                                (<><a href="" >{`@${notif?.user?.username}` ?? `@username`}</a> now follows you.</>):
                                 notif?.notification_type==2 || notif.notification_type==3? //like and repost
                                 (<>"{notif?.post?.desc}"</>): 
                                 ("")

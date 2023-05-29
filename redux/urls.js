@@ -53,7 +53,8 @@ getParticularCommentReplies:"/comments/all_reply/",
   sendMessage: '/message/send_message',
 
   //Notifications
-  socialNotification: "/notification/social"
+  socialNotification: "/notification/social",
+  unreadNotification: "/notification/unread"
 };
 
 

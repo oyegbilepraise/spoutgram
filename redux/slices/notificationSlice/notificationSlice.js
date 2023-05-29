@@ -16,6 +16,17 @@ export const socialNotificationAction = createAsyncThunk("/notification/socialNo
     }
 })
 
+//get unread notifications
+export const unreadNotificationAction = createAsyncThunk("/notification/unreadNotification", async(_, {rejectWithValue})=>{
+    const token = Cookies.get("token");
+    try{
+        const res =await getRequest({url: `${baseUrl}${URL.unreadNotification}`, token});
+        return res?.data?.data;
+    }catch(err){
+        rejectWithValue(err?.response?.data?.message);
+    }
+})
+
 
 const notificationSlice = createSlice({
     name: 'Notification',
@@ -24,6 +35,11 @@ const notificationSlice = createSlice({
             loading: false,
             appError: null,
             data: []
+        },
+        unreadNotification: {
+            loading: false,
+            unread: null,
+            appError: null
         }
     },
     reducers: {},
@@ -39,6 +55,17 @@ const notificationSlice = createSlice({
         }).addCase(socialNotificationAction.rejected, (state, action)=>{
             state.notification.loading = false;
             state.notification.appError = action?.payload
+        })
+        // unread notification
+        .addCase(unreadNotificationAction.pending, (state, action)=>{
+            state.unreadNotification.loading = true;
+            state.unreadNotification.appError = null;
+        }).addCase(unreadNotificationAction.fulfilled, (state, action)=>{
+            state.unreadNotification.loading = false;
+            state.unreadNotification.unread = action?.payload
+        }).addCase(unreadNotificationAction.rejected, (state, action)=>{
+            state.unreadNotification.loading = false;
+            state.unreadNotification.appError = action?.payload
         })
     }
 })

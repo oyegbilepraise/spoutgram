@@ -211,19 +211,25 @@ const LeftSidebar = () => {
 
         {/* this was set to display none for a reason */}
         <span>
-          <Link href={`${user.data?.username}`}> 
+          <span 
+          // href={`${user.data?.username}`}
+          onClick={()=>{
+              localStorage.setItem("username", user?.data?.username);
+              router.push(`${user.data?.username}`);
+          }}
+          > 
           {/* I want to be using either anothewr tag or button so that I can use onClick on it and set username into the localStorage */}
             <div className={styles.__user__data__hold}>
               <span className={styles.user__initial}>
                 {
-                  `${user?.data?.name.split(" ")[0].split("")[0]}${user?.data?.name.split(" ")[1].split("")[0]}` ?? "JO"
+                  user?.data ?`${user?.data?.name.split(" ")[0].split("")[0]}${user?.data?.name.split(" ")[1].split("")[0]}` : "SP"
                 }
               </span>
             </div>
-          </Link>
+          </span>
         </span>
         <span className={`${styles.span_data_sidebar} ${styles.norms__ava}`}>
-          {user?.data?.name}
+          {user?.data?.name ?? "Username"}
           <span className={styles.normass__zz}> {user?.data?.email} </span>
         </span>
         <svg

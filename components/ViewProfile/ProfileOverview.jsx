@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { BtnloadSvg, PageSpinner } from "../../components";
 import { useRouter } from "next/router";
-import { getAllUsersAction, updateProfileAction, updateProfilePictureAction } from "@/redux/slices/userDetailSlice";
+import { getAllUsersAction, getUserPostsAction, updateProfileAction, updateProfilePictureAction } from "@/redux/slices/userDetailSlice";
 import { useFormik } from "formik";
 import axios from "axios";
 import { getUserAction } from "@/redux/slices/authSlice/authSlice";
@@ -20,16 +20,7 @@ const ProfileOverview = () => {
   const [userDetail, setUserDetail] = useState({});
   const router = useRouter();
   const dispatch = useDispatch();
-  let userId;
   // remove and set overflow
-  useEffect(()=>{
-    if(localStorage.username){
-      userId = localStorage.username ? localStorage.getItem("username"): "";
-    }
-    else{
-      userId = router?.query?.userId;
-    }
-  })
   useEffect(() => {
     if (showSubscribe) {
       document.body.classList.add("no-scroll");
@@ -39,15 +30,13 @@ const ProfileOverview = () => {
   }, [showSubscribe]);
   useEffect(()=>{
     dispatch(getAllUsersAction());
-    localStorage.setItem("username", router.query.userId);
     getUserDetail();
   }, [router])
-
+  
   const getUserDetail=async ()=>{
-    // let userId = localStorage.username ? localStorage.getItem("username"): "";
-    // console.log(userId);
-    // const {userId} = router.query;
+    const {userId} = router.query;
     let newUser = await allUsers?.data?.find((user)=>user?.username==userId)
+    dispatch(getUserPostsAction(newUser?._id))
     if(newUser?.username == user?.data?.username){
       setUserDetail({...newUser, owner: true})
     }else{

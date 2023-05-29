@@ -63,8 +63,8 @@ export const getUserPostsAction = createAsyncThunk("/users/post", async(payload,
     console.log(payload);
     try{
         const res = await getRequest({url: `${baseUrl}${URL.getUserPost}${payload}`, token});
-        console.log(res?.data);
-        return res?.data;
+        console.log(res?.data?.data);
+        return res?.data?.data;
     }catch(err){
         rejectWithValue(err?.response?.data);
     }
@@ -96,7 +96,7 @@ const userDetailSlice = createSlice({
       appError: null,
       users: []
     },
-    getUserPost: {
+    userPost: {
       loading: false,
       appError: null,
       posts: []
@@ -165,16 +165,16 @@ const userDetailSlice = createSlice({
       })
       //get user posts
       .addCase(getUserPostsAction.pending, (state, action)=>{
-        state.getUserPost.loading = true;
-        state.getUserPost.appError = null;
+        state.userPost.loading = true;
+        state.userPost.appError = null;
       })
       .addCase(getUserPostsAction.fulfilled, (state, action)=>{
-          state.getUserPost.loading = false;
-          state.getUserPost.posts = action.payload
+          state.userPost.loading = false;
+          state.userPost.posts = action.payload
       })
       .addCase(getUserPostsAction.rejected, (state, action)=>{
-          state.getUserPost.loading = false;
-          state.getUserPost.appError = action.payload;
+          state.userPost.loading = false;
+          state.userPost.appError = action.payload;
       })
   },
 });
