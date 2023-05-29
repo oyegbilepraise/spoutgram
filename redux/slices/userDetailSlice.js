@@ -27,7 +27,7 @@ export const updateProfileAction = createAsyncThunk("/users/updateProfile", asyn
     const token = Cookies.get("token");
     try{
         const res = await patchRequest({url: `${baseUrl}${URL.updateProfile}`, token, data: payload})
-        dispatch(updateUserProfile(res?.data?.data))
+        dispatch(updateUserProfile(res?.data))
         return res.data
     }catch(err){
         rejectWithValue(err?.response?.data.data);
@@ -41,7 +41,6 @@ export const updateProfilePictureAction = createAsyncThunk('/users/updateProfile
       console.log(res);
       return res?.data
     }catch(err){
-      console.log(err.response.data);
       rejectWithValue(err?.response?.data?.message);
     }
 })
@@ -51,6 +50,7 @@ export const getAllUsersAction= createAsyncThunk("users/getAllUsers", async(_, {
   const token = Cookies.get("token");
   try{
     const res = await getRequest({url: `${baseUrl}${URL.getAllUsers}`, token: token})
+    console.log(res.data);
     return res?.data
   }catch(err){
     rejectWithValue(err?.response?.data?.message);
@@ -60,7 +60,6 @@ export const getAllUsersAction= createAsyncThunk("users/getAllUsers", async(_, {
 //get user posts
 export const getUserPostsAction = createAsyncThunk("/users/post", async(payload, {rejectWithValue})=>{
     const token = Cookies.get("token");
-    console.log(payload);
     try{
         const res = await getRequest({url: `${baseUrl}${URL.getUserPost}${payload}`, token});
         console.log(res?.data?.data);

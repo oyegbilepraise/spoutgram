@@ -10,14 +10,12 @@ import { useFormik } from "formik";
 import axios from "axios";
 import { getUserAction } from "@/redux/slices/authSlice/authSlice";
 import Cookies from "js-cookie";
-const ProfileOverview = () => {
+const ProfileOverview = ({userDetail}) => {
   const [showSubscribe, setShowSubscribe] = useState(false);
   const [showMore, setShowMore] = useState(false);
   const [showVideo, setShowVideo] = useState(false);
   const { user, apiError, loading } = useSelector((state) => state?.auth?.getUser);
-  const allUsers = useSelector((state)=>state.userDetails.allUsers.users)
   const updateProfile = useSelector(state=>state.userDetails.updateProfile)
-  const [userDetail, setUserDetail] = useState({});
   const router = useRouter();
   const dispatch = useDispatch();
   // remove and set overflow
@@ -28,22 +26,6 @@ const ProfileOverview = () => {
       document.body.classList.remove("no-scroll");
     }
   }, [showSubscribe]);
-  useEffect(()=>{
-    dispatch(getAllUsersAction());
-    getUserDetail();
-  }, [router])
-  
-  const getUserDetail=async ()=>{
-    const {userId} = router.query;
-    let newUser = await allUsers?.data?.find((user)=>user?.username==userId)
-    dispatch(getUserPostsAction(newUser?._id))
-    if(newUser?.username == user?.data?.username){
-      setUserDetail({...newUser, owner: true})
-    }else{
-      setUserDetail({...newUser, owner: false})
-    }
-  }
-
   const [image, setImage] = useState(null);
   const [isLoading, setLoading] = useState(false);
 
@@ -101,14 +83,15 @@ const ProfileOverview = () => {
         username: userDetail?.username,
         bio: userDetail?.bio,
         website: userDetail?.website,
-        location: userDetail?.location
+        location: userDetail?.location,
+        showSubscribersCount: false
       },
       enableReinitialize: true,
       onSubmit: async(values)=>{
-        const token = Cookies.get("token");
         const {name, username, bio, website, location} = values;
         await dispatch(updateProfileAction({name, username, bio, website, location}));
         setEditModalOpen(false);
+        console.log(user?.data);
       }
   })
   
@@ -118,7 +101,9 @@ const ProfileOverview = () => {
       <div>
         <div className={styles.sxuiip}>
           <div className={styles._000data__img__div}>
-            <Image src={userDetail?.profilePhoto? userDetail?.profilePhoto : img} alt="img" className={styles.profile_img} fill />
+            <Image src={
+              userDetail?.owner?
+              (user?.data?.profilePhoto ?? img):(userDetail?.profilePhoto ?? img) } alt="img" className={styles.profile_img} fill />
           </div>
           <div>
             <div className={styles.dxcWAsd}>
@@ -131,9 +116,12 @@ const ProfileOverview = () => {
                   {userDetail?.following?.length?? 0}
                   <span className={styles.xyxxn}>following</span>
                 </span>
+                {
+                  formik.values.showSubscribersCount &&
                 <span className={styles.xoxtrn}>
                   0<span className={styles.xyxxn}>subscribers</span>
                 </span>
+                }
               </span>
               <div>
                 <span
@@ -163,7 +151,10 @@ const ProfileOverview = () => {
           </span>
           <div>
             <span className={`${styles.user_data_name} ${styles.yuv_usr}`}>
-              {userDetail?.name}
+              {
+                userDetail?.owner ? user?.data?.name:
+              userDetail?.name
+              }
               <svg
                 class={styles.spoutgram_verified}
                 label="spoutgram-verified"
@@ -195,17 +186,22 @@ const ProfileOverview = () => {
             </span>
             <div>
               <span className={styles.user_data_unique}>
-                @{userDetail?.username}
+                @{
+                userDetail?.owner ? user?.data?.username:
+              userDetail?.username
+              }
               </span>
             </div>
           </div>
           <div>
             <span className={styles.user_data_about}>
-              {userDetail?.bio ?? <>
-              For most startups, better shape translates into two things: to
-              have a better product with more users, and to have more options
-              for raising money.
-              </>}
+              {
+                userDetail?.owner ? (user?.data?.bio ?? <>
+                Updated your Bio...
+                </>): (userDetail?.bio ?? <>
+              Updated your Bio...
+              </>)
+              }
             </span>
             <span className={styles.span__data__prfl}>
               <svg
@@ -216,7 +212,15 @@ const ProfileOverview = () => {
                 <path d="M12 20.8995L16.9497 15.9497C19.6834 13.2161 19.6834 8.78392 16.9497 6.05025C14.2161 3.31658 9.78392 3.31658 7.05025 6.05025C4.31658 8.78392 4.31658 13.2161 7.05025 15.9497L12 20.8995ZM12 23.7279L5.63604 17.364C2.12132 13.8492 2.12132 8.15076 5.63604 4.63604C9.15076 1.12132 14.8492 1.12132 18.364 4.63604C21.8787 8.15076 21.8787 13.8492 18.364 17.364L12 23.7279ZM12 13C13.1046 13 14 12.1046 14 11C14 9.89543 13.1046 9 12 9C10.8954 9 10 9.89543 10 11C10 12.1046 10.8954 13 12 13ZM12 15C9.79086 15 8 13.2091 8 11C8 8.79086 9.79086 7 12 7C14.2091 7 16 8.79086 16 11C16 13.2091 14.2091 15 12 15Z" />
               </svg>
 
-              <span className={styles.pfl__data}>{userDetail?.location?? <>Miami, USA</>}</span>
+              <span className={styles.pfl__data}>
+                {
+                userDetail?.owner ? (user?.data?.location ?? <>
+                Location
+                </>): (userDetail?.location ?? <>
+                Location
+              </>)
+              }
+                </span>
             </span>
           </div>
           <div>
@@ -241,7 +245,14 @@ const ProfileOverview = () => {
                     <path d="M18.3643 15.5353L16.95 14.1211L18.3643 12.7069C20.3169 10.7543 20.3169 7.58847 18.3643 5.63585C16.4116 3.68323 13.2458 3.68323 11.2932 5.63585L9.87898 7.05007L8.46477 5.63585L9.87898 4.22164C12.6127 1.48797 17.0448 1.48797 19.7785 4.22164C22.5121 6.95531 22.5121 11.3875 19.7785 14.1211L18.3643 15.5353ZM15.5358 18.3638L14.1216 19.778C11.388 22.5117 6.9558 22.5117 4.22213 19.778C1.48846 17.0443 1.48846 12.6122 4.22213 9.87849L5.63634 8.46428L7.05055 9.87849L5.63634 11.2927C3.68372 13.2453 3.68372 16.4112 5.63634 18.3638C7.58896 20.3164 10.7548 20.3164 12.7074 18.3638L14.1216 16.9496L15.5358 18.3638ZM14.8287 7.75717L16.2429 9.17139L9.17187 16.2425L7.75766 14.8282L14.8287 7.75717Z" />
                   </svg>
                   <span className={`${styles.pfl__data} ${styles.user__link}`}>
-                    {!!userDetail?.website ?userDetail?.website: <>https://linktr.ee/xyz</>}
+                    {
+                    // !!userDetail?.website ?userDetail?.website: <>https://yourwebsite</>
+                    userDetail?.owner ? (user?.data?.website ?? <>
+                     https://yourwebsite
+                      </>): (userDetail?.website ?? <>
+                        https://yourwebsite
+                    </>)
+                    }
                   </span>
                 </span>
 
@@ -253,7 +264,9 @@ const ProfileOverview = () => {
                   >
                     <path d="M9 1V3H15V1H17V3H21C21.5523 3 22 3.44772 22 4V20C22 20.5523 21.5523 21 21 21H3C2.44772 21 2 20.5523 2 20V4C2 3.44772 2.44772 3 3 3H7V1H9ZM20 11H4V19H20V11ZM8 13V15H6V13H8ZM13 13V15H11V13H13ZM18 13V15H16V13H18ZM7 5H4V9H20V5H17V7H15V5H9V7H7V5Z" />
                   </svg>
-                  <span className={styles.pfl__data}>Joined {userDetail?.createdAt? (`${new Date(userDetail?.createdAt).toLocaleString('default', { month: 'long'})}, ${new Date(userDetail?.createdAt).getFullYear()}`): '2004'}</span>
+                  <span className={styles.pfl__data}>Joined {
+                  userDetail?.createdAt? (`${new Date(userDetail?.createdAt).toLocaleString('default', { month: 'long'})}, ${new Date(userDetail?.createdAt).getFullYear()}`): ("2004")
+                  }</span>
                 </span>
               </span>
             </span>
@@ -549,8 +562,10 @@ const ProfileOverview = () => {
                   <span>
                     <input
                       type="checkbox"
-                      name="allow_tipsb"
+                      name="showSubscribersCount"
                       id="switcha"
+                      onChange={formik.handleChange}
+                      checked={formik.values.showSubscribersCount}
                     />
                     <label
                       htmlFor="switcha"

@@ -24,14 +24,15 @@ const MainProfileScreen = () => {
   const { userId } = router.query;
   const { user, apiError } = useSelector((state) => state?.auth?.getUser);
   const allUsers = useSelector((state)=>state.userDetails.allUsers.users)
+  const {loading, posts} = useSelector(state=>state.userDetails?.userPost)
   const allPosts = useSelector(
     (state) => state?.post?.allPosts
   );
   const [userDetail, setUserDetail] = useState({});
-  console.log(allPosts);
+  console.log(posts);
   // const {loading, appError, posts} = useSelector((state)=>state.post.allPosts)
   const [post, setPost] = useState();
-  const [loading, setLoading] = useState(true)
+  // const [loading, setLoading] = useState(true)
   const dispatch = useDispatch()
     const token = Cookies.get("token");
   useEffect(() => {
@@ -61,7 +62,7 @@ const MainProfileScreen = () => {
     const {userId} = router.query;
     let newUser = await allUsers?.data?.find((user)=>user?.username==userId)
     console.log(newUser);
-    dispatch(getUserPostsAction(newUser?._id));
+    dispatch(getUserPostsAction(newUser?._id))
     if(newUser?.username == user?.data?.username){
       setUserDetail({...newUser, owner: true})
     }else{
@@ -69,29 +70,29 @@ const MainProfileScreen = () => {
     }
   }
 
-  useEffect(() => {
-    getUsersPost()
-    // first
+  // useEffect(() => {
+  //   getUsersPost()
+  //   // first
 
-    // return () => {
-    //   second
-    // }
-  }, [])
-  const getUsersPost = async () => {
-    // console.log({ user });
-    // const token = Cookies.get('token')
-    // try {
-    //   const { data } = await axios.get(`${baseUrl}/users/posts`, { headers: { Authorization: 'Bearer ' + token } })
-    //   setPost(data.data)
-    //   console.log(data?.data)
-    //   setLoading(false)
-    // } catch (error) {
-    //   // if (!error?.response?.data.status) {
-    //   //   dispatch(logout())
-    //   // }
-    //   console.log({ error });
-    // }
-  }
+  //   // return () => {
+  //   //   second
+  //   // }
+  // }, [])
+  // const getUsersPost = async () => {
+  //   // console.log({ user });
+  //   // const token = Cookies.get('token')
+  //   // try {
+  //   //   const { data } = await axios.get(`${baseUrl}/users/posts`, { headers: { Authorization: 'Bearer ' + token } })
+  //   //   setPost(data.data)
+  //   //   console.log(data?.data)
+  //   //   setLoading(false)
+  //   // } catch (error) {
+  //   //   // if (!error?.response?.data.status) {
+  //   //   //   dispatch(logout())
+  //   //   // }
+  //   //   console.log({ error });
+  //   // }
+  // }
 
 
   const handleGoBack = () => {
@@ -114,7 +115,7 @@ const MainProfileScreen = () => {
           </div>
         </nav>
 
-        <ProfileOverview />
+        <ProfileOverview userDetail={userDetail} />
         {/* Tabs  */}
         <div
           className={`${styles.column_nav_menu_profile} ${styles.profile_nav__forPrf} ${styles.another__class}`}
