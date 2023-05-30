@@ -378,7 +378,7 @@ const ProfileOverview = ({userDetail}) => {
                 className={styles.div__subsvrib__pht}
                 style={{ textAlign: "center" }}
               >
-                <Image fill src={img} className={styles.submodal__ppic} />
+                <Image fill src={img} className={styles.submodal__ppic} width="22" height="22"/>
               </div>
               <div className={styles.subprofile___show}>
                 <h5>Penuel John</h5>
