@@ -34,9 +34,8 @@ const LoginScreen = () => {
   // google login
   const handleGoogleLogin = async () => {
     try {
-      if (typeof window !== "undefined") {
-        window.open(`${oauthEndpoint}/api/v1/auth/google/callback`, "_self");
-      }
+        window.open(`${baseUrlTest}/auth/google/callback`, "_self");
+      
     } catch (error) {
       console.log(error);
     }
