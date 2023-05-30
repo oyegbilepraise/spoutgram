@@ -13,10 +13,10 @@ import { useContext, useEffect, useState } from "react";
 import { SocketContext } from "../../redux/context/socket.js";
 import Link from "next/link";
 import { InView } from "react-intersection-observer";
-import { useRouter } from "next/router";
 import HomeVideo from "../VideoUpload/HomeVideo";
 import Image from "next/image";
 import img from '../../images/default.jpeg' 
+import { bookmarkAction } from "@/redux/slices/postSlice/postSlice";
 
 const EachPost = ({ post, route }) => {
   const dispatch = useDispatch();
@@ -29,10 +29,8 @@ const EachPost = ({ post, route }) => {
   const [_views, set_Views] = useState(post?.post[0]?.view);
   const { user, apiError } = useSelector((state) => state?.auth?.getUser);
 
-  const router = useRouter();
   useEffect(() => {
     if (post) {
-      // console.log(post.post);
     }
   }, [post]);
 
@@ -41,9 +39,6 @@ const EachPost = ({ post, route }) => {
   );
   const isBookmarked = post?.post[0]?.bookmarks.includes(user?.data?._id);
   const isViewed = post?.post[0]?.view.includes(user?.data?._id);
-
-  // console.log({ post });
-
   const handlePostView = async (inView, post, entry) => {
     if (inView && !isViewed) {
       const res = await dispatch(setViews(post?.post[0]?._id));
@@ -52,13 +47,20 @@ const EachPost = ({ post, route }) => {
   };
   const handleLike = async () => {
     try {
-      const res = await dispatch(likePostAction({ postId:post?.post[0]?._id }));
-      // console.log(res?.payload?.data);
+      const res = await dispatch(likePostAction({ postId: post?.post[0]?._id }));
       setLikes(res?.payload?.data?.likes);
     } catch (error) {
       console.log({ error });
     }
   };
+
+  const handleBookmark = async () => {
+    try {
+      const res = await dispatch(bookmarkAction({ postId: post?.post[0]?._id }));
+    } catch (error) {
+      console.log({ error });
+    }
+  }
   useEffect(() => {
     socket.on(post?.post[0]?._id, (data) => {
       if (data.data.type === "view") {
@@ -70,15 +72,6 @@ const EachPost = ({ post, route }) => {
       }
     });
   }, [socket]);
-  // const handleDislike = async (id) => {
-  //   try {
-  //     const res = await dispatch(dislikePostAction({ postId: id }));
-  //     setDisLikes(res.payload.data.dislikes);
-  //   } catch (error) {
-  //     console.log({ error });
-  //   }
-  // };
-
   useEffect(() => {
     setisLiked(likes?.includes(user?.data?._id));
   }, [likes]);
@@ -150,13 +143,29 @@ const EachPost = ({ post, route }) => {
             <span className={styles.repost__txt}>{post?.reposter[0].name} reposted</span>
           </div>
         )}
+        {post?.repost_status && (
+          <div>
+            {" "}
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              id="repost"
+              className={`${styles.green} ${styles.x_icn_ftr} ${styles.repostme}`}
+              width={24}
+              height={24}
+            >
+              <path fill="none" d="M0 0h24v24H0z" />
+              <path d="M8 20v1.932a.5.5 0 0 1-.82.385l-4.12-3.433A.5.5 0 0 1 3.382 18H18a2 2 0 0 0 2-2V8h2v8a4 4 0 0 1-4 4H8zm8-16V2.068a.5.5 0 0 1 .82-.385l4.12 3.433a.5.5 0 0 1-.321.884H6a2 2 0 0 0-2 2v8H2V8a4 4 0 0 1 4-4h10z" />
+            </svg>{" "}
+            {post?.reposter[0].name} reposted
+          </div>
+        )}
         <div className={`${styles.div} ${styles.data_content}`}>
-          
+
           <ProfileImage post={post} />
           <div
             className={`${styles.data_content_all} ${styles._00dca} ${styles.data_no_content}`}
           >
-            {/* <Link href={`@${post?.user?.username}/postComments/${post._id}`}> */}
             {route?.one ? (
               <Link href={`${route.one}${post._id}`}>
                 <div>
@@ -173,9 +182,9 @@ const EachPost = ({ post, route }) => {
                           {more
                             ? post?.post[0]?.desc
                             : `${post?.post[0]?.desc?.substring(
-                                0,
-                                300
-                              )}...`}{" "}
+                              0,
+                              300
+                            )}...`}{" "}
                           <button
                             style={{ color: "grey" }}
                             onClick={() => setMore(!more)}
@@ -216,9 +225,9 @@ const EachPost = ({ post, route }) => {
                           {more
                             ? post?.post[0]?.desc
                             : `${post?.post[0]?.desc?.substring(
-                                0,
-                                300
-                              )}...`}{" "}
+                              0,
+                              300
+                            )}...`}{" "}
                           <button
                             style={{ color: "grey" }}
                             onClick={() => setMore(!more)}
@@ -281,24 +290,42 @@ const EachPost = ({ post, route }) => {
                   )}
                 </span>
                 <span className={styles._00mn_spn_cnt}>
-                  {likes.length > 0 && likes.length}
+                  {likes?.length > 0 && likes?.length}
                 </span>
               </span>
               <span className={styles._00mn_span}>
-                <span  onClick={openModal}>
-                  <svg
-                    id="comment"
-                    className={`${styles.blue} ${styles.x_icn_ftr}`}
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    width={24}
-                    height={24}
-                  >
-                    <path fill="none" d="M0 0h24v24H0z" />
-                    <path d="M10 3h4a8 8 0 1 1 0 16v3.5c-5-2-12-5-12-11.5a8 8 0 0 1 8-8zm2 14h2a6 6 0 1 0 0-12h-4a6 6 0 0 0-6 6c0 3.61 2.462 5.966 8 8.48V17z" />
-                  </svg>
-                </span>
-
+                {/* <Link href={`reply/${comment?._id}`}> */}
+                {route?.two ? (
+                  <Link href={`${route.two}${post?._id}`}>
+                    <span>
+                      <svg
+                        id="comment"
+                        className={`${styles.blue} ${styles.x_icn_ftr}`}
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        width={24}
+                        height={24}
+                      >
+                        <path fill="none" d="M0 0h24v24H0z" />
+                        <path d="M10 3h4a8 8 0 1 1 0 16v3.5c-5-2-12-5-12-11.5a8 8 0 0 1 8-8zm2 14h2a6 6 0 1 0 0-12h-4a6 6 0 0 0-6 6c0 3.61 2.462 5.966 8 8.48V17z" />
+                      </svg>
+                    </span>
+                  </Link>
+                ) : (
+                  <span>
+                    <svg
+                      id="comment"
+                      className={`${styles.blue} ${styles.x_icn_ftr}`}
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      width={24}
+                      height={24}
+                    >
+                      <path fill="none" d="M0 0h24v24H0z" />
+                      <path d="M10 3h4a8 8 0 1 1 0 16v3.5c-5-2-12-5-12-11.5a8 8 0 0 1 8-8zm2 14h2a6 6 0 1 0 0-12h-4a6 6 0 0 0-6 6c0 3.61 2.462 5.966 8 8.48V17z" />
+                    </svg>
+                  </span>
+                )}
                 <span className={styles._00mn_spn_cnt}>
                   {post?.post[0]?.comment > 0 && post?.post[0]?.comment}
                 </span>
@@ -320,17 +347,12 @@ const EachPost = ({ post, route }) => {
                     <path fill="none" d="M0 0h24v24H0z" />
                     <path d="M8 20v1.932a.5.5 0 0 1-.82.385l-4.12-3.433A.5.5 0 0 1 3.382 18H18a2 2 0 0 0 2-2V8h2v8a4 4 0 0 1-4 4H8zm8-16V2.068a.5.5 0 0 1 .82-.385l4.12 3.433a.5.5 0 0 1-.321.884H6a2 2 0 0 0-2 2v8H2V8a4 4 0 0 1 4-4h10z" />
                   </svg>
-                  {/* this is the green repost icon /> */}
-                  {/* <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="repost" style={{ fill: "rgb(0, 128, 0, 0.775);" }} className={`${styles.green} ${styles.x_icn_ftr} ${styles.repostme}`} width={24} height={24} >
-                    <path fill="none" d="M0 0h24v24H0z" />
-                    <path d="M8 20v1.932a.5.5 0 0 1-.82.385l-4.12-3.433A.5.5 0 0 1 3.382 18H18a2 2 0 0 0 2-2V8h2v8a4 4 0 0 1-4 4H8zm8-16V2.068a.5.5 0 0 1 .82-.385l4.12 3.433a.5.5 0 0 1-.321.884H6a2 2 0 0 0-2 2v8H2V8a4 4 0 0 1 4-4h10z" />
-                  </svg> */}
                 </span>
                 <span className={styles._00mn_spn_cnt}>
                   {post?.post[0]?.repost.length}
                 </span>
               </span>
-              <span className={styles._00mn_span}>
+              <span className={styles._00mn_span} onClick={handleBookmark}>
                 <span>
                   {!isBookmarked ? (
                     <svg

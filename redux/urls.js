@@ -23,6 +23,7 @@ likePost:"/posts/post/like",
 dislikePost:"/posts/post/unlike",
 getUserPost: "/users/posts",
 repost:"/posts/repost/",
+bookmark: '/posts/bookmak',
   // Category
 
   // Comment
