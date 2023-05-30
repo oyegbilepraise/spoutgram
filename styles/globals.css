@@ -98,7 +98,7 @@ div {
 }
 button:focus, a:focus {
   outline: 2px solid var(--transparent);
-}
+} 
 
 .imageContainer{
   place-items:center;
@@ -106,7 +106,7 @@ button:focus, a:focus {
   display: grid;
   grid-gap:0px;
   overflow: hidden;
-  border-radius: 25px;
+  border-radius: 9px;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: auto;
 }
@@ -131,9 +131,11 @@ button:focus, a:focus {
 
 .singleItem {
   width: 548px;
-  height: 500px;
-  border-radius: 25px;
+  height: 600px;
+  border-radius: 9px;
   object-fit: cover;
+  border: var(--border-all);
+  margin-bottom: 6px;
 }
 
 .secondStyle{
