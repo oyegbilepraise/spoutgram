@@ -15,7 +15,6 @@ const Social = () => {
       dispatch(getAllUsersAction())
       dispatch(socialNotificationAction())
   }, [dispatch])
-  console.log(data);
 
   const goToPost=({type, postId, username, id})=>{
     dispatch(readNotificationAction(id));
@@ -23,7 +22,7 @@ const Social = () => {
       router.push(`/${username}`)
     }
     if(type ===2 || type ===3){
-        router.push(`${Routes.EACHPOST}${postId}`);
+      router.push(`${Routes.EACHPOST}${postId}`);
     }
   }
 
@@ -50,7 +49,7 @@ const Social = () => {
                     <div className={`${styles.npd_toast} ${styles.npd_f_notif}`} onClick={()=>goToPost({type: notif.notification_type, postId: notif?.post?._id, username: notif?.user?.username, id: notif?._id})} key={index}>
                       <div className={styles.hold_them}>
                         <div>
-                          <Image src={!!notif?.user?.profilePhoto ? notif?.user?.profilePhoto : imgOne} className={styles.npd_toast_png} width={50} height={50}/>
+                          <Image src={!!notif?.user?.profilePhoto ? notif?.user?.profilePhoto : imgOne} className={styles.npd_toast_png} width={50} height={50} alt="profile"/>
                         </div>
                         <div className={`${styles.float_nicn} ${styles.fncn}`}>
                           {/* <img

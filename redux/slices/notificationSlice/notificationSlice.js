@@ -1,4 +1,4 @@
-import { getRequest, putRequest } from "@/redux/api";
+import { getRequest, putRequest, putTokenRequest } from "@/redux/api";
 import { baseUrl } from "@/redux/baseUrl";
 import { URL } from "@/redux/urls";
 import Cookies from "js-cookie";
@@ -30,12 +30,10 @@ export const unreadNotificationAction = createAsyncThunk("/notification/unread",
 export const readNotificationAction = createAsyncThunk("/notification/read", async(payload, {rejectWithValue})=>{
     const token = Cookies.get("token");
     try{
-        const res = putRequest({url: `${baseUrl}${URL.readNotification}${payload}`, token});
-        console.log(res?.data);
+        const res = await putTokenRequest({url: `${baseUrl}${URL.readNotification}${payload}`, token});
         return res?.data;
     }
     catch(err){
-        console.log(err?.response?.data);
             rejectWithValue(err?.response?.data);
     }
 })

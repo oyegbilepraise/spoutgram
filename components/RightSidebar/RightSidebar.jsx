@@ -264,7 +264,7 @@ const RightSidebar = () => {
                     <div>
                       {items.map(({ name, _id, username, followers }) => {
                         return (
-                          <div key={id} className={styles.sgstn_tst}>
+                          <div key={_id} className={styles.sgstn_tst}>
                             <div>
                               <Link href={`/${username}`}>
                               {/* replace with the appropriate username variable */}

@@ -28,7 +28,7 @@ const ProfileOverview = ({userDetail}) => {
   }, [showSubscribe]);
   const [image, setImage] = useState(null);
   const [isLoading, setLoading] = useState(false);
-
+  console.log(userDetail);
   // Function to handle image upload
   const handleImageUpload = (event) => {
     const file = event.target.files[0];

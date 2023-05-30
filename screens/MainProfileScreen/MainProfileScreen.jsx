@@ -58,7 +58,8 @@ const MainProfileScreen = ({userId}) => {
 
   const getUserDetail=async ()=>{
     const {userId} = router.query;
-    let newUser = await allUsers?.data?.find((user)=>user?.username==userId)
+    let newUser = await allUsers?.data?.find((user)=>user?.username===userId)
+    console.log(newUser);
     dispatch(getUserPostsAction(newUser?._id))
     if(newUser?.username == user?.data?.username){
       setUserDetail({...newUser, owner: true})
@@ -180,18 +181,14 @@ const MainProfileScreen = ({userId}) => {
   )
 }
 
-
-export async function getServerSideProps({ query }) {
-  // Extract the userId from the query parameters
+MainProfileScreen.getInitialProps = async ({ query }) => {
   const { userId } = query;
 
-  // Fetch additional data or perform server-side operations using the `userId`
+  // Perform any server-side operations or data fetching using the `userId`
 
   return {
-    props: {
-      userId
-    },
+    userId,
   };
-}
+};
 
 export default MainProfileScreen;

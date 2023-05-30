@@ -94,3 +94,19 @@ export const putRequest = async ({ url, token, data, formData, params }) => {
   });
   return requestResponse;
 };
+
+//put request with token
+export const putTokenRequest = async ({ url, token, data, formData, params }) => {
+  const requestResponse = await API({
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    method: "PUT",
+    url,
+    params,
+    data,
+    formData,
+  });
+  return requestResponse;
+};
