@@ -87,6 +87,7 @@ const { user, apiError } = useSelector((state) => state?.auth?.getUser);
      if (res?.payload?.success) {
       values.text = "";
       values.image = "";
+      setIsOpen(false)
       setImage(null);
       // router.push(Routes.HOME);
      }

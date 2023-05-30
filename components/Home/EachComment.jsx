@@ -204,7 +204,8 @@ const EachComment = ({ comment, individualPost, route }) => {
             </span>
           </span>
           <span className={styles._00mn_span}>
-          {route?.two ? <Link href={`${route.two}${comment?._id}`}>
+          {/* {route?.two ? <Link href={`${route.two}${comment?._id}`}> */}
+           {route?.one ? <Link href={`${route.one}${comment?._id}`}>
               <span>
                 <svg
                   id="comment"
