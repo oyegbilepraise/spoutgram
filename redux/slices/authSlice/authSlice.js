@@ -139,7 +139,7 @@ export const getUserAction = createAsyncThunk(
       const res = await getRequest({
         url: `${baseUrl}${URL.auth}`,
         token: payload,
-      });
+      }); 
       return res.data;
     } catch (err) {
       if (!err?.response?.data.status) {

@@ -21,7 +21,7 @@ getPosts:"/posts/all-posts",
 getSinglePost:"/posts/post/",
 likePost:"/posts/post/like",
 dislikePost:"/posts/post/unlike",
-getUserPost: "/users/posts",
+getUserPost: "/users/posts/",
 repost:"/posts/repost/",
   // Category
 
@@ -53,7 +53,9 @@ getParticularCommentReplies:"/comments/all_reply/",
   sendMessage: '/message/send_message',
 
   //Notifications
-  socialNotification: "/notification/social"
+  socialNotification: "/notification/social",
+  unreadNotification: "/notification/unread",
+  readNotification: "/notification/read/"
 };
 
 

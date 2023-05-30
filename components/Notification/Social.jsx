@@ -1,8 +1,8 @@
 import styles from "@/layout/HomeLayout/HomeLayout.module.css";
-import imgOne from "../../images/me.jpeg";
+import imgOne from "../../images/default.jpeg";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { socialNotificationAction } from "@/redux/slices/notificationSlice/notificationSlice";
+import { readNotificationAction, socialNotificationAction } from "@/redux/slices/notificationSlice/notificationSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllUsersAction } from "@/redux/slices/userDetailSlice";
 import { useRouter } from "next/router";
@@ -13,12 +13,16 @@ const Social = () => {
   const {loading, appError, data} = useSelector(state=>state.notification.notification);
   useEffect(()=>{
       dispatch(getAllUsersAction())
-      dispatch(socialNotificationAction())  
+      dispatch(socialNotificationAction())
   }, [dispatch])
 
-  const goToPost=({type, postId})=>{
+  const goToPost=({type, postId, username, id})=>{
+    dispatch(readNotificationAction(id));
+    if(type == 1){
+      router.push(`/${username}`)
+    }
     if(type ===2 || type ===3){
-        router.push(`${Routes.EACHPOST}${postId}`);
+      router.push(`${Routes.EACHPOST}${postId}`);
     }
   }
 
@@ -42,10 +46,10 @@ const Social = () => {
             {
               data?.filter((item)=>item.notification===1)?.map((notif, index)=>{
                 return (
-                    <div className={`${styles.npd_toast} ${styles.npd_f_notif}`} onClick={()=>goToPost({type: notif.notification_type, postId: notif?.post?._id})} key={index}>
+                    <div className={`${styles.npd_toast} ${styles.npd_f_notif}`} onClick={()=>goToPost({type: notif.notification_type, postId: notif?.post?._id, username: notif?.user?.username, id: notif?._id})} key={index}>
                       <div className={styles.hold_them}>
                         <div>
-                          <Image src={!!notif?.user?.profilePhoto ? notif?.user?.profilePhoto : imgOne} className={styles.npd_toast_png} width={50} height={50}/>
+                          <Image src={!!notif?.user?.profilePhoto ? notif?.user?.profilePhoto : imgOne} className={styles.npd_toast_png} width={50} height={50} alt="profile"/>
                         </div>
                         <div className={`${styles.float_nicn} ${styles.fncn}`}>
                           {/* <img
@@ -76,7 +80,7 @@ const Social = () => {
                               {
                                 //notification contents
                                 notif?.notification_type==1? //follow
-                                (<><a href="" >@username</a> now follows you.</>):
+                                (<><a href="" >{`@${notif?.user?.username}` ?? `@username`}</a> now follows you.</>):
                                 notif?.notification_type==2 || notif.notification_type==3? //like and repost
                                 (<>"{notif?.post?.desc}"</>): 
                                 ("")

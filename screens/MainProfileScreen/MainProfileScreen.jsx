@@ -15,20 +15,34 @@ import Cookies from 'js-cookie';
 import Post from '@/components/Home/Post';
 import Routes from '@/utils/routes';
 import { logout } from '@/redux/slices/authSlice/authSlice';
+import { getAllPostsAction } from '@/redux/slices/postSlice/postSlice';
+import { getAllUsersAction, getUserPostsAction } from '@/redux/slices/userDetailSlice';
 
-const MainProfileScreen = () => {
+const MainProfileScreen = ({userId}) => {
   const router = useRouter();
   const [currentTab, setCurrentTab] = useState("/");
-  const { userId } = router.query;
+  // const { userId } = router.query;
   const { user, apiError } = useSelector((state) => state?.auth?.getUser);
+  const allUsers = useSelector((state)=>state.userDetails.allUsers.users)
+  const {loading, posts} = useSelector(state=>state.userDetails?.userPost)
+  const allPosts = useSelector(
+    (state) => state?.post?.allPosts
+  );
+  const [userDetail, setUserDetail] = useState({});
+  console.log(posts);
   // const {loading, appError, posts} = useSelector((state)=>state.post.allPosts)
   const [post, setPost] = useState();
-  const [loading, setLoading] = useState(true)
+  // const [loading, setLoading] = useState(true)
   const dispatch = useDispatch()
+    const token = Cookies.get("token");
+  useEffect(() => {
+    dispatch(getAllPostsAction(token));
+    // socket.emit("NEW_USER_ONLINE",user._id)
+  }, []);
+
   //   get the current tab
   useEffect(() => {
     const { tab } = router.query;
-    console.log(router.query);
     if (tab) {
       setCurrentTab(tab);
     } else {
@@ -36,36 +50,51 @@ const MainProfileScreen = () => {
     }
   }, [router.query.tab]);
 
+  // console.log(user)
   useEffect(()=>{
-      // const {userId} = router.query;
-      
-  }, [router.query.userId])
+    dispatch(getAllUsersAction());
+    getUserDetail();
+  }, [router])
 
-  useEffect(() => {
-    getUsersPost()
-    // first
-
-    // return () => {
-    //   second
-    // }
-  }, [])
-
-
-  const getUsersPost = async () => {
-    console.log({ user });
-    const token = Cookies.get('token')
-    try {
-      const { data } = await axios.get(`${baseUrl}/users/posts`, { headers: { Authorization: 'Bearer ' + token } })
-      setPost(data.data)
-      console.log(data?.data)
-      setLoading(false)
-    } catch (error) {
-      // if (!error?.response?.data.status) {
-      //   dispatch(logout())
-      // }
-      console.log({ error });
+  const getUserDetail=async ()=>{
+    const {userId} = router.query;
+    let newUser = await allUsers?.data?.find((user)=>user?.username===userId)
+    console.log(newUser);
+    dispatch(getUserPostsAction(newUser?._id))
+    if(newUser?.username == user?.data?.username){
+      setUserDetail({...newUser, owner: true})
+    }else{
+      if(newUser?.followers.includes(`${user?.data?._id}`)){
+        setUserDetail({...newUser, owner: false, amFollowing: true})
+      }else{
+        setUserDetail({...newUser, owner: false, amFollowing: false})
+      }
     }
   }
+
+  // useEffect(() => {
+  //   getUsersPost()
+  //   // first
+
+  //   // return () => {
+  //   //   second
+  //   // }
+  // }, [])
+  // const getUsersPost = async () => {
+  //   // console.log({ user });
+  //   // const token = Cookies.get('token')
+  //   // try {
+  //   //   const { data } = await axios.get(`${baseUrl}/users/posts`, { headers: { Authorization: 'Bearer ' + token } })
+  //   //   setPost(data.data)
+  //   //   console.log(data?.data)
+  //   //   setLoading(false)
+  //   // } catch (error) {
+  //   //   // if (!error?.response?.data.status) {
+  //   //   //   dispatch(logout())
+  //   //   // }
+  //   //   console.log({ error });
+  //   // }
+  // }
 
 
   const handleGoBack = () => {
@@ -88,7 +117,7 @@ const MainProfileScreen = () => {
           </div>
         </nav>
 
-        <ProfileOverview />
+        <ProfileOverview userDetail={userDetail} />
         {/* Tabs  */}
         <div
           className={`${styles.column_nav_menu_profile} ${styles.profile_nav__forPrf} ${styles.another__class}`}
@@ -134,7 +163,7 @@ const MainProfileScreen = () => {
         </div>
 
         {/* post container */}
-        {currentTab === "/" && <Post posts={post} loading={loading} />}
+        {currentTab === "/" && <Post posts={allPosts?.posts?.data} loading={allPosts.loading} />}
         {/* post container */}
         {/* gallery container */}
         {/* Media */}
@@ -151,5 +180,15 @@ const MainProfileScreen = () => {
     </HomeLayout>
   )
 }
+
+MainProfileScreen.getInitialProps = async ({ query }) => {
+  const { userId } = query;
+
+  // Perform any server-side operations or data fetching using the `userId`
+
+  return {
+    userId,
+  };
+};
 
 export default MainProfileScreen;

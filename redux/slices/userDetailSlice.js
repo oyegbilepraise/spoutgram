@@ -27,7 +27,7 @@ export const updateProfileAction = createAsyncThunk("/users/updateProfile", asyn
     const token = Cookies.get("token");
     try{
         const res = await patchRequest({url: `${baseUrl}${URL.updateProfile}`, token, data: payload})
-        dispatch(updateUserProfile(res?.data?.data))
+        dispatch(updateUserProfile(res?.data))
         return res.data
     }catch(err){
         rejectWithValue(err?.response?.data.data);
@@ -41,7 +41,6 @@ export const updateProfilePictureAction = createAsyncThunk('/users/updateProfile
       console.log(res);
       return res?.data
     }catch(err){
-      console.log(err.response.data);
       rejectWithValue(err?.response?.data?.message);
     }
 })
@@ -51,10 +50,23 @@ export const getAllUsersAction= createAsyncThunk("users/getAllUsers", async(_, {
   const token = Cookies.get("token");
   try{
     const res = await getRequest({url: `${baseUrl}${URL.getAllUsers}`, token: token})
+    console.log(res.data);
     return res?.data
   }catch(err){
     rejectWithValue(err?.response?.data?.message);
   }
+})
+
+//get user posts
+export const getUserPostsAction = createAsyncThunk("/users/post", async(payload, {rejectWithValue})=>{
+    const token = Cookies.get("token");
+    try{
+        const res = await getRequest({url: `${baseUrl}${URL.getUserPost}${payload}`, token});
+        console.log(res?.data?.data);
+        return res?.data?.data;
+    }catch(err){
+        rejectWithValue(err?.response?.data);
+    }
 })
 
 const userDetailSlice = createSlice({
@@ -82,6 +94,11 @@ const userDetailSlice = createSlice({
       loading: false,
       appError: null,
       users: []
+    },
+    userPost: {
+      loading: false,
+      appError: null,
+      posts: []
     }
   },
   reducers: {
@@ -144,6 +161,19 @@ const userDetailSlice = createSlice({
       .addCase(getAllUsersAction.rejected, (state, action)=>{
           state.allUsers.loading = false;
           state.allUsers.appError = action.payload;
+      })
+      //get user posts
+      .addCase(getUserPostsAction.pending, (state, action)=>{
+        state.userPost.loading = true;
+        state.userPost.appError = null;
+      })
+      .addCase(getUserPostsAction.fulfilled, (state, action)=>{
+          state.userPost.loading = false;
+          state.userPost.posts = action.payload
+      })
+      .addCase(getUserPostsAction.rejected, (state, action)=>{
+          state.userPost.loading = false;
+          state.userPost.appError = action.payload;
       })
   },
 });

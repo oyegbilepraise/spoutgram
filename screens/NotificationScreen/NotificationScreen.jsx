@@ -9,12 +9,19 @@ import Earnings from "@/components/Notification/Earnings";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { useDispatch, useSelector } from "react-redux";
+import { unreadNotificationAction } from "@/redux/slices/notificationSlice/notificationSlice";
 
 const NotificationScreen = () => {
   const router = useRouter();
   const [currentTab, setCurrentTab] = useState("/");
   const pathname = router.pathname.split("/")[1];
-
+  const {loading, appError, unread } = useSelector(state=>state?.notification?.unreadNotification);
+  console.log(unread);
+  const dispatch = useDispatch();
+    useEffect(()=>{
+        dispatch(unreadNotificationAction());
+    }, [dispatch])
     //   get the current tab
     useEffect(() => {
       const { tab } = router.query;
@@ -54,7 +61,7 @@ const NotificationScreen = () => {
               </svg>
             </span>
             <span className={styles.not_home_nav_text}>Notifications</span>
-            <span className={styles.data_count_bookm}>0 unread</span>
+            <span className={styles.data_count_bookm}>{unread?? 0} unread{unread >1 ? "s" : ""}</span>
           </div>
           <div className={styles.slice__selector}>
             {/*  */}
