@@ -1,6 +1,6 @@
 import './RightSidebar.module.css'
 import React, { useEffect, useState } from "react";
-import img from "../../images/default-photo.svg";
+import img from "../../images/default.jpeg";
 import Image from "next/image";
 import styles from "@/layout/HomeLayout/HomeLayout.module.css";
 import Carousel from "react-multi-carousel";
@@ -280,13 +280,15 @@ const RightSidebar = () => {
                               <Link href={`/${username}`}>
                                 <span className={styles.yynmsq}>{name}</span>
                               </Link>
-                              <span className={styles.yyusbsq}>@{username}</span>
+                              <Link href={`/${username}`}>
+                                <span className={styles.yyusbsq}>@{username}</span>
+                              </Link>
                             </div>
                             <div>
                               {followers.includes(user?.data?._id)
-                              ?  <button className={styles.flwx_xyq_fllw}>Following</button>
+                              ?  <button className={styles.flwx_xyq_fllw}>Unfollow</button>
 
-                              : <button className={styles.flwx_xyq_fllw} onClick={()=>handleFollow(_id)}>follow</button>
+                              : <button className={styles.flwx_xyq_fllw} onClick={()=>handleFollow(_id)}>Follow</button>
                               }
                              
                             </div>
