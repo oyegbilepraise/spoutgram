@@ -76,14 +76,6 @@ const EachPost = ({ post, route }) => {
     setisLiked(likes?.includes(user?.data?._id));
   }, [likes]);
 
-  // // const route = { one: "postComments/", two: "comment/" };
-  // const sendRouteOne = () => {
-  //   router.push(`postComments/${post?._id}`);
-  // };
-  // const sendRouteTwo = () => {
-  //   router.push(`comment/${post?._id}`);
-  // };
-
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = () => {
