@@ -19,6 +19,7 @@ import { getAllPostsAction } from '@/redux/slices/postSlice/postSlice';
 import { getAllUsersAction, getUserPostsAction } from '@/redux/slices/userDetailSlice';
 
 const MainProfileScreen = ({userId}) => {
+  console.log(userId);
   const router = useRouter();
   const [currentTab, setCurrentTab] = useState("/");
   // const { userId } = router.query;
@@ -61,7 +62,7 @@ const MainProfileScreen = ({userId}) => {
     let newUser = await allUsers?.data?.find((user)=>user?.username===userId)
     console.log(newUser);
     dispatch(getUserPostsAction(newUser?._id))
-    if(newUser?.username == user?.data?.username){
+    if(newUser?.username === user?.data?.username){
       setUserDetail({...newUser, owner: true})
     }else{
       if(newUser?.followers.includes(`${user?.data?._id}`)){
