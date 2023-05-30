@@ -54,7 +54,8 @@ getParticularCommentReplies:"/comments/all_reply/",
 
   //Notifications
   socialNotification: "/notification/social",
-  unreadNotification: "/notification/unread"
+  unreadNotification: "/notification/unread",
+  readNotification: "/notification/read/"
 };
 
 

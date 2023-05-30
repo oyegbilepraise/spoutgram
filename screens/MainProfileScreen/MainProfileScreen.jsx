@@ -18,10 +18,10 @@ import { logout } from '@/redux/slices/authSlice/authSlice';
 import { getAllPostsAction } from '@/redux/slices/postSlice/postSlice';
 import { getAllUsersAction, getUserPostsAction } from '@/redux/slices/userDetailSlice';
 
-const MainProfileScreen = () => {
+const MainProfileScreen = ({userId}) => {
   const router = useRouter();
   const [currentTab, setCurrentTab] = useState("/");
-  const { userId } = router.query;
+  // const { userId } = router.query;
   const { user, apiError } = useSelector((state) => state?.auth?.getUser);
   const allUsers = useSelector((state)=>state.userDetails.allUsers.users)
   const {loading, posts} = useSelector(state=>state.userDetails?.userPost)
@@ -37,14 +37,12 @@ const MainProfileScreen = () => {
     const token = Cookies.get("token");
   useEffect(() => {
     dispatch(getAllPostsAction(token));
-    console.log(user);
     // socket.emit("NEW_USER_ONLINE",user._id)
   }, []);
 
   //   get the current tab
   useEffect(() => {
     const { tab } = router.query;
-    console.log(router.query);
     if (tab) {
       setCurrentTab(tab);
     } else {
@@ -61,12 +59,15 @@ const MainProfileScreen = () => {
   const getUserDetail=async ()=>{
     const {userId} = router.query;
     let newUser = await allUsers?.data?.find((user)=>user?.username==userId)
-    console.log(newUser);
     dispatch(getUserPostsAction(newUser?._id))
     if(newUser?.username == user?.data?.username){
       setUserDetail({...newUser, owner: true})
     }else{
-      setUserDetail({...newUser, owner: false})
+      if(newUser?.followers.includes(`${user?.data?._id}`)){
+        setUserDetail({...newUser, owner: false, amFollowing: true})
+      }else{
+        setUserDetail({...newUser, owner: false, amFollowing: false})
+      }
     }
   }
 
@@ -177,6 +178,20 @@ const MainProfileScreen = () => {
       {/* div.timeline -> middle */}
     </HomeLayout>
   )
+}
+
+
+export async function getServerSideProps({ query }) {
+  // Extract the userId from the query parameters
+  const { userId } = query;
+
+  // Fetch additional data or perform server-side operations using the `userId`
+
+  return {
+    props: {
+      userId
+    },
+  };
 }
 
 export default MainProfileScreen;

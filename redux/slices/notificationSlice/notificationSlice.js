@@ -1,15 +1,14 @@
-import { getRequest } from "@/redux/api";
+import { getRequest, putRequest } from "@/redux/api";
 import { baseUrl } from "@/redux/baseUrl";
 import { URL } from "@/redux/urls";
 import Cookies from "js-cookie";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 
-export const socialNotificationAction = createAsyncThunk("/notification/socialNotification", async(_, {rejectWithValue})=>{
+export const socialNotificationAction = createAsyncThunk("/notification/social", async(_, {rejectWithValue})=>{
     const token = Cookies.get("token");
     try{
         const res =await getRequest({url: `${baseUrl}${URL.socialNotification}`, token});
-        console.log(res?.data)
         return res?.data?.data;
     }catch(err){
         rejectWithValue(err?.response?.data?.message);
@@ -17,13 +16,27 @@ export const socialNotificationAction = createAsyncThunk("/notification/socialNo
 })
 
 //get unread notifications
-export const unreadNotificationAction = createAsyncThunk("/notification/unreadNotification", async(_, {rejectWithValue})=>{
+export const unreadNotificationAction = createAsyncThunk("/notification/unread", async(_, {rejectWithValue})=>{
     const token = Cookies.get("token");
     try{
         const res =await getRequest({url: `${baseUrl}${URL.unreadNotification}`, token});
         return res?.data?.data;
     }catch(err){
         rejectWithValue(err?.response?.data?.message);
+    }
+})
+
+//read notification
+export const readNotificationAction = createAsyncThunk("/notification/read", async(payload, {rejectWithValue})=>{
+    const token = Cookies.get("token");
+    try{
+        const res = putRequest({url: `${baseUrl}${URL.readNotification}${payload}`, token});
+        console.log(res?.data);
+        return res?.data;
+    }
+    catch(err){
+        console.log(err?.response?.data);
+            rejectWithValue(err?.response?.data);
     }
 })
 
@@ -40,7 +53,11 @@ const notificationSlice = createSlice({
             loading: false,
             unread: null,
             appError: null
-        }
+        },
+        readNotification: {
+            loading: false,
+            appError: null
+        },
     },
     reducers: {},
     extraReducers: (builder)=>{
@@ -66,6 +83,16 @@ const notificationSlice = createSlice({
         }).addCase(unreadNotificationAction.rejected, (state, action)=>{
             state.unreadNotification.loading = false;
             state.unreadNotification.appError = action?.payload
+        })
+        //read notification
+        .addCase(readNotificationAction.pending, (state, action)=>{
+            state.readNotification.loading = true;
+            state.readNotification.appError = null;
+        }).addCase(readNotificationAction.fulfilled, (state, action)=>{
+            state.readNotification.loading = false;
+        }).addCase(readNotificationAction.rejected, (state, action)=>{
+            state.readNotification.loading = false;
+            state.readNotification.appError = action?.payload
         })
     }
 })

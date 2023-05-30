@@ -21,7 +21,7 @@ const NotificationScreen = () => {
   const dispatch = useDispatch();
     useEffect(()=>{
         dispatch(unreadNotificationAction());
-    }, [])
+    }, [dispatch])
     //   get the current tab
     useEffect(() => {
       const { tab } = router.query;

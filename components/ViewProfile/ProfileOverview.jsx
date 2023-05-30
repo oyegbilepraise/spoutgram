@@ -91,7 +91,6 @@ const ProfileOverview = ({userDetail}) => {
         const {name, username, bio, website, location} = values;
         await dispatch(updateProfileAction({name, username, bio, website, location}));
         setEditModalOpen(false);
-        console.log(user?.data);
       }
   })
   
@@ -103,7 +102,7 @@ const ProfileOverview = ({userDetail}) => {
           <div className={styles._000data__img__div}>
             <Image src={
               userDetail?.owner?
-              (user?.data?.profilePhoto ?? img):(userDetail?.profilePhoto ?? img) } alt="img" className={styles.profile_img} fill />
+              (user?.data?.profilePhoto ? user?.data?.profilePhoto: img):(userDetail?.profilePhoto ? userDetail?.profilePhoto : img) } alt="img" className={styles.profile_img} fill />
           </div>
           <div>
             <div className={styles.dxcWAsd}>
@@ -144,7 +143,7 @@ const ProfileOverview = ({userDetail}) => {
         <div style={{ position: "relative" }}>
           <span className={styles.absolute__me__now}>
             <span style={userDetail?.owner? {display: 'none'}: {}}>
-              <button className={`${styles.follow__user}`}>Follow</button>
+              <button className={`${styles.follow__user}`} >{userDetail?.amFollowing? "Unfollow": "Follow"}</button>
               <button className={`${styles.follow__user}`}>Message</button>
             </span>
             <button className={`${styles.follow__user}`} onClick={handleEditProfile} style={!userDetail?.owner? {display: 'none'}: {}} > Edit Profile </button>
@@ -247,11 +246,11 @@ const ProfileOverview = ({userDetail}) => {
                   <span className={`${styles.pfl__data} ${styles.user__link}`}>
                     {
                     // !!userDetail?.website ?userDetail?.website: <>https://yourwebsite</>
-                    userDetail?.owner ? (user?.data?.website ?? <>
-                     https://yourwebsite
-                      </>): (userDetail?.website ?? <>
-                        https://yourwebsite
-                    </>)
+                    userDetail?.owner ? (user?.data?.website ? (user?.data?.website) : (<>
+                     yourwebsitelink
+                      </>)): (userDetail?.website ? (userDetail?.website): ( <>
+                        yourwebsitelink
+                    </>))
                     }
                   </span>
                 </span>
