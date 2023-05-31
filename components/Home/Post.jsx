@@ -14,7 +14,7 @@ const route={one:"postComments/",two:"comment/"}
         <div>
           {posts?.map((post, id) => {
             return (
-              <EachPost post={post} key={id} route={route}/>
+              <EachPost post={post.post[0]} parent={post} key={id} route={route}/>
             )
           }
           )}
