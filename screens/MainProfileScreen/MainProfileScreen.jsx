@@ -17,22 +17,19 @@ import Routes from '@/utils/routes';
 import { logout } from '@/redux/slices/authSlice/authSlice';
 import { getAllPostsAction } from '@/redux/slices/postSlice/postSlice';
 import { getAllUsersAction, getUserPostsAction } from '@/redux/slices/userDetailSlice';
-
-const MainProfileScreen = ({userId}) => {
+import { getServerSideProps } from 'next';
+const MainProfileScreen = ({userId, userDetail}) => {
   const router = useRouter();
   const [currentTab, setCurrentTab] = useState("/");
-  // const { userId } = router.query;
   const { user, apiError } = useSelector((state) => state?.auth?.getUser);
   const allUsers = useSelector((state)=>state.userDetails.allUsers.users)
   const {loading, posts} = useSelector(state=>state.userDetails?.userPost)
   const allPosts = useSelector(
     (state) => state?.post?.allPosts
   );
-  const [userDetail, setUserDetail] = useState({});
+  // const [userDetail, setUserDetail] = useState({});
   console.log(posts);
-  // const {loading, appError, posts} = useSelector((state)=>state.post.allPosts)
   const [post, setPost] = useState();
-  // const [loading, setLoading] = useState(true)
   const dispatch = useDispatch()
     const token = Cookies.get("token");
   useEffect(() => {
@@ -51,26 +48,26 @@ const MainProfileScreen = ({userId}) => {
   }, [router.query.tab]);
 
   // console.log(user)
-  useEffect(()=>{
-    dispatch(getAllUsersAction());
-    getUserDetail();
-  }, [router])
+  // useEffect(()=>{
+  //   dispatch(getAllUsersAction());
+  //   getUserDetail();
+  // }, [router]);
 
-  const getUserDetail=async ()=>{
-    const {userId} = router.query;
-    let newUser = await allUsers?.data?.find((user)=>user?.username===userId)
-    console.log(newUser);
-    dispatch(getUserPostsAction(newUser?._id))
-    if(newUser?.username == user?.data?.username){
-      setUserDetail({...newUser, owner: true})
-    }else{
-      if(newUser?.followers.includes(`${user?.data?._id}`)){
-        setUserDetail({...newUser, owner: false, amFollowing: true})
-      }else{
-        setUserDetail({...newUser, owner: false, amFollowing: false})
-      }
-    }
-  }
+  // const getUserDetail=async ()=>{
+  //   const {userId} = router.query;
+  //   let newUser = await allUsers?.data?.find((user)=>user?.username===userId)
+  //   console.log(newUser);
+  //   dispatch(getUserPostsAction(newUser?._id))
+  //   if(newUser?.username === user?.data?.username){
+  //     setUserDetail({...newUser, owner: true})
+  //   }else{
+  //     if(newUser?.followers.includes(`${user?.data?._id}`)){
+  //       setUserDetail({...newUser, owner: false, amFollowing: true})
+  //     }else{
+  //       setUserDetail({...newUser, owner: false, amFollowing: false})
+  //     }
+  //   }
+  // }
 
   // useEffect(() => {
   //   getUsersPost()
@@ -95,8 +92,6 @@ const MainProfileScreen = ({userId}) => {
   //   //   console.log({ error });
   //   // }
   // }
-
-
   const handleGoBack = () => {
       router.back(); // Go back to the previous page or route
   };
@@ -181,14 +176,14 @@ const MainProfileScreen = ({userId}) => {
   )
 }
 
-MainProfileScreen.getInitialProps = async ({ query }) => {
-  const { userId } = query;
+// MainProfileScreen.getServerSideProps = async ({ query }) => {
+//   const { userId } = query;
 
-  // Perform any server-side operations or data fetching using the `userId`
-
-  return {
-    userId,
-  };
-};
+//   // Perform any server-side operations or data fetching using the `userId`
+  
+//   return {
+//     userId,
+//   };
+// };
 
 export default MainProfileScreen;

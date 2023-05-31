@@ -1,30 +1,29 @@
-
 /* @import 'bootstrap/dist/css/bootstrap.css'; */
 @font-face {
-  font-family: 'Roboto-Light';
+  font-family: "Roboto-Light";
   src: url(../fonts/Roboto/woff2/Roboto-Light.woff2) format(woff2);
 }
 @font-face {
-  font-family: 'Roboto-Regular';
+  font-family: "Roboto-Regular";
   src: url(../fonts/Roboto/woff2/Roboto-Regular.woff2) format(woff2);
 }
 @font-face {
-  font-family: 'Roboto-Medium';
+  font-family: "Roboto-Medium";
   src: url(../fonts/Roboto/woff2/Roboto-Medium.woff2) format(woff2);
 }
 @font-face {
-  font-family: 'Roboto-Bold';
+  font-family: "Roboto-Bold";
   src: url(../fonts/Roboto/woff2/Roboto-Bold.woff2) format(woff2);
 }
 :root {
   color-scheme: only light;
-  --global-thin: 'Roboto-Light', sans-serif;
-  --global-regular: 'Roboto-Regular', sans-serif;
-  --global-medium: 'Roboto-Medium', sans-serif;
-  --global-bold: 'Roboto-Bold', sans-serif;
+  --global-thin: "Roboto-Light", sans-serif;
+  --global-regular: "Roboto-Regular", sans-serif;
+  --global-medium: "Roboto-Medium", sans-serif;
+  --global-bold: "Roboto-Bold", sans-serif;
   --transparent: rgba(255, 255, 255, 0);
   --transparent-brand-color: #01a8ea2e;
-  --brand-color: #01A8EA;
+  --brand-color: #01a8ea;
   --rounded-radius: 1000px;
   --curved-radius: 12px;
   --grey: gray;
@@ -34,7 +33,8 @@
   --modal-radius: 20px;
   --border-all: 1px solid rgb(235, 235, 235);
   --modal-radius: 20px;
-  --global-font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --global-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Helvetica, Arial, sans-serif;
   --transparent-background-color: #01a8ea14;
 }
 html {
@@ -46,11 +46,16 @@ html {
   overflow: hidden;
 }
 
-input, button, img, svg, select, textarea {
-  -webkit-touch-callout: none; 
+input,
+button,
+img,
+svg,
+select,
+textarea {
+  -webkit-touch-callout: none;
   -webkit-user-select: none;
-  -khtml-user-select: none; 
-  -moz-user-select: none; 
+  -khtml-user-select: none;
+  -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
 }
@@ -58,12 +63,12 @@ input[type="search"]::-webkit-search-cancel-button {
   -webkit-appearance: none;
   -moz-appearance: none;
   height: 17px;
-  width: 17px; 
+  width: 17px;
   border-radius: 50em;
   background: url(/cancelsearch.svg) no-repeat 50% 50%;
   background-size: contain;
   opacity: 1;
-} 
+}
 input:-webkit-autofill {
   -webkit-box-shadow: 0 0 0px 1000px rgba(255, 255, 255, 0) inset !important;
   transition: background-color 5000s ease-in-out 0s;
@@ -74,8 +79,8 @@ input:autofill {
   transition: background-color 5000s ease-in-out 0s;
   backdrop-filter: none !important;
 }
-button:disabled, 
-button[disabled]{
+button:disabled,
+button[disabled] {
   background-color: #cac5ff;
   color: #ffffff;
   cursor: default;
@@ -92,65 +97,101 @@ button,
 select,
 a,
 div {
-    -webkit-tap-highlight-color: transparent;
-    appearance: none;
-    -webkit-appearance: none;
+  -webkit-tap-highlight-color: transparent;
+  appearance: none;
+  -webkit-appearance: none;
 }
-button:focus, a:focus {
+button:focus,
+a:focus {
   outline: 2px solid var(--transparent);
 }
 
-.imageContainer{
-  place-items:center;
-  justify-content: center;
-  display: grid;
-  grid-gap:0px;
-  overflow: hidden;
-  border-radius: 25px;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: auto;
-}
-
-.thirdImageContainer {
-  background-color: rgb(178, 55, 55);
-  display: grid;
-  grid-template-columns: 1fr 2fr;
-  grid-template-rows: auto;
-  grid-gap: 0px;
-}
-
-.thirdImageContainer > div:first-child {
-  grid-column: 1 / 2;
-  grid-row: 1 / 3;
-}
-
-.thirdImageContainer > div:last-child {
-  grid-column: 2;
-  grid-row: 1;
+/* styles for when there is just one item in the postImage */
+.oneItemContainer {
+  border-radius: 9px;
+  max-height: 500px;
+  grid-gap: 5px;
 }
 
 .singleItem {
-  width: 548px;
-  height: 500px;
-  border-radius: 25px;
+  width: 100%;
+  /* height: 100%; */
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  border-radius: 9px;
   object-fit: cover;
 }
 
-.secondStyle{
-  width: 548px;
-  height: 200px;
+/* styles for when there is only two items in the postImage */
+
+.twoItemContainer {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  border-radius: 9px;
+  grid-gap: 5px;
+  overflow: hidden;
+}
+
+.secondStyle {
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  display: flex;
   object-fit: cover;
 }
 
-.thirdStyle{
-  object-fit: cover;
-  width: 548px;
-  height: 200px;
+/* styles for when there is only three items in the postImage */
+
+.thirdImageContainer {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  grid-gap: 5px;
+  border-radius: 9px;
+  overflow: hidden; 
+  position: relative;
 }
 
-.fourthStyle{
+/* Targetting the signle image in the third grid */
+
+.firstImage div{
+  height: 100%; /* Make the width of the first image 100% of the container */
+  object-fit: cover; /* Maintain aspect ratio and cover the available space */
+}
+
+.secondImage {
+    grid-row: span 2;
+}
+
+
+
+.thirdStyle {
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  object-fit: cover;
+}
+
+
+/* styles for when there is only four items in the postImage */
+
+.fourthStyle {
   width: 100%;
   object-fit: cover;
+}
+
+.imageContainer {
+  place-items: center;
+  justify-content: center;
+  display: grid;
+  grid-gap: 0px;
+  overflow: hidden;
+  border-radius: 9px;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -162,4 +203,4 @@ button:focus, a:focus {
   body {
     background-color: white;
   }
-} 
+}

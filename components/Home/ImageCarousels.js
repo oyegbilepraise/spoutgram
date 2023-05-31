@@ -51,56 +51,30 @@ function ImageCarousels({ postImage }) {
 
   return (
     <div
-      className={`imageContainer ${
-        postImage.length === 3 ? "thirdImageContainer" : getItemClassName(postImage.length)
-      }`}
+      className={`${
+        postImage.length === 1
+          ? "oneItemContainer"
+          : postImage.length === 2
+          ? "twoItemContainer"
+          : postImage.length === 3
+          ? "thirdImageContainer"
+          : ""
+      } ${postImage.length === 4 ? "imageContainer" : ""}`}
     >
       {postImage.map((pic, id) => (
-        <div key={id}>{handleImageVideodisplay(pic, id)}</div>
+        <div
+          key={id}
+          className={`${
+            id === 0 && postImage.length === 3 ? "firstImage" : ""
+          } ${id === 1 && postImage.length === 3 ? "secondImage" : ""} ${
+            id === 2 && postImage.length === 3 ? "thirdImage" : ""
+          }`}
+        >
+          {handleImageVideodisplay(pic, id)}
+        </div>
       ))}
     </div>
   );
 }
 
 export default ImageCarousels;
-
-
-// <div className={`${styles.data_content_img} ${styles.grid_101}`}>
-    //   {postImage.length === 1 ? (
-    //     <Image
-    //       src={postImage[0]}
-    //       alt="picgrid"
-    //       className={styles._00img_data}
-    //       width={1000}
-    //       height={1000}
-    //       priority
-    //     />
-    //   ) : (
-    //     <Carousel
-    //       swipeable={true}
-    //       draggable={true}
-    //       arrows={true}
-    //       showDots={true}
-    //       className=""
-    //       responsive={responsive}
-    //       ssr={true}
-    //       keyBoardControl={true}
-    //       customTransition="all .5"
-    //       transitionDuration={500}
-    //       dotListClass="custom-dot-list-style"
-    //     >
-    //       {postImage.map((pic,id) => (
-    //         <Image
-    //           src={pic!==null&&pic}
-    //           alt="picgrid"
-    //           className={styles._00img_data}
-    //           width={1000}
-    //           height={1000}
-    //           priority
-    //           key={id}
-    //         />
-    //       ))}
-    //     </Carousel>
-    //   )}
-    // </div>
-
