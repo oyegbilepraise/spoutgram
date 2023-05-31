@@ -1,36 +1,27 @@
 import { HomeLayout } from '@/layout'
-import Image from 'next/image'
-import img from '../../images/default-photo.svg'
 import ProfileOverview from "@/components/ViewProfile/ProfileOverview";
 import Gallery from "@/components/ViewProfile/Gallery";
-import PodCast from "@/components/ViewProfile/PodCast";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import styles from '@/layout/HomeLayout/HomeLayout.module.css'
-import { baseUrl } from '@/redux/baseUrl';
 import { useDispatch, useSelector } from 'react-redux';
-import axios from 'axios';
 import Cookies from 'js-cookie';
 import Post from '@/components/Home/Post';
-import Routes from '@/utils/routes';
-import { logout } from '@/redux/slices/authSlice/authSlice';
 import { getAllPostsAction } from '@/redux/slices/postSlice/postSlice';
-import { getAllUsersAction, getUserPostsAction } from '@/redux/slices/userDetailSlice';
-import { getServerSideProps } from 'next';
-const MainProfileScreen = ({userId, userDetail}) => {
+const MainProfileScreen = ({ userId, userDetail }) => {
   const router = useRouter();
   const [currentTab, setCurrentTab] = useState("/");
   const { user, apiError } = useSelector((state) => state?.auth?.getUser);
-  const allUsers = useSelector((state)=>state.userDetails.allUsers.users)
-  const {loading, posts} = useSelector(state=>state.userDetails?.userPost)
+  const allUsers = useSelector((state) => state.userDetails.allUsers.users)
+  const { loading, posts } = useSelector(state => state.userDetails?.userPost)
   const allPosts = useSelector(
     (state) => state?.post?.allPosts
   );
   console.log(posts);
   const [post, setPost] = useState();
   const dispatch = useDispatch()
-    const token = Cookies.get("token");
+  const token = Cookies.get("token");
   useEffect(() => {
     dispatch(getAllPostsAction(token));
     // socket.emit("NEW_USER_ONLINE",user._id)
@@ -91,7 +82,7 @@ const MainProfileScreen = ({userId, userDetail}) => {
   //   // }
   // }
   const handleGoBack = () => {
-      router.back(); // Go back to the previous page or route
+    router.back(); // Go back to the previous page or route
   };
 
   return (
@@ -99,11 +90,10 @@ const MainProfileScreen = ({userId, userDetail}) => {
       {/* div.timeline -> middle */}
       <div class={`${styles.timeline} ${styles._000middlebar}`}>
 
-        <nav className={styles.___main_nav} style={{borderBottom: "transparent"}}>
+        <nav className={styles.___main_nav} style={{ borderBottom: "transparent" }}>
           <div>
             <span class={styles.icon_back} onClick={handleGoBack}>
-            <svg class={styles._00_history__back} fill="rgb(120, 120, 120)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10.8284 12.0007L15.7782 16.9504L14.364 18.3646L8 12.0007L14.364 5.63672L15.7782 7.05093L10.8284 12.0007Z"></path></svg>
-              {/* <svg class={styles._00_history__back} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgb(90, 90, 90)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H6M12 5l-7 7 7 7" /></svg> */}
+              <svg class={styles._00_history__back} fill="rgb(120, 120, 120)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10.8284 12.0007L15.7782 16.9504L14.364 18.3646L8 12.0007L14.364 5.63672L15.7782 7.05093L10.8284 12.0007Z"></path></svg>
             </span>
             <span style={{ color: "transparent" }}>hidden</span>
             <svg class={styles._00_history__back_more} fill="rgb(120, 120, 120)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 10C3.9 10 3 10.9 3 12C3 13.1 3.9 14 5 14C6.1 14 7 13.1 7 12C7 10.9 6.1 10 5 10ZM19 10C17.9 10 17 10.9 17 12C17 13.1 17.9 14 19 14C20.1 14 21 13.1 21 12C21 10.9 20.1 10 19 10ZM12 10C10.9 10 10 10.9 10 12C10 13.1 10.9 14 12 14C13.1 14 14 13.1 14 12C14 10.9 13.1 10 12 10Z"></path></svg>
@@ -192,7 +182,7 @@ const MainProfileScreen = ({userId, userDetail}) => {
 //   const { userId } = query;
 
 //   // Perform any server-side operations or data fetching using the `userId`
-  
+
 //   return {
 //     userId,
 //   };
