@@ -27,7 +27,6 @@ const MainProfileScreen = ({userId, userDetail}) => {
   const allPosts = useSelector(
     (state) => state?.post?.allPosts
   );
-  // const [userDetail, setUserDetail] = useState({});
   console.log(posts);
   const [post, setPost] = useState();
   const dispatch = useDispatch()
