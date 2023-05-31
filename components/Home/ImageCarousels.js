@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "@/layout/HomeLayout/HomeLayout.module.css";
 import Image from "next/image";
+import CustomVideo from "../VideoUpload/CustomVideo";
 
 function ImageCarousels({ postImage }) {
   const handleImageVideodisplay = (pic, id) => {
@@ -22,15 +23,12 @@ function ImageCarousels({ postImage }) {
       );
     } else if (fileExtension === "mp4") {
       return (
-        <div key={id}>
-          <video
-            controls
-            width={200}
-            height={200}
+        <div>
+          <CustomVideo
+            pic={pic}
+            id={id}
             className={getItemClassName(itemCount)}
-          >
-            <source src={pic !== null && pic} type="video/mp4" />
-          </video>
+          />
         </div>
       );
     }
