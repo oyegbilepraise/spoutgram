@@ -2,13 +2,7 @@ import styles from "@/layout/HomeLayout/HomeLayout.module.css";
 import ProfileImage from "./ProfileImage";
 import ImageCarousels from "./ImageCarousels";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  dislikePostAction,
-  likePostAction,
-  repostAction,
-  setViews,
-} from "@/redux/slices/postSlice/postSlice";
-import { AiOutlineDislike } from "react-icons/ai";
+import { likePostAction, repostAction, setViews } from "@/redux/slices/postSlice/postSlice";
 import { useContext, useEffect, useState } from "react";
 import { SocketContext } from "../../redux/context/socket.js";
 import Link from "next/link";
@@ -21,7 +15,6 @@ import { bookmarkAction } from "@/redux/slices/postSlice/postSlice";
 const EachPost = ({ post, route }) => {
   const dispatch = useDispatch();
   const socket = useContext(SocketContext);
-  const [postId, setPostId] = useState(post._id);
   const [likes, setLikes] = useState(post?.post[0]?.likes);
   const [disLikes, setDisLikes] = useState(post?.post[0]?.dislikes);
   const [bookmarks, setBookmarks] = useState(post?.post[0]?.bookmarks);
@@ -148,7 +141,6 @@ const EachPost = ({ post, route }) => {
           </div>
         )} */}
         <div className={`${styles.div} ${styles.data_content}`}>
-
           <ProfileImage post={post} />
           <div
             className={`${styles.data_content_all} ${styles._00dca} ${styles.data_no_content}`}
@@ -442,7 +434,6 @@ const EachPost = ({ post, route }) => {
         </div>
       )}
       {/* this is the comment modal */}
-
     </>
   );
 };
