@@ -130,7 +130,7 @@ const EachPost = ({ post, route }) => {
             <span className={styles.repost__txt}>{post?.reposter[0].name} reposted</span>
           </div>
         )}
-        {post?.repost_status && (
+        {/* {post?.repost_status && (
           <div>
             {" "}
             <svg
@@ -146,7 +146,7 @@ const EachPost = ({ post, route }) => {
             </svg>{" "}
             {post?.reposter[0].name} reposted
           </div>
-        )}
+        )} */}
         <div className={`${styles.div} ${styles.data_content}`}>
 
           <ProfileImage post={post} />
@@ -162,7 +162,7 @@ const EachPost = ({ post, route }) => {
                     </span>
                   </div>
 
-                  <div>
+                  <div className={styles.preline}>
                     <span className={styles._ttl_contxt}>
                       {post?.post[0]?.desc?.length > 300 ? (
                         <span>
@@ -280,43 +280,26 @@ const EachPost = ({ post, route }) => {
                   {likes?.length > 0 && likes?.length}
                 </span>
               </span>
-              <span className={styles._00mn_span}>
-                {/* <Link href={`reply/${comment?._id}`}> */}
-                {route?.two ? (
-                  <Link href={`${route.two}${post?._id}`}>
-                    <span>
-                      <svg
-                        id="comment"
-                        className={`${styles.blue} ${styles.x_icn_ftr}`}
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        width={24}
-                        height={24}
-                      >
-                        <path fill="none" d="M0 0h24v24H0z" />
-                        <path d="M10 3h4a8 8 0 1 1 0 16v3.5c-5-2-12-5-12-11.5a8 8 0 0 1 8-8zm2 14h2a6 6 0 1 0 0-12h-4a6 6 0 0 0-6 6c0 3.61 2.462 5.966 8 8.48V17z" />
-                      </svg>
-                    </span>
-                  </Link>
-                ) : (
-                  <span>
-                    <svg
-                      id="comment"
-                      className={`${styles.blue} ${styles.x_icn_ftr}`}
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 24 24"
-                      width={24}
-                      height={24}
-                    >
-                      <path fill="none" d="M0 0h24v24H0z" />
-                      <path d="M10 3h4a8 8 0 1 1 0 16v3.5c-5-2-12-5-12-11.5a8 8 0 0 1 8-8zm2 14h2a6 6 0 1 0 0-12h-4a6 6 0 0 0-6 6c0 3.61 2.462 5.966 8 8.48V17z" />
-                    </svg>
-                  </span>
-                )}
+
+              <span className={styles._00mn_span} onClick={openModal}>
+                <span>
+                  <svg
+                    id="comment"
+                    className={`${styles.blue} ${styles.x_icn_ftr}`}
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    width={24}
+                    height={24}
+                  >
+                    <path fill="none" d="M0 0h24v24H0z" />
+                    <path d="M10 3h4a8 8 0 1 1 0 16v3.5c-5-2-12-5-12-11.5a8 8 0 0 1 8-8zm2 14h2a6 6 0 1 0 0-12h-4a6 6 0 0 0-6 6c0 3.61 2.462 5.966 8 8.48V17z" />
+                  </svg>
+                </span>
                 <span className={styles._00mn_spn_cnt}>
                   {post?.post[0]?.comment > 0 && post?.post[0]?.comment}
                 </span>
               </span>
+
               <span
                 className={styles._00mn_span}
                 onClick={() => dispatch(repostAction(post._id))}
