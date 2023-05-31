@@ -16,6 +16,7 @@ const BookmarkScreen = () => {
     const getBoomarks = async () => {
         try {
             const res = await dispatch(getAllBoomarks())
+            console.log(res.payload.data);
             setBookmarks(res.payload.data)
             setLoading(false);
         } catch (error) {
