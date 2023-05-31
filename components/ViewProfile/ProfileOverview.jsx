@@ -7,15 +7,14 @@ import { BtnloadSvg, PageSpinner } from "../../components";
 import { useRouter } from "next/router";
 import { getAllUsersAction, getUserPostsAction, updateProfileAction, updateProfilePictureAction } from "@/redux/slices/userDetailSlice";
 import { useFormik } from "formik";
-import axios from "axios";
-import { getUserAction } from "@/redux/slices/authSlice/authSlice";
 import Cookies from "js-cookie";
 const ProfileOverview = ({userDetail}) => {
   const [showSubscribe, setShowSubscribe] = useState(false);
   const [showMore, setShowMore] = useState(false);
   const [showVideo, setShowVideo] = useState(false);
   const { user, apiError, loading } = useSelector((state) => state?.auth?.getUser);
-  const updateProfile = useSelector(state=>state.userDetails.updateProfile)
+  const allUsers = useSelector((state) => state.userDetails.allUsers.users)
+  const updateProfile = useSelector(state => state.userDetails.updateProfile)
   const router = useRouter();
   const dispatch = useDispatch();
   // remove and set overflow
@@ -37,13 +36,13 @@ const ProfileOverview = ({userDetail}) => {
     reader.onloadstart = () => {
       setLoading(true);
     };
-  
+
     reader.onload = (e) => {
       setTimeout(() => {
         setLoading(false);
         setImage(e.target.result);
       }, 2500); // Delay of 2 seconds (2000 milliseconds)
-    };  
+    };
 
     if (file) {
       reader.readAsDataURL(file);
@@ -93,8 +92,6 @@ const ProfileOverview = ({userDetail}) => {
         setEditModalOpen(false);
       }
   })
-  
-
   return (
     <div className={styles.the__starting__point}>
       <div>
@@ -108,11 +105,11 @@ const ProfileOverview = ({userDetail}) => {
             <div className={styles.dxcWAsd}>
               <span className={styles._all00xcuunt}>
                 <span className={styles.xoxtrn}>
-                  {userDetail?.followers?.length??0}
+                  {userDetail?.followers?.length ?? 0}
                   <span className={styles.xyxxn}>followers</span>
                 </span>
                 <span className={styles.xoxtrn}>
-                  {userDetail?.following?.length?? 0}
+                  {userDetail?.following?.length ?? 0}
                   <span className={styles.xyxxn}>following</span>
                 </span>
                 {
@@ -146,7 +143,7 @@ const ProfileOverview = ({userDetail}) => {
               <button className={`${styles.follow__user}`} >{userDetail?.amFollowing? "Unfollow": "Follow"}</button>
               <button className={`${styles.follow__user}`}>Message</button>
             </span>
-            <button className={`${styles.follow__user}`} onClick={handleEditProfile} style={!userDetail?.owner? {display: 'none'}: {}} > Edit Profile </button>
+            <button className={`${styles.follow__user}`} onClick={handleEditProfile} style={!userDetail?.owner ? { display: 'none' } : {}} > Edit Profile </button>
           </span>
           <div>
             <span className={`${styles.user_data_name} ${styles.yuv_usr}`}>
@@ -321,7 +318,7 @@ const ProfileOverview = ({userDetail}) => {
 
       {/* more__button */}
 
-      <div className={styles.span__xyz} style={{display: "none"}}>
+      <div className={styles.span__xyz} style={{ display: "none" }}>
         <div
           className="xyx__more__Profile"
           style={{ position: "relative", height: "32px", width: "32px", display: "none" }}
@@ -459,7 +456,7 @@ const ProfileOverview = ({userDetail}) => {
       {showVideo && (
         <div className={styles.subscription__modal}>
           <div className={styles.subscription__modal__container}>
-             <div className={styles.subcanmdl__div}>
+            <div className={styles.subcanmdl__div}>
               <h6
                 className={styles.cancel__submdl}
                 onClick={() => setShowVideo((prev) => !prev)}
@@ -467,13 +464,13 @@ const ProfileOverview = ({userDetail}) => {
                 CANCEL
               </h6>
             </div>
-              <video width="350" height="350" controls src="/podcast__tester.mp4" type="video/mp4"/>
+            <video width="350" height="350" controls src="/podcast__tester.mp4" type="video/mp4" />
           </div>
         </div>
-      )}  
+      )}
       {/* Video modal ends*/}
 
-      {/* edit profile modal */} 
+      {/* edit profile modal */}
       {isEditModalOpen && (
         <form onSubmit={formik.handleSubmit}>
       <div className={styles.editprofile__modal__xx}>
@@ -574,12 +571,103 @@ const ProfileOverview = ({userDetail}) => {
                     </label>
                   </span>
                 </span>
+                <span>Edit Profile</span>
+
+                {/* this is the save/submit button to save edited profile information */}
+                <button className={styles.btn__edit__save} type="submit" disabled={updateProfile?.loading} style={updateProfile?.loading ? { padding: '2vh', color: "transparent", transition: "0.1s all", cursor: 'not-allowed' } : {}}>
+                  {
+                    updateProfile?.loading ? (
+                      <>
+                        <BtnloadSvg />
+                      </>
+                    ) : (
+                      'Save'
+                    )
+                  }
+                </button>
+              </div>
+              <div style={{ padding: "17px" }}>
+                <div style={{ textAlign: "center", paddingBottom: "12px", paddingTop: "5px", position: "relative" }}>
+                  {!image && (
+                    <div className={styles.awayy__uuu___vvvv} onClick={() => document.getElementById('fileInput').click()}>
+                      <Image src={img} className={styles.img__edit__img} fill alt="pic" />
+                      {isLoading ? (
+                        <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}>
+                          < PageSpinner />
+                        </div>
+                      ) : (<svg fill="rgb(235, 235, 235)" className={styles.svg__edit__upld__yyy} style={{ width: "22px", height: "22px" }} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.82843 5L7.82843 7H4V19H20V7H16.1716L14.1716 5H9.82843ZM9 3H15L17 5H21C21.5523 5 22 5.44772 22 6V20C22 20.5523 21.5523 21 21 21H3C2.44772 21 2 20.5523 2 20V6C2 5.44772 2.44772 5 3 5H7L9 3ZM12 18C8.96243 18 6.5 15.5376 6.5 12.5C6.5 9.46243 8.96243 7 12 7C15.0376 7 17.5 9.46243 17.5 12.5C17.5 15.5376 15.0376 18 12 18ZM12 16C13.933 16 15.5 14.433 15.5 12.5C15.5 10.567 13.933 9 12 9C10.067 9 8.5 10.567 8.5 12.5C8.5 14.433 10.067 16 12 16Z"></path></svg>)}
+                      <input
+                        type="file"
+                        id="fileInput"
+                        accept="image/jpg, image/jpeg, image/png"
+                        onChange={handleImageUpload}
+                        style={{ display: 'none' }}
+                      />
+                    </div>
+                  )}
+                  {image && (
+                    <>
+                      <div className={styles.awayy__uuu___vvvv} onClick={() => document.getElementById('fileInput').click()}>
+                        <img src={image} className={styles.img__edit__img} alt="pic" priority />
+                        {isLoading ? (
+                          <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}>
+                            < PageSpinner />
+                          </div>
+                        ) : (<svg fill="rgb(235, 235, 235)" className={styles.svg__edit__upld__yyy} style={{ width: "22px", height: "22px" }} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.82843 5L7.82843 7H4V19H20V7H16.1716L14.1716 5H9.82843ZM9 3H15L17 5H21C21.5523 5 22 5.44772 22 6V20C22 20.5523 21.5523 21 21 21H3C2.44772 21 2 20.5523 2 20V6C2 5.44772 2.44772 5 3 5H7L9 3ZM12 18C8.96243 18 6.5 15.5376 6.5 12.5C6.5 9.46243 8.96243 7 12 7C15.0376 7 17.5 9.46243 17.5 12.5C17.5 15.5376 15.0376 18 12 18ZM12 16C13.933 16 15.5 14.433 15.5 12.5C15.5 10.567 13.933 9 12 9C10.067 9 8.5 10.567 8.5 12.5C8.5 14.433 10.067 16 12 16Z"></path></svg>)}
+                        <input
+                          type="file"
+                          id="fileInput"
+                          accept="image/jpg, image/jpeg, image/png"
+                          onChange={handleImageUpload}
+                          style={{ display: 'none' }}
+                        />
+                      </div>
+                      <span className={styles.span___rmv__edt__pp} onClick={handleImageRemove}>Remove Photo</span>
+                    </>
+                  )}
+                </div>
+                <div>
+                  <div>
+                    <input type="text" placeholder="Name" name="name" className={styles.data_content_pass} value={formik.values.name} onChange={formik.handleChange} />
+                  </div>
+                  <div>
+                    <input type="text" placeholder="Username" name="username" value={formik.values.username} className={styles.data_content_pass} onChange={formik.handleChange} />
+                  </div>
+                  <div>
+                    <input type="text" placeholder="Location" name="location" value={formik.values.location} className={styles.data_content_pass} onChange={formik.handleChange} />
+                  </div>
+                  <div>
+                    <input type="text" placeholder="Website or bio link" name="website" value={formik.values.website} className={styles.data_content_pass} onChange={formik.handleChange} />
+                  </div>
+                  <div>
+                    <textarea placeholder="Your bio" name="bio" value={formik.values.
+                      bio} className={styles.prfole_edit_bio} onChange={formik.handleChange} />
+                  </div>
+                  <div style={{ marginTop: "-10px" }}>
+                    <span className={styles.span_post_option}>
+                      Hide Subscribers count
+                      <span>
+                        <input
+                          type="checkbox"
+                          name="allow_tipsb"
+                          id="switcha"
+                        />
+                        <label
+                          htmlFor="switcha"
+                          className={styles.label__tips}
+                        >
+                          Toggle
+                        </label>
+                      </span>
+                    </span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
-      </form>
+          </div>
+          </div>
+        </form>
       )}
       {/* edit profile modal */}
 
