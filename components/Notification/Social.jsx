@@ -80,7 +80,7 @@ const Social = () => {
                               {
                                 //notification contents
                                 notif?.notification_type==1? //follow
-                                (<><a href="" >{`@${notif?.user?.username}` ?? `@username`}</a> now follows you.</>):
+                                (<><a href="" >{`@${notif?.user?.username}` ?? `@username`}</a> now following you.</>):
                                 notif?.notification_type==2 || notif.notification_type==3? //like and repost
                                 (<>"{notif?.post?.desc}"</>): 
                                 ("")

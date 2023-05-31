@@ -28,7 +28,6 @@ const ProfileOverview = ({userDetail}) => {
   }, [showSubscribe]);
   const [image, setImage] = useState(null);
   const [isLoading, setLoading] = useState(false);
-  console.log(userDetail);
   // Function to handle image upload
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
@@ -79,11 +78,11 @@ const ProfileOverview = ({userDetail}) => {
 
   const formik = useFormik({
       initialValues: {
-        name: userDetail?.name,
-        username: userDetail?.username,
-        bio: userDetail?.bio,
-        website: userDetail?.website,
-        location: userDetail?.location,
+        name: user?.data?.name,
+        username: user?.data?.username,
+        bio: user?.data?.bio,
+        website: user?.data?.website,
+        location: user?.data?.location,
         showSubscribersCount: false
       },
       enableReinitialize: true,
@@ -196,9 +195,9 @@ const ProfileOverview = ({userDetail}) => {
             <span className={styles.user_data_about}>
               {
                 userDetail?.owner ? (user?.data?.bio ?? <>
-                Updated your Bio...
+                Update your Bio...
                 </>): (userDetail?.bio ?? <>
-              Updated your Bio...
+              Update your Bio...
               </>)
               }
             </span>
