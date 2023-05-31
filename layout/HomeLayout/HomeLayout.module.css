@@ -1973,6 +1973,9 @@ input[type="text"].disbld__inp__post {
     cursor: pointer;
     transition: 0.6s all;
 }
+.preline {
+    white-space: pre-line;
+}
 .close_hm_reply:hover {
     fill: #a199fb;
     transition: 0.6s all;
