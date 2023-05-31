@@ -1,9 +1,10 @@
 import styles from "@/layout/HomeLayout/HomeLayout.module.css";
-import img from '../../images/default-photo.svg'
+import img from '../../images/default.jpeg'
 import Image from "next/image";
 import PostedAt from "../PostedAt/postedAt";
 import { useDispatch, useSelector } from "react-redux";
 import { followUser } from "@/redux/slices/postSlice/postSlice";
+import { useState, useRef, useEffect } from 'react';
 
 const ProfileImage = ({ post }) => {
   const { user, apiError } = useSelector((state) => state?.auth?.getUser);
@@ -18,8 +19,31 @@ const ProfileImage = ({ post }) => {
       console.log({ error });
     }
   }
+
+  //this is for the more function
+  const [showOptions, setShowOptions] = useState(false);
+  const moreIconRef = useRef();
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (moreIconRef.current && !moreIconRef.current.contains(event.target)) {
+        setShowOptions(false);
+      }
+    };
+
+    document.addEventListener('click', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, []);
+
+  const toggleOptions = () => {
+    setShowOptions(!showOptions);
+  };
+
   return (
-    <div style={{ position: "relative" }}>
+    <div style={{ position: "relative", border: "", borderBottom: "0px" }}>
       <div className={styles.hover_main_image}>
         <Image
           src={post?.user[0]?.profilePhoto == '' ? img : post?.user[0]?.profilePhoto}
@@ -192,38 +216,53 @@ const ProfileImage = ({ post }) => {
       </div>
 
       <div style={{ position: "absolute", right: 0, top: "-3px" }}>
-        <svg
-          width={15}
-          height={4}
-          viewBox="0 0 18 4"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <circle
-            cx={2}
-            cy={2}
-            r="1.2"
-            fill="gray"
-            stroke="gray"
-            strokeWidth="1.6"
-          />
-          <circle
-            cx={9}
-            cy={2}
-            r="1.2"
-            fill="gray"
-            stroke="gray"
-            strokeWidth="1.6"
-          />
-          <circle
-            cx={16}
-            cy={2}
-            r="1.2"
-            fill="gray"
-            stroke="gray"
-            strokeWidth="1.6"
-          />
-        </svg>
+        <div style={{position: "relative"}} className={styles.yyyy__jjjj__qqq}>
+          <svg
+            ref={moreIconRef}
+            onClick={toggleOptions}
+            className={styles.more_icn_pst_yy}
+            width={15}
+            height={4}
+            viewBox="0 0 18 4"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <circle
+              cx={2}
+              cy={2}
+              r="1.2"
+              // fill="gray"
+              // stroke="gray"
+              strokeWidth="1.6"
+            />
+            <circle
+              cx={9}
+              cy={2}
+              r="1.2"
+              // fill="gray"
+              // stroke="gray"
+              strokeWidth="1.6"
+            />
+            <circle
+              cx={16}
+              cy={2}
+              r="1.2"
+              // fill="gray"
+              // stroke="gray"
+              strokeWidth="1.6"
+            />
+          </svg>
+
+          
+          {/* more option */}
+          {showOptions && (
+          <span className={styles.post__more__optns}>
+            Copy post link
+          </span>
+          )}
+          {/* more option */}
+
+        </div>
       </div>
     </div>
   );

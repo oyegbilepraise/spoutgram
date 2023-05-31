@@ -19,23 +19,36 @@ console.log(user_comments);
 
   return (
     <div>
-    {/* {user_comments.success && user_comments?.data?.comments?.map(comment => {
+
+  {/* Post and its comments */}
+    {user_comments.success && user_comments?.data?.comments?.map((comment,id) => {
     return(
+    <div key={id} style={{marginBottom:'10px'}}>
     <EachPost post={comment} />
-    )
-    })} */}
-    {user_comments.success && user_comments?.data?.reply?.map((each,id) => (
-    <div key={id}>
-    <EachComment comment={each?.comment[0]} />
-    {/* <div className='replies' style={{width:'60%'}}>
-   {each?.replies.map((reply,Id)=>(
+     <div className='comments' style={{width:'80%'}}>
+   {comment?.comments.map((commenti,Id)=>(
     <div key={Id}>
-    <EachReply reply={reply}/>
+    <EachComment comment={commenti} individualPost={comment}/>
     </div>
     ))}
-    </div> */}
     </div>
+    </div>
+    )
+    })}
 
+  {/* Comment and its replies */}
+  <h3>Replies</h3>
+    {user_comments.success && user_comments?.data?.reply?.map((each,id) => (
+    <div key={id}>
+    <EachComment comment={each?.comment[0]} individualPost={each} />
+    <div className='replies' style={{width:'80%'}}>
+   {each?.replies.map((reply,Id)=>(
+    <div key={Id}>
+    <EachReply reply={reply} individualComment={each}/>
+    </div>
+    ))}
+    </div>
+    </div>
     )
   )}
     </div>

@@ -48,7 +48,7 @@ function ImageCarousels({ postImage }) {
             alt="picgrid"
             className={''}
             width={200}
-            height={200}
+            height={200} 
             priority
             key={id}
             onClick={() => openModal(pic)}

@@ -137,15 +137,23 @@ const RepliesScreen = () => {
             <div className={styles.whats_yyy}>
               <div className={styles.parnt__cnt_wyyyt}>
                 <div className={styles.inipic_xyz}>
-                  <Image
+                   <Image
                     alt="img"
-                    fill
                     className={styles.img__winipc}
                     src={
                       user?.data?.profilePhoto == ""
                         ? defaultImg
                         : user?.data?.profilePhoto
                     }
+                    width="50"
+                    height="22"
+                    style={{
+                      height: "200px",
+                      width: "100%",
+                      border: "1px solid gray",
+                      objectFit: "cover",
+                      borderRadius: "8px",
+                    }}
                   />
                 </div>
                 <div className={styles.ini__inp}>
@@ -179,7 +187,7 @@ const RepliesScreen = () => {
                 {replies?.data?.map((reply, id) => {
                   return (
                     <div key={id}>
-                     <EachReply reply={reply}/>
+                     <EachReply reply={reply} individualComment={individualComment}/>
                     </div>
                   );
                 })}
@@ -211,16 +219,24 @@ const RepliesScreen = () => {
                 </div>
                 <div style={{ display: "flex" }}>
                   <div>
-                    <Image
-                      src={
-                        user?.data?.profilePhoto == ""
-                          ? defaultImg
-                          : user?.data?.profilePhoto
-                      }
-                      alt="image_profile_img"
-                      className={styles.impg__cpr__nal}
-                      fill
-                    />
+                     <Image
+                    alt="img"
+                    className={styles.img__winipc}
+                    src={
+                      user?.data?.profilePhoto == ""
+                        ? defaultImg
+                        : user?.data?.profilePhoto
+                    }
+                    width="50"
+                    height="22"
+                    style={{
+                      height: "200px",
+                      width: "100%",
+                      border: "1px solid gray",
+                      objectFit: "cover",
+                      borderRadius: "8px",
+                    }}
+                  />
                   </div>
                   <div>
                     <textarea

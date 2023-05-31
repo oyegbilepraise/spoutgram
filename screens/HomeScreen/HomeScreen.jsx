@@ -1,9 +1,9 @@
 import { HomeLayout } from "@/layout";
 import Image from "next/image";
-import img from '../../images/default.jpeg' 
+import img from '../../images/default.jpeg'
 import styles from "@/layout/HomeLayout/HomeLayout.module.css";
 import Post from "@/components/Home/Post";
-import { useContext, useEffect, useState, } from "react"; 
+import { useContext, useEffect, useState, } from "react";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import Cookies from "js-cookie";
@@ -14,9 +14,7 @@ import { getAllUsersAction } from "@/redux/slices/userDetailSlice";
 const HomeScreen = (props) => {
   const { user } = props
   const socket = useContext(SocketContext);
-
   const dispatch = useDispatch()
-  
   const token = Cookies.get("token");
   const { loading, apiError, posts } = useSelector(
     (state) => state?.post?.allPosts
@@ -24,15 +22,25 @@ const HomeScreen = (props) => {
 
   useEffect(() => {
     dispatch(getAllPostsAction(token));
-    console.log(user);
-    // socket.emit("NEW_USER_ONLINE",user._id)
   }, []);
 
   return (
     <HomeLayout>
       <div className={`${styles.timeline} ${styles._000middlebar}`}>
-        <nav className={styles.___main_nav} style={{borderBottom: "transparent"}}>
-          <span>Home</span>
+        <nav className={styles.___main_nav} style={{ borderBottom: "transparent" }}>
+          <div>
+            <span>Home</span>
+
+            {/* showing the new post */}
+            <div className={styles.show_new_post_ldr}>
+              <div style={{ position: "relative" }}>
+                <svg className={styles.pointr_up_svg} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12.9999 7.82843V20H10.9999V7.82843L5.63589 13.1924L4.22168 11.7782L11.9999 4L19.778 11.7782L18.3638 13.1924L12.9999 7.82843Z"></path></svg>
+                <span className={styles.bb_nn_mm}>15 New Posts</span>
+              </div>
+            </div>
+            {/* showing the new post */}
+
+          </div>
         </nav>
 
         <div className={styles.whats_yyy}>

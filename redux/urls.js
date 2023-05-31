@@ -15,7 +15,7 @@ export const URL = {
   updateProfilePicture: "/users/user/profile-photo/upload",
   getAllUsers: "/users/all-users",
   getSingleUser: "/users/user/",
-  getUserComments: "/users/comments",
+  getUserComments: "/users/comments/1",
   // Posts
 createPost:"/posts/create",
 getPosts:"/posts/all-posts",
@@ -24,6 +24,7 @@ likePost:"/posts/post/like",
 dislikePost:"/posts/post/unlike",
 getUserPost: "/users/posts",
 repost:"/posts/repost/",
+bookmark: '/posts/bookmak',
   // Category
 
   // Comment
