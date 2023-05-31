@@ -109,7 +109,6 @@ a:focus {
 /* styles for when there is just one item in the postImage */
 .oneItemContainer {
   border-radius: 9px;
-  border: 5px solid red;
   max-height: 500px;
   grid-gap: 5px;
 }
@@ -146,28 +145,26 @@ a:focus {
 /* styles for when there is only three items in the postImage */
 
 .thirdImageContainer {
-  background-color: rgb(178, 55, 55);
-  border: 5px solid rgb(218, 153, 204);
   display: grid;
-  grid-template-columns: 2fr 1fr;
+  grid-template-columns: 1fr 2fr;
   grid-gap: 5px;
   border-radius: 9px;
   overflow: hidden; 
+  position: relative;
 }
 
 /* Targetting the signle image in the third grid */
 
-.firstImage {
-  border: 2px solid red;
+.firstImage div{
+  height: 100%; /* Make the width of the first image 100% of the container */
+  object-fit: cover; /* Maintain aspect ratio and cover the available space */
 }
 
 .secondImage {
-  border: 2px solid pink;
+    grid-row: span 2;
 }
 
-.thirdImage {
-  border: 2px solid blue;
-}
+
 
 .thirdStyle {
   width: 100%;
