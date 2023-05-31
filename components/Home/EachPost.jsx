@@ -15,7 +15,7 @@ import Link from "next/link";
 import { InView } from "react-intersection-observer";
 import HomeVideo from "../VideoUpload/HomeVideo";
 import Image from "next/image";
-import img from '../../images/default.jpeg' 
+import img from '../../images/default.jpeg'
 import { bookmarkAction } from "@/redux/slices/postSlice/postSlice";
 
 const EachPost = ({ post, route }) => {
@@ -28,12 +28,6 @@ const EachPost = ({ post, route }) => {
   const [more, setMore] = useState(false);
   const [_views, set_Views] = useState(post?.post[0]?.view);
   const { user, apiError } = useSelector((state) => state?.auth?.getUser);
-
-  useEffect(() => {
-    if (post) {
-    }
-  }, [post]);
-
   const [isLiked, setisLiked] = useState(
     post?.post[0]?.likes?.includes(user?.data?._id)
   );
@@ -57,6 +51,8 @@ const EachPost = ({ post, route }) => {
   const handleBookmark = async () => {
     try {
       const res = await dispatch(bookmarkAction({ postId: post?.post[0]?._id }));
+      console.log(res?.payload?.data?.bookmarks);
+      setBookmarks(res?.payload?.data?.bookmarks);
     } catch (error) {
       console.log({ error });
     }
@@ -68,6 +64,8 @@ const EachPost = ({ post, route }) => {
       } else if (data.data.type === "like") {
         setLikes(data.data.count);
       } else if (data.data.type === "dislike") {
+        setDisLikes(data.data.count);
+      } else if (data.data.type === "bookmark") {
         setDisLikes(data.data.count);
       }
     });
@@ -85,11 +83,8 @@ const EachPost = ({ post, route }) => {
   const closeModal = () => {
     setIsModalOpen(false);
   };
-
-
   const [image, setImage] = useState(null);
   const [isLoading, setLoading] = useState(false);
-
   // Function to handle image upload
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
@@ -97,13 +92,13 @@ const EachPost = ({ post, route }) => {
     reader.onloadstart = () => {
       setLoading(true);
     };
-  
+
     reader.onload = (e) => {
       setTimeout(() => {
         setLoading(false);
         setImage(e.target.result);
       }, 500); // Delay of 2 seconds (2000 milliseconds)
-    };  
+    };
 
     if (file) {
       reader.readAsDataURL(file);
@@ -131,7 +126,7 @@ const EachPost = ({ post, route }) => {
       >
         {post?.repost_status && (
           <div className={styles.repost_contner}>
-            <svg className={styles.repost_icn_shw} id="a" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M22.3,28c0,.72-.58,1.3-1.3,1.3H7c-1.82,0-3.3-1.48-3.3-3.3V7.14l-.78,.78c-.51,.51-1.33,.51-1.84,0s-.51-1.33,0-1.84l3-3c.12-.12,.26-.22,.42-.28,.32-.13,.68-.13,.99,0,.16,.07,.3,.16,.42,.28l3,3c.51,.51,.51,1.33,0,1.84-.25,.25-.59,.38-.92,.38s-.67-.13-.92-.38l-.78-.78V26c0,.39,.31,.7,.7,.7h14c.72,0,1.3,.58,1.3,1.3Zm8.62-3.92c-.51-.51-1.33-.51-1.84,0l-.78,.78V6c0-1.82-1.48-3.3-3.3-3.3H11c-.72,0-1.3,.58-1.3,1.3s.58,1.3,1.3,1.3h14c.39,0,.7,.31,.7,.7V24.86l-.78-.78c-.51-.51-1.33-.51-1.84,0s-.51,1.33,0,1.84l3,3c.12,.12,.26,.22,.42,.28,.16,.07,.33,.1,.5,.1s.34-.03,.5-.1c.16-.07,.3-.16,.42-.28l3-3c.51-.51,.51-1.33,0-1.84Z"/></svg>
+            <svg className={styles.repost_icn_shw} id="a" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M22.3,28c0,.72-.58,1.3-1.3,1.3H7c-1.82,0-3.3-1.48-3.3-3.3V7.14l-.78,.78c-.51,.51-1.33,.51-1.84,0s-.51-1.33,0-1.84l3-3c.12-.12,.26-.22,.42-.28,.32-.13,.68-.13,.99,0,.16,.07,.3,.16,.42,.28l3,3c.51,.51,.51,1.33,0,1.84-.25,.25-.59,.38-.92,.38s-.67-.13-.92-.38l-.78-.78V26c0,.39,.31,.7,.7,.7h14c.72,0,1.3,.58,1.3,1.3Zm8.62-3.92c-.51-.51-1.33-.51-1.84,0l-.78,.78V6c0-1.82-1.48-3.3-3.3-3.3H11c-.72,0-1.3,.58-1.3,1.3s.58,1.3,1.3,1.3h14c.39,0,.7,.31,.7,.7V24.86l-.78-.78c-.51-.51-1.33-.51-1.84,0s-.51,1.33,0,1.84l3,3c.12,.12,.26,.22,.42,.28,.16,.07,.33,.1,.5,.1s.34-.03,.5-.1c.16-.07,.3-.16,.42-.28l3-3c.51-.51,.51-1.33,0-1.84Z" /></svg>
             <span className={styles.repost__txt}>{post?.reposter[0].name} reposted</span>
           </div>
         )}
@@ -365,7 +360,7 @@ const EachPost = ({ post, route }) => {
                     </svg>
                   )}
                 </span>
-                <span className={styles._00mn_spn_cnt}>{bookmarks.length}</span>
+                <span className={styles._00mn_spn_cnt}>{post?.post[0]?.bookmarks.length}</span>
               </span>
               <span className={styles._00mn_span}>
                 <span>
@@ -389,79 +384,79 @@ const EachPost = ({ post, route }) => {
 
       {/* this is the comment modal */}
       {isModalOpen && (
-      <div className={styles.home_post__yyy_commt}>
-        <div className={styles.commnt_qqq_aa}>
-          <div className={styles.modal_inner}>
+        <div className={styles.home_post__yyy_commt}>
+          <div className={styles.commnt_qqq_aa}>
+            <div className={styles.modal_inner}>
 
-            {/* close button */}
-            <svg onClick={closeModal} className={styles.close_hm_reply} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12.0007 10.5865L16.9504 5.63672L18.3646 7.05093L13.4149 12.0007L18.3646 16.9504L16.9504 18.3646L12.0007 13.4149L7.05093 18.3646L5.63672 16.9504L10.5865 12.0007L5.63672 7.05093L7.05093 5.63672L12.0007 10.5865Z"></path></svg>
-            {/* close button */}
+              {/* close button */}
+              <svg onClick={closeModal} className={styles.close_hm_reply} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12.0007 10.5865L16.9504 5.63672L18.3646 7.05093L13.4149 12.0007L18.3646 16.9504L16.9504 18.3646L12.0007 13.4149L7.05093 18.3646L5.63672 16.9504L10.5865 12.0007L5.63672 7.05093L7.05093 5.63672L12.0007 10.5865Z"></path></svg>
+              {/* close button */}
 
-            <div className={styles.wdyynait} style={{display: "flex", marginBottom: "30px"}}>
-              <div>
-                <Link href="/penuel">
-                <Image src={img} alt="img" className={styles.replly_img_authr} priority/>
-                </Link>
-                <div className={styles.line_border_yy}></div>
-              </div>
-              <div>
-                <span className={styles._0022_nm_usr}>
-                  Penuel John
-                  <span>@penuel</span>
-                </span>
+              <div className={styles.wdyynait} style={{ display: "flex", marginBottom: "30px" }}>
                 <div>
-                  <span className={`${styles._ttl_top} ${styles._ttl_top_reply}`}>
-                    What I think about Adolf hitler
+                  <Link href="/penuel">
+                    <Image src={img} alt="img" className={styles.replly_img_authr} priority />
+                  </Link>
+                  <div className={styles.line_border_yy}></div>
+                </div>
+                <div>
+                  <span className={styles._0022_nm_usr}>
+                    Penuel John
+                    <span>@penuel</span>
                   </span>
+                  <div>
+                    <span className={`${styles._ttl_top} ${styles._ttl_top_reply}`}>
+                      What I think about Adolf hitler
+                    </span>
+                  </div>
+                  <div>
+                    <span className={`${styles._ttl_contxt} ${styles._ttl_contxt_reply}`}>
+                      this is the reply text...it should be in here, you get @steven??? were are goin to be here!
+                      now, the rest part of this words is to test the text truncation
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div className={styles.wdyynait} style={{ display: "flex" }}>
+                <div>
+                  <Link href="/penuel">
+                    <Image src={img} alt="img" className={styles.replly_img_authr} priority />
+                  </Link>
                 </div>
                 <div>
-                  <span className={`${styles._ttl_contxt} ${styles._ttl_contxt_reply}`}>
-                    this is the reply text...it should be in here, you get @steven??? were are goin to be here!
-                    now, the rest part of this words is to test the text truncation
+                  <span className={styles._0022_nm_usr}>
+                    Replying to
+                    <span style={{ color: "#a199fb" }}>@penuel</span>
                   </span>
-                </div>
-              </div>
-            </div>
+                  <div>
+                    <textarea placeholder="What's your reply?" className={styles.textarea_reply_qq}></textarea>
+                  </div>
 
-            <div className={styles.wdyynait} style={{display: "flex"}}>
-              <div>
-                <Link href="/penuel">
-                  <Image src={img} alt="img" className={styles.replly_img_authr} priority/>
-                </Link>
-              </div>
-              <div>
-                <span className={styles._0022_nm_usr}>
-                  Replying to
-                  <span style={{color: "#a199fb"}}>@penuel</span>
-                </span>
-                <div>
-                  <textarea placeholder="What's your reply?" className={styles.textarea_reply_qq}></textarea>
-                </div>
+                  {image && (
+                    <div style={{ position: "relative" }}>
+                      <img src={image} className={styles.img_reply_hm} alt="img" priority />
+                      <svg onClick={handleImageRemove} className={styles.close_pic_reply_yxyx} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM12 10.5858L9.17157 7.75736L7.75736 9.17157L10.5858 12L7.75736 14.8284L9.17157 16.2426L12 13.4142L14.8284 16.2426L16.2426 14.8284L13.4142 12L16.2426 9.17157L14.8284 7.75736L12 10.5858Z"></path></svg>
+                    </div>
+                  )}
 
-                {image && (
-                <div style={{position: "relative"}}>
-                  <img src={image} className={styles.img_reply_hm} alt="img" priority/>
-                  <svg  onClick={handleImageRemove} className={styles.close_pic_reply_yxyx} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM12 10.5858L9.17157 7.75736L7.75736 9.17157L10.5858 12L7.75736 14.8284L9.17157 16.2426L12 13.4142L14.8284 16.2426L16.2426 14.8284L13.4142 12L16.2426 9.17157L14.8284 7.75736L12 10.5858Z"></path></svg>
-                </div>
-                )}
+                  <div style={{ position: "relative" }}>
+                    <svg onClick={() => document.getElementById("fileInput").click()} style={{ fill: "#a199fb", width: "22px", height: "22px", cursor: "pointer", marginTop: "5px" }} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 11.1005L7 9.1005L12.5 14.6005L16 11.1005L19 14.1005V5H5V11.1005ZM5 13.9289V19H8.1005L11.0858 16.0147L7 11.9289L5 13.9289ZM10.9289 19H19V16.9289L16 13.9289L10.9289 19ZM4 3H20C20.5523 3 21 3.44772 21 4V20C21 20.5523 20.5523 21 20 21H4C3.44772 21 3 20.5523 3 20V4C3 3.44772 3.44772 3 4 3ZM15.5 10C14.6716 10 14 9.32843 14 8.5C14 7.67157 14.6716 7 15.5 7C16.3284 7 17 7.67157 17 8.5C17 9.32843 16.3284 10 15.5 10Z"></path></svg>
+                    <input
+                      type="file"
+                      id="fileInput"
+                      accept="image/jpg, image/jpeg, image/png"
+                      onChange={handleImageUpload}
+                      style={{ display: "none" }}
+                    />
 
-                <div style={{position: "relative"}}>
-                  <svg onClick={() => document.getElementById("fileInput").click()} style={{fill: "#a199fb", width: "22px", height: "22px", cursor: "pointer", marginTop: "5px"}} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 11.1005L7 9.1005L12.5 14.6005L16 11.1005L19 14.1005V5H5V11.1005ZM5 13.9289V19H8.1005L11.0858 16.0147L7 11.9289L5 13.9289ZM10.9289 19H19V16.9289L16 13.9289L10.9289 19ZM4 3H20C20.5523 3 21 3.44772 21 4V20C21 20.5523 20.5523 21 20 21H4C3.44772 21 3 20.5523 3 20V4C3 3.44772 3.44772 3 4 3ZM15.5 10C14.6716 10 14 9.32843 14 8.5C14 7.67157 14.6716 7 15.5 7C16.3284 7 17 7.67157 17 8.5C17 9.32843 16.3284 10 15.5 10Z"></path></svg>
-                  <input
-                    type="file"
-                    id="fileInput"
-                    accept="image/jpg, image/jpeg, image/png"
-                    onChange={handleImageUpload}
-                    style={{ display: "none" }}
-                  />
-
-                  <button className={styles.reply__hm_btn} type="submit">Reply</button>
+                    <button className={styles.reply__hm_btn} type="submit">Reply</button>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
       )}
       {/* this is the comment modal */}
 

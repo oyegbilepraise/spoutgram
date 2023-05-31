@@ -71,7 +71,7 @@ export const bookmarkAction = createAsyncThunk(
   async (postId, { rejectWithValue }) => {
     const token = Cookies.get("token");
     try {
-      const res = await patchRequest({ url: `${baseUrl}${URL.bookmark}`, data: postId, token })
+      const res = await postRequest({ url: `${baseUrl}${URL.bookmark}`, data: postId, token })
       return res.data
     } catch (error) {
       return rejectWithValue(error);
