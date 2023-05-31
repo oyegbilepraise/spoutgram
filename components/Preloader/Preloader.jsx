@@ -17,7 +17,7 @@ const Preloader = () => {
     const handleComplete = (url) => {
       if (url === router.asPath) {
         setLoading(false);
-        document.body.classList.remove(styles.no_scroll);
+        // document.body.classList.remove(styles.no_scroll);
       }
     };
     router.events.on("routeChangeStart", handleStart);
@@ -34,16 +34,16 @@ const Preloader = () => {
   useEffect(() => {
     if (!loading) {
       const preloader = document.querySelector(`.${styles.loader__}`);
-      const appbody = document.querySelector('.appBody__main');
+      // const appbody = document.querySelector('.appBody__main');
 
       if (preloader) {
-        appbody.classList.add(styles.no_scroll);
+        // appbody.classList.add(styles.no_scroll);
         if (timerId) clearTimeout(timerId);
         timerId = setTimeout(() => {
           preloader.classList.add(styles.fadeOut);
           setTimeout(() => {
             preloader.remove();
-            appbody.classList.remove(styles.no_scroll);
+            // appbody.classList.remove(styles.no_scroll);
           }, 1000);
         }, 6000); 
         preloader.classList.remove(styles.fadeOut);
@@ -76,10 +76,18 @@ const Preloader = () => {
               gradientTransform="translate(0 30)"
               gradientUnits="userSpaceOnUse"
             >
-              <stop offset={0} stopColor="#0070d7" />
+              {/* this is the spoutgram ex-gradient */}
+              {/* <stop offset={0} stopColor="#0070d7" />
               <stop offset=".38" stopColor="#00aae1" />
               <stop offset=".8" stopColor="#00e7eb" />
-              <stop offset={1} stopColor="#00fff0" />
+              <stop offset={1} stopColor="#00fff0" /> */}
+
+              {/* this is the testing/new */}
+              <stop offset={0} stopColor="rgb(210, 210, 210)" />
+              <stop offset=".38" stopColor="rgb(210, 210, 210)" />
+              <stop offset=".8" stopColor="rgb(210, 210, 210)" />
+              <stop offset={1} stopColor="rgb(210, 210, 210)" />
+
             </linearGradient>
           </defs>
           <path
@@ -99,7 +107,7 @@ const Preloader = () => {
             d="m574.73,22.84c-5.11-4.97-11.83-7.46-20.17-7.46-4.91,0-9.46,1.15-13.67,3.46-4.21,2.31-7.42,5.37-9.63,9.19-2.29-4.06-5.52-7.18-9.69-9.37-4.17-2.19-8.91-3.28-14.23-3.28-4.17,0-7.99.8-11.47,2.39s-6.32,3.78-8.52,6.56c0-4.41-3.68-7.99-8.22-7.99h-8.95v66.09h17.17v-36.5c0-5.17,1.37-9.13,4.11-11.87,2.74-2.75,6.48-4.12,11.22-4.12s8.34,1.37,11.04,4.12c2.7,2.75,4.05,6.7,4.05,11.87v36.5h17.17v-36.5c0-5.17,1.37-9.13,4.11-11.87,2.74-2.75,6.44-4.12,11.1-4.12s8.34,1.37,11.04,4.12,4.05,6.7,4.05,11.87v36.5h17.17v-38.77c0-8.9-2.56-15.84-7.66-20.82Z"
           />
         </svg>
-        < PageSpinner/>
+        {/* < PageSpinner/> */}
       </div>
     </div> 
   );

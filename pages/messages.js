@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { MessagesScreen } from "@/screens";
 import Head from "next/head";
 

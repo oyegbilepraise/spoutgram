@@ -1,16 +1,21 @@
 import './RightSidebar.module.css'
-import React, { useState } from "react";
-import img from "../../images/default-photo.svg";
+import React, { useEffect, useState } from "react";
+import img from "../../images/default.jpeg";
 import Image from "next/image";
 import styles from "@/layout/HomeLayout/HomeLayout.module.css";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import Search from "../SearchComp/Search";
+import Cookies from "js-cookie";
+import { Follow, getSuggestedUsers } from '@/redux/slices/messageSlice/messageSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import Link from "next/link";
+import { followUser } from '@/redux/slices/postSlice/postSlice';
+import { useFormik } from 'formik';
 
-// read documentation to style and also inspect element. https://www.npmjs.com/package/react-multi-carousel
-
-// custom arrows. add arrows in place of the buttons
 const ButtonGroup = ({ next, previous, goToSlide, ...rest }) => {
+
+
   const {
     carouselState: { currentSlide },
   } = rest;
@@ -20,38 +25,49 @@ const ButtonGroup = ({ next, previous, goToSlide, ...rest }) => {
     >
       {" "}
       <button
-        className={currentSlide === 0 ? "disable" : ""}
+        // className={currentSlide === 0 ? "disable" : ""}
+        className={styles.buttons__prv__slide}
         onClick={() => previous()}
         style={{ cursor: "pointer" }}
+      // {currentSlide === 0 ? "disable" : ""}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          width={21}
-          height={21}
+          width={19}
+          height={19}
           viewBox="0 0 24 24"
           fill="none"
-          stroke="var(--brand-color)"
+          stroke="#8e8e8e"
           strokeWidth={2}
           strokeLinecap="round"
           strokeLinejoin="round"
+          style={{
+            position: "absolute",
+            top: "50%", left: "50%", transform: "translate(-50%, -50%)"
+          }}
         >
           <path d="M15 18l-6-6 6-6" />
         </svg>
       </button>
       <button
+        className={styles.buttons__prv__slide}
         onClick={() => next()}
-        style={{ marginLeft: "5px", cursor: "pointer" }}
+        style={{ marginLeft: "11px", cursor: "pointer" }}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          width={21}
-          height={21}
+          width={19}
+          height={19}
           viewBox="0 0 24 24"
           fill="none"
-          stroke="var(--brand-color)"
+          stroke="#8e8e8e"
           strokeWidth={2}
           strokeLinecap="round"
           strokeLinejoin="round"
+          style={{
+            position: "absolute",
+            top: "50%", left: "50%", transform: "translate(-50%, -50%)"
+          }}
         >
           <path d="M9 18l6-6-6-6" />
         </svg>
@@ -67,19 +83,19 @@ const carouselItems = [
     id: 1,
   },
   {
-    id: 2,  
+    id: 2,
   },
   {
-    id: 3,  
+    id: 3,
   },
   {
-    id: 4,  
+    id: 4,
   },
   {
-    id: 5,  
+    id: 5,
   },
   {
-    id: 6,  
+    id: 6,
   },
 
 ];
@@ -123,6 +139,16 @@ const CustomDot = ({ onClick, ...rest }) => {
 };
 
 const RightSidebar = () => {
+  const { user } = useSelector((state) => state?.auth?.getUser);
+  const dispatch = useDispatch()
+  const token = Cookies.get("token");
+  const { loading, apiError, suggested } = useSelector(
+    (state) => state?.message?.suggestedUsers
+  );
+  useEffect(() => {
+    dispatch(getSuggestedUsers(token));
+  }, []);
+
   const responsive = {
     desktop: {
       breakpoint: { max: 3000, min: 1024 },
@@ -140,135 +166,39 @@ const RightSidebar = () => {
       slidesToSlide: 1, // optional, default to 1.
     },
   };
+  let info = suggested.data
+  let data = []
+  const itemsPerPage = 6;
 
-  const data = [
-    {
-      id: 1,
-      items: [
-        {
-          id: 1,
-          name: "Preshpie",
-          username: "@pie",
-          btn: "Follow",
-        },
-        {
-          id: 2,
-          name: "John",
-          username: "@penuel",
-          btn: "Follow",
-        },
-        {
-          id: 3,
-          name: "Tomiwa",
-          username: "@tom",
-          btn: "Follow",
-        },
-        {
-          id: 4,
-          name: "Dipo",
-          username: "@dipox",
-          btn: "Follow",
-        },
-        {
-          id: 5,
-          name: "Dipo",
-          username: "@dipox",
-          btn: "Follow",
-        },
-        {
-          id: 6,
-          name: "Dipo",
-          username: "@dipox",
-          btn: "Follow",
-        },
-      ],
-    },
-    {
-      id: 2,
-      items: [
-        {
-          id: 1,
-          name: "Dada",
-          username: "@pie",
-          btn: "Follow",
-        },
-        {
-          id: 2,
-          name: "YORA",
-          username: "@penuel",
-          btn: "Follow",
-        },
-        {
-          id: 3,
-          name: "dami",
-          username: "@tom",
-          btn: "Follow",
-        },
-        {
-          id: 4,
-          name: "Yemi",
-          username: "@dipox",
-          btn: "Follow",
-        },
-        {
-          id: 5,
-          name: "Yemi",
-          username: "@dipox",
-          btn: "Follow",
-        },
-        {
-          id: 6,
-          name: "Yemi",
-          username: "@dipox",
-          btn: "Follow",
-        },
-      ],
-    },
-    {
-      id: 3,
-      items: [
-        {
-          id: 1,
-          name: "Rema",
-          username: "@badguy",
-          btn: "Follow",
-        },
-        {
-          id: 2,
-          name: "Doja",
-          username: "@cat",
-          btn: "Follow",
-        },
-        {
-          id: 3,
-          name: "Drake",
-          username: "@yourmama",
-          btn: "Follow",
-        },
-        {
-          id: 4,
-          name: "James",
-          username: "@brown",
-          btn: "Follow",
-        },
-        {
-          id: 5,
-          name: "James",
-          username: "@brown",
-          btn: "Follow",
-        },
-        {
-          id: 6,
-          name: "James",
-          username: "@brown",
-          btn: "Follow",
-        },
-      ],
-    }, 
-  ];
+  if (info) {
 
+    let total = Math.round(info.length / 6)
+    for (let index = 1; index <= total; index++) {
+      let format = displayPage(index);
+      data.push({ id: index, items: format })
+    }
+
+  }
+
+  function displayPage(page) {
+    let startIndex = (page - 1) * itemsPerPage;
+    let endIndex = startIndex + itemsPerPage;
+    let pageItems = info.slice(startIndex, endIndex);
+    return pageItems
+  }
+
+  const handleFollow = async (id) => {
+    console.log("Following:: ", id);
+    const res = dispatch(followUser(id))
+    // let dataFind = suggested.data.findIndex((e => e._id == id));
+    // suggested.data[dataFind]?.followers.push(user?.data?._id)
+
+    // console.log(data);
+
+  }
   // show search modal toggle
   const [showSearch, setShowSearch] = useState(false);
+
   const handleSearch = () => {
     setShowSearch((prev) => !prev);
   };
@@ -308,56 +238,71 @@ const RightSidebar = () => {
 
         {/* suggestions */}
         <div className={styles.sgstn}>
-          <span>Suggested Follows</span>
-          <Carousel
-            swipeable={true}
-            draggable={true}
-            arrows={false}
-            showDots={true}
-            responsive={responsive}
-            ssr={true}
-            infinite={true}
-            keyBoardControl={true}
-            customTransition="all .5"
-            transitionDuration={500}
-            customButtonGroup={<ButtonGroup />}
-            customDot={<CustomDot />}
-            containerClass="carousel-container"
-            renderButtonGroupOutside={true}
-            dotListClass="custom-dot-list-style"
-            itemClass="carousel-item-padding-40-px"
-          >
-            {data.map(({ id, items }) => {
-              return (
-                <div key={id}>
-                  <div>
-                    {items.map(({ name, id, username, btn }) => {
-                      return (
-                        <div key={id} className={styles.sgstn_tst}>
-                          <div>
-                            <Image
-                              src={img}
-                              alt="img"
-                              className={styles.xqsstn_bn}
-                            />
+          <span>Follow Suggestions</span>
+          {data ?
+            <Carousel
+              swipeable={true}
+              draggable={true}
+              arrows={false}
+              showDots={true}
+              responsive={responsive}
+              ssr={true}
+              infinite={true}
+              keyBoardControl={true}
+              customTransition="all .5"
+              transitionDuration={500}
+              customButtonGroup={<ButtonGroup />}
+              customDot={<CustomDot />}
+              containerClass="carousel-container"
+              renderButtonGroupOutside={true}
+              dotListClass="custom-dot-list-style"
+              itemClass="carousel-item-padding-40-px"
+            >
+              {data.map(({ id, items }) => {
+                return (
+                  <div key={id}>
+                    <div>
+                      {items.map(({ name, _id, username, followers }) => {
+                        return (
+                          <div key={_id} className={styles.sgstn_tst}>
+                            <div>
+                              <Link href={`/${username}`}>
+                              {/* replace with the appropriate username variable */}
+                                <Image
+                                  src={img}
+                                  alt="img"
+                                  className={styles.xqsstn_bn}
+                                />
+                              </Link>
+                            </div>
+                            <div>
+                              {/* replace with the appropriate username variable */}
+                              <Link href={`/${username}`}>
+                                <span className={styles.yynmsq}>{name}</span>
+                              </Link>
+                              <Link href={`/${username}`}>
+                                <span className={styles.yyusbsq}>@{username}</span>
+                              </Link>
+                            </div>
+                            <div>
+                              {followers.includes(user?.data?._id)
+                              ?  <button className={styles.flwx_xyq_fllw}>Unfollow</button>
+
+                              : <button className={styles.flwx_xyq_fllw} onClick={()=>handleFollow(_id)}>Follow</button>
+                              }
+                             
+                            </div>
                           </div>
-                          <div>
-                            <span className={styles.yynmsq}>{name}</span>
-                            <span className={styles.yyusbsq}>{username}</span>
-                          </div>
-                          <div>
-                            <button className={styles.flwx_xyq_fllw}>
-                              {btn}
-                            </button>
-                          </div>
-                        </div>
-                      );
-                    })}
+                        );
+                      })}
+                    </div>
                   </div>
-                </div>
-              );
-            })}
-          </Carousel>
+                );
+              })}
+            </Carousel>
+
+            : "No user"}
+
         </div>
         {/* footer */}
         <div className={styles._00main_ftr}>

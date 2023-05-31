@@ -1,16 +1,52 @@
 import styles from "@/layout/HomeLayout/HomeLayout.module.css";
-import img from '../../images/default-photo.svg'
-import people1 from '../../images/people-1.jpeg'
+import img from '../../images/default.jpeg'
 import Image from "next/image";
 import PostedAt from "../PostedAt/postedAt";
+import { useDispatch, useSelector } from "react-redux";
+import { followUser } from "@/redux/slices/postSlice/postSlice";
+import { useState, useRef, useEffect } from 'react';
 
-const ProfileImage = ({post}) => {
-// console.log(post)
+const ProfileImage = ({ post }) => {
+  const { user, apiError } = useSelector((state) => state?.auth?.getUser);
+  const dispatch = useDispatch();
+
+  const isPostOwner = post?.user[0]?._id === user?.data?._id
+
+  const handleFollow = async () => {
+    try {
+      dispatch(followUser(post?.user[0]?._id));
+    } catch (error) {
+      console.log({ error });
+    }
+  }
+
+  //this is for the more function
+  const [showOptions, setShowOptions] = useState(false);
+  const moreIconRef = useRef();
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (moreIconRef.current && !moreIconRef.current.contains(event.target)) {
+        setShowOptions(false);
+      }
+    };
+
+    document.addEventListener('click', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, []);
+
+  const toggleOptions = () => {
+    setShowOptions(!showOptions);
+  };
+
   return (
-    <div style={{ position: "relative" }}>
+    <div style={{ position: "relative", border: "", borderBottom: "0px" }}>
       <div className={styles.hover_main_image}>
         <Image
-          src={post.profile.profilePhoto==''?img:post.profile.profilePhoto}
+          src={post?.user[0]?.profilePhoto == '' ? img : post?.user[0]?.profilePhoto}
           alt="profile-img"
           className={styles.data_content_pimg}
           width="22"
@@ -22,29 +58,31 @@ const ProfileImage = ({post}) => {
           <div className={styles.flex_h_div}>
             <div>
               {/* {{#if this.owner_avatar_link}} */}
-              <Image src={post.profile.profilePhoto==''?img:post.profile.profilePhoto} alt="img" width="22" height="22" className={styles.image_h_c} />
+              <Image src={post?.user[0]?.profilePhoto == '' ? img : post?.user[0]?.profilePhoto} alt="img" width="22" height="22" className={styles.image_h_c} />
             </div>
             <div>
               <span className={`${styles.postt_name} ${styles._0022_nm_usr}`}>
-                {post.profile.name}
+                {post?.user[0]?.name}
               </span>
-              <span className={styles.postt_uname_hover}>@{post.profile.username}</span>
-            </div>
+              <span className={styles.postt_uname_hover}>@{post?.user[0]?.username}</span>
+            </div> 
             {/* {{!  }} */}
           </div>
           <div>
-            <span className={styles.xmoric}>
-              <span className={`${styles.xoxtrn} ${styles.hovr__f}`}>
-                {post.user.followers.length} <span className={styles.xyxxn}>{post.user.followers.length<2?"Follower":"Followers"}</span>
+            <span className={styles.xmoric} 
+            style={{display: "flex", width: "max-content", marginTop: "11px"}}
+            >
+              <span className={`${styles.xoxtrn} ${styles.hovr__f}`} style={{display: "flex"}}>
+                {post?.user[0]?.followers?.length}&nbsp;<span className={styles.xyxxn}>{post?.user[0]?.followers?.length < 2 ? "Follower" : "Followers"}</span>
               </span>
-              <span className={`${styles.xoxtrn} ${styles.hovr__f}`}>
-                {post.user.following.length} <span className={styles.xyxxn}>Following</span>
+              <span className={`${styles.xoxtrn} ${styles.hovr__f}`} style={{display: "flex"}}>
+                {post?.user[0]?.following?.length}&nbsp;<span className={styles.xyxxn}>Following</span>
               </span>
             </span>
           </div>
           <div>
-            <span className={`${styles.user_data_about} ${styles.hovr__bio}`}>
-              For most startups, better shape translates into two things: to
+            <span className={`${styles.user_data_about} ${styles.hovr__bio}`} style={{width: "100%"}}>
+              For most startups, better shape tran slates into two things: to
               have a better product with more users, and to have more options
               for raising money.
             </span>
@@ -143,13 +181,15 @@ const ProfileImage = ({post}) => {
             </span>
           </div>
           <div className={styles.button__for__hover__div}>
-            <div style={{ paddingRight: 5 }}>
-              <button
-                className={`${styles.fllw_hvr_btn} ${styles.follow__hvr}`}
-              >
-                Follow
-              </button>
-            </div>
+            {!isPostOwner && (
+              <div style={{ paddingRight: 5 }}>
+                <button
+                  className={`${styles.fllw_hvr_btn} ${styles.follow__hvr}`} onClick={handleFollow}
+                >
+                  Follow
+                </button>
+              </div>
+            )}
             <div style={{ paddingLeft: 5 }}>
               <button className={`${styles.fllw_hvr_btn} ${styles.msg__hvr}`}>
                 Message
@@ -158,56 +198,71 @@ const ProfileImage = ({post}) => {
           </div>
         </div>
         {/* hovercard */}
+
       </div>
-     
+
       <div>
         <div>
           <span className={styles._0022_nm_usr}>
-           {post.profile.name}
-            <span>@{post.profile.username}</span>
+            {post?.user[0]?.name}
+            <span>@{post?.user[0]?.username}</span>
           </span>
         </div>
         <div>
           <span className={styles._000_dt_data}>
-            {}
-            <PostedAt time={post.createdAt}/> 
+            <PostedAt time={post?.post[0]?.createdAt} />
           </span>
         </div>
       </div>
-     
+
       <div style={{ position: "absolute", right: 0, top: "-3px" }}>
-        <svg
-          width={15}
-          height={4}
-          viewBox="0 0 18 4"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <circle
-            cx={2}
-            cy={2}
-            r="1.2"
-            fill="gray"
-            stroke="gray"
-            strokeWidth="1.6"
-          />
-          <circle
-            cx={9}
-            cy={2}
-            r="1.2"
-            fill="gray"
-            stroke="gray"
-            strokeWidth="1.6"
-          />
-          <circle
-            cx={16}
-            cy={2}
-            r="1.2"
-            fill="gray"
-            stroke="gray"
-            strokeWidth="1.6"
-          />
-        </svg>
+        <div style={{position: "relative"}} className={styles.yyyy__jjjj__qqq}>
+          <svg
+            ref={moreIconRef}
+            onClick={toggleOptions}
+            className={styles.more_icn_pst_yy}
+            width={15}
+            height={4}
+            viewBox="0 0 18 4"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <circle
+              cx={2}
+              cy={2}
+              r="1.2"
+              // fill="gray"
+              // stroke="gray"
+              strokeWidth="1.6"
+            />
+            <circle
+              cx={9}
+              cy={2}
+              r="1.2"
+              // fill="gray"
+              // stroke="gray"
+              strokeWidth="1.6"
+            />
+            <circle
+              cx={16}
+              cy={2}
+              r="1.2"
+              // fill="gray"
+              // stroke="gray"
+              strokeWidth="1.6"
+            />
+          </svg>
+
+          
+          {/* more option */}
+          {showOptions && (
+          <span className={styles.post__more__optns}>
+            Copy post link
+          </span>
+          )}
+          {/* more option */}
+
+        </div>
       </div>
     </div>
   );

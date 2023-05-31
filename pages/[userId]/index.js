@@ -1,12 +1,43 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import { MainProfileScreen } from '@/screens'
 import Head from 'next/head'
+import { useDispatch, useSelector } from 'react-redux';
+import { useRouter } from 'next/router';
+import { getAllUsersAction, getUserPostsAction } from '@/redux/slices/userDetailSlice';
+import { loadGetInitialProps } from 'next/dist/shared/lib/utils';
 
 const Profile = () => {
+  const {user, appError }  = useSelector((state) => state?.auth?.getUser);
+  const allUsers = useSelector((state)=>state.userDetails.allUsers.users)
+  const [userDetail, setUserDetail] = useState({});
+  const [userId, setUserId] = useState("");
+  const router = useRouter();
+  const dispatch = useDispatch();
+
+  useEffect(()=>{
+    dispatch(getAllUsersAction());
+    getUserDetail();
+    setUserId(router.query.userId);
+  }, [router]);
+  
+  const getUserDetail=async ()=>{
+    let newUser = allUsers?.data?.find((user)=>user?.username===router?.query?.userId)
+    dispatch(getUserPostsAction(newUser?._id))
+    if(newUser?.username == user?.data?.username){
+      setUserDetail({...newUser, owner: true})
+    }else{
+      if(newUser?.followers.includes(`${user?.data?._id}`)){
+        setUserDetail({...newUser, owner: false, amFollowing: true})
+      }else{
+        setUserDetail({...newUser, owner: false, amFollowing: false})
+      }
+    }
+  }
+
   return ( 
     <>
      <Head>
-     <title>*Profile name* / @*username*</title>
+     <title>{userDetail?.name ?? "Profile name"} / @{userDetail?.username ?? "username"}</title>
         <>
           <meta charset="UTF-8"></meta>
           <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
@@ -50,9 +81,8 @@ const Profile = () => {
         </>
         <link rel="icon" href="/apple-touch-icon.png" type="image/png" />
       </Head>
-      <MainProfileScreen/>
+      <MainProfileScreen userDetail={userDetail} userId={userId}/>
     </>
   )
 }
-
 export default Profile

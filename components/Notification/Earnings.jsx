@@ -1,4 +1,6 @@
 import styles from "@/layout/HomeLayout/HomeLayout.module.css";
+import imgOne from "../../images/me.jpeg";
+import Image from "next/image";
 
 const Earnings = () => {
   return (
@@ -6,9 +8,66 @@ const Earnings = () => {
       id="columnThree"
       data-tag="earnings-notification"
       className={styles.npd_body_content}
-    >
+      >
+
+      {/* Tips */}
+      <div className={`${styles.npd_toast} ${styles.npd_f_notif}`}>
+        <div className={styles.hold_them}>
+          <div>
+            <Image src={imgOne} className={styles.npd_toast_png} width="22" height="22" />
+          </div>
+          <div className={`${styles.float_nicn} ${styles.fncn}`}>
+            {/* <img
+              src="/images/utility icon/followed.svg"
+              className={styles.npd_notf_icnxxx}
+            /> */}
+          </div>
+        </div>
+        <div>
+          <div>
+            <h6 className={styles.notf_title}>
+              <span>Username</span>&nbsp;Tipped you!
+            </h6>
+          </div>
+          <div>
+            <h6 className={styles.notf_contnt}>
+              <a href="">@username</a> tipped you $5
+            </h6>
+          </div>
+        </div>
+      </div>
+
+
+      {/* Subscriptions */}
+      <div className={`${styles.npd_toast} ${styles.npd_f_notif}`}>
+        <div className={styles.hold_them}>
+          <div>
+            <Image src={imgOne} className={styles.npd_toast_png} width="22" height="22" />
+          </div>
+          <div className={`${styles.float_nicn} ${styles.fncn}`}>
+            {/* <img
+              src="/images/utility icon/followed.svg"
+              className={styles.npd_notf_icnxxx}
+            /> */}
+          </div>
+        </div>
+        <div>
+          <div>
+            <h6 className={styles.notf_title}>
+              <span>Username</span>&nbsp;Subscribed to your content!
+            </h6>
+          </div>
+          <div>
+            <h6 className={styles.notf_contnt}>
+              <a href="">@username</a> subscribed for $10
+            </h6>
+          </div>
+        </div>
+      </div>
+
+
       {/* no earnings notifications yet */}
-      <div className={styles.nbyd}>
+      <div className={styles.nbyd} style={{display:"none"}}>
         <div>
           <div>
             <svg

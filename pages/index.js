@@ -1,39 +1,42 @@
-import ProtectedRoute from "@/components/ProtectedRoutes/ProtectedRoute";
+import { SocketContext } from "@/redux/context/socket";
 import { HomeScreen } from "@/screens";
 import Head from "next/head";
-import axios from "axios";
-import { useState, useEffect } from "react";
-import { baseUrl } from "../redux/baseUrl"
-import Cookies from "js-cookie";
-import Routes from "@/utils/routes";
-import { useRouter } from "next/router";
+import { useContext, useEffect } from "react";
+import { useSelector } from "react-redux";
+// import { SocketContext } from "../../redux/context/socket.js";
+
 function Home() {
-  const router = useRouter();
-  const [user, setUser] = useState(null);
+  const { user, apiError } = useSelector((state) => state?.auth?.getUser);
+  console.log({user});
+  const socket = useContext(SocketContext);
+
 
   useEffect(() => {
-    const token = Cookies.get("token");
-    if (!token) {
-      router.push(Routes.LOGIN);
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        handleSuccess,
+        handleError
+      );
+    } else {
+      console.log('Geolocation is not supported by your browser');
     }
-    const getUser = async () => {
-      try {
-        const url = `${baseUrl}/auth/welcome`
-        const { data } = await axios.get(url, { headers: { Authorization: `Bearer ${token}` } })
-        localStorage.setItem("authToken", JSON.stringify(data.data));
-        setUser(data.data);
-        if (data.data.profile === null) {
-          router.push(Routes.CREATE_PROFILE)
-        }
-      } catch (e) {
-        if (!e?.response?.data.status) {
-          Cookies.remove("token");
-          router.push(Routes.LOGIN)
-        }
-      }
-    }
-    getUser()
   }, [])
+
+  // useEffect(() => {
+  //   console.log("socket:: ", socket.id);
+  //   socket.emit("NEW_USER_ONLINE",user?.data?._id)
+
+  // },[user])
+
+  const handleSuccess = (position) => {
+    const { latitude, longitude } = position.coords;
+    // Do something with the coordinates
+  };
+
+  const handleError = (error) => {
+    console.log('Error:', error.message);
+    // Handle the error if geolocation retrieval fails
+  };
   return (
     <>
       <Head>

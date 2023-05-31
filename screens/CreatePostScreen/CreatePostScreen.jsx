@@ -1,5 +1,5 @@
 import { HomeLayout } from "@/layout";
-import React, { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import styles from "@/layout/HomeLayout/HomeLayout.module.css";
 import "./CreatePostScreen.module.css";
 import VideoUploader from "@/components/VideoUpload/VideoUploader";
@@ -7,278 +7,252 @@ import ImagePost from "./ImagePost";
 import { useDispatch, useSelector } from "react-redux";
 import { createPostAction } from "@/redux/slices/postSlice/postSlice";
 import { useFormik } from "formik";
-import Cookies from "js-cookie";
+import { MdPermMedia } from "react-icons/md";
+import { BtnloadSvg } from "../../components";
+import EmojiPicker from "emoji-picker-react";
+import { createRef } from "react";
 import { useRouter } from "next/router";
-import Routes from "@/utils/routes";
-
 
 const CreatePostScreen = () => {
+  const inputTitle = createRef()
+  const inputDesc = createRef()
+  const [cursorPosition, setcursorPosition] = useState("")
   const [showPostSettings, setShowPostSettings] = useState(false);
+  const [postSucceeds, setPostSucceeds] = useState(false)
   const dispatch = useDispatch();
-  const token = Cookies.get("token");
-  const router=useRouter()
-
-  const {reccentPost}=useSelector(state=>state?.post?.createPost)
-
   const fileInputRef = useRef();
+  const VideoInputRef = useRef();
+
+  const { loading, reccentPost } = useSelector(
+    (state) => state?.post?.createPost
+  );
+
+  const [showSuccess, setShowSuccess] = useState(false);
+
+  useEffect(() => {
+    let timer;
+    if (reccentPost.success) {
+      setShowSuccess(true);
+      timer = setTimeout(() => {
+        setShowSuccess(false);
+      }, 4000); // Display error message for 5 seconds
+    }
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [reccentPost.success]);
 
   const handleButtonClick = () => {
     fileInputRef.current.click();
   };
-// console.log(reccentPost);
-//   useEffect(() => {
-//   if (reccentPost.success) {
-//     //  router.push(Routes.HOME);
-//         console.log("push to home from create-post");
-//   }
-//   }, [reccentPost])
-  
+  //   useEffect(() => {
+  //   if (reccentPost.success) {
+  //     //  router.push(Routes.HOME);
+  //         console.log("push to home from create-post");
+  //   }
+  //   }, [reccentPost])
 
   // ----- video uploader starts here -----
-  const [videos, setVideos] = useState([]);
+  // const [video, setVideo] = useState(null);
   // console.log(video);
-  const VideoInputRef = useRef();
 
-  // const handleVideoChange = (event) => {
-    
-  //   const selectedFiles = event.target.files;
-  //   console.log(selectedFiles);
+  const handleVideoChange = (event) => {
+    const selectedFiles = event.target.files;
 
-  //   if (selectedFiles.length > 1) {
-  //     alert("Please select only one video file.");
-  //     return;
-  //   }
-  //   const selectedFile = selectedFiles[0];
-  //   setVideo(selectedFile);
-  // };
+    if (selectedFiles.length > 1) {
+      alert("Please select only one video file.");
+      return;
+    }
+    const selectedFile = selectedFiles[0];
+    setVideo(selectedFile);
+  };
 
   const handleVideoClick = () => {
+    // VideoInputRef.current.click();
     VideoInputRef.current.click();
   };
 
   // ------------ Function handling post submit -------------
-  const [images, setImages] = useState([]);
-  
+  const [media, setMedia] = useState([]);
 
   const formik = useFormik({
-    
-    initialValues: { title: "", desc: "", images: [],videos:[] },
+    initialValues: { title: "", desc: "", media: [] },
     onSubmit: async (values) => {
-
       const formData = new FormData();
-
       formData.append("title", values.title);
       formData.append("desc", values.desc);
-      // formData.append("video", video);
-
-
-      for (let i = 0; i < values.images.length; i++) {
-        formData.append("image", values.images[i]);
+      for (let i = 0; i < values.media.length; i++) {
+        if (values.media[i].type.startsWith("image/")) {
+          formData.append("image", values.media[i]);
+        } else if (values.media[i].type.startsWith("video/")) {
+          formData.append("video", values.media[i]);
+        }
       }
-      for (let i = 0; i < values.videos.length; i++) {
-        formData.append("video", values.videos[i]);
-      }
-     
-      dispatch(createPostAction(formData));
-      console.log(values);
+      const res = await dispatch(createPostAction(formData));
+console.log(res?.payload?.success);
+if (res?.payload?.success) {
       values.title = "";
       values.desc = "";
-      values.images = [];
-      setImages([]);
-      setVideos([]);
+      setPostSucceeds(true)
+      setTimeout(()=>{
+      setPostSucceeds(false)
+      },3000)
+      values.media = [];
+      setMedia([]);
+      // router.push(Routes.HOME);
       fileInputRef.current.value = "";
       VideoInputRef.current.value = "";
-      // router.push(Routes.HOME);
-    }
+}
+    },
   });
+
+  //emoji show and hide handler
+  const [isEmojiOpen, setIsEmojiOpen] = useState(false);
+  const emojiRef = useRef(null);
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (emojiRef.current && !emojiRef.current.contains(event.target)) {
+        setIsEmojiOpen(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  function toggleEmoji() {
+    setIsEmojiOpen((prevState) => !prevState);
+  }
+
+  function handleButtonClickk(event) {
+    event.stopPropagation();
+    toggleEmoji();
+  }
+
+  const handleEmojiClick = ({ emoji }) => {
+    if (inputDesc.current.name == "desc") {
+      const ref = inputDesc.current;
+      ref.focus()
+      const start = formik.values.desc.substring(0, ref.selectionStart)
+      const end = formik.values.desc.substring(ref.selectionStart)
+      let message = start + emoji + end
+      formik.values.desc = message
+      console.log(inputDesc.current.name);
+      setcursorPosition(start.length + emoji.length)
+    } else if (inputTitle.current.name == "title") {
+      const ref = inputTitle.current;
+      ref.focus()
+      const start = formik.values.title.substring(0, ref.selectionStart)
+      const end = formik.values.title.substring(ref.selectionStart)
+      let message = start + emoji + end
+      formik.values.title = message
+      console.log(inputTitle.current.name);
+      setcursorPosition(start.length + emoji.length)
+    }
+  }
+
+  useEffect(() => {
+    if (inputDesc.current.name == "desc") {
+      inputDesc.current.selectionEnd = cursorPosition
+    } else if (inputTitle.current.name == "title") {
+      inputTitle.current.selectionEnd = cursorPosition
+    }
+  }, [cursorPosition])
+
+
+  const [showAddButton, setShowAddButton] = useState(true);
+  const [showRemoveButton, setShowRemoveButton] = useState(false);
+
+  const handleAddTitle = () => {
+    setShowAddButton(false);
+    setShowRemoveButton(true);
+  };
+
+  const handleRemoveTitle = () => {
+    setShowAddButton(true);
+    setShowRemoveButton(false);
+    formik.setFieldValue('title', ''); // Clear the value of the "title" field 
+  };
+
 
   return (
     <HomeLayout>
       {/* div.timeline -> middle */}
       <div class={`${styles.timeline} ${styles._000middlebar}`}>
-        <nav className={styles.___main_nav}>
-          <div>
-            <span class={styles.icon_back}>
-              <svg
-                class={styles._00_history__back}
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="rgb(90, 90, 90)"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path d="M19 12H6M12 5l-7 7 7 7" />
-              </svg>
-            </span>
-            <span class={styles.not_home_nav_text}>Create Post</span>
-          </div>
-        </nav>
-
-        <form
-          className={styles.post__compose__container}
+      <form
           style={{ display: "" }}
           onSubmit={formik.handleSubmit}
         >
-          <div className={styles.pcc__child}>
-            <div style={{ display: "" }}>
-              <textarea
-                className={`${styles.post__data__content} ${styles.title__content}`}
-                placeholder="Post Title"
-                name="title"
-                value={formik.values.title}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-              />
-            </div>
+        <nav className={styles.___main_nav}>
+          <div>
+            <span class={styles.icon_back}>
+            <svg class={styles._00_history__back} fill="rgb(120, 120, 120)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10.8284 12.0007L15.7782 16.9504L14.364 18.3646L8 12.0007L14.364 5.63672L15.7782 7.05093L10.8284 12.0007Z"></path></svg>
+              {/* <svg class={styles._00_history__back} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgb(90, 90, 90)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H6M12 5l-7 7 7 7" /></svg> */}
+            </span>
+            <span class={styles.not_home_nav_text}>Create Post</span>
             <div>
-              <textarea
-                className={styles.post__data__content}
-                placeholder="Start Post"
-                name="desc"
-                value={formik.values.desc}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-              />
+              {loading ? (
+                <button
+                  className={styles.data_vh_post}
+                  type="submit"
+                  style={{ color: "transparent", transition: "0.1s all" }}
+                  disabled
+                >
+                  <>
+                    <BtnloadSvg />
+                  </>
+                  Post
+                </button>
+              ) : (
+                <button
+                  className={styles.data_vh_post}
+                  type="submit"
+                  disabled={
+                    (formik.values.title == "" &&
+                      formik.values.desc == "" &&
+                      formik.values.media.length == 0) ||
+                    (formik.values.title != "" &&
+                      formik.values.desc == "" &&
+                      formik.values.media.length == 0)
+                  }
+                >
+                  Post
+                </button>
+              )}
             </div>
           </div>
-          {/* image/video */}
-          <div className={styles.media__preview} style={{ display: "" }}>
-            {/*image parent container */}
-            <ImagePost images={images} />
-            {/*video parent container */}
-            <VideoUploader videos={videos} />
-          </div>
+        </nav>
 
-          {/* image/video */}
-          <div className={`${styles.img} ${styles.vid} ${styles.__09xfgc}`}>
+
+
+        {/* image/video */}
+        <div className={`${styles.img} ${styles.vid} ${styles.__09xfgc}`}>
             <div className={styles._sxvg_div} onClick={handleButtonClick}>
-              <svg
-                className={styles.post_icon_data}
-                width={18}
-                height={18}
-                viewBox="0 0 18 18"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <circle
-                  cx={13}
-                  cy={5}
-                  r="1.2"
-                  stroke="#01A8EA"
-                  fill="#01A8EA"
-                  strokeWidth="1.6"
-                />
-                <rect
-                  x="0.8"
-                  y="0.8"
-                  width="16.4"
-                  height="16.4"
-                  rx="3.2"
-                  stroke="#01A8EA"
-                  strokeWidth="1.6"
-                />
-                <path
-                  d="M4.69661 12.0373C5.10088 11.5153 5.89107 11.5214 6.2872 12.0496L8.5 15H2.40186L4.69661 12.0373Z"
-                  fill="#01A8EA"
-                />
-                <path
-                  d="M9.26306 9.80415C9.65941 9.37179 10.341 9.37181 10.7374 9.80418L15.5 15H4.5L9.26306 9.80415Z"
-                  fill="#01A8EA"
-                />
-              </svg>
-              <h6 className={styles.tooltip}>Image</h6>
+              {/* <MdPermMedia className={`${styles.post_icon_data} text-info`} /> */}
+              <h6 className={styles.tooltip}>Media</h6>
             </div>
             <input
               type="file"
               multiple
               ref={fileInputRef}
-              accept=".jpg"
-              name="image"
+              name="media"
               style={{ display: "none" }}
               onChange={(event) => {
-
-                formik.setFieldValue("images", Array.from(event.target.files));
-                const newImages = [];
+                formik.setFieldValue("media", Array.from(event.target.files));
+                const newMedia = [];
                 const files = event.target.files;
 
                 for (let i = 0; i < files.length; i++) {
                   const file = files[i];
-                  if (file.type.startsWith("image/")) {
-                    if (formik.values.images.length >= 4) {
-                      alert("You can only upload up to 4 images.");
-                      return;
-                    }
-                    newImages.push(file);
-
-                  }
-
+                  newMedia.push(file);
+                  console.log(file);
                 }
-
-                setImages([...images, ...newImages]);
+                setMedia([...media, ...newMedia]);
               }}
             />
-
-            {/* video uploader */}
-            <div className={styles._sxvg_div} onClick={handleVideoClick}>
-              <svg
-                className={styles.post_icon_data}
-                width={18}
-                height={18}
-                viewBox="0 0 18 18"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <rect
-                  x="0.8"
-                  y="0.8"
-                  width="16.4"
-                  height="16.4"
-                  rx="3.2"
-                  stroke="#01A8EA"
-                  strokeWidth="1.6"
-                />
-                <path
-                  stroke="#01A8EA"
-                  d="M12.1 9.1732L7.6 11.7713C7.46667 11.8483 7.3 11.752 7.3 11.5981L7.3 6.40192C7.3 6.24796 7.46667 6.15174 7.6 6.22872L12.1 8.82679C12.2333 8.90378 12.2333 9.09623 12.1 9.1732Z"
-                  strokeWidth="1.6"
-                />
-              </svg>
-              <h6 className={styles.tooltip}>Video</h6>
-            </div>
-            <input
-              type="file"
-              accept=".mp4"
-              ref={VideoInputRef}
-              style={{ display: "none" }}
-              multiple
-              name="video"
-              onChange={(event)=>{
-                   formik.setFieldValue("videos", Array.from(event.target.files));
-                const newVideos = [];
-                const files = event.target.files;
-console.log(files);
-                for (let i = 0; i < files.length; i++) {
-                  const file = files[i];
-
-                  if (file.type.startsWith("video/")) {
-                    if (formik.values.videos.length >= 4) {
-                      alert("You can only upload up to 4 images.");
-                      return;
-                    }
-                    newVideos.push(file);
-
-                  }
-
-                }
-
-                setVideos([...videos,...newVideos]);
-              }}
-            />
-
             <div className={styles._sxvg_div} style={{ width: "min-content" }}>
               <div style={{ position: "relative", width: "min-content" }}>
                 <svg
@@ -351,7 +325,7 @@ console.log(files);
               {showPostSettings && (
                 <div
                   className={styles.options__postsettns}
-                  // style={{ display: "none" }}
+                // style={{ display: "none" }}
                 >
                   <div>
                     <div>
@@ -430,16 +404,159 @@ console.log(files);
                 </div>
               )}
             </div>
+
+            {/* this is for the emojis */}
             <div>
-              <button
-                className={styles.data_vh_post}
-                type="submit"
-                disabled={(formik.values.title == "" && formik.values.desc == "" && formik.values.images == "" && formik.values.videos == "")||(formik.values.title != "" && formik.values.desc == "" && formik.values.images == "" && formik.values.videos == "")}
-              >
-                Post
-              </button>
+              <div style={{ position: "relative" }}>
+                <svg
+                  className={styles.post_icon_data}
+                  onMouseDown={handleButtonClickk}
+                  fill="#00acee"
+                  width="24px"
+                  cursor="pointer"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M10.5199 19.8634C10.5955 18.6615 10.8833 17.5172 11.3463 16.4676C9.81124 16.3252 8.41864 15.6867 7.33309 14.7151L8.66691 13.2248C9.55217 14.0172 10.7188 14.4978 12 14.4978C12.1763 14.4978 12.3501 14.4887 12.5211 14.471C14.227 12.2169 16.8661 10.7083 19.8634 10.5199C19.1692 6.80877 15.9126 4 12 4C7.58172 4 4 7.58172 4 12C4 15.9126 6.80877 19.1692 10.5199 19.8634ZM19.0233 12.636C15.7891 13.2396 13.2396 15.7891 12.636 19.0233L19.0233 12.636ZM22 12C22 12.1677 21.9959 12.3344 21.9877 12.5L12.5 21.9877C12.3344 21.9959 12.1677 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12ZM10 10C10 10.8284 9.32843 11.5 8.5 11.5C7.67157 11.5 7 10.8284 7 10C7 9.17157 7.67157 8.5 8.5 8.5C9.32843 8.5 10 9.17157 10 10ZM17 10C17 10.8284 16.3284 11.5 15.5 11.5C14.6716 11.5 14 10.8284 14 10C14 9.17157 14.6716 8.5 15.5 8.5C16.3284 8.5 17 9.17157 17 10Z"></path>
+                </svg>
+
+                {/* this is the emoji container */}
+                {isEmojiOpen && (
+                  <div
+                    className={styles.emojis__container__parent}
+                    ref={emojiRef}
+                  >
+                    <div>
+                      <div>
+                        {/* search for emojis */}
+                        {/* <input
+                          type="search"
+                          name=""
+                          id=""
+                          placeholder="Search emojis"
+                          className={styles.search__emojis}
+                        /> */}
+                      </div>
+                      <div
+                        style={{
+                          width: "100%",
+                          height: "105px",
+                          overflowY: "auto",
+                        }}
+                      >
+                        {/* shoot the emoji here */}
+                        {/* emojis */}
+
+                        <EmojiPicker height={350} width={300} onEmojiClick={handleEmojiClick} />
+                      </div>
+                    </div>
+                  </div>
+                )}
+                {/* this is the emoji container */}
+                {/* <EmojiPicker height={350} width={300} onEmojiClick={handleEmojiClick} /> */}
+              </div>
             </div>
+            {/* this is for the emojis */}
+
+            {/* <div>
+              {loading ? (
+                <button
+                  className={styles.data_vh_post}
+                  type="submit"
+                  style={{ color: "transparent", transition: "0.1s all" }}
+                  disabled
+                >
+                  <>
+                    <BtnloadSvg />
+                  </>
+                  Post
+                </button>
+              ) : (
+                <button
+                  className={styles.data_vh_post}
+                  type="submit"
+                  disabled={
+                    (formik.values.title == "" &&
+                      formik.values.desc == "" &&
+                      formik.values.media.length == 0) ||
+                    (formik.values.title != "" &&
+                      formik.values.desc == "" &&
+                      formik.values.media.length == 0)
+                  }
+                >
+                  Post
+                </button>
+              )}
+            </div> */}
+
+
+            {showAddButton && (
+                    <button className="btn" onClick={handleAddTitle}>
+                      Add title
+                    </button>
+            )}
+            {showRemoveButton && (
+              <div>
+                <button className="btn" onClick={handleRemoveTitle}>
+                  Remove title
+                </button>
+                {/* <textarea className="t_a" placeholder="your title" /> */}
+              </div>
+            )}
+
           </div>
+          {/* image/video */}   
+
+
+          <div className={`${styles.pcc__child} ${styles.post__compose__container}`}>
+          {showRemoveButton && (
+            <div style={{ display: "" }}>
+              <textarea
+                className={`${styles.post__data__content} ${styles.title__content}`}
+                placeholder="Add title"
+                name="title"
+                ref={inputTitle}
+                value={formik.values.title}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+              />
+            </div>
+          )}  
+            <div>
+              <textarea
+                className={styles.post__data__content}
+                placeholder="Compose a post"
+                name="desc"
+                ref={inputDesc}
+                value={formik.values.desc}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+              />
+            </div>
+            {/* this is the successful and error popup */}
+            {showSuccess && (
+              <div>
+                <span className={styles.post__msg__pp}>
+                  Post created successfully!
+                </span>
+              </div>
+            )}
+            {/* this is the successful and error popup */}
+          </div>
+
+          {/* image/video */}
+          <div
+            className={styles.media__preview}
+            style={{ border: "transparent" }}
+            >
+            {/*image parent container */}
+            <ImagePost media={media} />
+            {/*video parent container */}
+            {/* <VideoUploader video={video} /> */}
+          </div>
+
+          
+
         </form>
       </div>
       {/* div.timeline -> middle */}

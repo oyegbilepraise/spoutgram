@@ -3,6 +3,7 @@ import { getRequest, postRequest, putRequest } from "../../api";
 import { URL } from "../../urls";
 import Cookies from "js-cookie";
 import { baseUrl } from "@/redux/baseUrl";
+import { getAllUsersAction } from "../userDetailSlice";
 
 // Register a user
 export const registerUserAction = createAsyncThunk(
@@ -138,9 +139,13 @@ export const getUserAction = createAsyncThunk(
       const res = await getRequest({
         url: `${baseUrl}${URL.auth}`,
         token: payload,
-      });
+      }); 
       return res.data;
     } catch (err) {
+      if (!err?.response?.data.status) {
+        Cookies.remove("token");
+        router.push(Routes.LOGIN)
+      }
       return rejectWithValue(err?.response?.data?.message);
     }
   }
@@ -189,10 +194,12 @@ const authSlice = createSlice({
     },
   },
   reducers: {
-    // logout(state) {
-    //   state.getUser.user = {}
-    // }
+    //updating the user profile
+    updateUserProfile(state, action){
+        state.getUser.user = action.payload
+    },
     logout: (state) => {
+      Cookies.remove('token')
       state.getUser.user = {};
       state.loginUser.user = {}
     }
@@ -253,7 +260,6 @@ const authSlice = createSlice({
     // Verify User mail code input.
     builder.addCase(verifyEmailAction.pending, (state) => {
       state.verifyCode.loading = true;
-      state.verifyCode.user = {};
       state.verifyCode.verified = false;
       state.verifyCode.appError = null;
     });
@@ -321,6 +327,6 @@ const authSlice = createSlice({
   },
 });
 
-export const { logout } = authSlice.actions
+export const { updateUserProfile, logout } = authSlice.actions
 
 export default authSlice.reducer;

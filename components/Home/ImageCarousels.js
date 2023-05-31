@@ -1,65 +1,76 @@
 import React from "react";
 import styles from "@/layout/HomeLayout/HomeLayout.module.css";
 import Image from "next/image";
-import Carousel from "react-multi-carousel";
-import people2 from "../../images/people-2.jpeg";
+import CustomVideo from "../VideoUpload/CustomVideo";
 
 function ImageCarousels({ postImage }) {
-  const responsive = {
-    desktop: {
-      breakpoint: { max: 3000, min: 1024 },
-      items: 1,
-      slidesToSlide: 1, // optional, default to 1.
-    },
-    tablet: {
-      breakpoint: { max: 1024, min: 464 },
-      items: 1,
-      slidesToSlide: 1, // optional, default to 1.
-    },
-    mobile: {
-      breakpoint: { max: 464, min: 0 },
-      items: 1,
-      slidesToSlide: 1, // optional, default to 1.
-    },
+  const handleImageVideodisplay = (pic, id) => {
+    const fileExtension = pic.split(".").pop().toLowerCase();
+    const itemCount = postImage.length;
+
+    if (["jpg", "jpeg", "png"].includes(fileExtension)) {
+      return (
+        <div key={id}>
+          <Image
+            src={pic !== null && pic}
+            alt="picgrid"
+            className={getItemClassName(itemCount)}
+            width={200}
+            height={200}
+            priority
+          />
+        </div>
+      );
+    } else if (fileExtension === "mp4") {
+      return (
+        <div>
+          <CustomVideo
+            pic={pic}
+            id={id}
+            className={getItemClassName(itemCount)}
+          />
+        </div>
+      );
+    }
   };
+
+  const getItemClassName = (itemCount) => {
+    if (itemCount === 1) {
+      return "singleItem";
+    } else if (itemCount === 2) {
+      return "secondStyle";
+    } else if (itemCount === 3) {
+      return "thirdStyle";
+    } else if (itemCount === 4) {
+      return "fourthStyle";
+    }
+    return "";
+  };
+
   return (
-    <div className={`${styles.data_content_img} ${styles.grid_101}`}>
-      {postImage.length === 1 ? (
-        <Image
-          src={postImage[0]}
-          alt="picgrid"
-          className={styles._00img_data}
-          width={1000}
-          height={1000}
-          priority
-        />
-      ) : (
-        <Carousel
-          swipeable={true}
-          draggable={true}
-          arrows={true}
-          showDots={true}
-          className=""
-          responsive={responsive}
-          ssr={true}
-          keyBoardControl={true}
-          customTransition="all .5"
-          transitionDuration={500}
-          dotListClass="custom-dot-list-style"
+    <div
+      className={`${
+        postImage.length === 1
+          ? "oneItemContainer"
+          : postImage.length === 2
+          ? "twoItemContainer"
+          : postImage.length === 3
+          ? "thirdImageContainer"
+          : ""
+      } ${postImage.length === 4 ? "imageContainer" : ""}`}
+    >
+      {postImage.map((pic, id) => (
+        <div
+          key={id}
+          className={`${
+            id === 0 && postImage.length === 3 ? "firstImage" : ""
+          } ${id === 1 && postImage.length === 3 ? "secondImage" : ""} ${
+            id === 2 && postImage.length === 3 ? "thirdImage" : ""
+          }`}
         >
-          {postImage.map((pic,id) => (
-            <Image
-              src={pic!==null&&pic}
-              alt="picgrid"
-              className={styles._00img_data}
-              width={1000}
-              height={1000}
-              priority
-              key={id}
-            />
-          ))}
-        </Carousel>
-      )}
+          {handleImageVideodisplay(pic, id)}
+        </div>
+      ))}
     </div>
   );
 }

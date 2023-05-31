@@ -7,7 +7,7 @@ export const API = axios.create({
     "Content-Type": "application/json",
   },
 });
-
+//GET REQUEST
 export const getRequest = async ({ url, token, params }) => {
   const requestResponse = await API({
     headers: { Authorization: `Bearer ${token}` },
@@ -20,8 +20,6 @@ export const getRequest = async ({ url, token, params }) => {
 
 // POST REQUEST
 export const postRequest = async ({ url, token, data, formData, params }) => {
-
-  
   const requestResponse = await API({
     headers: {
       Authorization: "Bearer " + token,
@@ -37,10 +35,9 @@ export const postRequest = async ({ url, token, data, formData, params }) => {
 };
 
 //POST WITH IMAGE
-export const postRequestWithImage = async ({ url, token,data, formData, params }) => {
-
+export const postRequestWithImage = async ({ url, token, data, formData, params }) => {
   console.log("Date:", new Date());
-  
+
   const requestResponse = await API({
     headers: {
       Authorization: "Bearer " + token,
@@ -82,10 +79,27 @@ export const deleteRequest = async ({ url, token, data, params }) => {
   return requestResponse;
 };
 
+
 //put request
 export const putRequest = async ({ url, token, data, formData, params }) => {
   const requestResponse = await API({
     headers: {
+      "Content-Type": "application/json",
+    },
+    method: "PUT",
+    url,
+    params,
+    data,
+    formData,
+  });
+  return requestResponse;
+};
+
+//put request with token
+export const putTokenRequest = async ({ url, token, data, formData, params }) => {
+  const requestResponse = await API({
+    headers: {
+      Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",
     },
     method: "PUT",
