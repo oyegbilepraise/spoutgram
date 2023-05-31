@@ -37,9 +37,6 @@ const MainProfileScreen = ({userId, userDetail}) => {
     // socket.emit("NEW_USER_ONLINE",user._id)
   }, []);
 
-  //   get the current tab
-    const token = Cookies.get('token')
-
   useEffect(() => {
     const { tab } = router.query;
     if (tab) {
