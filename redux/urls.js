@@ -15,6 +15,7 @@ export const URL = {
   updateProfilePicture: "/users/user/profile-photo/upload",
   getAllUsers: "/users/all-users",
   getSingleUser: "/users/user/",
+  getUserComments: "/users/comments/1",
   // Posts
 createPost:"/posts/create",
 getPosts:"/posts/all-posts",
