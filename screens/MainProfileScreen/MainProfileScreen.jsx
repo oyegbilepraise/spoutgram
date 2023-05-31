@@ -15,17 +15,22 @@ import Cookies from 'js-cookie';
 import Post from '@/components/Home/Post';
 import Routes from '@/utils/routes';
 import { logout } from '@/redux/slices/authSlice/authSlice';
+import { getAllPostsAction } from '@/redux/slices/postSlice/postSlice';
+import MyReplies from '@/components/MyReplies/MyReplies';
 
 const MainProfileScreen = () => {
   const router = useRouter();
   const [currentTab, setCurrentTab] = useState("/");
   const { userId } = router.query;
   const { user, apiError } = useSelector((state) => state?.auth?.getUser);
-  // const {loading, appError, posts} = useSelector((state)=>state.post.allPosts)
+  const { posts} = useSelector((state)=>state.post.allPosts)
   const [post, setPost] = useState();
+  const [myPosts, setMyPosts] = useState([])
   const [loading, setLoading] = useState(true)
   const dispatch = useDispatch()
   //   get the current tab
+    const token = Cookies.get('token')
+
   useEffect(() => {
     const { tab } = router.query;
     console.log(router.query);
@@ -41,31 +46,57 @@ const MainProfileScreen = () => {
       
   }, [router.query.userId])
 
-  useEffect(() => {
-    getUsersPost()
-    // first
+  // useEffect(() => {
+  //   getUsersPost()
+  //   // first
 
-    // return () => {
-    //   second
-    // }
-  }, [])
+  //   // return () => {
+  //   //   second
+  //   // }
+  // }, [])
 
 
-  const getUsersPost = async () => {
-    console.log({ user });
-    const token = Cookies.get('token')
-    try {
-      const { data } = await axios.get(`${baseUrl}/users/posts`, { headers: { Authorization: 'Bearer ' + token } })
-      setPost(data.data)
-      console.log(data?.data)
-      setLoading(false)
-    } catch (error) {
-      // if (!error?.response?.data.status) {
-      //   dispatch(logout())
-      // }
-      console.log({ error });
-    }
-  }
+  // const getUsersPost = async () => {
+  //   console.log({ user });
+  //   try {
+  //     const { data } = await axios.get(`${baseUrl}/users/posts`, { headers: { Authorization: 'Bearer ' + token } })
+  //     setPost(data.data)
+  //     console.log(data?.data)
+  //     setLoading(false)
+  //   } catch (error) {
+  //     // if (!error?.response?.data.status) {
+  //     //   dispatch(logout())
+  //     // }
+  //     console.log({ error });
+  //   }
+  // }
+
+    useEffect(() => {
+    dispatch(getAllPostsAction(token));
+    console.log(user);
+    // socket.emit("NEW_USER_ONLINE",user._id)
+  }, []);
+let outcome=[]
+ useEffect(()=>{
+ if (posts?.data && user?.data) {
+   console.log(posts);
+   console.log(user);
+   outcome=posts?.data?.filter((post)=>{
+   return post?.user[0]?._id==user?.data?._id || post?.reposter[0]?._id==user?.data?._id
+   })
+
+ }
+ },[posts,user])
+
+
+ useEffect(() => {
+ if (outcome.length>0) {
+ console.log(outcome);
+   setMyPosts(outcome)
+   setLoading(false)
+ }
+ }, [outcome])
+ 
 
 
   const handleGoBack = () => {
@@ -112,13 +143,22 @@ const MainProfileScreen = () => {
                 <Link href={`/${userId}?tab=gallery`}>Media</Link>
               </h6>
             </div>
-            <div className={styles.p_n_m_c_div} id="menuThree">
+            {/* <div className={styles.p_n_m_c_div} id="menuThree">
               <h6
                 className={`${styles.n_m_text} ${currentTab === "podcast" ? styles.active_n_m_text : ""
                   }`}
                 id="textThree"
               >
                 <Link href={`/${userId}?tab=podcast`}>Pinned</Link>
+              </h6>
+            </div> */}
+            <div className={styles.p_n_m_c_div} id="menuThree">
+              <h6
+                className={`${styles.n_m_text} ${currentTab === "replies" ? styles.active_n_m_text : ""
+                  }`}
+                id="textThree"
+              >
+                <Link href={`/${userId}?tab=replies`}>Replies</Link>
               </h6>
             </div>
             <div className={styles.p_n_m_c_div} id="menuFourth">
@@ -134,17 +174,22 @@ const MainProfileScreen = () => {
         </div>
 
         {/* post container */}
-        {currentTab === "/" && <Post posts={post} loading={loading} />}
+        {currentTab === "/" && <Post posts={myPosts} loading={loading} />}
         {/* post container */}
         {/* gallery container */}
         {/* Media */}
         {currentTab === "gallery" && <Gallery posts={post} loading={loading} />}
         {/* Media */}
         {/* gallery container */}
+
         {/* podcast */}
         {/* clips */}
-        {currentTab === "podcast" && <PodCast />}
+        {/* {currentTab === "podcast" && <PodCast />} */}
         {/* clips */}
+        {/* podcast */}
+
+        {/* podcast */}
+        {currentTab === "replies" && <MyReplies id={user?.data?._id} />}
         {/* podcast */}
       </div>
       {/* div.timeline -> middle */}

@@ -2,11 +2,11 @@
 require('dotenv').config()
 const nextConfig = {
   reactStrictMode: true,
-    images: {
+  images: {
     domains: ['res.cloudinary.com'],
     unoptimized: true,
   },
-  eslint:{
+  eslint: {
     ignoreDuringBuilds: true,
     ignoreDuringDevelopment: true,
   }

@@ -63,7 +63,21 @@ export const likePostAction = createAsyncThunk(
     } catch (error) {
       return rejectWithValue(error);
     }
-  })
+  }
+)
+
+export const bookmarkAction = createAsyncThunk(
+  'post/bookmarks',
+  async (postId, { rejectWithValue }) => {
+    const token = Cookies.get("token");
+    try {
+      const res = await postRequest({ url: `${baseUrl}${URL.bookmark}`, data: postId, token })
+      return res.data
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+)
 
 export const followUser = createAsyncThunk(
   "/users/user/follow",
@@ -113,7 +127,7 @@ export const getAllBoomarks = createAsyncThunk(
 
 export const setViews = createAsyncThunk('post/view_post',
   async (postId, { rejectWithValue }) => {
-    console.log({postId});
+    console.log({ postId });
     const token = Cookies.get("token");
     try {
       const res = await getRequest({ url: `${baseUrl}${URL.views}${postId}`, token })
@@ -129,7 +143,7 @@ export const setViews = createAsyncThunk('post/view_post',
 )
 export const repostAction = createAsyncThunk('post/repost',
   async (postId, { rejectWithValue }) => {
-    console.log({postId});
+    console.log({ postId });
     const token = Cookies.get("token");
     try {
       const res = await patchRequest({ url: `${baseUrl}${URL.repost}${postId}`, token })

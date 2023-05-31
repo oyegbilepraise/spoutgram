@@ -6,7 +6,7 @@ const route={one:"postComments/",two:"comment/"}
 // console.log(posts);
   return (
     <div>
-      {loading ? <div style={{ height: "78vh" }} className="d-flex justify-content-center align-items-center">
+      {loading ? <div style={{ height: "" }} className="d-flex justify-content-center align-items-center">
         <div style={{ paddingTop: "30px" }} role="status">
           <PageSpinner />
         </div>

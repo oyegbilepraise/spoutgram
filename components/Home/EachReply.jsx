@@ -8,11 +8,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { likeReplyAction } from "@/redux/slices/commentSlice/commentSlice";
 import { SocketContext } from "@/redux/context/socket";
 
-const EachReply = ({ reply }) => {
+const EachReply = ({ reply,individualComment }) => {
   const dispatch = useDispatch();
-  const { individualComment } = useSelector(
-    (state) => state?.comment?.singleComment
-  );
+ 
 
   const socket = useContext(SocketContext);
   const [replyId, setReplyId] = useState(reply?._id);
@@ -27,9 +25,7 @@ const EachReply = ({ reply }) => {
   //   const isBookmarked = reply.bookmarks.includes(user?.data?._id)
   //   const isViewed = reply.view.includes(user?.data?._id)
 
-  console.log({ reply });
-  console.log({ isLiked });
-  console.log({ likes: reply?.likes });
+  console.log(individualComment);
 
   //   const handlereplyView = async (inView, reply, entry) => {
   //     if (inView && !isViewed) {
@@ -67,10 +63,12 @@ const EachReply = ({ reply }) => {
       <div style={{ position: "relative" }}>
         <div className={styles.hover_main_image}>
           <Image
-            src={
-              reply?.user?.profilePhoto == ""
+            src={ Array.isArray(reply?.user)?
+              (reply?.user[0]?.profilePhoto == ""
                 ? defaultImg
-                : reply?.user?.profilePhoto
+                : reply?.user[0]?.profilePhoto):(reply?.user?.profilePhoto == ""
+                ? defaultImg
+                : reply?.user?.profilePhoto)
             }
             alt="profile-img"
             className={styles.data_content_pimg}
@@ -84,8 +82,10 @@ const EachReply = ({ reply }) => {
             <span
               className={`${styles._0022_nm_usr} ${styles._0022_nm_usr__pp}`}
             >
-              {reply?.user?.name}
-              <span>@{reply?.user?.username}</span>
+            {Array.isArray(reply?.user)?<div>{reply?.user[0]?.name}
+              <span> @{reply?.user[0]?.username}</span></div>:<div>{reply?.user?.name}
+              <span> @{reply?.user?.username}</span></div>}
+              
               <span
                 style={{
                   display: "inline",
@@ -94,7 +94,7 @@ const EachReply = ({ reply }) => {
                 }}
                 className={styles._000_dt_data}
               >
-                <PostedAt time={reply?.createdAt} />
+                {/* <PostedAt time={reply?.createdAt} /> */}
               </span>
             </span>
           </div>
@@ -102,7 +102,7 @@ const EachReply = ({ reply }) => {
             <span className={styles._000_dt_data} style={{ fontSize: "16px" }}>
               Replying{" "}
               <span style={{ color: "var(--brand-color)" }}>
-                @{individualComment?.data?.user?.username}
+                @{individualComment?.data? individualComment?.data?.user?.username:individualComment?.user[0]?.username}
               </span>
             </span>
           </div>
