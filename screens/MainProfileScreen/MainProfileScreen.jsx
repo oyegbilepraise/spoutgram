@@ -16,42 +16,22 @@ import Post from '@/components/Home/Post';
 import Routes from '@/utils/routes';
 import { logout } from '@/redux/slices/authSlice/authSlice';
 import { getAllPostsAction } from '@/redux/slices/postSlice/postSlice';
-<<<<<<< HEAD
-import { getAllUsersAction, getUserPostsAction } from '@/redux/slices/userDetailSlice';
-import { getServerSideProps } from 'next';
-const MainProfileScreen = ({userId, userDetail}) => {
-=======
 import MyReplies from '@/components/MyReplies/MyReplies';
 
 const MainProfileScreen = () => {
->>>>>>> steven
   const router = useRouter();
   const [currentTab, setCurrentTab] = useState("/");
   const { user, apiError } = useSelector((state) => state?.auth?.getUser);
-<<<<<<< HEAD
-  const allUsers = useSelector((state)=>state.userDetails.allUsers.users)
-  const {loading, posts} = useSelector(state=>state.userDetails?.userPost)
-  const allPosts = useSelector(
-    (state) => state?.post?.allPosts
-  );
-  // const [userDetail, setUserDetail] = useState({});
-  console.log(posts);
-  const [post, setPost] = useState();
-=======
   const { posts} = useSelector((state)=>state.post.allPosts)
   const [post, setPost] = useState();
   const [myPosts, setMyPosts] = useState([])
   const [loading, setLoading] = useState(true)
->>>>>>> steven
   const dispatch = useDispatch()
     const token = Cookies.get("token");
   useEffect(() => {
     dispatch(getAllPostsAction(token));
     // socket.emit("NEW_USER_ONLINE",user._id)
   }, []);
-
-  //   get the current tab
-    const token = Cookies.get('token')
 
   useEffect(() => {
     const { tab } = router.query;
@@ -68,23 +48,6 @@ const MainProfileScreen = () => {
   //   getUserDetail();
   // }, [router]);
 
-<<<<<<< HEAD
-  // const getUserDetail=async ()=>{
-  //   const {userId} = router.query;
-  //   let newUser = await allUsers?.data?.find((user)=>user?.username===userId)
-  //   console.log(newUser);
-  //   dispatch(getUserPostsAction(newUser?._id))
-  //   if(newUser?.username === user?.data?.username){
-  //     setUserDetail({...newUser, owner: true})
-  //   }else{
-  //     if(newUser?.followers.includes(`${user?.data?._id}`)){
-  //       setUserDetail({...newUser, owner: false, amFollowing: true})
-  //     }else{
-  //       setUserDetail({...newUser, owner: false, amFollowing: false})
-  //     }
-  //   }
-  // }
-=======
   // useEffect(() => {
   //   getUsersPost()
   //   // first
@@ -136,7 +99,6 @@ let outcome=[]
  }
  }, [outcome])
  
->>>>>>> steven
 
   // useEffect(() => {
   //   getUsersPost()
@@ -236,11 +198,7 @@ let outcome=[]
         </div>
 
         {/* post container */}
-<<<<<<< HEAD
-        {currentTab === "/" && <Post posts={allPosts?.posts?.data} loading={allPosts.loading} />}
-=======
         {currentTab === "/" && <Post posts={myPosts} loading={loading} />}
->>>>>>> steven
         {/* post container */}
         {/* gallery container */}
         {/* Media */}
