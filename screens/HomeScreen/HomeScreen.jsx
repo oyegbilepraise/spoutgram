@@ -32,7 +32,19 @@ const HomeScreen = (props) => {
     <HomeLayout>
       <div className={`${styles.timeline} ${styles._000middlebar}`}>
         <nav className={styles.___main_nav} style={{borderBottom: "transparent"}}>
-          <span>Home</span>
+          <div>
+            <span>Home</span>
+
+            {/* showing the new post */}
+            <div className={styles.show_new_post_ldr}>
+              <div style={{position: "relative"}}>
+                <svg className={styles.pointr_up_svg} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12.9999 7.82843V20H10.9999V7.82843L5.63589 13.1924L4.22168 11.7782L11.9999 4L19.778 11.7782L18.3638 13.1924L12.9999 7.82843Z"></path></svg>
+                <span className={styles.bb_nn_mm}>15 New Posts</span>
+              </div>
+            </div>
+            {/* showing the new post */}
+
+          </div>
         </nav>
 
         <div className={styles.whats_yyy}>
