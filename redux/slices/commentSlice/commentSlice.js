@@ -111,6 +111,23 @@ export const likeReplyAction = createAsyncThunk(
     }
   })
 
+  export const getUserCommentsAction = createAsyncThunk('user/comments',
+  async (payload, { rejectWithValue }) => {
+    console.log({payload});
+    const token = Cookies.get("token");
+    try {
+      const res = await getRequest({ url: `${baseUrl}${URL.getUserComments}`,data:payload,token })
+      return res.data
+    } catch (error) {
+      // if (!error?.response?.data.status) {
+      //   Cookies.remove("token");
+      //   router.push(Routes.LOGIN)
+      // }
+      return rejectWithValue(error);
+    }
+  }
+)
+
 
 
 const commentSlice = createSlice({
@@ -150,6 +167,11 @@ const commentSlice = createSlice({
       loading: false,
       apiError: null,
       reccentReply: {},
+    },
+      userComments: {
+      loading: false,
+      apiError: null,
+      user_comments: [],
     },
   },
   reducers: {},
@@ -272,6 +294,24 @@ console.log(state,action);
 console.log(state,action);
       state.likeReply.loading = false;
       state.likeReply.apiError = action?.payload;
+    });
+
+      //getUserComments
+    builder.addCase(getUserCommentsAction.pending, (state) => {
+console.log(state);
+      state.userComments.loading = true;
+      state.userComments.user_comments = [];
+      state.userComments.apiError = null;
+    });
+    builder.addCase(getUserCommentsAction.fulfilled, (state, action) => {
+console.log(state,action);
+      state.userComments.loading = false;
+      state.userComments.user_comments = action?.payload;
+    });
+    builder.addCase(getUserCommentsAction.rejected, (state, action) => {
+console.log(state,action);
+      state.userComments.loading = false;
+      state.userComments.apiError = action?.payload;
     });
       },
 });

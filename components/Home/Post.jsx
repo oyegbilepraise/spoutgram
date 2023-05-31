@@ -1,5 +1,5 @@
 import EachPost from "./EachPost";
-import { ResendLdSvg } from "../../components";
+import { PageSpinner } from "../../components";
 
 const Post = ({ posts, loading }) => {
 const route={one:"postComments/",two:"comment/"}
@@ -8,7 +8,7 @@ const route={one:"postComments/",two:"comment/"}
     <div>
       {loading ? <div style={{ height: "78vh" }} className="d-flex justify-content-center align-items-center">
         <div style={{ paddingTop: "30px" }} role="status">
-          <ResendLdSvg />
+          <PageSpinner />
         </div>
       </div> :
         <div>
@@ -25,3 +25,4 @@ const route={one:"postComments/",two:"comment/"}
 };
 
 export default Post;
+

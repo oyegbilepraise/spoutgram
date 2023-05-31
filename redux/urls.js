@@ -11,13 +11,18 @@ export const URL = {
   // Users
   createProfile: "/users/create-profile",
   verifyUsername: "/users/verify-username",
-
+  updateProfile: "/users/user/update",
+  updateProfilePicture: "/users/user/profile-photo/upload",
+  getAllUsers: "/users/all-users",
+  getSingleUser: "/users/user/",
+  getUserComments: "/users/comments",
   // Posts
 createPost:"/posts/create",
 getPosts:"/posts/all-posts",
 getSinglePost:"/posts/post/",
 likePost:"/posts/post/like",
 dislikePost:"/posts/post/unlike",
+getUserPost: "/users/posts",
 repost:"/posts/repost/",
   // Category
 
@@ -46,7 +51,10 @@ getParticularCommentReplies:"/comments/all_reply/",
   //MESSAGES
   suggestedUsers:"/message/suggested",
   friends: '/message/friends',
-  sendMessage: '/message/send_message'
+  sendMessage: '/message/send_message',
+
+  //Notifications
+  socialNotification: "/notification/social"
 };
 
 

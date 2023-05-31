@@ -3,6 +3,7 @@ import { getRequest, postRequest, putRequest } from "../../api";
 import { URL } from "../../urls";
 import Cookies from "js-cookie";
 import { baseUrl } from "@/redux/baseUrl";
+import { getAllUsersAction } from "../userDetailSlice";
 
 // Register a user
 export const registerUserAction = createAsyncThunk(
@@ -193,6 +194,10 @@ const authSlice = createSlice({
     },
   },
   reducers: {
+    //updating the user profile
+    updateUserProfile(state, action){
+        state.getUser.user = action.payload
+    },
     logout: (state) => {
       Cookies.remove('token')
       state.getUser.user = {};
@@ -255,7 +260,6 @@ const authSlice = createSlice({
     // Verify User mail code input.
     builder.addCase(verifyEmailAction.pending, (state) => {
       state.verifyCode.loading = true;
-      state.verifyCode.user = {};
       state.verifyCode.verified = false;
       state.verifyCode.appError = null;
     });
@@ -323,6 +327,6 @@ const authSlice = createSlice({
   },
 });
 
-export const { logout } = authSlice.actions
+export const { updateUserProfile, logout } = authSlice.actions
 
 export default authSlice.reducer;

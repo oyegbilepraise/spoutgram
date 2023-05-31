@@ -1,6 +1,6 @@
 import './RightSidebar.module.css'
 import React, { useEffect, useState } from "react";
-import img from "../../images/default-photo.svg";
+import img from "../../images/default.jpeg";
 import Image from "next/image";
 import styles from "@/layout/HomeLayout/HomeLayout.module.css";
 import Carousel from "react-multi-carousel";
@@ -139,6 +139,7 @@ const CustomDot = ({ onClick, ...rest }) => {
 };
 
 const RightSidebar = () => {
+  const { user } = useSelector((state) => state?.auth?.getUser);
   const dispatch = useDispatch()
   const token = Cookies.get("token");
   const { loading, apiError, suggested } = useSelector(
@@ -147,17 +148,6 @@ const RightSidebar = () => {
   useEffect(() => {
     dispatch(getSuggestedUsers(token));
   }, []);
-
-  const handleFollow = async (id) => {
-    console.log("Following:: ", id);
-    const res = dispatch(followUser(id))
-    console.log(res);
-
-
-    // if (id) {
-    // }
-
-  }
 
   const responsive = {
     desktop: {
@@ -197,8 +187,18 @@ const RightSidebar = () => {
     return pageItems
   }
 
+  const handleFollow = async (id) => {
+    console.log("Following:: ", id);
+    const res = dispatch(followUser(id))
+    // let dataFind = suggested.data.findIndex((e => e._id == id));
+    // suggested.data[dataFind]?.followers.push(user?.data?._id)
+
+    // console.log(data);
+
+  }
   // show search modal toggle
   const [showSearch, setShowSearch] = useState(false);
+
   const handleSearch = () => {
     setShowSearch((prev) => !prev);
   };
@@ -262,12 +262,12 @@ const RightSidebar = () => {
                 return (
                   <div key={id}>
                     <div>
-                      {items.map(({ name, _id, username }) => {
+                      {items.map(({ name, _id, username, followers }) => {
                         return (
                           <div key={id} className={styles.sgstn_tst}>
                             <div>
+                              <Link href={`/${username}`}>
                               {/* replace with the appropriate username variable */}
-                              <Link href="/{username}">
                                 <Image
                                   src={img}
                                   alt="img"
@@ -277,15 +277,20 @@ const RightSidebar = () => {
                             </div>
                             <div>
                               {/* replace with the appropriate username variable */}
-                              <Link href="/{username}">
+                              <Link href={`/${username}`}>
                                 <span className={styles.yynmsq}>{name}</span>
                               </Link>
-                              <span className={styles.yyusbsq}>@{username}</span>
+                              <Link href={`/${username}`}>
+                                <span className={styles.yyusbsq}>@{username}</span>
+                              </Link>
                             </div>
                             <div>
-                              <button className={styles.flwx_xyq_fllw} onClick={()=>handleFollow(_id)}>
-                                follow
-                              </button>
+                              {followers.includes(user?.data?._id)
+                              ?  <button className={styles.flwx_xyq_fllw}>Unfollow</button>
+
+                              : <button className={styles.flwx_xyq_fllw} onClick={()=>handleFollow(_id)}>Follow</button>
+                              }
+                             
                             </div>
                           </div>
                         );

@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Cookies from "js-cookie";
 import { getAllPostsAction } from "@/redux/slices/postSlice/postSlice";
 import { SocketContext } from "../../redux/context/socket.js";
+import { getAllUsersAction } from "@/redux/slices/userDetailSlice";
 
 const HomeScreen = (props) => {
   const { user } = props

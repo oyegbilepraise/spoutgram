@@ -4,6 +4,7 @@ import userDetailSlice from "./slices/userDetailSlice";
 import postSlice from "./slices/postSlice/postSlice";
 import commentSlice from "./slices/commentSlice/commentSlice";
 import messageSlice from "./slices/messageSlice/messageSlice";
+import notificationSlice from "./slices/notificationSlice/notificationSlice";
 
 
 
@@ -34,6 +35,7 @@ export const store = configureStore({
     post: postSlice,
     comment: commentSlice,
     message: messageSlice,
+    notification: notificationSlice
   },
   // middleware: (getDefaultMiddleware) =>
   //   getDefaultMiddleware({

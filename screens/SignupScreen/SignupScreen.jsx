@@ -115,6 +115,36 @@ const SignUpScreen = () => {
     setShowCPasswordError(false);
   }
 
+  const [showError, setShowError] = useState(false);
+
+  const [showMsg, setShowMsg] = useState(false);
+
+  useEffect(() => {
+    let timer;
+    if (storedData?.appError) {
+      setShowError(true);
+      timer = setTimeout(() => {
+        setShowError(false);
+      }, 2500); // Display error message for 5 seconds
+    }
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [storedData?.appError]);
+
+  useEffect(() => {
+    let timer;
+    if (storedData?.register?.message) {
+      setShowMsg(true);
+      timer = setTimeout(() => {
+        setShowMsg(false);
+      }, 2500); // Display error message for 5 seconds
+    }
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [storedData?.register?.message]);
+
   return (
     <AuthLayout>
       <main className={styles.__main} role="main">
@@ -124,20 +154,19 @@ const SignUpScreen = () => {
               <span className={styles.vdf_data}>Sign up for Spoutgram</span>
 
               {/* this is the error msg from the API : User already registered. Please login. */}
-              {storedData?.appError && (
+              {showError && (
                 <div className={styles.byyy__err}>
                 <span className={styles.error__msg__xyx}>
-                  <CautionSvg />
                   <span className={styles.error__txt__xyx}>
                     {storedData?.appError}
                   </span>
                 </span>
                 </div>
               )}
-              {storedData?.register?.message && (
+
+              {showMsg && (
                 <div className={styles.byyy__err}>
                 <span className={styles.error__msg__xyx}>
-                  <CautionSvg />
                   <span className={styles.error__txt__xyx}>
                     {storedData?.register?.message}
                   </span>
@@ -189,6 +218,7 @@ const SignUpScreen = () => {
                     name="password"
                     spellCheck="false"
                     placeholder="Password"
+                    autoComplete="new-password"
                     className={`${styles.data_content_pass} ${styles._00x00_pwd}`}
                   />
                   {/* show and hide password svg */}
@@ -228,6 +258,7 @@ const SignUpScreen = () => {
                     name="confirmPassword"
                     spellCheck="false"
                     placeholder="Confirm Password"
+                    autoComplete="new-password"
                     className={`${styles.data_content_pass} ${styles._00x00_pwd}`}
                   />
                   {/* show and hide password svg */}

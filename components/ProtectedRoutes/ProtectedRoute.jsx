@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { SocketContext } from "@/redux/context/socket";
+import { getAllUsersAction } from "@/redux/slices/userDetailSlice";
 
 
 const ProtectedRoute = ({ children }) => {
